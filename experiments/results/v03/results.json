@@ -1,0 +1,3148 @@
+{
+ "articles": 209480,
+ "meta": {
+  "python": "3.14.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "cpus": 6,
+  "run_at": "2026-11-08 22:15"
+ },
+ "events": [
+  {
+   "date": "2012-10-29",
+   "exprs": [
+    "sandy",
+    "hurricane sandy"
+   ],
+   "label": "허리케인 샌디 상륙",
+   "group": "v0.2"
+  },
+  {
+   "date": "2012-12-14",
+   "exprs": [
+    "newtown",
+    "sandy hook"
+   ],
+   "label": "샌디훅 초등학교 총격",
+   "group": "v0.2"
+  },
+  {
+   "date": "2013-04-15",
+   "exprs": [
+    "boston",
+    "boston marathon"
+   ],
+   "label": "보스턴 마라톤 폭탄 테러",
+   "group": "v0.2"
+  },
+  {
+   "date": "2013-07-13",
+   "exprs": [
+    "zimmerman",
+    "george zimmerman"
+   ],
+   "label": "짐머먼 무죄 평결",
+   "group": "v0.2"
+  },
+  {
+   "date": "2014-03-08",
+   "exprs": [
+    "malaysia",
+    "malaysia airlines"
+   ],
+   "label": "말레이시아항공 MH370 실종",
+   "group": "v0.2"
+  },
+  {
+   "date": "2014-08-09",
+   "exprs": [
+    "ferguson",
+    "michael brown"
+   ],
+   "label": "퍼거슨 사건",
+   "group": "v0.2"
+  },
+  {
+   "date": "2014-09-30",
+   "exprs": [
+    "ebola"
+   ],
+   "label": "미국 첫 에볼라 확진",
+   "group": "v0.2"
+  },
+  {
+   "date": "2015-06-17",
+   "exprs": [
+    "charleston",
+    "charleston shooting"
+   ],
+   "label": "찰스턴 교회 총격",
+   "group": "v0.2"
+  },
+  {
+   "date": "2016-02-13",
+   "exprs": [
+    "scalia",
+    "antonin scalia"
+   ],
+   "label": "스캘리아 대법관 사망",
+   "group": "v0.2"
+  },
+  {
+   "date": "2016-06-12",
+   "exprs": [
+    "orlando",
+    "orlando shooting"
+   ],
+   "label": "올랜도 나이트클럽 총격",
+   "group": "v0.2"
+  },
+  {
+   "date": "2016-06-23",
+   "exprs": [
+    "brexit"
+   ],
+   "label": "브렉시트 국민투표",
+   "group": "v0.2"
+  },
+  {
+   "date": "2017-08-12",
+   "exprs": [
+    "charlottesville"
+   ],
+   "label": "샬러츠빌 집회 폭력",
+   "group": "v0.2"
+  },
+  {
+   "date": "2018-02-14",
+   "exprs": [
+    "parkland",
+    "school shooting",
+    "florida school"
+   ],
+   "label": "파크랜드 고교 총격",
+   "group": "v0.2"
+  },
+  {
+   "date": "2020-03-11",
+   "exprs": [
+    "coronavirus",
+    "coronavirus pandemic"
+   ],
+   "label": "WHO 팬데믹 선언",
+   "group": "v0.2"
+  },
+  {
+   "date": "2020-05-25",
+   "exprs": [
+    "floyd",
+    "george floyd"
+   ],
+   "label": "조지 플로이드 사망",
+   "group": "v0.2"
+  },
+  {
+   "date": "2022-02-24",
+   "exprs": [
+    "ukraine",
+    "russia ukraine"
+   ],
+   "label": "러시아의 우크라이나 침공",
+   "group": "v0.2"
+  },
+  {
+   "date": "2015-11-13",
+   "exprs": [
+    "paris",
+    "paris attacks"
+   ],
+   "label": "파리 테러",
+   "group": "holdout"
+  },
+  {
+   "date": "2017-08-25",
+   "exprs": [
+    "harvey",
+    "hurricane harvey"
+   ],
+   "label": "허리케인 하비",
+   "group": "holdout"
+  },
+  {
+   "date": "2017-09-20",
+   "exprs": [
+    "maria",
+    "puerto rico"
+   ],
+   "label": "허리케인 마리아",
+   "group": "holdout"
+  },
+  {
+   "date": "2017-10-05",
+   "exprs": [
+    "weinstein",
+    "harvey weinstein"
+   ],
+   "label": "와인스타인 보도",
+   "group": "holdout"
+  },
+  {
+   "date": "2018-09-16",
+   "exprs": [
+    "kavanaugh",
+    "brett kavanaugh"
+   ],
+   "label": "캐버노 의혹 보도",
+   "group": "holdout"
+  },
+  {
+   "date": "2019-04-15",
+   "exprs": [
+    "notre",
+    "notre dame"
+   ],
+   "label": "노트르담 화재",
+   "group": "holdout"
+  },
+  {
+   "date": "2019-09-24",
+   "exprs": [
+    "impeachment",
+    "impeachment inquiry"
+   ],
+   "label": "트럼프 탄핵 조사 착수",
+   "group": "holdout"
+  },
+  {
+   "date": "2020-01-26",
+   "exprs": [
+    "kobe",
+    "kobe bryant"
+   ],
+   "label": "코비 브라이언트 사망",
+   "group": "holdout"
+  },
+  {
+   "date": "2021-01-06",
+   "exprs": [
+    "capitol",
+    "capitol riot"
+   ],
+   "label": "미국 의사당 난입",
+   "group": "holdout"
+  },
+  {
+   "date": "2022-06-24",
+   "exprs": [
+    "roe",
+    "abortion rights"
+   ],
+   "label": "로 대 웨이드 판결 폐기",
+   "group": "holdout"
+  }
+ ],
+ "E7": {
+  "rows": {
+   "uni_article": {
+    "keywords_approx": 2853.7884711779448,
+    "keywords_exact": 40251.719799498744,
+    "keywords_exact_final": 54995,
+    "pybytes_approx": 660563.2,
+    "pybytes_exact": 4238059,
+    "overlap20": 0.9990726817042607,
+    "overlap20_min": 0.95,
+    "same_order_pct": 89.02255639097744,
+    "update_rate_median": 210918.97360526773,
+    "update_rate_min": 210474.64000562739,
+    "update_rate_max": 212485.95379521634,
+    "tokens_per_article": 5.474875883139202
+   },
+   "phr_article": {
+    "keywords_approx": 4506.55037593985,
+    "keywords_exact": 198463.12781954888,
+    "keywords_exact_final": 363665,
+    "pybytes_approx": 1029261.3,
+    "pybytes_exact": 19464124,
+    "overlap20": 0.998922305764411,
+    "overlap20_min": 0.95,
+    "same_order_pct": 90.12531328320802,
+    "update_rate_median": 129190.95061319051,
+    "update_rate_min": 114147.88613910266,
+    "update_rate_max": 129690.38803475037,
+    "tokens_per_article": 7.963848577429826
+   }
+  },
+  "examples": {
+   "uni_article": {
+    "2013-04-17": [
+     "wedding",
+     "boston",
+     "home",
+     "divorce",
+     "spring",
+     "stress",
+     "study",
+     "marathon",
+     "love",
+     "baby",
+     "marriage",
+     "food",
+     "children",
+     "house",
+     "style",
+     "health",
+     "u.s.",
+     "ideas",
+     "april",
+     "recipes"
+    ],
+    "2016-02-16": [
+     "clinton",
+     "trump",
+     "sanders",
+     "bernie",
+     "obama",
+     "hillary",
+     "donald",
+     "super",
+     "court",
+     "supreme",
+     "scalia",
+     "hampshire",
+     "gop",
+     "bowl",
+     "debate",
+     "rubio",
+     "grammys",
+     "iowa",
+     "justice",
+     "cruz"
+    ],
+    "2020-05-29": [
+     "trump",
+     "coronavirus",
+     "u.s.",
+     "donald",
+     "dead",
+     "house",
+     "covid",
+     "home",
+     "china",
+     "face",
+     "pandemic",
+     "death",
+     "white",
+     "california",
+     "impeachment",
+     "gop",
+     "fox",
+     "twitter",
+     "tweets",
+     "police"
+    ]
+   },
+   "phr_article": {
+    "2013-04-17": [
+     "wedding",
+     "boston",
+     "home",
+     "divorce",
+     "spring",
+     "stress",
+     "study",
+     "love",
+     "baby",
+     "marriage",
+     "boston marathon",
+     "food",
+     "children",
+     "house",
+     "style",
+     "health",
+     "u.s.",
+     "ideas",
+     "april",
+     "recipes"
+    ],
+    "2016-02-16": [
+     "clinton",
+     "trump",
+     "bernie sanders",
+     "obama",
+     "hillary clinton",
+     "donald trump",
+     "supreme court",
+     "scalia",
+     "new hampshire",
+     "gop",
+     "debate",
+     "super bowl",
+     "rubio",
+     "grammys",
+     "iowa",
+     "justice",
+     "cruz",
+     "love",
+     "black",
+     "marco rubio"
+    ],
+    "2020-05-29": [
+     "trump",
+     "coronavirus",
+     "u.s.",
+     "dead",
+     "donald trump",
+     "house",
+     "covid",
+     "home",
+     "china",
+     "face",
+     "pandemic",
+     "death",
+     "white",
+     "california",
+     "impeachment",
+     "gop",
+     "fox",
+     "twitter",
+     "white house",
+     "tweets"
+    ]
+   }
+  }
+ },
+ "E10": {
+  "snapshots": 1995,
+  "pairs": 37905,
+  "swaps": 197,
+  "missed_swaps": 0,
+  "flag_rate_key": 0.023796332937607176,
+  "flag_rate_global": 0.6655322516818362,
+  "flag_precision_key": 0.21840354767184036,
+  "last_row_flag_rate_key": 0.09423558897243108,
+  "last_row_flag_rate_global": 0.9609022556390977,
+  "last_row_dropouts": 37,
+  "last_row_missed": 0,
+  "pybytes_with_tracking": 856272,
+  "pybytes_without": 660563.2
+ },
+ "E11": {
+  "uni_article": {
+   "config": "uni_article",
+   "label": "단어 · 기사 수 감쇠 (v0.2)",
+   "rows": [
+    {
+     "event": "허리케인 샌디 상륙",
+     "date": "2012-10-29",
+     "group": "v0.2",
+     "exprs": [
+      "sandy",
+      "hurricane sandy"
+     ],
+     "top_day": 0,
+     "top_expr": "sandy",
+     "burst_day": 0,
+     "burst_expr": "sandy",
+     "in_top_before": true,
+     "in_burst_before": true,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 25486,
+       "date": "2012-10-28",
+       "headline": "Escaping Sandy: Recommended Beach Vacations For Storm Avoiders (PHOTOS)"
+      },
+      {
+       "id": 25474,
+       "date": "2012-10-28",
+       "headline": "Hurricane Sandy Meets \"Grease\" (PICTURE)"
+      },
+      {
+       "id": 25459,
+       "date": "2012-10-28",
+       "headline": "Hurricane Sandy Pet Emergency Plan"
+      }
+     ]
+    },
+    {
+     "event": "샌디훅 초등학교 총격",
+     "date": "2012-12-14",
+     "group": "v0.2",
+     "exprs": [
+      "newtown",
+      "sandy hook"
+     ],
+     "top_day": 5,
+     "top_expr": "newtown",
+     "burst_day": 1,
+     "burst_expr": "newtown",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 16,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 30232,
+       "date": "2012-12-19",
+       "headline": "The Names Of Newtown"
+      },
+      {
+       "id": 30228,
+       "date": "2012-12-19",
+       "headline": "Natalie Barden, 10-Year-Old Sister Of Newtown Shooting Victim, Writes Letter To President Obama About Gun Control (VIDEO)"
+      },
+      {
+       "id": 30107,
+       "date": "2012-12-18",
+       "headline": "Field Notes From Newtown: Reflections on What Constitutes Good Care in a Time of Crisis"
+      }
+     ]
+    },
+    {
+     "event": "보스턴 마라톤 폭탄 테러",
+     "date": "2013-04-15",
+     "group": "v0.2",
+     "exprs": [
+      "boston",
+      "boston marathon"
+     ],
+     "top_day": 1,
+     "top_expr": "boston",
+     "burst_day": 1,
+     "burst_expr": "boston",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 41392,
+       "date": "2013-04-16",
+       "headline": "Martin Richard Photo: 8-Year-Old Boston Victim Pictured With 'No More Hurting People' Sign"
+      },
+      {
+       "id": 41391,
+       "date": "2013-04-16",
+       "headline": "Kelli Johnston, Robert Watling Marry After Boston Marathon Despite Explosions (PHOTOS)"
+      },
+      {
+       "id": 41390,
+       "date": "2013-04-16",
+       "headline": "How To Talk To Kids About The Boston Marathon Bombing, Age By Age"
+      }
+     ]
+    },
+    {
+     "event": "짐머먼 무죄 평결",
+     "date": "2013-07-13",
+     "group": "v0.2",
+     "exprs": [
+      "zimmerman",
+      "george zimmerman"
+     ],
+     "top_day": 1,
+     "top_expr": "zimmerman",
+     "burst_day": 1,
+     "burst_expr": "zimmerman",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 9,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 49822,
+       "date": "2013-07-14",
+       "headline": "Attorney General Holder Has a Compelling Reason to Consider a Zimmerman Prosecution"
+      },
+      {
+       "id": 49821,
+       "date": "2013-07-14",
+       "headline": "George Zimmerman Acquittal: How Are You Coping With The Outcome?"
+      },
+      {
+       "id": 49814,
+       "date": "2013-07-14",
+       "headline": "George Zimmerman Trial Reactions Roll In"
+      }
+     ]
+    },
+    {
+     "event": "말레이시아항공 MH370 실종",
+     "date": "2014-03-08",
+     "group": "v0.2",
+     "exprs": [
+      "malaysia",
+      "malaysia airlines"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": null,
+     "burst_expr": null,
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 5,
+     "top_success": false,
+     "burst_success": false,
+     "evidence": []
+    },
+    {
+     "event": "퍼거슨 사건",
+     "date": "2014-08-09",
+     "group": "v0.2",
+     "exprs": [
+      "ferguson",
+      "michael brown"
+     ],
+     "top_day": 7,
+     "top_expr": "ferguson",
+     "burst_day": 6,
+     "burst_expr": "ferguson",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 5,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 86220,
+       "date": "2014-08-16",
+       "headline": "Ferguson Protesters Guard Stores From Looters"
+      },
+      {
+       "id": 86213,
+       "date": "2014-08-16",
+       "headline": "Streets Of Ferguson Erupt Again"
+      },
+      {
+       "id": 86193,
+       "date": "2014-08-15",
+       "headline": "FLASHBACK: Ferguson Cops Beat Man, Charged Him For Bleeding On Their Uniforms"
+      }
+     ]
+    },
+    {
+     "event": "미국 첫 에볼라 확진",
+     "date": "2014-09-30",
+     "group": "v0.2",
+     "exprs": [
+      "ebola"
+     ],
+     "top_day": 0,
+     "top_expr": "ebola",
+     "burst_day": 1,
+     "burst_expr": "ebola",
+     "in_top_before": true,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 90142,
+       "date": "2014-09-29",
+       "headline": "Ebola In Sierra Leone: 'It Reminded Me Of A Conflict Zone'"
+      },
+      {
+       "id": 90088,
+       "date": "2014-09-29",
+       "headline": "Ebola and Life-Threatening Diseases: Should You Take Untested Medicines?"
+      },
+      {
+       "id": 90080,
+       "date": "2014-09-28",
+       "headline": "Experts: Tradition Of Kissing Corpses May Contribute To Ebola Spread"
+      }
+     ]
+    },
+    {
+     "event": "찰스턴 교회 총격",
+     "date": "2015-06-17",
+     "group": "v0.2",
+     "exprs": [
+      "charleston",
+      "charleston shooting"
+     ],
+     "top_day": 1,
+     "top_expr": "charleston",
+     "burst_day": 1,
+     "burst_expr": "charleston",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 1,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 112887,
+       "date": "2015-06-18",
+       "headline": "Shooting in Charleston: Let's Stand With Mother Emanuel"
+      },
+      {
+       "id": 112880,
+       "date": "2015-06-18",
+       "headline": "Charleston Church Shooting: The Danger of 'All Are Welcome'"
+      },
+      {
+       "id": 112858,
+       "date": "2015-06-18",
+       "headline": "Charleston Resident On Church Shooting: ‘The Real Issue Is Race'"
+      }
+     ]
+    },
+    {
+     "event": "스캘리아 대법관 사망",
+     "date": "2016-02-13",
+     "group": "v0.2",
+     "exprs": [
+      "scalia",
+      "antonin scalia"
+     ],
+     "top_day": 2,
+     "top_expr": "scalia",
+     "burst_day": 0,
+     "burst_expr": "scalia",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 10,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 134257,
+       "date": "2016-02-15",
+       "headline": "Vulnerable Senate Republicans Say No Scalia Replacement Under Obama"
+      },
+      {
+       "id": 134217,
+       "date": "2016-02-14",
+       "headline": "Justice Scalia Left Undecided High-Stakes Cases That Could Change The Nation"
+      },
+      {
+       "id": 134214,
+       "date": "2016-02-14",
+       "headline": "Replacing Antonin Scalia Could Mean The Biggest Supreme Court Shakeup In 25 Years"
+      }
+     ]
+    },
+    {
+     "event": "올랜도 나이트클럽 총격",
+     "date": "2016-06-12",
+     "group": "v0.2",
+     "exprs": [
+      "orlando",
+      "orlando shooting"
+     ],
+     "top_day": 0,
+     "top_expr": "orlando",
+     "burst_day": 0,
+     "burst_expr": "orlando",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 144507,
+       "date": "2016-06-12",
+       "headline": "The Orlando Massacre: A Reminder of the Dangers LGBT People Live With Every Day"
+      },
+      {
+       "id": 144503,
+       "date": "2016-06-12",
+       "headline": "Witnesses Recount Horror At Orlando Nightclub During Mass Shooting"
+      },
+      {
+       "id": 144502,
+       "date": "2016-06-12",
+       "headline": "Connecticut's Senators, Who Know Something About Gun Violence, Blame Congress For Orlando Slaughter"
+      }
+     ]
+    },
+    {
+     "event": "브렉시트 국민투표",
+     "date": "2016-06-23",
+     "group": "v0.2",
+     "exprs": [
+      "brexit"
+     ],
+     "top_day": 1,
+     "top_expr": "brexit",
+     "burst_day": 0,
+     "burst_expr": "brexit",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 3,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 145553,
+       "date": "2016-06-24",
+       "headline": "Anti-EU Leader Ignores Jo Cox’s Murder In ‘Crass’ Brexit Victory Speech"
+      },
+      {
+       "id": 145552,
+       "date": "2016-06-24",
+       "headline": "Markets Tumble Amid Brexit Chaos"
+      },
+      {
+       "id": 145551,
+       "date": "2016-06-24",
+       "headline": "Brexit Chaos Could Shock Trump Voters Back To Common Sense"
+      }
+     ]
+    },
+    {
+     "event": "샬러츠빌 집회 폭력",
+     "date": "2017-08-12",
+     "group": "v0.2",
+     "exprs": [
+      "charlottesville"
+     ],
+     "top_day": 1,
+     "top_expr": "charlottesville",
+     "burst_day": 0,
+     "burst_expr": "charlottesville",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 181727,
+       "date": "2017-08-13",
+       "headline": "Nationwide Solidarity Rallies Assemble In Charlottesville Aftermath"
+      },
+      {
+       "id": 181725,
+       "date": "2017-08-13",
+       "headline": "Fox News Host Compares Charlottesville White Supremacists To Black Lives Matter"
+      },
+      {
+       "id": 181724,
+       "date": "2017-08-13",
+       "headline": "How What Happened Here In Charlottesville Was Inevitable"
+      }
+     ]
+    },
+    {
+     "event": "파크랜드 고교 총격",
+     "date": "2018-02-14",
+     "group": "v0.2",
+     "exprs": [
+      "parkland",
+      "school shooting",
+      "florida school"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 8,
+     "burst_expr": "parkland",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 3,
+     "top_success": false,
+     "burst_success": false,
+     "evidence": []
+    },
+    {
+     "event": "WHO 팬데믹 선언",
+     "date": "2020-03-11",
+     "group": "v0.2",
+     "exprs": [
+      "coronavirus",
+      "coronavirus pandemic"
+     ],
+     "top_day": 0,
+     "top_expr": "coronavirus",
+     "burst_day": 0,
+     "burst_expr": "coronavirus",
+     "in_top_before": true,
+     "in_burst_before": true,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 204291,
+       "date": "2020-03-11",
+       "headline": "Nearly 1,000 People Diagnosed With Coronavirus In U.S."
+      },
+      {
+       "id": 204290,
+       "date": "2020-03-10",
+       "headline": "Only 6,563 Americans Have Been Tested For The Coronavirus So Far"
+      },
+      {
+       "id": 204289,
+       "date": "2020-03-10",
+       "headline": "Thanks To The Coronavirus, Now Is A Great Time To Refinance Your Debt"
+      }
+     ]
+    },
+    {
+     "event": "조지 플로이드 사망",
+     "date": "2020-05-25",
+     "group": "v0.2",
+     "exprs": [
+      "floyd",
+      "george floyd"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 8,
+     "burst_expr": "floyd",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 4,
+     "top_success": false,
+     "burst_success": false,
+     "evidence": []
+    },
+    {
+     "event": "러시아의 우크라이나 침공",
+     "date": "2022-02-24",
+     "group": "v0.2",
+     "exprs": [
+      "ukraine",
+      "russia ukraine"
+     ],
+     "top_day": 1,
+     "top_expr": "ukraine",
+     "burst_day": 0,
+     "burst_expr": "ukraine",
+     "in_top_before": false,
+     "in_burst_before": true,
+     "best_rank": 6,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 208366,
+       "date": "2022-02-25",
+       "headline": "Republicans At CPAC Would Rather Talk About The Southern Border Than Ukraine"
+      },
+      {
+       "id": 208364,
+       "date": "2022-02-25",
+       "headline": "UN To Scale Up Humanitarian Operations In Ukraine Following Russia's Invasion"
+      },
+      {
+       "id": 208363,
+       "date": "2022-02-25",
+       "headline": "Europe Braces For Refugees As Russia Attacks Ukraine's Capital"
+      }
+     ]
+    },
+    {
+     "event": "파리 테러",
+     "date": "2015-11-13",
+     "group": "holdout",
+     "exprs": [
+      "paris",
+      "paris attacks"
+     ],
+     "top_day": 1,
+     "top_expr": "paris",
+     "burst_day": 1,
+     "burst_expr": "paris",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 1,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 126104,
+       "date": "2015-11-14",
+       "headline": "Stunned Europe Steps Up Security Following Paris Attacks"
+      },
+      {
+       "id": 126102,
+       "date": "2015-11-14",
+       "headline": "France's Hollande Orders Borders Closed, Paris Under First Mandatory Curfew Since 1944"
+      },
+      {
+       "id": 126100,
+       "date": "2015-11-14",
+       "headline": "Paris Authorities Storm Concert Hall Where Hostages Were Held"
+      }
+     ]
+    },
+    {
+     "event": "허리케인 하비",
+     "date": "2017-08-25",
+     "group": "holdout",
+     "exprs": [
+      "harvey",
+      "hurricane harvey"
+     ],
+     "top_day": 2,
+     "top_expr": "harvey",
+     "burst_day": 0,
+     "burst_expr": "harvey",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 182885,
+       "date": "2017-08-27",
+       "headline": "Harvey's 'Unprecedented' Rainfall And Flooding Are 'Only Getting Worse'"
+      },
+      {
+       "id": 182881,
+       "date": "2017-08-27",
+       "headline": "'Harvey The Hurricane Hawk' Hunkers Down With Cabbie During Storm"
+      },
+      {
+       "id": 182859,
+       "date": "2017-08-26",
+       "headline": "Harvey Spawns Tornadoes That Devastate Homes Outside Houston"
+      }
+     ]
+    },
+    {
+     "event": "허리케인 마리아",
+     "date": "2017-09-20",
+     "group": "holdout",
+     "exprs": [
+      "maria",
+      "puerto rico"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": null,
+     "burst_expr": null,
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 2,
+     "top_success": false,
+     "burst_success": false,
+     "evidence": []
+    },
+    {
+     "event": "와인스타인 보도",
+     "date": "2017-10-05",
+     "group": "holdout",
+     "exprs": [
+      "weinstein",
+      "harvey weinstein"
+     ],
+     "top_day": 3,
+     "top_expr": "weinstein",
+     "burst_day": 0,
+     "burst_expr": "weinstein",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 186141,
+       "date": "2017-10-08",
+       "headline": "Donald Trump Is Not Surprised By Harvey Weinstein Sexual Harassment Allegations"
+      },
+      {
+       "id": 186130,
+       "date": "2017-10-07",
+       "headline": "Late Night Hosts Slammed For Relative Silence On Weinstein Allegations"
+      },
+      {
+       "id": 186127,
+       "date": "2017-10-07",
+       "headline": "NYT Calls On Weinstein To Release His Accusers From Nondisclosure Agreements"
+      }
+     ]
+    },
+    {
+     "event": "캐버노 의혹 보도",
+     "date": "2018-09-16",
+     "group": "holdout",
+     "exprs": [
+      "kavanaugh",
+      "brett kavanaugh"
+     ],
+     "top_day": 10,
+     "top_expr": "kavanaugh",
+     "burst_day": 3,
+     "burst_expr": "kavanaugh",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 4,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 201393,
+       "date": "2018-09-26",
+       "headline": "'Fox & Friends' Co-Host Brian Kilmeade Defends Kavanaugh In Bizarre Rant"
+      },
+      {
+       "id": 201391,
+       "date": "2018-09-26",
+       "headline": "Judicial Crisis Network On Kavanaugh Allegations: ‘We Have To Look Into This Further’"
+      },
+      {
+       "id": 201384,
+       "date": "2018-09-24",
+       "headline": "Susan Collins: 'I Do Not Believe' Kavanaugh Would Repeal Roe v. Wade"
+      }
+     ]
+    },
+    {
+     "event": "노트르담 화재",
+     "date": "2019-04-15",
+     "group": "holdout",
+     "exprs": [
+      "notre",
+      "notre dame"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 1,
+     "burst_expr": "notre",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "트럼프 탄핵 조사 착수",
+     "date": "2019-09-24",
+     "group": "holdout",
+     "exprs": [
+      "impeachment",
+      "impeachment inquiry"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 6,
+     "burst_expr": "impeachment",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 1,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "코비 브라이언트 사망",
+     "date": "2020-01-26",
+     "group": "holdout",
+     "exprs": [
+      "kobe",
+      "kobe bryant"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 2,
+     "burst_expr": "kobe",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "미국 의사당 난입",
+     "date": "2021-01-06",
+     "group": "holdout",
+     "exprs": [
+      "capitol",
+      "capitol riot"
+     ],
+     "top_day": 10,
+     "top_expr": "capitol",
+     "burst_day": 2,
+     "burst_expr": "capitol",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 19,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 206106,
+       "date": "2021-01-16",
+       "headline": "Mary Trump: My Uncle ‘Enjoyed Every Second’ Of Capitol Riot"
+      },
+      {
+       "id": 206104,
+       "date": "2021-01-15",
+       "headline": "Kamala Harris Compares Capitol Riot To Charlottesville, Emmett Till's Death"
+      },
+      {
+       "id": 206095,
+       "date": "2021-01-14",
+       "headline": "Rep. Tim Ryan Says Capitol Police Leadership Not Being Transparent With Lawmakers"
+      }
+     ]
+    },
+    {
+     "event": "로 대 웨이드 판결 폐기",
+     "date": "2022-06-24",
+     "group": "holdout",
+     "exprs": [
+      "roe",
+      "abortion rights"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 1,
+     "burst_expr": "roe",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    }
+   ],
+   "evidence_by_year": {
+    "2012": {
+     "median_mentions_7d": 10.11448598130841,
+     "thin_share": 0.022429906542056077,
+     "days": 214
+    },
+    "2013": {
+     "median_mentions_7d": 9.606849315068493,
+     "thin_share": 0.022876712328767125,
+     "days": 365
+    },
+    "2014": {
+     "median_mentions_7d": 7.597260273972603,
+     "thin_share": 0.05219178082191781,
+     "days": 365
+    },
+    "2015": {
+     "median_mentions_7d": 9.063013698630137,
+     "thin_share": 0.027123287671232878,
+     "days": 365
+    },
+    "2016": {
+     "median_mentions_7d": 13.28551912568306,
+     "thin_share": 0.019398907103825136,
+     "days": 366
+    },
+    "2017": {
+     "median_mentions_7d": 12.40495867768595,
+     "thin_share": 0.02603305785123967,
+     "days": 363
+    },
+    "2018": {
+     "median_mentions_7d": 4.001369863013698,
+     "thin_share": 0.5538356164383562,
+     "days": 365
+    },
+    "2019": {
+     "median_mentions_7d": 0.5616438356164384,
+     "thin_share": 0.8798630136986302,
+     "days": 365
+    },
+    "2020": {
+     "median_mentions_7d": 0.6871584699453552,
+     "thin_share": 0.8165300546448088,
+     "days": 366
+    },
+    "2021": {
+     "median_mentions_7d": 0.7849315068493151,
+     "thin_share": 0.8532876712328767,
+     "days": 365
+    },
+    "2022": {
+     "median_mentions_7d": 0.693609022556391,
+     "thin_share": 0.8828947368421053,
+     "days": 266
+    }
+   },
+   "burst_novel_share": 0.4065505804311774
+  },
+  "phr_article": {
+   "config": "phr_article",
+   "label": "단어+구 · 기사 수 감쇠 (v0.3 기본)",
+   "rows": [
+    {
+     "event": "허리케인 샌디 상륙",
+     "date": "2012-10-29",
+     "group": "v0.2",
+     "exprs": [
+      "sandy",
+      "hurricane sandy"
+     ],
+     "top_day": 0,
+     "top_expr": "hurricane sandy",
+     "burst_day": 0,
+     "burst_expr": "hurricane sandy",
+     "in_top_before": true,
+     "in_burst_before": true,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 25474,
+       "date": "2012-10-28",
+       "headline": "Hurricane Sandy Meets \"Grease\" (PICTURE)"
+      },
+      {
+       "id": 25459,
+       "date": "2012-10-28",
+       "headline": "Hurricane Sandy Pet Emergency Plan"
+      },
+      {
+       "id": 25458,
+       "date": "2012-10-28",
+       "headline": "How Fujiwhara Effect Will Toss Hurricane Sandy Into U.S."
+      }
+     ]
+    },
+    {
+     "event": "샌디훅 초등학교 총격",
+     "date": "2012-12-14",
+     "group": "v0.2",
+     "exprs": [
+      "newtown",
+      "sandy hook"
+     ],
+     "top_day": 5,
+     "top_expr": "newtown",
+     "burst_day": 1,
+     "burst_expr": "newtown",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 16,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 30232,
+       "date": "2012-12-19",
+       "headline": "The Names Of Newtown"
+      },
+      {
+       "id": 30228,
+       "date": "2012-12-19",
+       "headline": "Natalie Barden, 10-Year-Old Sister Of Newtown Shooting Victim, Writes Letter To President Obama About Gun Control (VIDEO)"
+      },
+      {
+       "id": 30107,
+       "date": "2012-12-18",
+       "headline": "Field Notes From Newtown: Reflections on What Constitutes Good Care in a Time of Crisis"
+      }
+     ]
+    },
+    {
+     "event": "보스턴 마라톤 폭탄 테러",
+     "date": "2013-04-15",
+     "group": "v0.2",
+     "exprs": [
+      "boston",
+      "boston marathon"
+     ],
+     "top_day": 1,
+     "top_expr": "boston",
+     "burst_day": 1,
+     "burst_expr": "boston",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 41392,
+       "date": "2013-04-16",
+       "headline": "Martin Richard Photo: 8-Year-Old Boston Victim Pictured With 'No More Hurting People' Sign"
+      },
+      {
+       "id": 41391,
+       "date": "2013-04-16",
+       "headline": "Kelli Johnston, Robert Watling Marry After Boston Marathon Despite Explosions (PHOTOS)"
+      },
+      {
+       "id": 41390,
+       "date": "2013-04-16",
+       "headline": "How To Talk To Kids About The Boston Marathon Bombing, Age By Age"
+      }
+     ]
+    },
+    {
+     "event": "짐머먼 무죄 평결",
+     "date": "2013-07-13",
+     "group": "v0.2",
+     "exprs": [
+      "zimmerman",
+      "george zimmerman"
+     ],
+     "top_day": 1,
+     "top_expr": "zimmerman",
+     "burst_day": 1,
+     "burst_expr": "zimmerman",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 9,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 49822,
+       "date": "2013-07-14",
+       "headline": "Attorney General Holder Has a Compelling Reason to Consider a Zimmerman Prosecution"
+      },
+      {
+       "id": 49821,
+       "date": "2013-07-14",
+       "headline": "George Zimmerman Acquittal: How Are You Coping With The Outcome?"
+      },
+      {
+       "id": 49814,
+       "date": "2013-07-14",
+       "headline": "George Zimmerman Trial Reactions Roll In"
+      }
+     ]
+    },
+    {
+     "event": "말레이시아항공 MH370 실종",
+     "date": "2014-03-08",
+     "group": "v0.2",
+     "exprs": [
+      "malaysia",
+      "malaysia airlines"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": null,
+     "burst_expr": null,
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 5,
+     "top_success": false,
+     "burst_success": false,
+     "evidence": []
+    },
+    {
+     "event": "퍼거슨 사건",
+     "date": "2014-08-09",
+     "group": "v0.2",
+     "exprs": [
+      "ferguson",
+      "michael brown"
+     ],
+     "top_day": 7,
+     "top_expr": "ferguson",
+     "burst_day": 6,
+     "burst_expr": "ferguson",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 5,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 86220,
+       "date": "2014-08-16",
+       "headline": "Ferguson Protesters Guard Stores From Looters"
+      },
+      {
+       "id": 86213,
+       "date": "2014-08-16",
+       "headline": "Streets Of Ferguson Erupt Again"
+      },
+      {
+       "id": 86193,
+       "date": "2014-08-15",
+       "headline": "FLASHBACK: Ferguson Cops Beat Man, Charged Him For Bleeding On Their Uniforms"
+      }
+     ]
+    },
+    {
+     "event": "미국 첫 에볼라 확진",
+     "date": "2014-09-30",
+     "group": "v0.2",
+     "exprs": [
+      "ebola"
+     ],
+     "top_day": 0,
+     "top_expr": "ebola",
+     "burst_day": 1,
+     "burst_expr": "ebola",
+     "in_top_before": true,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 90142,
+       "date": "2014-09-29",
+       "headline": "Ebola In Sierra Leone: 'It Reminded Me Of A Conflict Zone'"
+      },
+      {
+       "id": 90088,
+       "date": "2014-09-29",
+       "headline": "Ebola and Life-Threatening Diseases: Should You Take Untested Medicines?"
+      },
+      {
+       "id": 90080,
+       "date": "2014-09-28",
+       "headline": "Experts: Tradition Of Kissing Corpses May Contribute To Ebola Spread"
+      }
+     ]
+    },
+    {
+     "event": "찰스턴 교회 총격",
+     "date": "2015-06-17",
+     "group": "v0.2",
+     "exprs": [
+      "charleston",
+      "charleston shooting"
+     ],
+     "top_day": 1,
+     "top_expr": "charleston",
+     "burst_day": 1,
+     "burst_expr": "charleston",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 1,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 112887,
+       "date": "2015-06-18",
+       "headline": "Shooting in Charleston: Let's Stand With Mother Emanuel"
+      },
+      {
+       "id": 112880,
+       "date": "2015-06-18",
+       "headline": "Charleston Church Shooting: The Danger of 'All Are Welcome'"
+      },
+      {
+       "id": 112858,
+       "date": "2015-06-18",
+       "headline": "Charleston Resident On Church Shooting: ‘The Real Issue Is Race'"
+      }
+     ]
+    },
+    {
+     "event": "스캘리아 대법관 사망",
+     "date": "2016-02-13",
+     "group": "v0.2",
+     "exprs": [
+      "scalia",
+      "antonin scalia"
+     ],
+     "top_day": 1,
+     "top_expr": "scalia",
+     "burst_day": 0,
+     "burst_expr": "antonin scalia",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 7,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 134214,
+       "date": "2016-02-14",
+       "headline": "Replacing Antonin Scalia Could Mean The Biggest Supreme Court Shakeup In 25 Years"
+      },
+      {
+       "id": 134206,
+       "date": "2016-02-14",
+       "headline": "Supreme Court Justices Unanimous In Admiration For Antonin Scalia"
+      },
+      {
+       "id": 134201,
+       "date": "2016-02-14",
+       "headline": "Hillary Clinton: Obama Has 'Plenty Of Time' To Nominate Scalia Successor"
+      }
+     ]
+    },
+    {
+     "event": "올랜도 나이트클럽 총격",
+     "date": "2016-06-12",
+     "group": "v0.2",
+     "exprs": [
+      "orlando",
+      "orlando shooting"
+     ],
+     "top_day": 0,
+     "top_expr": "orlando",
+     "burst_day": 0,
+     "burst_expr": "orlando",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 144503,
+       "date": "2016-06-12",
+       "headline": "Witnesses Recount Horror At Orlando Nightclub During Mass Shooting"
+      },
+      {
+       "id": 144502,
+       "date": "2016-06-12",
+       "headline": "Connecticut's Senators, Who Know Something About Gun Violence, Blame Congress For Orlando Slaughter"
+      },
+      {
+       "id": 144501,
+       "date": "2016-06-12",
+       "headline": "Orlando Victims Deserve Real Action, Not Endless Debate And Speculation"
+      }
+     ]
+    },
+    {
+     "event": "브렉시트 국민투표",
+     "date": "2016-06-23",
+     "group": "v0.2",
+     "exprs": [
+      "brexit"
+     ],
+     "top_day": 1,
+     "top_expr": "brexit",
+     "burst_day": 0,
+     "burst_expr": "brexit",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 3,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 145554,
+       "date": "2016-06-24",
+       "headline": "BREXIT CARNAGE: Sterling, Stocks In Free Fall As UK Votes To Exit European Union"
+      },
+      {
+       "id": 145553,
+       "date": "2016-06-24",
+       "headline": "Anti-EU Leader Ignores Jo Cox’s Murder In ‘Crass’ Brexit Victory Speech"
+      },
+      {
+       "id": 145552,
+       "date": "2016-06-24",
+       "headline": "Markets Tumble Amid Brexit Chaos"
+      }
+     ]
+    },
+    {
+     "event": "샬러츠빌 집회 폭력",
+     "date": "2017-08-12",
+     "group": "v0.2",
+     "exprs": [
+      "charlottesville"
+     ],
+     "top_day": 1,
+     "top_expr": "charlottesville",
+     "burst_day": 0,
+     "burst_expr": "charlottesville",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 181727,
+       "date": "2017-08-13",
+       "headline": "Nationwide Solidarity Rallies Assemble In Charlottesville Aftermath"
+      },
+      {
+       "id": 181725,
+       "date": "2017-08-13",
+       "headline": "Fox News Host Compares Charlottesville White Supremacists To Black Lives Matter"
+      },
+      {
+       "id": 181724,
+       "date": "2017-08-13",
+       "headline": "How What Happened Here In Charlottesville Was Inevitable"
+      }
+     ]
+    },
+    {
+     "event": "파크랜드 고교 총격",
+     "date": "2018-02-14",
+     "group": "v0.2",
+     "exprs": [
+      "parkland",
+      "school shooting",
+      "florida school"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 1,
+     "burst_expr": "school shooting",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 1,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "WHO 팬데믹 선언",
+     "date": "2020-03-11",
+     "group": "v0.2",
+     "exprs": [
+      "coronavirus",
+      "coronavirus pandemic"
+     ],
+     "top_day": 0,
+     "top_expr": "coronavirus",
+     "burst_day": 0,
+     "burst_expr": "coronavirus",
+     "in_top_before": true,
+     "in_burst_before": true,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 204291,
+       "date": "2020-03-11",
+       "headline": "Nearly 1,000 People Diagnosed With Coronavirus In U.S."
+      },
+      {
+       "id": 204290,
+       "date": "2020-03-10",
+       "headline": "Only 6,563 Americans Have Been Tested For The Coronavirus So Far"
+      },
+      {
+       "id": 204289,
+       "date": "2020-03-10",
+       "headline": "Thanks To The Coronavirus, Now Is A Great Time To Refinance Your Debt"
+      }
+     ]
+    },
+    {
+     "event": "조지 플로이드 사망",
+     "date": "2020-05-25",
+     "group": "v0.2",
+     "exprs": [
+      "floyd",
+      "george floyd"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 8,
+     "burst_expr": "george floyd",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 4,
+     "top_success": false,
+     "burst_success": false,
+     "evidence": []
+    },
+    {
+     "event": "러시아의 우크라이나 침공",
+     "date": "2022-02-24",
+     "group": "v0.2",
+     "exprs": [
+      "ukraine",
+      "russia ukraine"
+     ],
+     "top_day": 1,
+     "top_expr": "ukraine",
+     "burst_day": 0,
+     "burst_expr": "ukraine",
+     "in_top_before": false,
+     "in_burst_before": true,
+     "best_rank": 6,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 208366,
+       "date": "2022-02-25",
+       "headline": "Republicans At CPAC Would Rather Talk About The Southern Border Than Ukraine"
+      },
+      {
+       "id": 208364,
+       "date": "2022-02-25",
+       "headline": "UN To Scale Up Humanitarian Operations In Ukraine Following Russia's Invasion"
+      },
+      {
+       "id": 208363,
+       "date": "2022-02-25",
+       "headline": "Europe Braces For Refugees As Russia Attacks Ukraine's Capital"
+      }
+     ]
+    },
+    {
+     "event": "파리 테러",
+     "date": "2015-11-13",
+     "group": "holdout",
+     "exprs": [
+      "paris",
+      "paris attacks"
+     ],
+     "top_day": 1,
+     "top_expr": "paris",
+     "burst_day": 1,
+     "burst_expr": "paris",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 1,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 126102,
+       "date": "2015-11-14",
+       "headline": "France's Hollande Orders Borders Closed, Paris Under First Mandatory Curfew Since 1944"
+      },
+      {
+       "id": 126100,
+       "date": "2015-11-14",
+       "headline": "Paris Authorities Storm Concert Hall Where Hostages Were Held"
+      },
+      {
+       "id": 126098,
+       "date": "2015-11-14",
+       "headline": "Deadly Paris Attacks Come Amid Rising Religious Tension In France"
+      }
+     ]
+    },
+    {
+     "event": "허리케인 하비",
+     "date": "2017-08-25",
+     "group": "holdout",
+     "exprs": [
+      "harvey",
+      "hurricane harvey"
+     ],
+     "top_day": 2,
+     "top_expr": "harvey",
+     "burst_day": 0,
+     "burst_expr": "hurricane harvey",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 182885,
+       "date": "2017-08-27",
+       "headline": "Harvey's 'Unprecedented' Rainfall And Flooding Are 'Only Getting Worse'"
+      },
+      {
+       "id": 182881,
+       "date": "2017-08-27",
+       "headline": "'Harvey The Hurricane Hawk' Hunkers Down With Cabbie During Storm"
+      },
+      {
+       "id": 182859,
+       "date": "2017-08-26",
+       "headline": "Harvey Spawns Tornadoes That Devastate Homes Outside Houston"
+      }
+     ]
+    },
+    {
+     "event": "허리케인 마리아",
+     "date": "2017-09-20",
+     "group": "holdout",
+     "exprs": [
+      "maria",
+      "puerto rico"
+     ],
+     "top_day": 8,
+     "top_expr": "puerto rico",
+     "burst_day": 6,
+     "burst_expr": "puerto rico",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 4,
+     "first_mention_day": 2,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 185439,
+       "date": "2017-09-28",
+       "headline": "White House Waives Jones Act For Puerto Rico"
+      },
+      {
+       "id": 185428,
+       "date": "2017-09-28",
+       "headline": "Pentagon Appoints 3-Star General To Lead Recovery Efforts In Puerto Rico"
+      },
+      {
+       "id": 185383,
+       "date": "2017-09-28",
+       "headline": "The Storm That Crushed Puerto Rico Isn't Getting As Much Attention As Harvey Or Irma"
+      }
+     ]
+    },
+    {
+     "event": "와인스타인 보도",
+     "date": "2017-10-05",
+     "group": "holdout",
+     "exprs": [
+      "weinstein",
+      "harvey weinstein"
+     ],
+     "top_day": 3,
+     "top_expr": "weinstein",
+     "burst_day": 0,
+     "burst_expr": "weinstein",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 186141,
+       "date": "2017-10-08",
+       "headline": "Donald Trump Is Not Surprised By Harvey Weinstein Sexual Harassment Allegations"
+      },
+      {
+       "id": 186130,
+       "date": "2017-10-07",
+       "headline": "Late Night Hosts Slammed For Relative Silence On Weinstein Allegations"
+      },
+      {
+       "id": 186127,
+       "date": "2017-10-07",
+       "headline": "NYT Calls On Weinstein To Release His Accusers From Nondisclosure Agreements"
+      }
+     ]
+    },
+    {
+     "event": "캐버노 의혹 보도",
+     "date": "2018-09-16",
+     "group": "holdout",
+     "exprs": [
+      "kavanaugh",
+      "brett kavanaugh"
+     ],
+     "top_day": 10,
+     "top_expr": "kavanaugh",
+     "burst_day": 3,
+     "burst_expr": "kavanaugh",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 4,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 201393,
+       "date": "2018-09-26",
+       "headline": "'Fox & Friends' Co-Host Brian Kilmeade Defends Kavanaugh In Bizarre Rant"
+      },
+      {
+       "id": 201391,
+       "date": "2018-09-26",
+       "headline": "Judicial Crisis Network On Kavanaugh Allegations: ‘We Have To Look Into This Further’"
+      },
+      {
+       "id": 201384,
+       "date": "2018-09-24",
+       "headline": "Susan Collins: 'I Do Not Believe' Kavanaugh Would Repeal Roe v. Wade"
+      }
+     ]
+    },
+    {
+     "event": "노트르담 화재",
+     "date": "2019-04-15",
+     "group": "holdout",
+     "exprs": [
+      "notre",
+      "notre dame"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 1,
+     "burst_expr": "notre dame",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "트럼프 탄핵 조사 착수",
+     "date": "2019-09-24",
+     "group": "holdout",
+     "exprs": [
+      "impeachment",
+      "impeachment inquiry"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 6,
+     "burst_expr": "impeachment",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 1,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "코비 브라이언트 사망",
+     "date": "2020-01-26",
+     "group": "holdout",
+     "exprs": [
+      "kobe",
+      "kobe bryant"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 2,
+     "burst_expr": "kobe",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "미국 의사당 난입",
+     "date": "2021-01-06",
+     "group": "holdout",
+     "exprs": [
+      "capitol",
+      "capitol riot"
+     ],
+     "top_day": 10,
+     "top_expr": "capitol",
+     "burst_day": 2,
+     "burst_expr": "capitol",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 19,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 206106,
+       "date": "2021-01-16",
+       "headline": "Mary Trump: My Uncle ‘Enjoyed Every Second’ Of Capitol Riot"
+      },
+      {
+       "id": 206104,
+       "date": "2021-01-15",
+       "headline": "Kamala Harris Compares Capitol Riot To Charlottesville, Emmett Till's Death"
+      },
+      {
+       "id": 206095,
+       "date": "2021-01-14",
+       "headline": "Rep. Tim Ryan Says Capitol Police Leadership Not Being Transparent With Lawmakers"
+      }
+     ]
+    },
+    {
+     "event": "로 대 웨이드 판결 폐기",
+     "date": "2022-06-24",
+     "group": "holdout",
+     "exprs": [
+      "roe",
+      "abortion rights"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 1,
+     "burst_expr": "roe",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 0,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    }
+   ],
+   "evidence_by_year": {
+    "2012": {
+     "median_mentions_7d": 10.060747663551401,
+     "thin_share": 0.02149532710280374,
+     "days": 214
+    },
+    "2013": {
+     "median_mentions_7d": 9.58904109589041,
+     "thin_share": 0.02178082191780822,
+     "days": 365
+    },
+    "2014": {
+     "median_mentions_7d": 7.563013698630137,
+     "thin_share": 0.04863013698630137,
+     "days": 365
+    },
+    "2015": {
+     "median_mentions_7d": 8.804109589041095,
+     "thin_share": 0.029589041095890414,
+     "days": 365
+    },
+    "2016": {
+     "median_mentions_7d": 12.739071038251366,
+     "thin_share": 0.02062841530054645,
+     "days": 366
+    },
+    "2017": {
+     "median_mentions_7d": 12.297520661157025,
+     "thin_share": 0.027961432506887055,
+     "days": 363
+    },
+    "2018": {
+     "median_mentions_7d": 3.9328767123287673,
+     "thin_share": 0.5504109589041096,
+     "days": 365
+    },
+    "2019": {
+     "median_mentions_7d": 0.5835616438356165,
+     "thin_share": 0.8831506849315068,
+     "days": 365
+    },
+    "2020": {
+     "median_mentions_7d": 0.6844262295081968,
+     "thin_share": 0.8142076502732241,
+     "days": 366
+    },
+    "2021": {
+     "median_mentions_7d": 0.7726027397260274,
+     "thin_share": 0.8554794520547945,
+     "days": 365
+    },
+    "2022": {
+     "median_mentions_7d": 0.6710526315789473,
+     "thin_share": 0.8834586466165414,
+     "days": 266
+    }
+   },
+   "burst_novel_share": 0.4817371475953566
+  },
+  "phr_day": {
+   "config": "phr_day",
+   "label": "단어+구 · 날짜 감쇠 (반감기 7일)",
+   "rows": [
+    {
+     "event": "허리케인 샌디 상륙",
+     "date": "2012-10-29",
+     "group": "v0.2",
+     "exprs": [
+      "sandy",
+      "hurricane sandy"
+     ],
+     "top_day": 0,
+     "top_expr": "hurricane sandy",
+     "burst_day": 0,
+     "burst_expr": "hurricane sandy",
+     "in_top_before": true,
+     "in_burst_before": true,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 25474,
+       "date": "2012-10-28",
+       "headline": "Hurricane Sandy Meets \"Grease\" (PICTURE)"
+      },
+      {
+       "id": 25459,
+       "date": "2012-10-28",
+       "headline": "Hurricane Sandy Pet Emergency Plan"
+      },
+      {
+       "id": 25458,
+       "date": "2012-10-28",
+       "headline": "How Fujiwhara Effect Will Toss Hurricane Sandy Into U.S."
+      }
+     ]
+    },
+    {
+     "event": "샌디훅 초등학교 총격",
+     "date": "2012-12-14",
+     "group": "v0.2",
+     "exprs": [
+      "newtown",
+      "sandy hook"
+     ],
+     "top_day": 4,
+     "top_expr": "newtown",
+     "burst_day": 1,
+     "burst_expr": "newtown",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 13,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 30107,
+       "date": "2012-12-18",
+       "headline": "Field Notes From Newtown: Reflections on What Constitutes Good Care in a Time of Crisis"
+      },
+      {
+       "id": 30099,
+       "date": "2012-12-18",
+       "headline": "'Where Have All the Flowers Gone?': Thoughts After the Newtown Massacre"
+      },
+      {
+       "id": 30085,
+       "date": "2012-12-17",
+       "headline": "Caring About and for Kids With Asperger Syndrome in the Aftermath of the Newtown Massacre"
+      }
+     ]
+    },
+    {
+     "event": "보스턴 마라톤 폭탄 테러",
+     "date": "2013-04-15",
+     "group": "v0.2",
+     "exprs": [
+      "boston",
+      "boston marathon"
+     ],
+     "top_day": 1,
+     "top_expr": "boston",
+     "burst_day": 1,
+     "burst_expr": "boston",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 41391,
+       "date": "2013-04-16",
+       "headline": "Kelli Johnston, Robert Watling Marry After Boston Marathon Despite Explosions (PHOTOS)"
+      },
+      {
+       "id": 41390,
+       "date": "2013-04-16",
+       "headline": "How To Talk To Kids About The Boston Marathon Bombing, Age By Age"
+      },
+      {
+       "id": 41389,
+       "date": "2013-04-16",
+       "headline": "Carol Johnson, Boston Public School Superintendent, Advises Parents On How To Talk About The Explosions"
+      }
+     ]
+    },
+    {
+     "event": "짐머먼 무죄 평결",
+     "date": "2013-07-13",
+     "group": "v0.2",
+     "exprs": [
+      "zimmerman",
+      "george zimmerman"
+     ],
+     "top_day": 1,
+     "top_expr": "zimmerman",
+     "burst_day": 1,
+     "burst_expr": "zimmerman",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 9,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 49822,
+       "date": "2013-07-14",
+       "headline": "Attorney General Holder Has a Compelling Reason to Consider a Zimmerman Prosecution"
+      },
+      {
+       "id": 49821,
+       "date": "2013-07-14",
+       "headline": "George Zimmerman Acquittal: How Are You Coping With The Outcome?"
+      },
+      {
+       "id": 49814,
+       "date": "2013-07-14",
+       "headline": "George Zimmerman Trial Reactions Roll In"
+      }
+     ]
+    },
+    {
+     "event": "말레이시아항공 MH370 실종",
+     "date": "2014-03-08",
+     "group": "v0.2",
+     "exprs": [
+      "malaysia",
+      "malaysia airlines"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": null,
+     "burst_expr": null,
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 5,
+     "top_success": false,
+     "burst_success": false,
+     "evidence": []
+    },
+    {
+     "event": "퍼거슨 사건",
+     "date": "2014-08-09",
+     "group": "v0.2",
+     "exprs": [
+      "ferguson",
+      "michael brown"
+     ],
+     "top_day": 7,
+     "top_expr": "ferguson",
+     "burst_day": 6,
+     "burst_expr": "ferguson",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 5,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 86213,
+       "date": "2014-08-16",
+       "headline": "Streets Of Ferguson Erupt Again"
+      },
+      {
+       "id": 86193,
+       "date": "2014-08-15",
+       "headline": "FLASHBACK: Ferguson Cops Beat Man, Charged Him For Bleeding On Their Uniforms"
+      },
+      {
+       "id": 86175,
+       "date": "2014-08-15",
+       "headline": "Ferguson Police Chief: Darren Wilson Did Not Know Michael Brown Was Suspect In 'Strong-Armed' Robbery"
+      }
+     ]
+    },
+    {
+     "event": "미국 첫 에볼라 확진",
+     "date": "2014-09-30",
+     "group": "v0.2",
+     "exprs": [
+      "ebola"
+     ],
+     "top_day": 0,
+     "top_expr": "ebola",
+     "burst_day": 1,
+     "burst_expr": "ebola",
+     "in_top_before": true,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 90142,
+       "date": "2014-09-29",
+       "headline": "Ebola In Sierra Leone: 'It Reminded Me Of A Conflict Zone'"
+      },
+      {
+       "id": 90088,
+       "date": "2014-09-29",
+       "headline": "Ebola and Life-Threatening Diseases: Should You Take Untested Medicines?"
+      },
+      {
+       "id": 90080,
+       "date": "2014-09-28",
+       "headline": "Experts: Tradition Of Kissing Corpses May Contribute To Ebola Spread"
+      }
+     ]
+    },
+    {
+     "event": "찰스턴 교회 총격",
+     "date": "2015-06-17",
+     "group": "v0.2",
+     "exprs": [
+      "charleston",
+      "charleston shooting"
+     ],
+     "top_day": 1,
+     "top_expr": "charleston",
+     "burst_day": 1,
+     "burst_expr": "charleston",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 1,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 112880,
+       "date": "2015-06-18",
+       "headline": "Charleston Church Shooting: The Danger of 'All Are Welcome'"
+      },
+      {
+       "id": 112858,
+       "date": "2015-06-18",
+       "headline": "Charleston Resident On Church Shooting: ‘The Real Issue Is Race'"
+      },
+      {
+       "id": 112854,
+       "date": "2015-06-18",
+       "headline": "White Supremacists Have Thoughts About Charleston Shooting"
+      }
+     ]
+    },
+    {
+     "event": "스캘리아 대법관 사망",
+     "date": "2016-02-13",
+     "group": "v0.2",
+     "exprs": [
+      "scalia",
+      "antonin scalia"
+     ],
+     "top_day": 1,
+     "top_expr": "scalia",
+     "burst_day": 0,
+     "burst_expr": "antonin scalia",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 7,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 134206,
+       "date": "2016-02-14",
+       "headline": "Supreme Court Justices Unanimous In Admiration For Antonin Scalia"
+      },
+      {
+       "id": 134201,
+       "date": "2016-02-14",
+       "headline": "Hillary Clinton: Obama Has 'Plenty Of Time' To Nominate Scalia Successor"
+      },
+      {
+       "id": 134199,
+       "date": "2016-02-14",
+       "headline": "How Scalia's Death Will Change The Supreme Court, America, And The Planet"
+      }
+     ]
+    },
+    {
+     "event": "올랜도 나이트클럽 총격",
+     "date": "2016-06-12",
+     "group": "v0.2",
+     "exprs": [
+      "orlando",
+      "orlando shooting"
+     ],
+     "top_day": 0,
+     "top_expr": "orlando",
+     "burst_day": 0,
+     "burst_expr": "orlando",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 144502,
+       "date": "2016-06-12",
+       "headline": "Connecticut's Senators, Who Know Something About Gun Violence, Blame Congress For Orlando Slaughter"
+      },
+      {
+       "id": 144501,
+       "date": "2016-06-12",
+       "headline": "Orlando Victims Deserve Real Action, Not Endless Debate And Speculation"
+      },
+      {
+       "id": 144499,
+       "date": "2016-06-12",
+       "headline": "We Are Here For You: Community Support After the Orlando Shooting"
+      }
+     ]
+    },
+    {
+     "event": "브렉시트 국민투표",
+     "date": "2016-06-23",
+     "group": "v0.2",
+     "exprs": [
+      "brexit"
+     ],
+     "top_day": 1,
+     "top_expr": "brexit",
+     "burst_day": 0,
+     "burst_expr": "brexit",
+     "in_top_before": false,
+     "in_burst_before": true,
+     "best_rank": 3,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 145553,
+       "date": "2016-06-24",
+       "headline": "Anti-EU Leader Ignores Jo Cox’s Murder In ‘Crass’ Brexit Victory Speech"
+      },
+      {
+       "id": 145552,
+       "date": "2016-06-24",
+       "headline": "Markets Tumble Amid Brexit Chaos"
+      },
+      {
+       "id": 145551,
+       "date": "2016-06-24",
+       "headline": "Brexit Chaos Could Shock Trump Voters Back To Common Sense"
+      }
+     ]
+    },
+    {
+     "event": "샬러츠빌 집회 폭력",
+     "date": "2017-08-12",
+     "group": "v0.2",
+     "exprs": [
+      "charlottesville"
+     ],
+     "top_day": 1,
+     "top_expr": "charlottesville",
+     "burst_day": 0,
+     "burst_expr": "charlottesville",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 181724,
+       "date": "2017-08-13",
+       "headline": "How What Happened Here In Charlottesville Was Inevitable"
+      },
+      {
+       "id": 181721,
+       "date": "2017-08-13",
+       "headline": "Heather Heyer 'Murdered While Protesting Against Hate' In Charlottesville, Friends Say"
+      },
+      {
+       "id": 181720,
+       "date": "2017-08-13",
+       "headline": "After Charlottesville, #ThisIsNotUS Hashtag Shows An America Fed-Up And Frustrated"
+      }
+     ]
+    },
+    {
+     "event": "파크랜드 고교 총격",
+     "date": "2018-02-14",
+     "group": "v0.2",
+     "exprs": [
+      "parkland",
+      "school shooting",
+      "florida school"
+     ],
+     "top_day": null,
+     "top_expr": null,
+     "burst_day": 1,
+     "burst_expr": "school shooting",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": null,
+     "first_mention_day": 1,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": []
+    },
+    {
+     "event": "WHO 팬데믹 선언",
+     "date": "2020-03-11",
+     "group": "v0.2",
+     "exprs": [
+      "coronavirus",
+      "coronavirus pandemic"
+     ],
+     "top_day": 0,
+     "top_expr": "coronavirus",
+     "burst_day": 0,
+     "burst_expr": "coronavirus",
+     "in_top_before": true,
+     "in_burst_before": true,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 204291,
+       "date": "2020-03-11",
+       "headline": "Nearly 1,000 People Diagnosed With Coronavirus In U.S."
+      },
+      {
+       "id": 204290,
+       "date": "2020-03-10",
+       "headline": "Only 6,563 Americans Have Been Tested For The Coronavirus So Far"
+      },
+      {
+       "id": 204289,
+       "date": "2020-03-10",
+       "headline": "Thanks To The Coronavirus, Now Is A Great Time To Refinance Your Debt"
+      }
+     ]
+    },
+    {
+     "event": "조지 플로이드 사망",
+     "date": "2020-05-25",
+     "group": "v0.2",
+     "exprs": [
+      "floyd",
+      "george floyd"
+     ],
+     "top_day": 6,
+     "top_expr": "george floyd",
+     "burst_day": null,
+     "burst_expr": null,
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 4,
+     "first_mention_day": 4,
+     "top_success": true,
+     "burst_success": false,
+     "evidence": [
+      {
+       "id": 204759,
+       "date": "2020-05-31",
+       "headline": "'Outraged' Lady Gaga Blasts Donald Trump As A 'Fool And A Racist' In George Floyd Post"
+      },
+      {
+       "id": 204745,
+       "date": "2020-05-29",
+       "headline": "Minneapolis Police Station Set On Fire As George Floyd Protests Rage For Third Day"
+      }
+     ]
+    },
+    {
+     "event": "러시아의 우크라이나 침공",
+     "date": "2022-02-24",
+     "group": "v0.2",
+     "exprs": [
+      "ukraine",
+      "russia ukraine"
+     ],
+     "top_day": 0,
+     "top_expr": "ukraine",
+     "burst_day": 0,
+     "burst_expr": "ukraine",
+     "in_top_before": true,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 208356,
+       "date": "2022-02-24",
+       "headline": "Cyberattacks Accompany Russian Military Assault On Ukraine"
+      },
+      {
+       "id": 208352,
+       "date": "2022-02-23",
+       "headline": "Biden, Putin Signal Bigger Confrontation Ahead Over Ukraine"
+      },
+      {
+       "id": 208346,
+       "date": "2022-02-22",
+       "headline": "U.S. Relocates Ukraine Embassy Staff To Poland Amid Russian Threat"
+      }
+     ]
+    },
+    {
+     "event": "파리 테러",
+     "date": "2015-11-13",
+     "group": "holdout",
+     "exprs": [
+      "paris",
+      "paris attacks"
+     ],
+     "top_day": 1,
+     "top_expr": "paris",
+     "burst_day": 1,
+     "burst_expr": "paris",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 1,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 126100,
+       "date": "2015-11-14",
+       "headline": "Paris Authorities Storm Concert Hall Where Hostages Were Held"
+      },
+      {
+       "id": 126098,
+       "date": "2015-11-14",
+       "headline": "Deadly Paris Attacks Come Amid Rising Religious Tension In France"
+      },
+      {
+       "id": 126097,
+       "date": "2015-11-14",
+       "headline": "Eagles Of Death Metal Safe After Attack At Paris Theater"
+      }
+     ]
+    },
+    {
+     "event": "허리케인 하비",
+     "date": "2017-08-25",
+     "group": "holdout",
+     "exprs": [
+      "harvey",
+      "hurricane harvey"
+     ],
+     "top_day": 1,
+     "top_expr": "harvey",
+     "burst_day": 0,
+     "burst_expr": "harvey",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 182859,
+       "date": "2017-08-26",
+       "headline": "Harvey Spawns Tornadoes That Devastate Homes Outside Houston"
+      },
+      {
+       "id": 182850,
+       "date": "2017-08-26",
+       "headline": "Twitter Users Blast Donald Trump For Using Hurricane Harvey 'As Political Cover'"
+      },
+      {
+       "id": 182832,
+       "date": "2017-08-26",
+       "headline": "Hurricane Harvey: Delve Inside The Eye Of The Storm"
+      }
+     ]
+    },
+    {
+     "event": "허리케인 마리아",
+     "date": "2017-09-20",
+     "group": "holdout",
+     "exprs": [
+      "maria",
+      "puerto rico"
+     ],
+     "top_day": 8,
+     "top_expr": "puerto rico",
+     "burst_day": 2,
+     "burst_expr": "puerto rico",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 4,
+     "first_mention_day": 2,
+     "top_success": false,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 185428,
+       "date": "2017-09-28",
+       "headline": "Pentagon Appoints 3-Star General To Lead Recovery Efforts In Puerto Rico"
+      },
+      {
+       "id": 185383,
+       "date": "2017-09-28",
+       "headline": "The Storm That Crushed Puerto Rico Isn't Getting As Much Attention As Harvey Or Irma"
+      },
+      {
+       "id": 185370,
+       "date": "2017-09-28",
+       "headline": "Stephen Colbert And Nick Kroll Share Their Awkward Puberty Photos For Puerto Rico"
+      }
+     ]
+    },
+    {
+     "event": "와인스타인 보도",
+     "date": "2017-10-05",
+     "group": "holdout",
+     "exprs": [
+      "weinstein",
+      "harvey weinstein"
+     ],
+     "top_day": 2,
+     "top_expr": "weinstein",
+     "burst_day": 0,
+     "burst_expr": "weinstein",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 186127,
+       "date": "2017-10-07",
+       "headline": "NYT Calls On Weinstein To Release His Accusers From Nondisclosure Agreements"
+      },
+      {
+       "id": 186104,
+       "date": "2017-10-07",
+       "headline": "One-Third Of Weinstein Company Board Resigns After Sexual Harassment Report"
+      },
+      {
+       "id": 186093,
+       "date": "2017-10-07",
+       "headline": "TV Journalist Says Harvey Weinstein Masturbated In Front Of Her"
+      }
+     ]
+    },
+    {
+     "event": "캐버노 의혹 보도",
+     "date": "2018-09-16",
+     "group": "holdout",
+     "exprs": [
+      "kavanaugh",
+      "brett kavanaugh"
+     ],
+     "top_day": 0,
+     "top_expr": "kavanaugh",
+     "burst_day": 4,
+     "burst_expr": "kavanaugh",
+     "in_top_before": true,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 201324,
+       "date": "2018-09-14",
+       "headline": "Some Republicans Stick By Brett Kavanaugh In Face Of Attempted Sexual Assault Accusation"
+      },
+      {
+       "id": 201317,
+       "date": "2018-09-13",
+       "headline": "Cory Booker Releases New Batch Of Kavanaugh Documents"
+      },
+      {
+       "id": 201026,
+       "date": "2018-07-10",
+       "headline": "With Brett Kavanaugh's Nomination, Trump Again Privileges Conservative Christians"
+      }
+     ]
+    },
+    {
+     "event": "노트르담 화재",
+     "date": "2019-04-15",
+     "group": "holdout",
+     "exprs": [
+      "notre",
+      "notre dame"
+     ],
+     "top_day": 0,
+     "top_expr": "notre dame",
+     "burst_day": 1,
+     "burst_expr": "notre dame",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 1,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 202559,
+       "date": "2019-04-15",
+       "headline": "Notre Dame Fire Ravages Iconic Paris Cathedral"
+      },
+      {
+       "id": 202558,
+       "date": "2019-04-15",
+       "headline": "Dramatic Photos Show Notre Dame Cathedral In Paris Engulfed In Flames"
+      },
+      {
+       "id": 200621,
+       "date": "2018-05-23",
+       "headline": "Idris Elba To Star As The New Hunchback Of Notre Dame For Netflix"
+      }
+     ]
+    },
+    {
+     "event": "트럼프 탄핵 조사 착수",
+     "date": "2019-09-24",
+     "group": "holdout",
+     "exprs": [
+      "impeachment",
+      "impeachment inquiry"
+     ],
+     "top_day": 2,
+     "top_expr": "impeachment",
+     "burst_day": null,
+     "burst_expr": null,
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 1,
+     "top_success": true,
+     "burst_success": false,
+     "evidence": [
+      {
+       "id": 203399,
+       "date": "2019-09-26",
+       "headline": "Here Are The Democratic Impeachment Holdouts"
+      },
+      {
+       "id": 203389,
+       "date": "2019-09-25",
+       "headline": "Colbert Audience Goes Wild: Trump Impeachment Inquiry Gets 40-Second Ovation"
+      },
+      {
+       "id": 203074,
+       "date": "2019-07-27",
+       "headline": "House Democrats Remain Divided On Impeachment After Mueller Hearing"
+      }
+     ]
+    },
+    {
+     "event": "코비 브라이언트 사망",
+     "date": "2020-01-26",
+     "group": "holdout",
+     "exprs": [
+      "kobe",
+      "kobe bryant"
+     ],
+     "top_day": 1,
+     "top_expr": "kobe",
+     "burst_day": 2,
+     "burst_expr": "kobe",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 5,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 204095,
+       "date": "2020-01-27",
+       "headline": "Grieving Fans Mourn Lakers Star At Staples Center, AKA 'The House Kobe Built'"
+      },
+      {
+       "id": 204094,
+       "date": "2020-01-26",
+       "headline": "LeBron James Reflected On Kobe Bryant's Legacy The Night Before His Death"
+      },
+      {
+       "id": 196292,
+       "date": "2018-03-05",
+       "headline": "Kobe Bryant, The Basketball Player, Just Won An Oscar"
+      }
+     ]
+    },
+    {
+     "event": "미국 의사당 난입",
+     "date": "2021-01-06",
+     "group": "holdout",
+     "exprs": [
+      "capitol",
+      "capitol riot"
+     ],
+     "top_day": 0,
+     "top_expr": "capitol",
+     "burst_day": 4,
+     "burst_expr": "capitol",
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 2,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": true,
+     "evidence": [
+      {
+       "id": 206049,
+       "date": "2021-01-06",
+       "headline": "Back In July, Trump Demanded Capitol Protesters Serve 10 Years In Prison"
+      },
+      {
+       "id": 206047,
+       "date": "2021-01-06",
+       "headline": "Republicans Condemn Violent Insurrection At The Capitol They Helped Foment"
+      },
+      {
+       "id": 204826,
+       "date": "2020-06-11",
+       "headline": "Tennessee Lawmakers Vote To Keep KKK Leader’s Bust In Capitol, Igniting Protests"
+      }
+     ]
+    },
+    {
+     "event": "로 대 웨이드 판결 폐기",
+     "date": "2022-06-24",
+     "group": "holdout",
+     "exprs": [
+      "roe",
+      "abortion rights"
+     ],
+     "top_day": 0,
+     "top_expr": "roe",
+     "burst_day": null,
+     "burst_expr": null,
+     "in_top_before": false,
+     "in_burst_before": false,
+     "best_rank": 3,
+     "first_mention_day": 0,
+     "top_success": true,
+     "burst_success": false,
+     "evidence": [
+      {
+       "id": 209010,
+       "date": "2022-06-24",
+       "headline": "Roe v. Wade: Supreme Court Overturns Landmark Ruling Protecting Abortion Rights"
+      },
+      {
+       "id": 208975,
+       "date": "2022-06-17",
+       "headline": "Without Roe V. Wade, Pregnant Women May Face Arrest For All Kinds Of Behaviors"
+      },
+      {
+       "id": 208749,
+       "date": "2022-05-05",
+       "headline": "Lawyer For Roe Calls Overturning The Law 'Giant Step Backward' For Privacy Rights"
+      }
+     ]
+    }
+   ],
+   "evidence_by_year": {
+    "2012": {
+     "median_mentions_7d": 10.095794392523365,
+     "thin_share": 0.018925233644859814,
+     "days": 214
+    },
+    "2013": {
+     "median_mentions_7d": 9.608219178082193,
+     "thin_share": 0.020821917808219178,
+     "days": 365
+    },
+    "2014": {
+     "median_mentions_7d": 7.6506849315068495,
+     "thin_share": 0.04109589041095891,
+     "days": 365
+    },
+    "2015": {
+     "median_mentions_7d": 8.921917808219177,
+     "thin_share": 0.023287671232876714,
+     "days": 365
+    },
+    "2016": {
+     "median_mentions_7d": 12.834699453551913,
+     "thin_share": 0.016256830601092898,
+     "days": 366
+    },
+    "2017": {
+     "median_mentions_7d": 12.538567493112948,
+     "thin_share": 0.0209366391184573,
+     "days": 363
+    },
+    "2018": {
+     "median_mentions_7d": 5.101369863013699,
+     "thin_share": 0.4552054794520548,
+     "days": 365
+    },
+    "2019": {
+     "median_mentions_7d": 2.0027397260273974,
+     "thin_share": 0.7398630136986302,
+     "days": 365
+    },
+    "2020": {
+     "median_mentions_7d": 1.969945355191257,
+     "thin_share": 0.7349726775956285,
+     "days": 366
+    },
+    "2021": {
+     "median_mentions_7d": 1.9767123287671233,
+     "thin_share": 0.7450684931506849,
+     "days": 365
+    },
+    "2022": {
+     "median_mentions_7d": 1.962406015037594,
+     "thin_share": 0.781578947368421,
+     "days": 266
+    }
+   },
+   "burst_novel_share": 0.46834975369458126
+  }
+ },
+ "elapsed_sec": 192.5
+}

@@ -66,27 +66,69 @@ def normalize_token(tok: str) -> str:
     return tok.strip("'-")
 
 
+def _prepare(text: str) -> tuple[str, bool]:
+    text = text.translate(_QUOTE_TRANSLATE)
+    text = _DOTTED_RE.sub(lambda m: m.group(0).replace(".", ""), text)
+    return text, text.isupper()        # all-caps headline: acronym test is meaningless
+
+
+def _keyword(raw: str, shouting: bool) -> str | None:
+    """The keyword a raw word maps to, or None if it is filtered out."""
+    if not shouting and raw in ACRONYMS:
+        return ACRONYMS[raw]
+    tok = normalize_token(raw.lower())
+    if len(tok) < MIN_LEN or tok in STOPWORDS or tok.isdigit():
+        return None
+    if any(ch.isdigit() for ch in tok):  # "2016", "5g" style tokens are noise here
+        return None
+    return tok
+
+
 def tokenize(text: str) -> list[str]:
     """Return the distinct keywords of ``text`` in first-appearance order.
 
     Rules (see README "전처리 규칙"): lower-case words of length >= 3 that are
     not stopwords and contain no digits; hyphenated words are split
     ("COVID-19" -> "covid"); possessives are dropped; whitelisted acronyms
-    (AI, UK, EU, UN, US / U.S.) are kept. Multi-word names are *not* merged
-    ("Donald Trump" -> "donald", "trump"; "New York" -> "york").
+    (AI, UK, EU, UN, US / U.S.) are kept. Multi-word names are handled
+    separately by :func:`phrases`.
     """
-    text = text.translate(_QUOTE_TRANSLATE)
-    text = _DOTTED_RE.sub(lambda m: m.group(0).replace(".", ""), text)
-    shouting = text.isupper()          # all-caps headline: acronym test is meaningless
+    text, shouting = _prepare(text)
     seen: dict[str, None] = {}
     for raw in _TOKEN_RE.findall(text):
-        if not shouting and raw in ACRONYMS:
-            seen.setdefault(ACRONYMS[raw], None)
-            continue
-        tok = normalize_token(raw.lower())
-        if len(tok) < MIN_LEN or tok in STOPWORDS or tok.isdigit():
-            continue
-        if any(ch.isdigit() for ch in tok):  # "2016", "5g" style tokens are noise here
-            continue
-        seen.setdefault(tok, None)
+        tok = _keyword(raw, shouting)
+        if tok is not None:
+            seen.setdefault(tok, None)
+    return list(seen)
+
+
+# Phrase (bigram) extraction ------------------------------------------------------
+# Headlines are Title Case, so capitalisation cannot find names. Instead every pair
+# of *adjacent* keywords inside one clause becomes a phrase candidate
+# ("Donald Trump" -> "donald trump", "Supreme Court Justice" -> "supreme court",
+# "court justice"). Frequent pairs are mostly collocations and names; rare pairs
+# are pruned by the decaying window like any other rare keyword.
+#   * pairs never cross punctuation (":", ",", "?", quotes ...) or a removed word,
+#     so "Trump: White House ..." does not produce "trump white"
+#   * "new" is a stopword but may start a phrase ("new york", "new hampshire")
+_CLAUSE_SPLIT_RE = re.compile(r"[:;,.!?\"()\[\]|/]+|\s'|'\s")
+PHRASE_STARTERS = frozenset({"new"})
+
+
+def phrases(text: str) -> list[str]:
+    """Distinct adjacent keyword pairs of ``text`` ("a b"), first-appearance order."""
+    text, shouting = _prepare(text)
+    seen: dict[str, None] = {}
+    for clause in _CLAUSE_SPLIT_RE.split(text):
+        prev: str | None = None
+        for raw in _TOKEN_RE.findall(clause):
+            tok = _keyword(raw, shouting)
+            if tok is not None and prev is not None and tok != prev:
+                seen.setdefault(f"{prev} {tok}", None)
+            if tok is not None:
+                prev = tok
+            elif raw.lower() in PHRASE_STARTERS:
+                prev = raw.lower()
+            else:
+                prev = None
     return list(seen)

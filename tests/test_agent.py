@@ -51,7 +51,7 @@ def final(text):
 
 class AgentTest(unittest.TestCase):
     def setUp(self):
-        self.engine = TrendEngine(make_articles(), EngineConfig(c=0.01, k=5, dgim_n=100, snapshot_every=20))
+        self.engine = TrendEngine(make_articles(), EngineConfig(decay_unit="article", c=0.01, k=5, dgim_n=100, snapshot_every=20))
         self.engine.step(600)
 
     def run_solar(self, responses):
@@ -146,7 +146,7 @@ class AgentTest(unittest.TestCase):
 
 class EngineTest(unittest.TestCase):
     def test_ranking_and_auto_tracking(self):
-        e = TrendEngine(make_articles(), EngineConfig(c=0.01, k=3, dgim_n=100, snapshot_every=20))
+        e = TrendEngine(make_articles(), EngineConfig(decay_unit="article", c=0.01, k=3, dgim_n=100, snapshot_every=20))
         e.step(600)
         st = e.state()
         scores = [r["score"] for r in st["ranking"]]
@@ -157,7 +157,7 @@ class EngineTest(unittest.TestCase):
         self.assertLessEqual(info["rel_error"], info["bound"])
 
     def test_current_topk_always_tracked_after_capacity_reached(self):
-        cfg = EngineConfig(c=0.02, k=3, dgim_n=100, snapshot_every=10, max_tracked=6, warmup_factor=0)
+        cfg = EngineConfig(decay_unit="article", c=0.02, k=3, dgim_n=100, snapshot_every=10, max_tracked=6, warmup_factor=0)
         e = TrendEngine(make_rotating_topics(), cfg)
         e.step(len(e.articles))
         self.assertGreater(e.evictions, 0)                       # capacity was hit
@@ -167,7 +167,7 @@ class EngineTest(unittest.TestCase):
             self.assertIn(w, e.trackers, f"{w} in Top K but not tracked")
 
     def test_pins_survive_and_are_capped(self):
-        cfg = EngineConfig(c=0.02, k=3, dgim_n=100, snapshot_every=10, max_tracked=6, warmup_factor=0)
+        cfg = EngineConfig(decay_unit="article", c=0.02, k=3, dgim_n=100, snapshot_every=10, max_tracked=6, warmup_factor=0)
         e = TrendEngine(make_rotating_topics(), cfg)
         ok, _ = e.track("alpha")
         self.assertTrue(ok)
@@ -180,7 +180,7 @@ class EngineTest(unittest.TestCase):
             self.assertIn(w, e.trackers)
 
     def test_retracking_restarts_observation(self):
-        cfg = EngineConfig(c=0.02, k=3, dgim_n=100, snapshot_every=10, max_tracked=4, warmup_factor=0)
+        cfg = EngineConfig(decay_unit="article", c=0.02, k=3, dgim_n=100, snapshot_every=10, max_tracked=4, warmup_factor=0)
         e = TrendEngine(make_rotating_topics(), cfg)
         e.step(len(e.articles))
         regen = [w for w, n in e.track_generations.items() if n > 1]
@@ -189,7 +189,7 @@ class EngineTest(unittest.TestCase):
                 self.assertGreater(e.trackers[w].generation, 1)
 
     def test_expire_all_uses_one_reference_time(self):
-        e = TrendEngine(make_articles(), EngineConfig(c=0.01, k=3, dgim_n=50, snapshot_every=20))
+        e = TrendEngine(make_articles(), EngineConfig(decay_unit="article", c=0.01, k=3, dgim_n=50, snapshot_every=20))
         e.step(600)
         e.metrics()
         for tr in e.trackers.values():
@@ -205,7 +205,7 @@ class EngineTest(unittest.TestCase):
         EngineConfig().validate()
 
     def test_event_kinds(self):
-        e = TrendEngine(make_rotating_topics(), EngineConfig(c=0.02, k=3, dgim_n=100, snapshot_every=10,
+        e = TrendEngine(make_rotating_topics(), EngineConfig(decay_unit="article", c=0.02, k=3, dgim_n=100, snapshot_every=10,
                                                             new_entry_gap=5, warmup_factor=0))
         e.step(len(e.articles))
         kinds = {ev["kind"] for ev in e.events}
@@ -213,7 +213,7 @@ class EngineTest(unittest.TestCase):
         self.assertTrue(kinds <= {"first", "reentry"})
 
     def test_reset_with_start_date_warms_up(self):
-        e = TrendEngine(make_articles(), EngineConfig(c=0.01, k=3, snapshot_every=20))
+        e = TrendEngine(make_articles(), EngineConfig(decay_unit="article", c=0.01, k=3, snapshot_every=20))
         e.reset(start_date="2020-01-10")
         self.assertEqual(e.articles[e.start_pos].date, "2020-01-10")
         self.assertGreater(len(e.pruned), 0)
@@ -221,3 +221,13 @@ class EngineTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class KeywordNoteTest(unittest.TestCase):
+    def test_unknown_phrase_is_reported(self):
+        engine = TrendEngine(make_articles(), EngineConfig(decay_unit="article", c=0.01, k=5, dgim_n=100, snapshot_every=20))
+        engine.step(600)
+        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": ""}):
+            res = agent.ask(engine, "festival rally 왜 화제야?")   # "festival rally" never appears
+        self.assertEqual(res["keyword"], "festival")
+        self.assertIn("festival rally", res["warning"])

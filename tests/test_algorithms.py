@@ -73,6 +73,30 @@ class DecayingWindowTest(unittest.TestCase):
             self.assertGreaterEqual(diff, -1e-9)
             self.assertLess(diff, bound + 1e-9)
 
+    def test_steps_match_brute_force(self):
+        # per-day decay: several documents share a day (steps=0), gaps of several days
+        rng = random.Random(7)
+        docs = random_docs(2000, vocab=120, seed=7)
+        steps = [rng.choice([0, 0, 0, 1, 1, 2, 5]) for _ in docs]
+        c, theta = 0.05, 0.3
+        exact, pruned = DecayingWindow(c), DecayingWindow(c, theta)
+        ref, ref_p = {}, {}
+        for d, k in zip(docs, steps):
+            exact.add(d, steps=k)
+            pruned.add(d, steps=k)
+            for table in (ref, ref_p):
+                for w in list(table):
+                    table[w] *= (1 - c) ** k
+                for w in d:
+                    table[w] = table.get(w, 0.0) + 1.0
+            for w in [w for w, s in ref_p.items() if s < theta]:
+                del ref_p[w]
+        for w, s in ref.items():
+            self.assertAlmostEqual(exact.score(w), s, places=6)
+        self.assertEqual(set(ref_p), {w for w, _ in pruned.items()})
+        with self.assertRaises(ValueError):
+            exact.add(["x"], steps=-1)
+
     def test_rejects_bad_threshold(self):
         with self.assertRaises(ValueError):
             DecayingWindow(0.01, 1.0)

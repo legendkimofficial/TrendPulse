@@ -17,11 +17,11 @@ import pickle
 from dataclasses import dataclass
 from pathlib import Path
 
-from .text import tokenize
+from .text import phrases, tokenize
 
 ROOT = Path(__file__).resolve().parent.parent
 RAW_PATH = ROOT / "data" / "raw" / "News_Category_Dataset_v3.json"
-CACHE_PATH = ROOT / "data" / "processed" / "stream_v2.pkl"
+CACHE_PATH = ROOT / "data" / "processed" / "stream_v3.pkl"
 
 
 @dataclass(slots=True)
@@ -33,6 +33,7 @@ class Article:
     category: str
     link: str
     tokens: tuple[str, ...]
+    phrases: tuple[str, ...] = ()   # adjacent keyword pairs, used when phrases are enabled
 
 
 def _build(raw_path: Path) -> tuple[list[Article], dict]:
@@ -72,6 +73,7 @@ def _build(raw_path: Path) -> tuple[list[Article], dict]:
             category=r.get("category", ""),
             link=link,
             tokens=tuple(tokenize(headline)),
+            phrases=tuple(phrases(headline)),
         ))
     report["kept"] = len(articles)
     report["kept_same_date_and_headline_extra"] = same_date_headline

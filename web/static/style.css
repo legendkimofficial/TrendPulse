@@ -257,3 +257,10 @@ a.cite:hover { text-decoration: underline; }
 .asof { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
 .ok { color: var(--up); font-weight: 700; }
 .msg { font-size: 12px; margin-top: 6px; color: var(--muted); }
+
+/* ---------------------------------------------------------------- v0.3 additions */
+.settings label.check { display: flex; flex-direction: row; align-items: center; gap: 6px; }
+.settings label.check small { margin-left: 4px; }
+.unc { color: var(--new); font-weight: 700; margin-left: 2px; cursor: help; }
+.burst-bar { display: inline-block; height: 6px; border-radius: 3px; background: var(--new); opacity: .55; margin-left: auto; flex: none; }
+.events .lift { font-size: 11px; color: var(--muted); white-space: nowrap; }

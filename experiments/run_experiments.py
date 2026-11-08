@@ -467,18 +467,20 @@ def e4(docs, articles, tracked, repeats):
 
     # Engine end-to-end (all counters + snapshots every 50 articles)
     from trendpulse.engine import EngineConfig, TrendEngine
-    eng = TrendEngine(articles, EngineConfig())
     start_date = "2016-01-01" if articles[-1].date > "2016-06-01" else articles[len(articles) // 2].date
-    rates = []
-    k = 0
-    for _ in range(max(2, repeats // 2)):
-        eng.reset(start_date=start_date)
-        k = min(20_000, len(articles) - eng.pos)
-        t0 = time.perf_counter()
-        eng.step(k)
-        rates.append(k / (time.perf_counter() - t0))
-    res["engine_step"] = {**med_range(rates), "unit": "articles/s", "articles": k, "snapshot_every": 50,
-                          "start_date": start_date}
+    # v0.2 setting (single words) and the v0.3 default (words + phrases, burst window)
+    for key, cfg in (("engine_step", EngineConfig(phrases=False, decay_unit="article")), ("engine_step_v03", EngineConfig())):
+        eng = TrendEngine(articles, cfg)
+        rates = []
+        k = 0
+        for _ in range(max(2, repeats // 2)):
+            eng.reset(start_date=start_date)
+            k = min(20_000, len(articles) - eng.pos)
+            t0 = time.perf_counter()
+            eng.step(k)
+            rates.append(k / (time.perf_counter() - t0))
+        res[key] = {**med_range(rates), "unit": "articles/s", "articles": k, "snapshot_every": 50,
+                    "start_date": start_date}
     # API latency (Flask test client, no network)
     from app import create_app
     app = create_app(articles, start_date=start_date)
@@ -493,7 +495,7 @@ def e4(docs, articles, tracked, repeats):
         lat_step.append((time.perf_counter() - t0) * 1000)
     res["api_state_ms"] = med_range(lat_state)
     res["api_step50_ms"] = med_range(lat_step)
-    print(f"[E4] engine {res['engine_step']['median']:,.0f}/s, /api/state {res['api_state_ms']['median']:.1f} ms, "
+    print(f"[E4] engine {res['engine_step']['median']:,.0f}/s (v0.3 default {res['engine_step_v03']['median']:,.0f}/s), /api/state {res['api_state_ms']['median']:.1f} ms, "
           f"/api/step(50) {res['api_step50_ms']['median']:.1f} ms")
     return res
 
@@ -935,8 +937,9 @@ def summary_md(res) -> str:
           f"| 추적 키워드 전체 조회 1회 (ms) | {mrf(e4r['query_all_dgim_N1000_r2'])} | {mrf(e4r['query_all_exact_window_N1000'])} |",
           "",
           f"- 엔진 전체(모든 집계 + 50건마다 스냅샷, {e4r['engine_step']['start_date']}부터 {e4r['engine_step']['articles']:,}건): "
-          f"{mr(e4r['engine_step'])} 기사/s",
-          f"- API 응답(Flask 테스트 클라이언트, 네트워크 제외, 30회): `/api/state` {mrf(e4r['api_state_ms'], ' ms')}, "
+          f"{mr(e4r['engine_step'])} 기사/s (단어만) · {mr(e4r['engine_step_v03'])} 기사/s (v0.3 기본: 단어+구, 급상승 창 포함)"
+          if "engine_step_v03" in e4r else f"{mr(e4r['engine_step'])} 기사/s",
+          f"- API 응답(v0.3 기본 설정, Flask 테스트 클라이언트, 네트워크 제외, 30회): `/api/state` {mrf(e4r['api_state_ms'], ' ms')}, "
           f"`/api/step`(50건) {mrf(e4r['api_step50_ms'], ' ms')}",
           "- 입력 갱신 측정에는 스냅샷·조회·평가 작업이 없다. 조회는 입력이 끝난 상태에서 따로 잰다. "
           "Top K 조회는 저장된 키워드 전체를 훑으므로(heapq.nlargest) 저장 키워드 수에 비례한다.\n"]

@@ -8,6 +8,7 @@
   :root {
     --ink: #14161f; --ink2: #4a5063; --muted: #7a8094; --line: #e4e6ee;
     --accent: #4f46e5; --accent-soft: #eef0ff; --warn: #c2410c; --warn-soft: #fff1e8;
+    --good: #0f8a5f; --good-soft: #e7f7ef;
     --bg: #ffffff; --panel: #f6f7fb;
   }
   * { box-sizing: border-box; }
@@ -19,6 +20,7 @@
   @media screen { .slide { margin: 24px auto; box-shadow: 0 4px 24px rgba(0,0,0,.12); } }
   .slide:last-child { break-after: auto; }
   .kicker { font-size: 14px; font-weight: 700; color: var(--accent); letter-spacing: .06em; margin-bottom: 4px; }
+  .kicker .new { background: var(--good-soft); color: var(--good); border-radius: 999px; padding: 1px 9px; margin-left: 6px; font-size: 12px; }
   h1 { font-size: 33px; margin: 0 0 18px; letter-spacing: -.02em; line-height: 1.25; }
   h2 { font-size: 20px; margin: 0 0 8px; }
   p, li { font-size: 18px; line-height: 1.55; color: var(--ink2); }
@@ -35,6 +37,7 @@
   .panel { background: var(--panel); border-radius: 14px; padding: 16px 20px; }
   .panel p, .panel li { font-size: 16px; }
   .panel.warn { background: var(--warn-soft); }
+  .panel.good { background: var(--good-soft); }
   .big { font-size: 40px; font-weight: 800; color: var(--accent); line-height: 1.1; font-variant-numeric: tabular-nums; }
   .big small { font-size: 17px; color: var(--ink2); font-weight: 600; }
   .label { font-size: 13px; color: var(--muted); font-weight: 700; margin-bottom: 4px; }
@@ -42,7 +45,6 @@
   .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
          background: var(--accent-soft); color: var(--accent); }
   .tag.gray { background: #eef0f4; color: var(--ink2); }
-  .tag.warn { background: var(--warn-soft); color: var(--warn); }
   img.fig { width: 100%; display: block; border-radius: 8px; }
   img.crop { width: 100%; display: block; border: 1px solid var(--line); border-radius: 8px; }
   .takeaway { border-left: 4px solid var(--accent); padding: 3px 0 3px 14px; margin-top: 10px; }
@@ -52,6 +54,7 @@
   th, td { padding: 6px 9px; border-bottom: 1px solid var(--line); text-align: right; }
   th { color: var(--muted); font-size: 12px; font-weight: 700; }
   th:first-child, td:first-child { text-align: left; }
+  tr.hl td { background: var(--good-soft); font-weight: 700; color: var(--ink); }
   .title { justify-content: center; background: linear-gradient(135deg, #ffffff 0%, #eef0ff 100%); }
   .title h1 { font-size: 60px; margin-bottom: 8px; }
   .title .sub { font-size: 25px; color: var(--ink2); margin: 0 0 30px; }
@@ -59,11 +62,12 @@
   .logo { width: 70px; height: 70px; margin-bottom: 20px; }
   .pulse { position: absolute; right: -40px; bottom: 70px; width: 640px; opacity: .14; }
   .flow { display: grid; grid-template-columns: 0.95fr 30px 0.95fr 30px 1.2fr 30px 1.2fr; align-items: center; }
-  .node { border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px; background: #fff; }
+  .node { border: 2px solid var(--line); border-radius: 12px; padding: 11px 14px; background: #fff; }
   .node h3 { margin: 0 0 4px; font-size: 16px; }
   .node p { margin: 0; font-size: 13.5px; line-height: 1.45; }
   .node.main { border-color: var(--accent); background: var(--accent-soft); }
-  .stack { display: grid; gap: 9px; }
+  .node.new { border-color: var(--good); }
+  .stack { display: grid; gap: 8px; }
   .arrow { text-align: center; color: var(--muted); font-size: 22px; }
   .formula { font-family: Consolas, monospace; font-size: 17px; background: #fff; border: 1px solid var(--line);
              border-radius: 8px; padding: 8px 12px; margin: 6px 0; color: var(--ink); }
@@ -76,11 +80,11 @@
 <section class="slide title">
   <svg class="logo" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#4f46e5"/><path d="M4 18h6l3-8 5 14 3-6h7" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <h1>Trend Pulse</h1>
-  <p class="sub">실시간 화제 키워드 — 프로토타입 v0.2 (리뷰 반영)</p>
+  <p class="sub">실시간 화제 키워드 — 프로토타입 v0.3</p>
   <div class="team">
     빅데이터개론 그룹 프로젝트 · Team <b>cloudnine</b><br>
     노상현 · 김현서 · 김태형 · 이현호<br>
-    2026-11 · 1차 스프린트
+    2026-11 · 스프린트 3 (두 단어 묶기 · 날짜 감쇠 · 급상승 · 순위 불확실성)
   </div>
   <svg class="pulse" viewBox="0 0 640 160"><path d="M0 90h170l40-70 60 130 40-80 30 20h300" stroke="#4f46e5" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </section>
@@ -103,7 +107,7 @@
       <div class="panel" style="background:var(--accent-soft)">
         <span class="tag">팀 논의 후 (현재)</span>
         <ul style="margin-top:8px">
-          <li><b>키워드 목록 없이</b> 제목의 모든 단어 추적</li>
+          <li><b>키워드 목록 없이</b> 제목의 단어·두 단어 구 추적</li>
           <li><b>감쇠 윈도우 중심</b> + 낮은 점수 제거</li>
           <li>DGIM은 보조: 선택한 키워드의 최근 N건 등장 수</li>
         </ul>
@@ -123,24 +127,24 @@
   <h1>HuffPost 뉴스 20만 건을 날짜순으로 재생</h1>
   <div class="center">
     <div class="flow">
-      <div class="node"><h3>스트림 재생</h3><p>News Category Dataset<br>2012-01 ~ 2022-09<br>빈 제목 6·중복 링크 41 제거<br><b>209,480건</b></p></div>
+      <div class="node"><h3>스트림 재생</h3><p>News Category Dataset<br>2012-01 ~ 2022-09<br>빈 제목·중복 링크 제거<br><b>209,480건</b></p></div>
       <div class="arrow">→</div>
-      <div class="node"><h3>토큰화</h3><p>제목 → 단어 집합(기사당 1회)<br>불용어·상투어 제거<br>약어 유지: AI, UK, EU, U.S.</p></div>
+      <div class="node"><h3>토큰화</h3><p>제목 → 단어 집합(기사당 1회)<br>불용어 제거, 약어 유지<br><b>+ 두 단어 구</b> (v0.3)</p></div>
       <div class="arrow">→</div>
       <div class="stack">
-        <div class="node main"><h3>감쇠 윈도우 + 제거</h3><p>화제 순위 · Top K 진입 (주 기능)</p></div>
-        <div class="node"><h3>정확 기준 방식</h3><p>모든 키워드 유지 (비교용)</p></div>
-        <div class="node"><h3>DGIM ↔ 정확 구간 집계</h3><p>추적 키워드의 최근 N건 등장 수</p></div>
+        <div class="node main"><h3>감쇠 윈도우 + 제거</h3><p>화제 순위 · 날짜 기준 감쇠(v0.3 기본)</p></div>
+        <div class="node new"><h3>짧은 감쇠 창 (v0.3)</h3><p>급상승 = 평소 비율보다 초과한 만큼</p></div>
+        <div class="node"><h3>정확 기준 · DGIM</h3><p>비교용 정확 계산 · 추적 키워드 최근 N건</p></div>
       </div>
       <div class="arrow">→</div>
       <div class="stack">
-        <div class="node"><h3>웹 대시보드</h3><p>화제 요약 → 근거 기사 → 비교·상세</p></div>
+        <div class="node"><h3>웹 대시보드</h3><p>순위(≈ 불확실 표시) · 급상승 · 근거 기사</p></div>
         <div class="node"><h3>Solar 에이전트</h3><p>도구로 기사 조회, 인용 id를 앱이 검증</p></div>
       </div>
     </div>
     <div class="cols three" style="margin-top:22px">
       <div class="panel"><p style="margin:0">날짜만 있고 시각이 없음 → <b>과거 데이터 재생</b>(실시간 수집 아님)</p></div>
-      <div class="panel"><p style="margin:0">2018년 이후 하루 약 5건 → 같은 1,000건이 <b>몇 달</b></p></div>
+      <div class="panel"><p style="margin:0">2018년 이후 하루 약 5건 → 기사 수 기준 창은 <b>몇 달</b>에 해당</p></div>
       <div class="panel"><p style="margin:0">집계 메모리와 <b>관련 기사 인덱스·원문</b>은 따로 보고</p></div>
     </div>
   </div>
@@ -155,11 +159,11 @@
     <div class="cols">
       <div class="panel">
         <h2>감쇠 윈도우 + 제거 <span class="tag">주 기능</span></h2>
-        <div class="formula">score(w) ← score(w)·(1−c) + 1[w ∈ 새 기사]</div>
+        <div class="formula">score(w) ← score(w)·(1−c)<sup>단계</sup> + 1[w ∈ 새 기사]</div>
         <ul>
-          <li>c = 0.001: 영향이 <b>693건마다 절반</b>(반감기). 경계 있는 창이 아니며 최근 1,000건이 가중치의 63%</li>
+          <li>단계 = 기사 1건 또는 <b>날짜 1일</b>(v0.3 기본, 반감기 7일)</li>
           <li>점수 &lt; θ(0.5) 키워드는 <b>삭제</b>, 잃는 점수 &lt; <b>θ/(1−θ)</b></li>
-          <li>전체 감쇠는 전역 계수 하나로 O(1). 기사당 비용은 토큰 수만큼의 갱신 + 힙 관리</li>
+          <li>v0.3: 키워드가 다시 들어온 뒤 경과만큼 상한이 줄어드는 <b>키워드별 상한</b></li>
         </ul>
       </div>
       <div class="panel">
@@ -167,12 +171,12 @@
         <div class="formula">최근 N개 기사 중 키워드 등장 기사 수 ≈ ?</div>
         <ul>
           <li>크기 2<sup>k</sup> 버킷, 크기별 최대 r개, 상대오차 ≤ <b>1/(2(r−1))</b></li>
-          <li>Top K 진입 시 자동 추적, <b>추적 시작 이후만</b> 계수 → 화면에 "관측 n/N건"</li>
-          <li>용량 300개: 현재 Top K·사용자 고정은 유지, 오래 비활성인 자동 추적부터 교체</li>
+          <li>Top K 진입 시 자동 추적, <b>추적 시작 이후만</b> 계수 → "관측 n/N건"</li>
+          <li>용량 300개: 현재 Top K·고정 키워드는 유지, 오래 비활성인 자동 추적부터 교체</li>
         </ul>
       </div>
     </div>
-    <div class="takeaway"><p>단위 테스트 33개: 단순 구현과의 일치, 오차 상한, 추적 용량 정책, 잘못된 설정 거부, Solar 근거 검증(mock)</p></div>
+    <div class="takeaway"><p>단위 테스트 50개: 단순 구현과의 일치, 오차 상한, <b>불확실성 표시 보장</b>, 추적 정책, 설정 검증, Solar 근거 검증(mock)</p></div>
   </div>
   <div class="foot"><span>Trend Pulse · cloudnine</span><span>4</span></div>
 </section>
@@ -180,20 +184,20 @@
 <!-- 5 -->
 <section class="slide">
   <div class="kicker">데모 · 2016-02-16 (스캘리아 대법관 사망 3일 뒤)</div>
-  <h1 style="margin-bottom:12px">신규 진입 → 순위 역전 → 기사 근거</h1>
-  <div class="cols" style="grid-template-columns:0.82fr 1.18fr;gap:20px;flex:1;min-height:0">
+  <h1 style="margin-bottom:12px">신규 진입 → 순위 불확실 → 기사 근거</h1>
+  <div class="cols" style="grid-template-columns:0.8fr 1.2fr;gap:20px;flex:1;min-height:0">
     <div>
       <p class="cap">① Top K 진입 기록 — 키워드 목록 없이 포착</p>
-      <img class="crop" src="img/crop_entries.png" alt="Top K 진입 기록">
+      <img class="crop" src="img/v03_demo_entries.png" alt="Top K 진입 기록">
     </div>
     <div style="display:grid;gap:12px;align-content:start">
       <div>
-        <p class="cap">② 메모리를 아낀 대가 — 정확 기준(빨강)과 scalia·rubio 순서가 바뀜, DGIM은 "관측 50"</p>
-        <img class="crop" src="img/crop_rankswap.png" alt="순위 역전">
+        <p class="cap">② ≈ = 근사 때문에 순서가 바뀔 수 있음 — 실제로 정확 기준(빨강)에서 gop·scalia가 뒤바뀜</p>
+        <img class="crop" src="img/v03_demo_rank.png" alt="순위 불확실 표시">
       </div>
       <div>
         <p class="cap">③ 근거 — 화제 요약과 대표 기사 (에이전트 인용 id는 조회 결과와 대조해 검증)</p>
-        <img class="crop" src="img/crop_evidence.png" alt="근거 기사">
+        <img class="crop" src="img/v03_demo_evidence.png" alt="근거 기사">
       </div>
     </div>
   </div>
@@ -202,19 +206,19 @@
 
 <!-- 6 -->
 <section class="slide">
-  <div class="kicker">실험 1 · 메모리 (θ = 0.5, 전체 209,480건)</div>
-  <h1>저장 키워드 수 92.9% 감소, 실제 객체 크기는 84.2% 감소</h1>
+  <div class="kicker">실험 1 · 메모리 (단어, 기사 수 감쇠, θ = 0.5)</div>
+  <h1>저장 키워드 수 92.9% 감소, 실제 객체 크기는 84.4% 감소</h1>
   <div class="cols wl" style="flex:1;min-height:0">
     <div><img class="fig" src="img/f2_memory_logical_vs_python.png" alt="키워드 수 vs 객체 크기"></div>
     <div style="display:grid;gap:12px;align-content:start">
       <div class="panel"><div class="label">저장 키워드 수 (논리 지표)</div><div class="big">2,854 <small>/ 40,265개</small></div>
         <div class="def">평가 구간 평균. 정확 기준은 본 단어를 모두 유지해 끝에는 54,995개</div></div>
-      <div class="panel"><div class="label">Python 집계 객체 크기 (실측)</div><div class="big">0.68 <small>/ 4.31 MB</small></div>
+      <div class="panel"><div class="label">Python 집계 객체 크기 (실측)</div><div class="big">0.66 <small>/ 4.24 MB</small></div>
         <div class="def">딕셔너리·키 문자열·float·<b>힙</b>을 재귀 측정. 기사 원문·인덱스·프로세스 전체 제외</div></div>
-      <div class="panel warn"><p style="margin:0;font-size:15px"><b>리뷰에서 발견</b>: 제거용 힙의 오래된 항목 때문에 v0.1(정리 기준 4배)에서는 θ=0.05일 때 객체가 정확 기준보다 컸다 → 1.2배로 바꿔 메모리·속도 모두 개선</p></div>
+      <div class="panel good"><p style="margin:0;font-size:15px"><b>v0.3</b>: 두 단어 구를 넣으면 정확 기준이 19.5 MB로 커져 근사(1.03 MB)의 감소율이 <b>94.7%</b>가 된다. 근사 쪽도 1.56배로 커진다</p></div>
     </div>
   </div>
-  <div class="foot"><span>c = 0.001 · 100건마다 순위, 20,000건마다 객체 크기 측정 · 처음 10,000건 제외</span><span>6</span></div>
+  <div class="foot"><span>c = 0.001 · 100건마다 순위, 20,000건마다 객체 크기 측정 · 처음 10,000건 제외 · v0.3 코드로 재실행한 값</span><span>6</span></div>
 </section>
 
 <!-- 7 -->
@@ -226,11 +230,11 @@
     <div style="display:grid;gap:10px;align-content:start">
       <table>
         <tr><th>θ = 0.5</th><th>값</th></tr>
-        <tr><td>Top 20 구성원 겹침 (평균)</td><td><b>99.90%</b></td></tr>
+        <tr><td>Top 20 구성원 겹침 (평균)</td><td><b>99.91%</b></td></tr>
         <tr><td>Top 20 구성원 겹침 (최저 시점)</td><td>95%</td></tr>
-        <tr><td>20개 순서까지 같은 시점</td><td><b>89.3%</b></td></tr>
+        <tr><td>20개 순서까지 같은 시점</td><td><b>89.0%</b></td></tr>
         <tr><td>Top 20 진입 이벤트 재현율 / 정밀도</td><td>99.8% / 99.9%</td></tr>
-        <tr><td>진입 시점이 늦은 이벤트</td><td>0.8% (최대 700건)</td></tr>
+        <tr><td>진입 시점이 늦은 이벤트</td><td>0.7% (최대 700건)</td></tr>
         <tr><td>최대 점수 오차 / 이론 상한</td><td>0.39 / 1.0</td></tr>
       </table>
       <div class="def">구성원 겹침 = 같은 시점 두 방식의 Top 20 집합이 겹치는 비율(순서 무관). 사람이 판단한 화제를 맞힌 비율이 아님 → 실험 3</div>
@@ -242,65 +246,112 @@
 
 <!-- 8 -->
 <section class="slide">
-  <div class="kicker">실험 3 · 화제 발견의 유용성</div>
-  <h1>실제 사건 16개 중 13개를 7일 안에 Top 20으로 발견</h1>
+  <div class="kicker">실험 3 · 화제 발견의 유용성 <span class="new">v0.3 확장</span></div>
+  <h1>날짜 기준 감쇠로 사건 26개 중 23개를 7일 안에 발견</h1>
   <div class="cols wl" style="flex:1;min-height:0">
-    <div><img class="fig" src="img/f7_case_studies.png" alt="사례 평가"></div>
+    <div><img class="fig" src="img/f9_case_configs.png" alt="설정별 사례 평가"></div>
     <div style="display:grid;gap:10px;align-content:start">
-      <div class="panel"><p style="margin:0;font-size:15px">사건·키워드·성공 기준(사건일~7일 안 Top 20 진입)을 <b>결과를 보기 전에</b> 정함. 진입 시점은 <b>기사 한 건 단위</b>로 비교: 13건 중 12건은 근사와 정확이 같은 기사에서 진입(우크라이나만 2건 늦음)</p></div>
-      <div class="panel warn"><h2 style="font-size:16px">실패 3건의 원인</h2>
-        <ul>
-          <li><b>malaysia</b>: 데이터에 MH370 보도가 거의 없음(2주간 1건)</li>
-          <li><b>parkland</b>: 기사가 "florida·shooting"으로 부름 → 두 단어는 다음 날 진입 (표현 문제)</li>
-          <li><b>floyd</b>: 2020년 하루 6건 → 1,000건이 약 6개월 (기사 수 기준 감쇠의 한계)</li>
-        </ul></div>
-      <div class="def">표현·근거 적절성은 팀원이 casestudies.md 양식에 직접 평가할 예정</div>
+      <table>
+        <tr><th>사건일~7일 Top 20 진입</th><th>v0.2 사건 16</th><th>사전 등록 10</th></tr>
+        <tr><td>단어 · 기사 수 감쇠 (v0.2)</td><td>13</td><td>3</td></tr>
+        <tr><td>단어+구 · 기사 수 감쇠</td><td>13</td><td>3</td></tr>
+        <tr class="hl"><td>단어+구 · 날짜 감쇠 7일</td><td>14</td><td>9</td></tr>
+      </table>
+      <div class="panel"><p style="margin:0;font-size:15px"><b>사전 등록</b> 10개는 이번 실행 전에 사건·표현·기준을 정했다(공정한 비교). v0.2 사건에 붙인 추가 표현(parkland → school shooting 등)은 결과를 본 뒤라 사후 분석이다</p></div>
+      <div class="panel warn"><p style="margin:0;font-size:15px">2018년 이후 사건 6개(노트르담, 탄핵 조사, 코비, 의사당, 로 대 웨이드 등): 기사 수 감쇠는 하루 5건뿐이라 반응하지 못하고, 날짜 감쇠는 0~2일 안에 잡았다</p></div>
     </div>
   </div>
-  <div class="foot"><span>c = 0.001, θ = 0.5, K = 20 · 관찰 기간 사건일 −7일 ~ +14일</span><span>8</span></div>
+  <div class="foot"><span>θ = 0.5, K = 20 · 관찰 기간 사건일 −7일 ~ +14일 · 표현 목록 중 하나라도 진입하면 진입 · experiments/results/v03/summary.md</span><span>8</span></div>
 </section>
 
 <!-- 9 -->
 <section class="slide">
-  <div class="kicker">실험 4 · DGIM (보조 기능)</div>
-  <h1>DGIM의 이득은 "무엇으로 재느냐"에 따라 달라진다</h1>
-  <img class="fig" src="img/f6_dgim_error_memory.png" alt="DGIM 오차와 논리 저장량" style="width:82%;margin:0 auto">
-  <div class="cols" style="margin-top:8px">
-    <div class="takeaway" style="margin-top:0"><p style="font-size:15px"><b>논리 저장량</b>(압축 가정)으로는 N=500에서 DGIM이 103%로 손해, N=5,000에서 39%로 이득. <b>Python 실측</b>으로는 모든 구성에서 DGIM이 더 작음(34~85%) — 정확 쪽 deque의 고정 비용 때문. 두 수치를 섞지 않는다</p></div>
-    <div class="takeaway" style="margin-top:0"><p style="font-size:15px">오차는 모두 이론 상한 안. 중앙값 추정의 평균 오차 7.9% vs 교과서식 26.7%는 <b>등장 1~4회</b>에서 생긴 차이(6.4% vs 32.2%). 10회 이상은 11.0% vs 11.1%, Top 10 겹침도 같음</p></div>
+  <div class="kicker">실험 3 · 날짜 감쇠의 대가 <span class="new">v0.3</span></div>
+  <h1>희소 구간에서는 어느 쪽이든 근거가 얇다</h1>
+  <div class="cols wl" style="flex:1;min-height:0">
+    <div>
+      <img class="fig" src="img/f10_day_vs_article.png" alt="날짜 감쇠 vs 기사 수 감쇠">
+      <div class="takeaway"><p style="font-size:15px">기사 수 감쇠는 몇 달 전 기사가 순위를 지탱하고, 날짜 감쇠는 최근 기사를 반영하지만 하루 5건이라 1~2건짜리 키워드도 오른다. 2019년 이후 Top 20의 <b>73~78%</b>(기사 수 감쇠는 81~88%)가 최근 7일 기사 ≤ 2건</p></div>
+    </div>
+    <div style="display:grid;gap:10px;align-content:start">
+      <p class="cap">2019-04-16 노트르담 화재 다음 날 (날짜 감쇠)</p>
+      <img class="crop" src="img/v03_sparse_rank.png" alt="2019 희소 구간 순위">
+      <div class="def">notre dame·fire·cathedral이 1·2·4위(1~8위만 표시). 같은 화면의 19·20위에는 hole, hurt 같은 1~2건짜리 단어가 올라오고, 최근에 들어온 키워드가 많아 ≈도 많이 붙는다</div>
+    </div>
   </div>
-  <div class="foot"><span>Top 20에 든 적 있는 키워드 656개 추적 · 500건마다 평가</span><span>9</span></div>
+  <div class="foot"><span>하루 끝마다 Top 20 키워드 각각의 최근 7일 기사 수를 셈 · 단어+구</span><span>9</span></div>
 </section>
 
 <!-- 10 -->
 <section class="slide">
-  <div class="kicker">처리 성능 · 민감도</div>
+  <div class="kicker">급상승 · 순위 불확실성 <span class="new">v0.3</span></div>
+  <h1>급상승은 더 빨리, ≈ 표시는 필요한 곳에만</h1>
+  <div class="cols" style="flex:1;min-height:0;grid-template-columns:1fr 1fr">
+    <div style="display:grid;gap:10px;align-content:start">
+      <h2>급상승 = 짧은 점수 − 긴 점수로 예상한 값</h2>
+      <img class="crop" src="img/v03_sparse_burst.png" alt="급상승 패널" style="width:78%">
+      <p class="def" style="margin:0">화면: 2019-04-16 노트르담 화재 다음 날의 급상승 패널</p>
+      <ul>
+        <li>사건 26개 중 <b>24개</b>를 7일 안에 급상승 Top 10에 올림 (Top 20은 16개)</li>
+        <li><b>17개</b> 사건에서 Top 20보다 먼저, parkland는 급상승에서만 +1일</li>
+        <li>급상승 목록의 <b>48%</b>는 그 시점 Top 20에 없는 키워드</li>
+      </ul>
+    </div>
+    <div style="display:grid;gap:10px;align-content:start">
+      <h2>≈ 표시의 보장</h2>
+      <img class="fig" src="img/f12_uncertainty.png" alt="불확실성 표시">
+      <ul>
+        <li>정확 점수 ∈ [s, s + e): 아래 키워드가 <b>s<sub>i+1</sub> + e<sub>i+1</sub> &gt; s<sub>i</sub></b>일 때만 ≈</li>
+        <li>인접 쌍 37,905개 중 <b>놓친 역전 0건</b>, 표시는 66.6% → 2.4%</li>
+        <li>대가: 키워드별 진입 시점 기억 → 객체 크기 +29.6%</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>급상승: 단어+구 · 기사 수 감쇠 기준 (날짜 감쇠 기본에서는 22/26) · 불확실성: 단어 · 기사 수 감쇠, 원점수 기준</span><span>10</span></div>
+</section>
+
+<!-- 11 -->
+<section class="slide">
+  <div class="kicker">실험 4 · DGIM (보조 기능)</div>
+  <h1>DGIM의 이득은 "무엇으로 재느냐"에 따라 달라진다</h1>
+  <img class="fig" src="img/f6_dgim_error_memory.png" alt="DGIM 오차와 논리 저장량" style="width:80%;margin:0 auto">
+  <div class="cols" style="margin-top:8px">
+    <div class="takeaway" style="margin-top:0"><p style="font-size:15px"><b>논리 저장량</b>(압축 가정)으로는 N=500에서 DGIM이 103%로 손해, N=5,000에서 39%로 이득. <b>Python 실측</b>으로는 모든 구성에서 DGIM이 더 작음(34~85%) — 정확 쪽 deque의 고정 비용 때문. 두 수치를 섞지 않는다</p></div>
+    <div class="takeaway" style="margin-top:0"><p style="font-size:15px">오차는 모두 이론 상한 안. 중앙값 추정의 평균 오차 7.9% vs 교과서식 26.7%는 <b>등장 1~4회</b>에서 생긴 차이(6.4% vs 32.2%). 10회 이상은 11.0% vs 11.1%, Top 10 겹침도 같음</p></div>
+  </div>
+  <div class="foot"><span>Top 20에 든 적 있는 키워드 656개 추적 · 500건마다 평가</span><span>11</span></div>
+</section>
+
+<!-- 12 -->
+<section class="slide">
+  <div class="kicker">처리 성능 · 에이전트</div>
   <h1>근사는 입력이 느리고 조회가 빠르다</h1>
   <div class="center">
     <div class="cols">
       <div>
         <table>
           <tr><th>같은 작업 범위, 5회 중앙값</th><th>정확 기준</th><th>근사 θ=0.5</th></tr>
-          <tr><td>입력 갱신만</td><td>561k 건/s</td><td><b>143k 건/s</b></td></tr>
-          <tr><td>Top 20 조회 1회</td><td>9.07 ms</td><td><b>0.38 ms</b></td></tr>
+          <tr><td>입력 갱신만 (단어)</td><td>684k 건/s</td><td><b>194k 건/s</b></td></tr>
+          <tr><td>Top 20 조회 1회</td><td>11.35 ms</td><td><b>0.51 ms</b></td></tr>
           <tr><td>조회 대상 키워드</td><td>54,995개</td><td>3,511개</td></tr>
         </table>
         <table style="margin-top:14px">
-          <tr><th>N = 1,000, r = 2</th><th>정확 구간</th><th>DGIM</th></tr>
-          <tr><td>입력 갱신만</td><td>882k 건/s</td><td>412k 건/s</td></tr>
+          <tr><th>엔진 전체 (모든 집계 + 스냅샷)</th><th>기사/s</th></tr>
+          <tr><td>단어만, 기사 수 감쇠 (v0.2 설정)</td><td>31k</td></tr>
+          <tr><td>v0.3 기본 (구·급상승 창·키워드별 상한)</td><td>20k</td></tr>
         </table>
-        <p class="def">엔진 전체 42k 건/s · API 응답 /api/state 6.4 ms. v0.1의 "속도 비교"는 작업 범위가 달라 철회하고 다시 쟀다</p>
+        <p class="def">v0.3 기본은 약 35% 느리지만 대시보드 재생(틱당 최대 1,000건)에는 충분 · /api/state 18.5 ms</p>
       </div>
       <div style="display:grid;gap:12px;align-content:start">
-        <div class="panel"><h2 style="font-size:16px">왜 입력이 느린가</h2><p style="margin:0">근사는 갱신마다 제거용 힙에 넣고 빼는 작업이 추가된다. 대신 저장 키워드가 적어 순위 조회가 24배 빠르다</p></div>
-        <div class="panel"><h2 style="font-size:16px">하루 안 기사 순서의 영향</h2><p style="margin:0">같은 날짜 안 순서를 3번 섞어도 하루 끝 Top 20 겹침 99.3%, 첫 진입일 동일 약 91% (차이 p95 = 1일)</p></div>
+        <div class="panel"><h2 style="font-size:16px">에이전트 평가 도구 (질문 33개)</h2><p style="margin:0">오프라인 기준선: 근거 검증 33/33, 인용 89/89 유효. 사건 직후 아직 기사에 없는 구(<code>george floyd</code>)를 물으면 <b>어떤 단어로 답했는지 경고</b>하도록 고침</p></div>
+        <div class="panel warn"><h2 style="font-size:16px">아직 못 한 것</h2><p style="margin:0">Solar 실제 호출은 키가 없어 미실행. 키를 넣고 <code>eval_agent.py</code>를 돌리면 같은 표가 채워진다</p></div>
       </div>
     </div>
   </div>
-  <div class="foot"><span>Python 3.14 · Windows 11 · 6코어 · 실행마다 ±10~30% 변동</span><span>10</span></div>
+  <div class="foot"><span>Python 3.14 · Windows 11 · 6코어 · 실행마다 ±10~30% 변동</span><span>12</span></div>
 </section>
 
-<!-- 11 -->
+<!-- 13 -->
 <section class="slide">
   <div class="kicker">정리</div>
   <h1>확인한 것, 한계, 다음 스프린트</h1>
@@ -309,34 +360,34 @@
       <div class="panel">
         <h2>확인한 것</h2>
         <ul>
-          <li>키워드 목록 없이 사건 13/16 발견</li>
-          <li>키워드 수 −92.9%, 객체 크기 −84.2%</li>
-          <li>Top 20 구성원 99.9% 일치, 대가는 <b>비슷한 점수끼리 순서 역전</b></li>
-          <li>DGIM 이득은 측정 기준·창 크기에 따라 다름</li>
+          <li>키워드 수 −92.9%, 객체 −84.4%, Top 20 구성원 99.9% 일치</li>
+          <li>대가는 <b>비슷한 점수끼리 순서 역전</b> → ≈로 표시(놓침 0)</li>
+          <li><b>날짜 감쇠</b>로 사전 등록 사건 9/10 (기사 수 감쇠 3/10)</li>
+          <li>급상승이 사건을 더 빨리 포착</li>
         </ul>
       </div>
       <div class="panel">
         <h2>한계</h2>
         <ul>
           <li>HuffPost 안의 화제일 뿐, 사회 전체 관심도가 아님</li>
-          <li>단어 단위 (parkland → florida·shooting)</li>
-          <li>희소 구간에서 기사 수 기준 감쇠가 느림</li>
-          <li>Solar는 mock 검증만, 실제 키로 미확인</li>
+          <li>2019년 이후 근거가 얇은 키워드가 많음</li>
+          <li>두 단어까지만 묶음</li>
+          <li>Solar 실제 호출·팀원 채점 미완</li>
         </ul>
       </div>
       <div class="panel" style="background:var(--accent-soft)">
         <h2>다음 스프린트</h2>
         <ul>
-          <li>Solar 실제 연동 + 답변 품질 평가</li>
-          <li>바이그램·개체명 묶기 (전후 비교)</li>
-          <li>날짜 기준 감쇠와 비교</li>
-          <li>급상승 탐지, 순위 불확실성 표시</li>
+          <li>Solar 실제 평가 + 팀원 채점</li>
+          <li>근거 기사 수 표시·최소 근거 필터</li>
+          <li>날짜 모드 급상승 창 조정</li>
+          <li>세 단어 구, 무작위 날짜 표본 평가</li>
         </ul>
       </div>
     </div>
-    <div class="takeaway" style="margin-top:20px"><p>코드·실험(summary.md, casestudies.md)·문서는 GitHub 저장소에 올릴 예정입니다. 피드백 부탁드립니다!</p></div>
+    <div class="takeaway" style="margin-top:20px"><p>코드·실험·문서: github.com/legendkimofficial/TrendPulse · 기본값을 날짜 감쇠로 바꾼 것에 대한 의견 부탁드립니다!</p></div>
   </div>
-  <div class="foot"><span>Trend Pulse · cloudnine</span><span>11</span></div>
+  <div class="foot"><span>Trend Pulse · cloudnine</span><span>13</span></div>
 </section>
 
 </body>

@@ -32,6 +32,7 @@ from datetime import date as _date
 from .data import Article, first_index_on_or_after
 from .decaying import DecayingWindow
 from .dgim import DGIM
+from .ranking import ABSORB_RATIO, absorb, burst_scores, outside_candidates, uncertainty
 from .sliding import ExactWindowCount
 
 
@@ -45,13 +46,22 @@ class EngineConfig:
     snapshot_every: int = 50     # articles between ranking snapshots
     new_entry_gap: int = 40      # snapshots outside Top K before a return counts as "재진입"
     max_tracked: int = 300       # DGIM tracking capacity (auto + user)
-    warmup_factor: float = 10.0  # warm-up of warmup_factor / c articles before start
+    warmup_factor: float = 10.0  # warm-up of warmup_factor / c decay steps before start
+    # v0.3 ---------------------------------------------------------------------
+    phrases: bool = True         # also count adjacent keyword pairs ("donald trump")
+    absorb_ratio: float = ABSORB_RATIO   # hide a word if a phrase with it has >= ratio x its score
+    decay_unit: str = "day"      # "day": per calendar day (v0.3 default, see E11) | "article": per article (c)
+    half_life_days: float = 7.0  # used when decay_unit == "day"
+    burst_ratio: float = 7.0     # long half-life / short half-life for burst detection
+    burst_min: float = 3.0       # minimum short-window score for a burst candidate
 
     # (min, max) inclusive ranges; checked before the engine state is touched
     _RANGES = {
         "c": (1e-5, 0.5), "threshold": (0.01, 0.99), "k": (1, 100),
         "dgim_n": (10, 100_000), "dgim_r": (2, 64), "snapshot_every": (1, 10_000),
         "new_entry_gap": (1, 10_000), "max_tracked": (1, 5_000), "warmup_factor": (0.0, 50.0),
+        "absorb_ratio": (0.5, 1.0), "half_life_days": (0.5, 365.0), "burst_ratio": (2.0, 50.0),
+        "burst_min": (1.0, 50.0),
     }
 
     def validate(self) -> "EngineConfig":
@@ -63,7 +73,27 @@ class EngineConfig:
                 raise ValueError(f"{name} must be in [{lo}, {hi}] (got {v})")
         if self.max_tracked < self.k:
             raise ValueError(f"max_tracked ({self.max_tracked}) must be >= k ({self.k})")
+        if self.decay_unit not in ("article", "day"):
+            raise ValueError("decay_unit must be 'article' or 'day'")
+        if not isinstance(self.phrases, bool):
+            raise ValueError("phrases must be true or false")
         return self
+
+    @property
+    def decay_c(self) -> float:
+        """Decay constant per step (article or day)."""
+        if self.decay_unit == "day":
+            return 1.0 - 0.5 ** (1.0 / self.half_life_days)
+        return self.c
+
+    @property
+    def half_life_steps(self) -> float:
+        return math.log(0.5) / math.log(1.0 - self.decay_c)
+
+    @property
+    def short_c(self) -> float:
+        """Burst detector: same unit, half-life divided by burst_ratio."""
+        return 1.0 - 0.5 ** (1.0 / (self.half_life_steps / self.burst_ratio))
 
 
 @dataclass
@@ -79,6 +109,8 @@ class Tracker:
 class TrendEngine:
     def __init__(self, articles: list[Article], config: EngineConfig | None = None):
         self.articles = articles
+        # calendar day number of every article (for per-day decay)
+        self._day = [_date.fromisoformat(a.date).toordinal() for a in articles]
         self.reset(config or EngineConfig())
 
     # ------------------------------------------------------------------ setup
@@ -86,8 +118,11 @@ class TrendEngine:
         if config is not None:
             self.config = config.validate()
         cfg = self.config
-        self.pruned = DecayingWindow(cfg.c, cfg.threshold)
-        self.baseline = DecayingWindow(cfg.c, None)
+        dc = cfg.decay_c
+        self.pruned = DecayingWindow(dc, cfg.threshold, track_error=True)
+        self.baseline = DecayingWindow(dc, None)
+        self.short = DecayingWindow(cfg.short_c, cfg.threshold)     # burst detector
+        self._last_day: int | None = None
         self.postings: dict[str, list[int]] = {}
         self.trackers: dict[str, Tracker] = {}
         self.track_generations: Counter = Counter()
@@ -108,7 +143,13 @@ class TrendEngine:
 
         start = first_index_on_or_after(self.articles, start_date) if start_date else 0
         start = min(start, len(self.articles) - 1)
-        warm = max(0, start - int(cfg.warmup_factor / cfg.c))
+        if cfg.decay_unit == "day":
+            first_day = self._day[start] - int(cfg.warmup_factor / dc)
+            warm = start
+            while warm > 0 and self._day[warm - 1] >= first_day:
+                warm -= 1
+        else:
+            warm = max(0, start - int(cfg.warmup_factor / dc))
         self.pos = warm
         while self.pos < start:
             self._ingest(self.articles[self.pos], warmup=True)
@@ -119,10 +160,18 @@ class TrendEngine:
 
     # ------------------------------------------------------------------ stream
     def _ingest(self, art: Article, warmup: bool = False) -> None:
-        toks = art.tokens
-        self.pruned.add(toks)
-        self.baseline.add(toks)
+        cfg = self.config
+        toks = art.tokens + art.phrases if cfg.phrases else art.tokens
         t = art.idx
+        if cfg.decay_unit == "day":
+            day = self._day[t]
+            steps = 0 if self._last_day is None else day - self._last_day
+            self._last_day = day
+        else:
+            steps = 1
+        self.pruned.add(toks, steps)
+        self.baseline.add(toks, steps)
+        self.short.add(toks, steps)
         postings = self.postings
         for w in toks:
             lst = postings.get(w)
@@ -159,10 +208,16 @@ class TrendEngine:
         return self.pos >= len(self.articles)
 
     # ------------------------------------------------------------------ snapshots
+    def _ranked(self, window: DecayingWindow, k: int) -> list[tuple[str, float]]:
+        """Displayed ranking: Top k after phrase absorption (if phrases are on)."""
+        if not self.config.phrases:
+            return window.top_k(k)
+        return absorb(window.top_k(3 * k), k, self.config.absorb_ratio)
+
     def _take_snapshot(self, emit_events: bool) -> None:
         cfg = self.config
         self._snap += 1
-        top = self.pruned.top_k(2 * cfg.k)
+        top = self._ranked(self.pruned, 2 * cfg.k)
         t = self.now
         for rank, (w, s) in enumerate(top, 1):
             h = self.history.get(w)
@@ -194,7 +249,7 @@ class TrendEngine:
 
     def _roll_display(self) -> None:
         self._prev_display = self._display
-        self._display = {w: r for r, (w, _) in enumerate(self.pruned.top_k(self.config.k), 1)}
+        self._display = {w: r for r, (w, _) in enumerate(self._ranked(self.pruned, self.config.k), 1)}
 
     # ------------------------------------------------------------------ DGIM tracking
     def track(self, w: str, pinned: bool = True) -> tuple[bool, str]:
@@ -265,11 +320,15 @@ class TrendEngine:
     # ------------------------------------------------------------------ queries
     def ranking(self) -> list[dict]:
         cfg = self.config
-        top = self.pruned.top_k(cfg.k)
-        base_top = self.baseline.top_k(cfg.k)
+        top = self._ranked(self.pruned, cfg.k)
+        errs = [self.pruned.key_error(w) for w, _ in top]
+        # Raw candidates (absorbed words included) -> conservative for the last row.
+        outside, complete = outside_candidates(self.pruned, top)
+        flags = uncertainty(top, errs, outside, self.pruned.error_bound(), complete)
+        base_top = self._ranked(self.baseline, cfg.k)
         base_rank = {w: r for r, (w, _) in enumerate(base_top, 1)}
         rows = []
-        for rank, (w, s) in enumerate(top, 1):
+        for (rank, (w, s)), fl, err in zip(enumerate(top, 1), flags, errs):
             prev = self._prev_display.get(w)
             dg = self.dgim_info(w)
             rows.append({
@@ -280,14 +339,25 @@ class TrendEngine:
                 "dgim": {"estimate": dg["estimate"], "exact": dg["exact"],
                          "observed": dg["observed"], "partial": dg["partial"]} if dg else None,
                 "spark": [p[1] for p in list(self.history.get(w, ()))[-30:]],
+                "may_swap_above": fl["swap_above"], "may_swap_below": fl["swap_below"],
+                "error_bound": round(err, 3),
             })
         return rows
+
+    def burst(self, k: int = 10) -> list[dict]:
+        """Keywords mentioned more than their long-term rate predicts (see ranking.burst_scores)."""
+        rows = burst_scores(self.short, self.pruned, self.config.burst_min, 3 * k)
+        if self.config.phrases:
+            kept = absorb([(r["keyword"], r["excess"]) for r in rows], k, self.config.absorb_ratio)
+            keep = {w for w, _ in kept}
+            rows = [r for r in rows if r["keyword"] in keep]
+        return rows[:k]
 
     def metrics(self) -> dict:
         cfg = self.config
         k = cfg.k
-        top = [w for w, _ in self.pruned.top_k(k)]
-        base = [w for w, _ in self.baseline.top_k(k)]
+        top = [w for w, _ in self._ranked(self.pruned, k)]
+        base = [w for w, _ in self._ranked(self.baseline, k)]
         overlap = len(set(top) & set(base))
         max_err = max((self.baseline.score(w) - self.pruned.score(w) for w in set(top) | set(base)),
                       default=0.0)
@@ -306,6 +376,7 @@ class TrendEngine:
             "max_score_error_topk": round(max_err, 4),
             "score_error_bound": round(self.pruned.error_bound(), 4),
             "dropped_total": self.pruned.dropped_total,
+            "short_window_keywords": len(self.short),
             "dgim_tracked": len(self.trackers), "dgim_capacity": cfg.max_tracked,
             "dgim_pinned": self._pinned_count(), "dgim_evictions": self.evictions,
             "dgim_bits": dgim_bits, "exact_window_bits": exact_bits,
@@ -316,8 +387,10 @@ class TrendEngine:
 
     def clock(self) -> dict:
         t = max(self.now, 0)
-        c = self.config.c
+        cfg = self.config
+        c = cfg.decay_c
         return {
+            "decay_unit": cfg.decay_unit, "unit_label": "일" if cfg.decay_unit == "day" else "건",
             "t": self.now, "date": self.articles[t].date,
             "start_date": self.articles[self.start_pos].date,
             "end_date": self.articles[-1].date,
@@ -326,12 +399,23 @@ class TrendEngine:
             "progress": round(self.pos / len(self.articles), 4),
             "finished": self.finished,
             "effective_window": round(1 / c),
-            "half_life": round(math.log(0.5) / math.log(1 - c)),
+            "half_life": round(cfg.half_life_steps, 1) if cfg.decay_unit == "day" else round(cfg.half_life_steps),
             # share of the total weight carried by the latest 1/c articles (long stream)
             "recent_weight_share": round(1 - (1 - c) ** round(1 / c), 3),
             # calendar days covered by the last 1/c articles (density varies by year)
-            "window_span_days": self._span_days(round(1 / c)),
+            "window_span_days": (self._span_days(round(1 / c)) if cfg.decay_unit == "article"
+                                 else round(1 / c)),
+            "articles_in_window": (self._articles_in_last_days(round(1 / c)) if cfg.decay_unit == "day"
+                                   else round(1 / c)),
         }
+
+    def _articles_in_last_days(self, days: int) -> int:
+        t = max(self.now, 0)
+        lo = self._day[t] - days + 1
+        i = t
+        while i >= 0 and self._day[i] >= lo:
+            i -= 1
+        return t - i
 
     def _span_days(self, n: int) -> int:
         t = max(self.now, 0)
@@ -342,7 +426,7 @@ class TrendEngine:
         return {
             "clock": self.clock(), "config": asdict(self.config),
             "ranking": self.ranking(), "events": list(self.events)[:25],
-            "metrics": self.metrics(),
+            "burst": self.burst(10), "metrics": self.metrics(),
         }
 
     # ------------------------------------------------------------------ article lookups
@@ -385,13 +469,33 @@ class TrendEngine:
         lst = self.postings.get(w.lower(), [])
         return bisect_right(lst, hi) - bisect_right(lst, lo)
 
+    def _recent_windows(self) -> tuple[int, int, str, str]:
+        """Article-index bounds of "recent" and "previous" windows in the active decay
+        unit (1/c articles, or 1/c days), for mentions_between(lo, hi]."""
+        cfg = self.config
+        now = self.now
+        span = round(1 / cfg.decay_c)
+        if cfg.decay_unit == "day":
+            today = self._day[max(now, 0)]
+            lo1 = bisect_left(self._day, today - span + 1) - 1
+            lo2 = bisect_left(self._day, today - 2 * span + 1) - 1
+            return lo1, lo2, f"최근 {span}일", f"그 이전 {span}일"
+        return now - span, now - 2 * span, f"최근 {span:,}건", f"그 이전 {span:,}건"
+
     def keyword_detail(self, w: str) -> dict:
         w = w.lower()
         score = self.pruned.score(w)
-        # Full rank among all kept keywords (not just Top K); None if pruned away.
-        rank = (1 + sum(1 for _, s in self.pruned.items() if s > score)) if w in self.pruned else None
-        win = round(1 / self.config.c)
+        # Rank in the *displayed* ranking (after phrase absorption) when it is within
+        # the first 200; otherwise among all kept keywords. None if pruned away.
+        shown = [x for x, _ in self._ranked(self.pruned, 200)]
+        if w in shown:
+            rank = shown.index(w) + 1
+        elif w in self.pruned:
+            rank = 1 + sum(1 for _, s in self.pruned.items() if s > score)
+        else:
+            rank = None
         now = self.now
+        lo1, lo2, label, prev_label = self._recent_windows()
         first_seen = self.postings.get(w, [None])[0]
         return {
             "keyword": w, "rank": rank, "in_top_k": rank is not None and rank <= self.config.k,
@@ -399,8 +503,9 @@ class TrendEngine:
             "baseline_score": round(self.baseline.score(w), 3),
             "in_pruned": w in self.pruned,
             "total_mentions_so_far": len(self.postings.get(w, [])),
-            "mentions_in_effective_window": self.mentions_between(w, now - win, now),
-            "mentions_in_previous_window": self.mentions_between(w, now - 2 * win, now - win),
+            "mentions_in_effective_window": self.mentions_between(w, lo1, now),
+            "mentions_in_previous_window": self.mentions_between(w, lo2, lo1),
+            "window_label": label, "previous_window_label": prev_label,
             "first_seen": ({"t": first_seen, "date": self.articles[first_seen].date}
                            if first_seen is not None else None),
             "first_entry": self.first_entry.get(w),

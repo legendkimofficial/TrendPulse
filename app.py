@@ -20,7 +20,9 @@ DEFAULT_START = "2016-01-01"
 DEMO = {"start_date": "2016-01-01", "warm_steps": 4000, "last_step": 100,
         "keyword": "scalia", "question": "scalia가 왜 순위에 올랐어?"}
 
-_FLOAT_FIELDS = {"c", "threshold", "warmup_factor"}
+_FLOAT_FIELDS = {"c", "threshold", "warmup_factor", "absorb_ratio", "half_life_days", "burst_ratio", "burst_min"}
+_BOOL_FIELDS = {"phrases"}
+_STR_FIELDS = {"decay_unit"}
 
 
 def parse_config(body: dict, current: EngineConfig) -> EngineConfig:
@@ -30,7 +32,18 @@ def parse_config(body: dict, current: EngineConfig) -> EngineConfig:
     for key, val in body.items():
         if key not in names or val is None or val == "":
             continue
-        if key in _FLOAT_FIELDS:
+        if key in _BOOL_FIELDS:
+            if isinstance(val, bool):
+                cfg[key] = val
+            elif str(val).lower() in ("true", "1", "on"):
+                cfg[key] = True
+            elif str(val).lower() in ("false", "0", "off"):
+                cfg[key] = False
+            else:
+                raise ValueError(f"{key} must be true or false")
+        elif key in _STR_FIELDS:
+            cfg[key] = str(val)
+        elif key in _FLOAT_FIELDS:
             cfg[key] = float(val)
         else:
             num = float(val)

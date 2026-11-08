@@ -1,0 +1,908 @@
+{
+ "solar_enabled": false,
+ "model": "solar-pro2",
+ "run_at": "2026-11-08 22:27",
+ "rows": [
+  {
+   "id": "event-sandy",
+   "kind": "event",
+   "date": "2012-10-31",
+   "question": "hurricane sandy가 왜 화제야?",
+   "expected": [
+    "sandy",
+    "hurricane sandy"
+   ],
+   "label": "허리케인 샌디 상륙",
+   "as_of": {
+    "t": 25762,
+    "date": "2012-10-31"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "hurricane sandy",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**hurricane sandy** — 2012-10-31 기준 현재 5위 (Top 20 안), 감쇠 점수 20.438 (정확 기준 20.438).\n\n- 최근 11일 동안 25건의 제목에 등장 (그 이전 11일: 0건)\n- Top 20 첫 진입: 2012-10-28 (15위)\n- 함께 많이 등장한 단어: hurricane, sandy, storm, power, u.s., path\n- 주요 카테고리: ENVIRONMENT(9), COMEDY(5), WELLNESS(4)\n- 최근 관련 기사:\n  - [#25715] 2012-10-31 · Airlines & Hurricane Sandy: What Do Airlines Owe Passengers Displaced By 'Acts Of God'?\n  - [#25695] 2012-10-31 · Hurricane Sandy: How To Help Friends Without Electricity\n  - [#25685] 2012-10-31 · Hurricane Sandy: The Power Of Compassion\n  - [#25678] 2012-10-31 · Tracy Morgan Says Hurricane Sandy Is Mitt Romney's Fault On 'Kimmel' VIDEO)\n- DGIM: 최근 1,000건 중 약 12.5건 (정확 14건, 추적 후 304/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-newtown",
+   "kind": "event",
+   "date": "2012-12-16",
+   "question": "sandy hook가 왜 화제야?",
+   "expected": [
+    "newtown",
+    "sandy hook"
+   ],
+   "label": "샌디훅 초등학교 총격",
+   "as_of": {
+    "t": 29995,
+    "date": "2012-12-16"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 2,
+   "valid_citations": 2,
+   "resolved_keyword": "sandy hook",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**sandy hook** — 2012-12-16 기준 현재 566위 (Top 20 밖), 감쇠 점수 1.726 (정확 기준 1.726).\n\n- 최근 11일 동안 2건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: sandy, hook, school, shooting, parents, react\n- 주요 카테고리: PARENTING(1), BUSINESS(1)\n- 최근 관련 기사:\n  - [#29875] 2012-12-15 · The Herald Newspaper Features Huge Gun Ad Next To Story Of Sandy Hook School Shooting (PHOTO)\n  - [#29796] 2012-12-14 · Parents React To The Sandy Hook Elementary School Shooting\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-boston",
+   "kind": "event",
+   "date": "2013-04-17",
+   "question": "boston marathon가 왜 화제야?",
+   "expected": [
+    "boston",
+    "boston marathon"
+   ],
+   "label": "보스턴 마라톤 폭탄 테러",
+   "as_of": {
+    "t": 41529,
+    "date": "2013-04-17"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "boston marathon",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**boston marathon** — 2013-04-17 기준 현재 10위 (Top 20 안), 감쇠 점수 14.783 (정확 기준 14.783).\n\n- 최근 11일 동안 16건의 제목에 등장 (그 이전 11일: 0건)\n- Top 20 첫 진입: 2013-04-16 (17위)\n- 함께 많이 등장한 단어: boston, marathon, explosions, bombing, tragedy, injury\n- 주요 카테고리: WELLNESS(7), PARENTING(7), WEDDINGS(2)\n- 최근 관련 기사:\n  - [#41498] 2013-04-17 · Boston Marathon Marriage Proposal: Two Men Pop The Question After Attacks (VIDEO)\n  - [#41444] 2013-04-17 · A Meditation on the Boston Marathon Bombing\n  - [#41442] 2013-04-17 · What Can You and I Learn From the Boston Marathon?\n  - [#41439] 2013-04-17 · The Boston Marathon Tragedy: How to Cope\n- DGIM: 최근 1,000건 중 약 3.5건 (정확 4건, 추적 후 114/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-zimmerman",
+   "kind": "event",
+   "date": "2013-07-15",
+   "question": "george zimmerman가 왜 화제야?",
+   "expected": [
+    "zimmerman",
+    "george zimmerman"
+   ],
+   "label": "짐머먼 무죄 평결",
+   "as_of": {
+    "t": 49965,
+    "date": "2013-07-15"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "george zimmerman",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**george zimmerman** — 2013-07-15 기준 현재 40위 (Top 20 밖), 감쇠 점수 7.246 (정확 기준 7.472).\n\n- 최근 11일 동안 8건의 제목에 등장 (그 이전 11일: 1건)\n- 함께 많이 등장한 단어: george, zimmerman, trayvon, martin, verdict, guilty\n- 주요 카테고리: BLACK VOICES(9)\n- 최근 관련 기사:\n  - [#49825] 2013-07-14 · George Zimmerman Considers Law School After Trayvon Martin Murder Acquittal, Close Friends Say\n  - [#49824] 2013-07-14 · George Zimmerman Verdict In: Jury Done Deliberating In George Zimmerman Trial\n  - [#49821] 2013-07-14 · George Zimmerman Acquittal: How Are You Coping With The Outcome?\n  - [#49814] 2013-07-14 · George Zimmerman Trial Reactions Roll In\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-malaysia",
+   "kind": "event",
+   "date": "2014-03-10",
+   "question": "malaysia airlines가 왜 화제야?",
+   "expected": [
+    "malaysia",
+    "malaysia airlines"
+   ],
+   "label": "말레이시아항공 MH370 실종",
+   "as_of": {
+    "t": 72365,
+    "date": "2014-03-10"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": "질문의 'malaysia airlines'는 2014-03-10까지 기사 제목에 없어 'malaysia' 기준으로 답했습니다.",
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 1,
+   "valid_citations": 1,
+   "resolved_keyword": "malaysia",
+   "keyword_note": "질문의 'malaysia airlines'는 2014-03-10까지 기사 제목에 없어 'malaysia' 기준으로 답했습니다.",
+   "keyword_ok": true,
+   "answer": "**malaysia** — 2014-03-10 기준 점수가 θ 아래로 내려가 집계에서 삭제된 상태, 감쇠 점수 0.0 (정확 기준 0.003).\n\n- 최근 11일 동안 0건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: island, relaxed, side\n- 주요 카테고리: TRAVEL(1)\n- 최근 관련 기사:\n  - [#66818] 2014-01-10 · Island Life Reveals Relaxed Side of Malaysia\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-ferguson",
+   "kind": "event",
+   "date": "2014-08-11",
+   "question": "michael brown가 왜 화제야?",
+   "expected": [
+    "ferguson",
+    "michael brown"
+   ],
+   "label": "퍼거슨 사건",
+   "as_of": {
+    "t": 85869,
+    "date": "2014-08-11"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": "질문의 'michael brown'는 2014-08-11까지 기사 제목에 없어 'brown' 기준으로 답했습니다.",
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "brown",
+   "keyword_note": "질문의 'michael brown'는 2014-08-11까지 기사 제목에 없어 'brown' 기준으로 답했습니다.",
+   "keyword_ok": false,
+   "answer": "**brown** — 2014-08-11 기준 현재 596위 (Top 20 밖), 감쇠 점수 1.519 (정확 기준 1.532).\n\n- 최근 11일 동안 1건의 제목에 등장 (그 이전 11일: 3건)\n- 함께 많이 등장한 단어: board, scott, jerry, republican, perfect, eyed\n- 주요 카테고리: POLITICS(11), EDUCATION(5), ENTERTAINMENT(2)\n- 최근 관련 기사:\n  - [#85180] 2014-08-04 · The Perfect Pop Of Color For Brown-Eyed Girls\n  - [#84840] 2014-07-31 · The Whitewashing Of James Brown\n  - [#84748] 2014-07-30 · John Bolton Endorses Scott Brown For Senate\n  - [#84273] 2014-07-25 · Reading the Pictures: On the Brilliant Michelle Obama Brown vs Board of Education Site Visit Photo\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-ebola",
+   "kind": "event",
+   "date": "2014-10-02",
+   "question": "ebola가 왜 화제야?",
+   "expected": [
+    "ebola"
+   ],
+   "label": "미국 첫 에볼라 확진",
+   "as_of": {
+    "t": 90410,
+    "date": "2014-10-02"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "ebola",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**ebola** — 2014-10-02 기준 현재 5위 (Top 20 안), 감쇠 점수 14.598 (정확 기준 14.598).\n\n- 최근 11일 동안 14건의 제목에 등장 (그 이전 11일: 9건)\n- Top 20 첫 진입: 2014-09-07 (17위)\n- 함께 많이 등장한 단어: u.s., doctor, patient, epidemic, outbreak, missionary\n- 주요 카테고리: HEALTHY LIVING(23), WORLDPOST(10), IMPACT(8)\n- 최근 관련 기사:\n  - [#90368] 2014-10-02 · How Authorities Are Bracing For The Next Ebola\n  - [#90353] 2014-10-02 · Can You Catch It From a Caliph?  Ebola, ISIS, and the Politics of Contagion\n  - [#90334] 2014-10-02 · Why We Won't Have An Ebola Cure Or Vaccine For Years\n  - [#90294] 2014-10-01 · Expert: U.S. Ebola Case May Be Wake-Up Call Americans Need\n- DGIM: 최근 1,000건 중 약 11.5건 (정확 14건)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-charleston",
+   "kind": "event",
+   "date": "2015-06-19",
+   "question": "charleston shooting가 왜 화제야?",
+   "expected": [
+    "charleston",
+    "charleston shooting"
+   ],
+   "label": "찰스턴 교회 총격",
+   "as_of": {
+    "t": 112979,
+    "date": "2015-06-19"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "charleston shooting",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**charleston shooting** — 2015-06-19 기준 현재 133위 (Top 20 밖), 감쇠 점수 3.717 (정확 기준 3.717).\n\n- 최근 11일 동안 4건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: charleston, shooting, thursday, morning, email, leaves\n- 주요 카테고리: POLITICS(2), GOOD NEWS(1), SPORTS(1)\n- 최근 관련 기사:\n  - [#112902] 2015-06-19 · Son Who Lost His Mother In Charleston Shooting Has A Message Of Love\n  - [#112854] 2015-06-18 · White Supremacists Have Thoughts About Charleston Shooting\n  - [#112838] 2015-06-18 · Charleston Shooting Vigil Ends With Moving Civil Rights Anthem 'We Shall Overcome'\n  - [#112820] 2015-06-18 · Thursday's Morning Email: Charleston Shooting Leaves Nine Dead, Reportedly A Hate Crime\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-scalia",
+   "kind": "event",
+   "date": "2016-02-15",
+   "question": "antonin scalia가 왜 화제야?",
+   "expected": [
+    "scalia",
+    "antonin scalia"
+   ],
+   "label": "스캘리아 대법관 사망",
+   "as_of": {
+    "t": 134309,
+    "date": "2016-02-15"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "antonin scalia",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**antonin scalia** — 2016-02-15 기준 현재 39위 (Top 20 밖), 감쇠 점수 9.716 (정확 기준 9.716).\n\n- 최근 11일 동안 11건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: antonin, scalia, court, supreme, justice, death\n- 주요 카테고리: POLITICS(12)\n- 최근 관련 기사:\n  - [#134281] 2016-02-15 · The One Big Issue Antonin Scalia Consistently Got Right\n  - [#134214] 2016-02-14 · Replacing Antonin Scalia Could Mean The Biggest Supreme Court Shakeup In 25 Years\n  - [#134206] 2016-02-14 · Supreme Court Justices Unanimous In Admiration For Antonin Scalia\n  - [#134187] 2016-02-14 · Antonin Scalia Was The Supreme Court's Longest-Serving Justice. Here's Where It All Began.\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-orlando",
+   "kind": "event",
+   "date": "2016-06-14",
+   "question": "orlando shooting가 왜 화제야?",
+   "expected": [
+    "orlando",
+    "orlando shooting"
+   ],
+   "label": "올랜도 나이트클럽 총격",
+   "as_of": {
+    "t": 144720,
+    "date": "2016-06-14"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "orlando shooting",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**orlando shooting** — 2016-06-14 기준 현재 8위 (Top 20 안), 감쇠 점수 22.894 (정확 기준 22.894).\n\n- 최근 11일 동안 25건의 제목에 등장 (그 이전 11일: 0건)\n- Top 20 첫 진입: 2016-06-13 (15위)\n- 함께 많이 등장한 단어: orlando, shooting, obama, victims, gun, direct\n- 주요 카테고리: POLITICS(10), QUEER VOICES(2), CRIME(2)\n- 최근 관련 기사:\n  - [#144705] 2016-06-14 · Donald Trump Distorted Lots Of Facts When Speaking About The Orlando Shooting\n  - [#144702] 2016-06-14 · HUFFPOLLSTER: Many Americans Supported Stricter Gun Laws Even Before The Orlando Shooting\n  - [#144700] 2016-06-14 · Here's What Queer Muslims Are Saying About The Orlando Shooting\n  - [#144668] 2016-06-14 · Veteran Reportedly Helped Guide Dozens To Safety During Orlando Shooting\n- DGIM: 최근 1,000건 중 약 9.5건 (정확 11건, 추적 후 135/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-brexit",
+   "kind": "event",
+   "date": "2016-06-25",
+   "question": "brexit가 왜 화제야?",
+   "expected": [
+    "brexit"
+   ],
+   "label": "브렉시트 국민투표",
+   "as_of": {
+    "t": 145725,
+    "date": "2016-06-25"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "brexit",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**brexit** — 2016-06-25 기준 현재 4위 (Top 20 안), 감쇠 점수 40.231 (정확 기준 40.363).\n\n- 최근 11일 동안 45건의 제목에 등장 (그 이전 11일: 0건)\n- Top 20 첫 진입: 2016-06-24 (12위)\n- 함께 많이 등장한 단어: vote, trump, eu, referendum, donald, chaos\n- 주요 카테고리: THE WORLDPOST(20), POLITICS(13), BUSINESS(9)\n- 최근 관련 기사:\n  - [#145709] 2016-06-25 · Brexit Crisis Tops Off Rough Stretch In Obama's Push For Legacy\n  - [#145706] 2016-06-25 · After Brexit, French Politicians Want English Language Out Of EU Too\n  - [#145701] 2016-06-25 · Britain's EU Commissioner Says He Is Resigning Following Brexit Vote\n  - [#145699] 2016-06-25 · Brexit Could Encourage British Companies To Pollute And Waste More\n- DGIM: 최근 1,000건 중 약 23.5건 (정확 27건, 추적 후 166/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-charlottesville",
+   "kind": "event",
+   "date": "2017-08-14",
+   "question": "charlottesville가 왜 화제야?",
+   "expected": [
+    "charlottesville"
+   ],
+   "label": "샬러츠빌 집회 폭력",
+   "as_of": {
+    "t": 181885,
+    "date": "2017-08-14"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "charlottesville",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**charlottesville** — 2017-08-14 기준 현재 2위 (Top 20 안), 감쇠 점수 52.12 (정확 기준 52.12).\n\n- 최근 11일 동안 56건의 제목에 등장 (그 이전 11일: 0건)\n- Top 20 첫 진입: 2017-08-13 (8위)\n- 함께 많이 등장한 단어: trump, white, violence, supremacists, supremacist, rally\n- 주요 카테고리: POLITICS(38), CRIME(4), BLACK VOICES(4)\n- 최근 관련 기사:\n  - [#181884] 2017-08-14 · Merkel Condemns 'Repulsive' Far-Right Violence In Charlottesville\n  - [#181880] 2017-08-14 · Charlottesville: We are Human Beings First\n  - [#181873] 2017-08-14 · How To Help Charlottesville Right Now\n  - [#181872] 2017-08-14 · Today Is Not A Normal Monday For Us In Charlottesville\n- DGIM: 최근 1,000건 중 약 30.5건 (정확 38건, 추적 후 145/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-parkland",
+   "kind": "event",
+   "date": "2018-02-16",
+   "question": "florida school가 왜 화제야?",
+   "expected": [
+    "parkland",
+    "school shooting",
+    "florida school"
+   ],
+   "label": "파크랜드 고교 총격",
+   "as_of": {
+    "t": 195338,
+    "date": "2018-02-16"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "florida school",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**florida school** — 2018-02-16 기준 현재 92위 (Top 20 밖), 감쇠 점수 5.529 (정확 기준 5.529).\n\n- 최근 11일 동안 6건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: florida, school, shooting, sick, thoughts, prayers\n- 주요 카테고리: POLITICS(4), MEDIA(1), CRIME(1)\n- 최근 관련 기사:\n  - [#195316] 2018-02-16 · At Vigil For Florida School Shooting Victims, Students Chant 'No More Guns!'\n  - [#195258] 2018-02-15 · Laura Ingraham Hosts Segment On 'Safe' AR-15 Hours After Florida School Shooting\n  - [#195251] 2018-02-15 · Obama Calls For 'Common-Sense' Gun Laws After Florida School Shooting\n  - [#195243] 2018-02-15 · Donald Trump Puts Focus On Mental Health In First Remarks After Florida School Shooting\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-coronavirus",
+   "kind": "event",
+   "date": "2020-03-13",
+   "question": "coronavirus pandemic가 왜 화제야?",
+   "expected": [
+    "coronavirus",
+    "coronavirus pandemic"
+   ],
+   "label": "WHO 팬데믹 선언",
+   "as_of": {
+    "t": 204302,
+    "date": "2020-03-13"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": "질문의 'coronavirus pandemic'는 2020-03-13까지 기사 제목에 없어 'coronavirus' 기준으로 답했습니다.",
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "coronavirus",
+   "keyword_note": "질문의 'coronavirus pandemic'는 2020-03-13까지 기사 제목에 없어 'coronavirus' 기준으로 답했습니다.",
+   "keyword_ok": true,
+   "answer": "**coronavirus** — 2020-03-13 기준 현재 1위 (Top 20 안), 감쇠 점수 20.544 (정확 기준 20.544).\n\n- 최근 11일 동안 24건의 제목에 등장 (그 이전 11일: 13건)\n- 함께 많이 등장한 단어: china, u.s., cases, death, positive, cruise\n- 주요 카테고리: WORLD NEWS(30), U.S. NEWS(28), MONEY(2)\n- 최근 관련 기사:\n  - [#204302] 2020-03-13 · Coronavirus Forces Mosques To Reassess Weekly Prayers And Ramadan Plans\n  - [#204301] 2020-03-13 · U.S. Masters Golf Tournament Postponed Due To Coronavirus Outbreak\n  - [#204298] 2020-03-12 · Drive-Thru Coronavirus Test Centers Are Coming, But First They Need Test Kits\n  - [#204296] 2020-03-12 · Cruise Lines Are Paying Customers Not To Cancel Despite Coronavirus Risk\n- DGIM: 최근 1,000건 중 약 35.5건 (정확 43건, 추적 후 136/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-floyd",
+   "kind": "event",
+   "date": "2020-05-27",
+   "question": "george floyd가 왜 화제야?",
+   "expected": [
+    "floyd",
+    "george floyd"
+   ],
+   "label": "조지 플로이드 사망",
+   "as_of": {
+    "t": 204738,
+    "date": "2020-05-27"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": "질문의 'george floyd'는 2020-05-27까지 기사 제목에 없어 'george' 기준으로 답했습니다.",
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 1,
+   "valid_citations": 1,
+   "resolved_keyword": "george",
+   "keyword_note": "질문의 'george floyd'는 2020-05-27까지 기사 제목에 없어 'george' 기준으로 답했습니다.",
+   "keyword_ok": false,
+   "answer": "**george** — 2020-05-27 기준 점수가 θ 아래로 내려가 집계에서 삭제된 상태, 감쇠 점수 0.0 (정확 기준 0.093).\n\n- 최근 11일 동안 0건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: trump, bashes, bush, unity, covid, crisis\n- 주요 카테고리: POLITICS(1)\n- 최근 관련 기사:\n  - [#204600] 2020-05-03 · Trump Bashes George W. Bush's Call For Unity During COVID-19 Crisis\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-ukraine",
+   "kind": "event",
+   "date": "2022-02-26",
+   "question": "russia ukraine가 왜 화제야?",
+   "expected": [
+    "ukraine",
+    "russia ukraine"
+   ],
+   "label": "러시아의 우크라이나 침공",
+   "as_of": {
+    "t": 208371,
+    "date": "2022-02-26"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": "질문의 'russia ukraine'는 2022-02-26까지 기사 제목에 없어 'ukraine' 기준으로 답했습니다.",
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "ukraine",
+   "keyword_note": "질문의 'russia ukraine'는 2022-02-26까지 기사 제목에 없어 'ukraine' 기준으로 답했습니다.",
+   "keyword_ok": true,
+   "answer": "**ukraine** — 2022-02-26 기준 현재 1위 (Top 20 안), 감쇠 점수 9.412 (정확 기준 9.589).\n\n- 최근 11일 동안 12건의 제목에 등장 (그 이전 11일: 2건)\n- Top 20 첫 진입: 2022-02-23 (1위)\n- 함께 많이 등장한 단어: russia, russian, military, putin, troop, buildup\n- 주요 카테고리: WORLD NEWS(8), POLITICS(5), BUSINESS(2)\n- 최근 관련 기사:\n  - [#208366] 2022-02-25 · Republicans At CPAC Would Rather Talk About The Southern Border Than Ukraine\n  - [#208364] 2022-02-25 · UN To Scale Up Humanitarian Operations In Ukraine Following Russia's Invasion\n  - [#208363] 2022-02-25 · Europe Braces For Refugees As Russia Attacks Ukraine's Capital\n  - [#208360] 2022-02-24 · Ukraine Attack Leaves Baltics Wondering: Are We Next?\n- DGIM: 최근 1,000건 중 약 5.5건 (정확 7건, 추적 후 17/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-paris",
+   "kind": "event",
+   "date": "2015-11-15",
+   "question": "paris attacks가 왜 화제야?",
+   "expected": [
+    "paris",
+    "paris attacks"
+   ],
+   "label": "파리 테러",
+   "as_of": {
+    "t": 126246,
+    "date": "2015-11-15"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "paris attacks",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**paris attacks** — 2015-11-15 기준 현재 3위 (Top 20 안), 감쇠 점수 28.832 (정확 기준 28.832).\n\n- 최근 11일 동안 31건의 제목에 등장 (그 이전 11일: 0건)\n- Top 20 첫 진입: 2015-11-14 (7위)\n- 함께 많이 등장한 단어: paris, attacks, deadly, soccer, france, germany\n- 주요 카테고리: THE WORLDPOST(12), POLITICS(6), ENTERTAINMENT(4)\n- 최근 관련 기사:\n  - [#126238] 2015-11-15 · Bono Calls Paris Attacks 'First Direct Hit On Music'\n  - [#126209] 2015-11-15 · Suspected Getaway Car In Paris Attacks Found Abandoned In Suburb\n  - [#126207] 2015-11-15 · Notre Dame Memorial Service Honors Victims Of Paris Attacks\n  - [#126198] 2015-11-15 · Marco Rubio: We Can't Take In Syrian Refugees After Paris Attacks\n- DGIM: 최근 1,000건 중 약 7.5건 (정확 9건, 추적 후 97/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-harvey",
+   "kind": "event",
+   "date": "2017-08-27",
+   "question": "hurricane harvey가 왜 화제야?",
+   "expected": [
+    "harvey",
+    "hurricane harvey"
+   ],
+   "label": "허리케인 하비",
+   "as_of": {
+    "t": 182927,
+    "date": "2017-08-27"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "hurricane harvey",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**hurricane harvey** — 2017-08-27 기준 현재 19위 (Top 20 안), 감쇠 점수 11.733 (정확 기준 11.733).\n\n- 최근 11일 동안 13건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: hurricane, harvey, texas, trump, texans, threatening\n- 주요 카테고리: POLITICS(6), GREEN(4), WEIRD NEWS(1)\n- 최근 관련 기사:\n  - [#182913] 2017-08-27 · Hurricane Harvey Continues To Drench Texas, And Small Businesses Are Stepping Up To Help Small Businesses\n  - [#182907] 2017-08-27 · As A Sandy Survivor, Here's My Advice For Texans Hit By Hurricane Harvey\n  - [#182899] 2017-08-27 · Hurricane Harvey Should Be A Wake-Up Call To Trump's Disaster Relief Budget\n  - [#182895] 2017-08-27 · As Hurricane Harvey's Aftermath Slams Texas, Trump Tweets A Storm Of Self-Congratulations And Grievances\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-maria",
+   "kind": "event",
+   "date": "2017-09-22",
+   "question": "puerto rico가 왜 화제야?",
+   "expected": [
+    "maria",
+    "puerto rico"
+   ],
+   "label": "허리케인 마리아",
+   "as_of": {
+    "t": 184988,
+    "date": "2017-09-22"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "puerto rico",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**puerto rico** — 2017-09-22 기준 현재 298위 (Top 20 밖), 감쇠 점수 3.0 (정확 기준 3.0).\n\n- 최근 11일 동안 3건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: puerto, rico, zika, problem, cdc, reports\n- 주요 카테고리: HEALTHY LIVING(2), POLITICS(1), GREEN(1)\n- 최근 관련 기사:\n  - [#184957] 2017-09-22 · At Least 25 Dead After Hurricane Maria Hits Puerto Rico And Caribbean\n  - [#184918] 2017-09-22 · J.Lo, Ricky Martin And More Boricua Stars Post Emotional Pleas For Puerto Rico\n  - [#184909] 2017-09-22 · Tens Of Thousands In Puerto Rico Told To Evacuate Immediately As Dam Cracks\n  - [#176484] 2017-06-10 · Statehood For Puerto Rico? Lessons From The Last Time The U.S. Added A Star To Its Flag\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-weinstein",
+   "kind": "event",
+   "date": "2017-10-07",
+   "question": "harvey weinstein가 왜 화제야?",
+   "expected": [
+    "weinstein",
+    "harvey weinstein"
+   ],
+   "label": "와인스타인 보도",
+   "as_of": {
+    "t": 186139,
+    "date": "2017-10-07"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "harvey weinstein",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**harvey weinstein** — 2017-10-07 기준 현재 28위 (Top 20 밖), 감쇠 점수 10.536 (정확 기준 10.536).\n\n- 최근 11일 동안 12건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: harvey, weinstein, sixties, excuse, expresses, regret\n- 주요 카테고리: WOMEN(4), POLITICS(4), MEDIA(2)\n- 최근 관련 기사:\n  - [#186093] 2017-10-07 · TV Journalist Says Harvey Weinstein Masturbated In Front Of Her\n  - [#186040] 2017-10-06 · Friday's Morning Email: Inside The Sexual Harassment Allegations Against Movie Mogul Harvey Weinstein\n  - [#186037] 2017-10-06 · Harvey Weinstein And The Danger Of Performative 'Wokeness'\n  - [#186021] 2017-10-06 · Harvey Weinstein And The End Of Open Secrets\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-kavanaugh",
+   "kind": "event",
+   "date": "2018-09-18",
+   "question": "brett kavanaugh가 왜 화제야?",
+   "expected": [
+    "kavanaugh",
+    "brett kavanaugh"
+   ],
+   "label": "캐버노 의혹 보도",
+   "as_of": {
+    "t": 201348,
+    "date": "2018-09-18"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 3,
+   "valid_citations": 3,
+   "resolved_keyword": "brett kavanaugh",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**brett kavanaugh** — 2018-09-18 기준 현재 23위 (Top 20 밖), 감쇠 점수 1.493 (정확 기준 1.494).\n\n- 최근 11일 동안 2건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: brett, kavanaugh, nomination, trump, privileges, conservative\n- 주요 카테고리: POLITICS(2), RELIGION(1)\n- 최근 관련 기사:\n  - [#201333] 2018-09-16 · Brett Kavanaugh Accuser Goes Public: 'I Thought He Might Inadvertently Kill Me'\n  - [#201324] 2018-09-14 · Some Republicans Stick By Brett Kavanaugh In Face Of Attempted Sexual Assault Accusation\n  - [#201026] 2018-07-10 · With Brett Kavanaugh's Nomination, Trump Again Privileges Conservative Christians\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-notre",
+   "kind": "event",
+   "date": "2019-04-17",
+   "question": "notre dame가 왜 화제야?",
+   "expected": [
+    "notre",
+    "notre dame"
+   ],
+   "label": "노트르담 화재",
+   "as_of": {
+    "t": 202569,
+    "date": "2019-04-17"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "notre dame",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**notre dame** — 2019-04-17 기준 현재 1위 (Top 20 안), 감쇠 점수 8.169 (정확 기준 8.169).\n\n- 최근 11일 동안 9건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: notre, dame, fire, cathedral, paris, pledge\n- 주요 카테고리: WORLD NEWS(9)\n- 최근 관련 기사:\n  - [#202566] 2019-04-17 · France's Billionaires And Others Pledge $700 Million To Restore Notre Dame\n  - [#202565] 2019-04-17 · Macron Sets Five-Year Deadline To Restore Notre Dame\n  - [#202564] 2019-04-16 · Pope Francis Responds To Fire At Notre Dame Cathedral\n  - [#202563] 2019-04-16 · Book Sales For ‘The Hunchback Of Notre Dame’ Soar In France After Cathedral Fire\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-impeachment",
+   "kind": "event",
+   "date": "2019-09-26",
+   "question": "impeachment inquiry가 왜 화제야?",
+   "expected": [
+    "impeachment",
+    "impeachment inquiry"
+   ],
+   "label": "트럼프 탄핵 조사 착수",
+   "as_of": {
+    "t": 203400,
+    "date": "2019-09-26"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 1,
+   "valid_citations": 1,
+   "resolved_keyword": "impeachment inquiry",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**impeachment inquiry** — 2019-09-26 기준 현재 86위 (Top 20 밖), 감쇠 점수 0.906 (정확 기준 0.906).\n\n- 최근 11일 동안 1건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: colbert, audience, wild, trump, impeachment, inquiry\n- 주요 카테고리: COMEDY(1)\n- 최근 관련 기사:\n  - [#203389] 2019-09-25 · Colbert Audience Goes Wild: Trump Impeachment Inquiry Gets 40-Second Ovation\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-kobe",
+   "kind": "event",
+   "date": "2020-01-28",
+   "question": "kobe bryant가 왜 화제야?",
+   "expected": [
+    "kobe",
+    "kobe bryant"
+   ],
+   "label": "코비 브라이언트 사망",
+   "as_of": {
+    "t": 204104,
+    "date": "2020-01-28"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "kobe bryant",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**kobe bryant** — 2020-01-28 기준 현재 5위 (Top 20 안), 감쇠 점수 3.726 (정확 기준 3.726).\n\n- 최근 11일 동안 4건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: kobe, bryant, helicopter, lebron, james, reflected\n- 주요 카테고리: U.S. NEWS(2), SPORTS(1), ENTERTAINMENT(1)\n- 최근 관련 기사:\n  - [#204102] 2020-01-28 · All 9 Bodies Recovered From Kobe Bryant Helicopter Wreckage, Officials Say\n  - [#204100] 2020-01-28 · Helicopter Pilot In Kobe Bryant Crash Tried To Climb To Avoid Fog\n  - [#204098] 2020-01-27 · Nick Kyrgios Wears Kobe Bryant's Jersey Before Australian Open Match\n  - [#204094] 2020-01-26 · LeBron James Reflected On Kobe Bryant's Legacy The Night Before His Death\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-capitol",
+   "kind": "event",
+   "date": "2021-01-08",
+   "question": "capitol riot가 왜 화제야?",
+   "expected": [
+    "capitol",
+    "capitol riot"
+   ],
+   "label": "미국 의사당 난입",
+   "as_of": {
+    "t": 206062,
+    "date": "2021-01-08"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 1,
+   "valid_citations": 1,
+   "resolved_keyword": "capitol riot",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**capitol riot** — 2021-01-08 기준 현재 65위 (Top 20 밖), 감쇠 점수 1.0 (정확 기준 1.0).\n\n- 최근 11일 동안 1건의 제목에 등장 (그 이전 11일: 0건)\n- 함께 많이 등장한 단어: capitol, riot, crystalizes, american, decline\n- 주요 카테고리: POLITICS(1)\n- 최근 관련 기사:\n  - [#206057] 2021-01-08 · The Capitol Riot Crystalizes 4 Years Of American Decline\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "event-roe",
+   "kind": "event",
+   "date": "2022-06-26",
+   "question": "abortion rights가 왜 화제야?",
+   "expected": [
+    "roe",
+    "abortion rights"
+   ],
+   "label": "로 대 웨이드 판결 폐기",
+   "as_of": {
+    "t": 209019,
+    "date": "2022-06-26"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 2,
+   "repairs": 0,
+   "citations": 4,
+   "valid_citations": 4,
+   "resolved_keyword": "abortion rights",
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**abortion rights** — 2022-06-26 기준 현재 9위 (Top 20 안), 감쇠 점수 1.726 (정확 기준 1.762).\n\n- 최근 11일 동안 2건의 제목에 등장 (그 이전 11일: 0건)\n- Top 20 첫 진입: 2022-06-25 (9위)\n- 함께 많이 등장한 단어: abortion, rights, roe, attack, supreme, court\n- 주요 카테고리: POLITICS(5), ENTERTAINMENT(1)\n- 최근 관련 기사:\n  - [#209011] 2022-06-25 · Truck Driver Rams Into Abortion Rights Demonstrators At Roe Rally In Iowa\n  - [#209010] 2022-06-24 · Roe v. Wade: Supreme Court Overturns Landmark Ruling Protecting Abortion Rights\n  - [#208830] 2022-05-20 · Samantha Bee Bleeped Big Time As She Torches Attack On Abortion Rights\n  - [#208739] 2022-05-04 · State Legislatures To Be ‘Main Battleground’ For Abortion Rights If Roe Is Overturned\n- DGIM: 최근 1,000건 중 약 0.0건 (정확 0건, 추적 후 4/1,000건만 관측)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다. 순위는 HuffPost 데이터 안에서 관찰한 화제입니다."
+  },
+  {
+   "id": "overview-2013-04-17",
+   "kind": "overview",
+   "date": "2013-04-17",
+   "question": "요즘 뭐가 화제야?",
+   "expected": [],
+   "label": "개요 질문",
+   "as_of": {
+    "t": 41529,
+    "date": "2013-04-17"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.02,
+   "tool_calls": 1,
+   "repairs": 0,
+   "citations": 0,
+   "valid_citations": 0,
+   "resolved_keyword": null,
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**2013-04-17 기준 화제 키워드 Top 10**\n1. wedding, 2. boston, 3. divorce, 4. home, 5. spring, 6. stress, 7. study, 8. love, 9. baby, 10. boston marathon\n\n최근 Top K 진입: house(2013-04-17, 재진입), boston marathon(2013-04-16, 첫 진입), boston(2013-04-16, 첫 진입), awards(2013-04-15, 첫 진입), movie(2013-04-15, 첫 진입)\n\n특정 키워드를 물어보면 관련 기사를 근거로 설명합니다 (예: \"wedding 왜 순위에 올랐어?\"). 키워드는 영어로 입력하세요."
+  },
+  {
+   "id": "overview-2016-11-10",
+   "kind": "overview",
+   "date": "2016-11-10",
+   "question": "요즘 뭐가 화제야?",
+   "expected": [],
+   "label": "개요 질문",
+   "as_of": {
+    "t": 157976,
+    "date": "2016-11-10"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.02,
+   "tool_calls": 1,
+   "repairs": 0,
+   "citations": 0,
+   "valid_citations": 0,
+   "resolved_keyword": null,
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**2016-11-10 기준 화제 키워드 Top 10**\n1. trump, 2. donald trump, 3. clinton, 4. election, 5. hillary clinton, 6. vote, 7. campaign, 8. obama, 9. president, 10. america\n\n최근 Top K 진입: night(2016-11-10, 첫 진입), senate(2016-11-09, 첫 진입), comey(2016-11-07, 첫 진입), voting(2016-11-05, 첫 진입), voter(2016-11-04, 첫 진입)\n\n특정 키워드를 물어보면 관련 기사를 근거로 설명합니다 (예: \"trump 왜 순위에 올랐어?\"). 키워드는 영어로 입력하세요."
+  },
+  {
+   "id": "overview-2020-03-15",
+   "kind": "overview",
+   "date": "2020-03-15",
+   "question": "요즘 뭐가 화제야?",
+   "expected": [],
+   "label": "개요 질문",
+   "as_of": {
+    "t": 204314,
+    "date": "2020-03-15"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 1,
+   "repairs": 0,
+   "citations": 0,
+   "valid_citations": 0,
+   "resolved_keyword": null,
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**2020-03-15 기준 화제 키워드 Top 10**\n1. coronavirus, 2. u.s., 3. trump, 4. test, 5. california, 6. cruise, 7. fears, 8. due, 9. pandemic, 10. dead\n\n최근 Top K 진입: black(2020-03-07, 첫 진입), virus(2020-03-07, 첫 진입), coronavirus outbreak(2020-03-07, 첫 진입), taliban(2020-03-07, 첫 진입), un(2020-03-07, 첫 진입)\n\n특정 키워드를 물어보면 관련 기사를 근거로 설명합니다 (예: \"coronavirus 왜 순위에 올랐어?\"). 키워드는 영어로 입력하세요."
+  },
+  {
+   "id": "overview-2022-03-01",
+   "kind": "overview",
+   "date": "2022-03-01",
+   "question": "요즘 뭐가 화제야?",
+   "expected": [],
+   "label": "개요 질문",
+   "as_of": {
+    "t": 208388,
+    "date": "2022-03-01"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.0,
+   "tool_calls": 1,
+   "repairs": 0,
+   "citations": 0,
+   "valid_citations": 0,
+   "resolved_keyword": null,
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**2022-03-01 기준 화제 키워드 Top 10**\n1. ukraine, 2. russia, 3. russian, 4. state, 5. biden, 6. union, 7. mlb, 8. un, 9. invasion, 10. police\n\n최근 Top K 진입: assault(2022-02-26, 첫 진입), queen(2022-02-26, 첫 진입), closing(2022-02-26, 첫 진입), games(2022-02-26, 첫 진입), ukrainians(2022-02-26, 첫 진입)\n\n특정 키워드를 물어보면 관련 기사를 근거로 설명합니다 (예: \"ukraine 왜 순위에 올랐어?\"). 키워드는 영어로 입력하세요."
+  },
+  {
+   "id": "hard-unknown",
+   "kind": "hard",
+   "date": "2016-02-16",
+   "question": "xyzzyq가 왜 화제야?",
+   "expected": [],
+   "label": "데이터에 없는 단어",
+   "as_of": {
+    "t": 134404,
+    "date": "2016-02-16"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.02,
+   "tool_calls": 1,
+   "repairs": 0,
+   "citations": 0,
+   "valid_citations": 0,
+   "resolved_keyword": null,
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**2016-02-16 기준 화제 키워드 Top 10**\n1. clinton, 2. trump, 3. bernie sanders, 4. obama, 5. hillary clinton, 6. donald trump, 7. supreme court, 8. scalia, 9. new hampshire, 10. gop\n\n최근 Top K 진입: grammys(2016-02-16, 첫 진입), justice(2016-02-15, 첫 진입), scalia(2016-02-15, 첫 진입), supreme court(2016-02-14, 첫 진입), love(2016-02-12, 첫 진입)\n\n특정 키워드를 물어보면 관련 기사를 근거로 설명합니다 (예: \"clinton 왜 순위에 올랐어?\"). 키워드는 영어로 입력하세요."
+  },
+  {
+   "id": "hard-future",
+   "kind": "hard",
+   "date": "2016-02-16",
+   "question": "covid가 왜 화제야?",
+   "expected": [],
+   "label": "아직 등장하지 않은 키워드",
+   "as_of": {
+    "t": 134404,
+    "date": "2016-02-16"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.02,
+   "tool_calls": 1,
+   "repairs": 0,
+   "citations": 0,
+   "valid_citations": 0,
+   "resolved_keyword": null,
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**2016-02-16 기준 화제 키워드 Top 10**\n1. clinton, 2. trump, 3. bernie sanders, 4. obama, 5. hillary clinton, 6. donald trump, 7. supreme court, 8. scalia, 9. new hampshire, 10. gop\n\n최근 Top K 진입: grammys(2016-02-16, 첫 진입), justice(2016-02-15, 첫 진입), scalia(2016-02-15, 첫 진입), supreme court(2016-02-14, 첫 진입), love(2016-02-12, 첫 진입)\n\n특정 키워드를 물어보면 관련 기사를 근거로 설명합니다 (예: \"clinton 왜 순위에 올랐어?\"). 키워드는 영어로 입력하세요."
+  },
+  {
+   "id": "hard-nokeyword",
+   "kind": "hard",
+   "date": "2016-02-16",
+   "question": "그래서 이유가 뭐야?",
+   "expected": [],
+   "label": "키워드 없는 질문",
+   "as_of": {
+    "t": 134404,
+    "date": "2016-02-16"
+   },
+   "mode": "offline",
+   "verified": true,
+   "warning": null,
+   "error": null,
+   "latency_s": 0.02,
+   "tool_calls": 1,
+   "repairs": 0,
+   "citations": 0,
+   "valid_citations": 0,
+   "resolved_keyword": null,
+   "keyword_note": null,
+   "keyword_ok": true,
+   "answer": "**2016-02-16 기준 화제 키워드 Top 10**\n1. clinton, 2. trump, 3. bernie sanders, 4. obama, 5. hillary clinton, 6. donald trump, 7. supreme court, 8. scalia, 9. new hampshire, 10. gop\n\n최근 Top K 진입: grammys(2016-02-16, 첫 진입), justice(2016-02-15, 첫 진입), scalia(2016-02-15, 첫 진입), supreme court(2016-02-14, 첫 진입), love(2016-02-12, 첫 진입)\n\n특정 키워드를 물어보면 관련 기사를 근거로 설명합니다 (예: \"clinton 왜 순위에 올랐어?\"). 키워드는 영어로 입력하세요."
+  }
+ ]
+}

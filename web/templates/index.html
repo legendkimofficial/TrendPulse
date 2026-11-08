@@ -64,6 +64,9 @@
   <label>순위 크기 K <input id="cfgK" type="number" min="5" max="50" value="20"></label>
   <label>DGIM 창 N <input id="cfgN" type="number" min="50" step="50" value="1000"><small>최근 N개 기사</small></label>
   <label>DGIM r <input id="cfgR" type="number" min="2" max="16" value="2"><small>크기별 최대 버킷 수</small></label>
+  <label>감쇠 단위 <select id="cfgUnit"><option value="article">기사 수 기준 (c)</option><option value="day">날짜 기준 (반감기 일수)</option></select><small>날짜 기준은 같은 날 기사끼리 감쇠 없음</small></label>
+  <label>반감기 (일) <input id="cfgHalf" type="number" step="0.5" min="0.5" max="365" value="7"><small>날짜 기준일 때만 사용</small></label>
+  <label class="check"><input id="cfgPhrases" type="checkbox" checked> 두 단어 묶기<small>donald trump, supreme court …</small></label>
   <p class="hint">설정을 바꾼 뒤 <b>다시 시작</b>을 누르면 시작일 직전 10/c개 기사로 창을 채운(warm-up) 뒤 재생합니다.
   감쇠 윈도우에는 경계가 없습니다: 기사의 영향은 반감기마다 절반으로 줄 뿐, 1/c건이 지나도 0이 되지 않습니다.</p>
 </section>
@@ -91,6 +94,11 @@
   </section>
 
   <aside class="side">
+    <section class="card">
+      <div class="card-head"><h2>급상승</h2><span class="badge soft" title="짧은 감쇠 점수 − 긴 감쇠 비율로 예상한 점수">평소보다 더 언급</span></div>
+      <p class="caption" id="burstCaption">짧은 반감기의 점수가 긴 반감기로 예상한 값보다 큰 키워드. 초과분 순.</p>
+      <ul class="events" id="burst"><li class="empty">재생하면 표시됩니다.</li></ul>
+    </section>
     <section class="card">
       <div class="card-head"><h2>Top K 진입 기록</h2><span class="badge soft" id="eventCount">0</span></div>
       <p class="caption" id="eventCaption">첫 진입 = 이번 재생에서 처음 Top K에 들어옴(warm-up 제외) · 재진입 = 일정 기간 Top K 밖에 있다가 복귀</p>

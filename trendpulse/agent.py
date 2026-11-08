@@ -35,7 +35,7 @@ from contextlib import nullcontext
 from typing import Any, Callable
 
 from .engine import TrendEngine
-from .text import tokenize
+from .text import phrases, tokenize
 
 DEFAULT_BASE_URL = "https://api.upstage.ai/v1"
 DEFAULT_MODEL = "solar-pro2"
@@ -115,7 +115,6 @@ class TrendTools:
             self._check_drift()
             d = self.e.keyword_detail(keyword)
             date = self.e.clock()["date"]
-            win = self.e.clock()["effective_window"]
         hist = d["history"][-8:]
         return {
             "keyword": d["keyword"], "as_of_date": date,
@@ -123,7 +122,7 @@ class TrendTools:
             "pruned_from_memory": not d["in_pruned"],
             "decayed_score": d["score"], "exact_baseline_score": d["baseline_score"],
             "mentions_so_far": d["total_mentions_so_far"],
-            "window_articles": win,
+            "window": d["window_label"], "previous_window": d["previous_window_label"],
             "mentions_in_last_window": d["mentions_in_effective_window"],
             "mentions_in_previous_window": d["mentions_in_previous_window"],
             "first_topk_entry": d["first_entry"],
@@ -161,7 +160,15 @@ class TrendTools:
 
 
 def guess_keyword(engine: TrendEngine, question: str) -> str | None:
-    """Pick the keyword a question is about (the highest-scoring known token)."""
+    """Pick the keyword a question is about.
+
+    A known phrase in the question ("supreme court") wins over its single
+    words; otherwise the highest-scoring known word is used.
+    """
+    if engine.config.phrases:
+        cands = [p for p in phrases(question) if p in engine.postings]
+        if cands:
+            return max(cands, key=engine.pruned.score)
     cands = [w for w in tokenize(question) if w in engine.postings]
     if not cands:
         return None
@@ -214,16 +221,25 @@ def ask(engine: TrendEngine, question: str, keyword: str | None = None,
         keyword = guess_keyword(engine, question) or (keyword or "").strip().lower() or None
         as_of = engine.now
         as_of_info = {"t": as_of, "date": engine.articles[max(as_of, 0)].date}
+        # A two-word name in the question that no headline has used yet: say which
+        # word the answer is about instead of silently switching ("george floyd" -> "george").
+        unmatched = [p for p in phrases(question) if p not in engine.postings and p != keyword]
+    note = (f"질문의 '{unmatched[0]}'는 {as_of_info['date']}까지 기사 제목에 없어 "
+            f"'{keyword}' 기준으로 답했습니다." if unmatched and keyword and " " not in keyword else None)
     key = os.environ.get("UPSTAGE_API_KEY", "").strip()
     if not key:
-        return _offline_answer(engine, keyword, lock, as_of, as_of_info)
-    try:
-        return _solar_answer(engine, question, keyword, key, lock, as_of, as_of_info)
-    except (urllib.error.URLError, TimeoutError, KeyError, ValueError, IndexError) as exc:
         res = _offline_answer(engine, keyword, lock, as_of, as_of_info)
-        res["mode"] = "offline-fallback"
-        res["warning"] = f"Solar API 호출 실패로 오프라인 요약을 표시합니다: {exc}"
-        return res
+    else:
+        try:
+            res = _solar_answer(engine, question, keyword, key, lock, as_of, as_of_info)
+        except (urllib.error.URLError, TimeoutError, KeyError, ValueError, IndexError) as exc:
+            res = _offline_answer(engine, keyword, lock, as_of, as_of_info)
+            res["mode"] = "offline-fallback"
+            res["warning"] = f"Solar API 호출 실패로 오프라인 요약을 표시합니다: {exc}"
+    if note:
+        res["warning"] = note + (" " + res["warning"] if res.get("warning") else "")
+        res["keyword_note"] = note
+    return res
 
 
 def _solar_answer(engine, question, keyword, key, lock, as_of, as_of_info) -> dict:
@@ -339,8 +355,8 @@ def _offline_answer(engine: TrendEngine, keyword: str | None, lock, as_of: int, 
         f"**{keyword}** — {stats['as_of_date']} 기준 {rank_txt}, 감쇠 점수 {stats['decayed_score']} "
         f"(정확 기준 {stats['exact_baseline_score']}).",
         "",
-        f"- 최근 {stats['window_articles']:,}건 중 {stats['mentions_in_last_window']}건의 제목에 등장 "
-        f"(그 이전 {stats['window_articles']:,}건: {stats['mentions_in_previous_window']}건)",
+        f"- {stats['window']} 동안 {stats['mentions_in_last_window']}건의 제목에 등장 "
+        f"({stats['previous_window']}: {stats['mentions_in_previous_window']}건)",
     ]
     if fe:
         lines.append(f"- Top {stats['top_k_size']} {'첫 진입' if fe['kind'] == 'first' else '재진입'}: {fe['date']} ({fe['rank']}위)")

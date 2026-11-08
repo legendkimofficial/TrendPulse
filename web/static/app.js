@@ -26,9 +26,11 @@ function render(st) {
   lastState = st;
   const c = st.clock;
   $("clockDate").textContent = c.date;
-  $("clockMeta").textContent =
-    `기사 #${fmt(c.t)} · 재생 ${fmt(c.processed)}건 · 반감기 ≈ ${fmt(c.half_life)}건 · ` +
-    `최근 ${fmt(c.effective_window)}건(${fmt(c.window_span_days)}일)이 가중치의 ${Math.round(c.recent_weight_share * 100)}%`;
+  $("clockMeta").textContent = c.decay_unit === "day"
+    ? `기사 #${fmt(c.t)} · 재생 ${fmt(c.processed)}건 · 날짜 기준 감쇠 · 반감기 ${c.half_life}일 · ` +
+      `최근 ${fmt(c.effective_window)}일(${fmt(c.articles_in_window)}건)이 가중치의 ${Math.round(c.recent_weight_share * 100)}%`
+    : `기사 #${fmt(c.t)} · 재생 ${fmt(c.processed)}건 · 반감기 ≈ ${fmt(c.half_life)}건 · ` +
+      `최근 ${fmt(c.effective_window)}건(${fmt(c.window_span_days)}일)이 가중치의 ${Math.round(c.recent_weight_share * 100)}%`;
   $("progressBar").style.width = `${(c.progress * 100).toFixed(2)}%`;
   $("kLabel").textContent = st.config.k;
   $("eventCaption").textContent =
@@ -36,6 +38,7 @@ function render(st) {
     `재진입 = ${fmt(st.config.new_entry_gap * st.config.snapshot_every)}건 이상 밖에 있다가 복귀`;
   renderRanking(st, prevRanking);
   renderEvents(st.events);
+  renderBurst(st.burst || []);
   renderMetrics(st.metrics, st.config);
   if (c.finished && playing) togglePlay(false);
 }
@@ -71,7 +74,7 @@ function renderRanking(st, prevSet) {
     const flash = prevSet && !prevSet.has(r.keyword) ? " flash" : "";
     const sel = r.keyword === selected ? " selected" : "";
     return `<tr data-kw="${esc(r.keyword)}" class="${sel}${flash}">
-      <td class="num rank">${r.rank}</td>
+      <td class="num rank">${r.rank}${uncMark(r, rows.length)}</td>
       <td>${deltaCell(r)}</td>
       <td class="kw">${esc(r.keyword)}</td>
       <td><div class="scorebar"><div class="bar" style="width:${width.toFixed(0)}px"></div><span>${r.score.toFixed(1)}</span></div></td>
@@ -80,6 +83,27 @@ function renderRanking(st, prevSet) {
       <td class="num hide-sm">${dgimCell(r.dgim, st.config.dgim_n)}</td>
     </tr>`;
   }).join("");
+}
+
+function uncMark(r, n) {
+  if (!r.may_swap_above && !r.may_swap_below) return "";
+  const parts = [];
+  if (r.may_swap_above) parts.push("바로 위");
+  if (r.may_swap_below) parts.push(r.rank === n ? "Top K 밖 키워드" : "바로 아래");
+  return `<span class="unc" title="메모리를 아낀 근사 때문에 정확 계산에서는 ${parts.join("·")}와 순서가 바뀔 수 있음 (이 키워드 점수 오차 < ${r.error_bound})">≈</span>`;
+}
+
+function renderBurst(rows) {
+  if (!rows.length) {
+    $("burst").innerHTML = '<li class="empty">조건(최소 등장)을 넘는 급상승 키워드가 없습니다.</li>';
+    return;
+  }
+  const max = rows[0].excess || 1;
+  $("burst").innerHTML = rows.map((b) => `<li data-kw="${esc(b.keyword)}">
+    <span class="ev-kw">${esc(b.keyword)}</span>
+    <span class="lift" title="짧은 창 점수 / 평소 비율로 예상한 점수">×${b.lift}</span>
+    <span class="burst-bar" style="width:${Math.max(6, (b.excess / max) * 80).toFixed(0)}px" title="초과분 ${b.excess}"></span>
+    <span class="ev-meta">+${b.excess}</span></li>`).join("");
 }
 
 function renderEvents(events) {
@@ -152,11 +176,10 @@ function trendSvg(history) {
 }
 
 function summaryBox(d) {
-  const win = lastState?.clock.effective_window ?? 1000;
   const fe = d.first_entry;
   const rankTxt = d.rank == null ? "집계에서 삭제됨(점수 < θ)" : `${d.rank}위${d.in_top_k ? "" : " (Top K 밖)"}`;
   const entryTxt = fe ? `${fe.kind === "first" ? "첫 진입" : "재진입"} ${esc(fe.date)} (${fe.rank}위)` : "이번 재생에서 Top K 진입 없음";
-  const change = `최근 ${fmt(win)}건 중 <b>${d.mentions_in_effective_window}</b>건 · 그 이전 ${fmt(win)}건 중 ${d.mentions_in_previous_window}건`;
+  const change = `${esc(d.window_label)} 동안 <b>${d.mentions_in_effective_window}</b>건 · ${esc(d.previous_window_label)} ${d.mentions_in_previous_window}건`;
   const co = d.cooccurring.slice(0, 5).map(([w]) => esc(w)).join(", ") || "–";
   const top3 = d.related.slice(0, 3).map((a) => `<li><a href="${esc(a.link)}" target="_blank" rel="noopener noreferrer">${esc(a.headline)}</a>
       <span class="meta">#${a.id} · ${esc(a.date)} · ${esc(a.category)}</span></li>`).join("") || '<li class="empty">관련 기사 없음</li>';
@@ -258,6 +281,8 @@ function startDate() {
 function syncSettings(cfg) {
   $("cfgC").value = cfg.c; $("cfgT").value = cfg.threshold; $("cfgK").value = cfg.k;
   $("cfgN").value = cfg.dgim_n; $("cfgR").value = cfg.dgim_r;
+  $("cfgUnit").value = cfg.decay_unit; $("cfgHalf").value = cfg.half_life_days;
+  $("cfgPhrases").checked = cfg.phrases;
   updateCHint();
 }
 
@@ -276,6 +301,8 @@ async function reset() {
       start_date: startDate(),
       c: $("cfgC").value, threshold: $("cfgT").value, k: $("cfgK").value,
       dgim_n: $("cfgN").value, dgim_r: $("cfgR").value,
+      decay_unit: $("cfgUnit").value, half_life_days: $("cfgHalf").value,
+      phrases: $("cfgPhrases").checked,
     });
     lastState = null;
     render(st);
@@ -366,6 +393,7 @@ function bind() {
   $("customDate").addEventListener("change", reset);
   $("rankBody").addEventListener("click", (e) => { const tr = e.target.closest("tr[data-kw]"); if (tr) select(tr.dataset.kw); });
   $("events").addEventListener("click", (e) => { const li = e.target.closest("li[data-kw]"); if (li) select(li.dataset.kw); });
+  $("burst").addEventListener("click", (e) => { const li = e.target.closest("li[data-kw]"); if (li) select(li.dataset.kw); });
   $("detailBody").addEventListener("click", async (e) => {
     const chip = e.target.closest("[data-kw]");
     if (chip) return select(chip.dataset.kw);
