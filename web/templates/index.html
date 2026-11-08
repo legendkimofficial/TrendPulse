@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trend Pulse</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234f46e5'/><path d='M4 18h6l3-8 5 14 3-6h7' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" class="logo" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M4 18h6l3-8 5 14 3-6h7"/></svg>
+    <div>
+      <h1>Trend Pulse</h1>
+      <p class="sub">HuffPost 뉴스 제목 스트림 재생 · 감쇠 윈도우 화제 순위 + DGIM 근사 집계</p>
+    </div>
+  </div>
+  <div class="clock">
+    <div class="clock-label">스트림 시각</div>
+    <div class="clock-date" id="clockDate">—</div>
+    <div class="clock-meta" id="clockMeta">—</div>
+  </div>
+</header>
+
+<div class="progress"><div id="progressBar"></div></div>
+
+<section class="controls">
+  <div class="group">
+    <button id="btnPlay" class="primary" title="재생 / 일시정지 (Space)">▶ 재생</button>
+    <button id="btnStep" title="한 번 진행">+ 진행</button>
+    <label>속도
+      <select id="speed">
+        <option value="20">20 기사/틱</option>
+        <option value="50" selected>50 기사/틱</option>
+        <option value="200">200 기사/틱</option>
+        <option value="1000">1,000 기사/틱</option>
+      </select>
+    </label>
+  </div>
+  <div class="group">
+    <label>시작일
+      <select id="preset">
+        <option value="2012-10-15">2012-10 미국 대선·허리케인 샌디</option>
+        <option value="2014-08-01">2014-08 퍼거슨 시위·에볼라</option>
+        <option value="2016-01-01" selected>2016-01 미국 대선 경선</option>
+        <option value="2016-10-15">2016-10 미국 대선</option>
+        <option value="2017-01-10">2017-01 트럼프 취임</option>
+        <option value="2020-01-01">2020-01 코로나19 (희소 구간)</option>
+        <option value="2022-01-01">2022-01 우크라이나 (희소 구간)</option>
+        <option value="custom">직접 입력…</option>
+      </select>
+    </label>
+    <input type="date" id="customDate" min="2012-01-28" max="2022-09-23" hidden>
+    <button id="btnDemo" title="발표 장면 복원: 2016-02-16, scalia 선택, 에이전트 질문">🎬 데모 장면</button>
+    <button id="btnSettings" aria-expanded="false">⚙ 설정</button>
+    <button id="btnReset">↺ 다시 시작</button>
+  </div>
+</section>
+
+<section class="settings" id="settings" hidden>
+  <label>감쇠 상수 c <input id="cfgC" type="number" step="0.0001" min="0.0001" max="0.1" value="0.001"><small id="cfgCHint">반감기 ≈ 693건</small></label>
+  <label>제거 임계값 θ <input id="cfgT" type="number" step="0.05" min="0.05" max="0.95" value="0.5"><small>점수 &lt; θ 인 키워드 삭제</small></label>
+  <label>순위 크기 K <input id="cfgK" type="number" min="5" max="50" value="20"></label>
+  <label>DGIM 창 N <input id="cfgN" type="number" min="50" step="50" value="1000"><small>최근 N개 기사</small></label>
+  <label>DGIM r <input id="cfgR" type="number" min="2" max="16" value="2"><small>크기별 최대 버킷 수</small></label>
+  <p class="hint">설정을 바꾼 뒤 <b>다시 시작</b>을 누르면 시작일 직전 10/c개 기사로 창을 채운(warm-up) 뒤 재생합니다.
+  감쇠 윈도우에는 경계가 없습니다: 기사의 영향은 반감기마다 절반으로 줄 뿐, 1/c건이 지나도 0이 되지 않습니다.</p>
+</section>
+
+<main class="grid">
+  <section class="card ranking">
+    <div class="card-head">
+      <h2>화제 키워드 Top <span id="kLabel">20</span></h2>
+      <span class="badge" title="감쇠 윈도우 점수: 최근 기사일수록 큰 가중치. θ 미만 키워드를 삭제한 근사값">감쇠 윈도우 점수 · 근사(θ 제거)</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th class="num">순위</th><th>변동</th><th>키워드</th><th class="scorecol">점수</th>
+          <th class="hide-sm">추이</th>
+          <th class="num hide-sm" title="모든 키워드를 유지하는 정확 기준 방식의 순위">기준</th>
+          <th class="num hide-sm" title="추적 시작 이후 관측한 기사 중, 최근 N개 기사 안에서 키워드가 나온 기사 수 (DGIM 근사 / 정확)">DGIM ≈ / 정확</th>
+        </tr>
+      </thead>
+      <tbody id="rankBody"></tbody>
+    </table>
+    <p class="foot">행을 클릭하면 화제 요약과 근거 기사를 볼 수 있습니다.
+      <b>진입</b> = 직전 화면 갱신 대비 Top K에 새로 들어옴 · <b>기준</b> = 메모리를 아끼지 않은 정확 계산의 순위(다르면 빨간색) ·
+      DGIM의 <b>관측 n</b> = 추적 시작 후 n건만 관측해 아직 N건 전체를 세지 못함.</p>
+  </section>
+
+  <aside class="side">
+    <section class="card">
+      <div class="card-head"><h2>Top K 진입 기록</h2><span class="badge soft" id="eventCount">0</span></div>
+      <p class="caption" id="eventCaption">첫 진입 = 이번 재생에서 처음 Top K에 들어옴(warm-up 제외) · 재진입 = 일정 기간 Top K 밖에 있다가 복귀</p>
+      <ul class="events" id="events"><li class="empty">재생을 시작하면 Top K에 새로 들어온 키워드가 표시됩니다.</li></ul>
+    </section>
+
+    <section class="card">
+      <div class="card-head"><h2>메모리 절약의 대가</h2><span class="badge soft" title="현재 화면 시점 기준">현재 시점</span></div>
+      <div class="metrics" id="metrics"></div>
+    </section>
+  </aside>
+
+  <section class="card detail" id="detail">
+    <div class="card-head">
+      <h2>키워드 상세 <span id="detailWord" class="kw"></span></h2>
+      <form id="lookup" class="lookup">
+        <input id="lookupInput" placeholder="키워드 검색 (영어)" autocomplete="off">
+        <button type="submit">조회</button>
+      </form>
+    </div>
+    <div id="detailBody" class="detail-body">
+      <p class="empty">순위표에서 키워드를 선택하거나 검색하세요.</p>
+    </div>
+  </section>
+
+  <section class="card agent">
+    <div class="card-head">
+      <h2>Solar 에이전트에게 묻기</h2>
+      <span class="badge soft" id="agentMode">확인 중…</span>
+    </div>
+    <form id="askForm" class="ask">
+      <input id="askInput" placeholder="예: trump가 왜 순위에 올랐어?" autocomplete="off">
+      <button class="primary" type="submit">질문</button>
+    </form>
+    <div id="answer" class="answer"><p class="empty">질문하면 에이전트가 통계·관련 기사 도구를 호출해 근거와 함께 설명합니다. 질문하는 동안 재생은 멈춥니다.</p></div>
+  </section>
+</main>
+
+<footer class="notes">
+  <p><b>해석의 한계</b> · 순위는 HuffPost 데이터 안에서 관찰한 화제이며 사회 전체의 관심도를 뜻하지 않습니다.
+  과거 기사를 날짜순으로 재생한 시뮬레이션이며(데이터에 시각 정보가 없어 같은 날짜 안의 순서는 고정 규칙),
+  집계용 메모리와 관련 기사 조회용 인덱스는 따로 보고합니다.</p>
+  <p>Team cloudnine · 빅데이터개론 그룹 프로젝트 프로토타입</p>
+</footer>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
