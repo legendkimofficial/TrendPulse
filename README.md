@@ -127,7 +127,7 @@ TrendPulse/
 │  ├─ run_sprint3.py          E7~E11 → results/v03/
 │  └─ eval_agent.py           에이전트 평가 → results/agent_eval/ (report.md에 사람 평가 칸)
 ├─ tests/                     67개 (brute-force 비교, 불확실성 보장, 엔진 정책, 근거 수·순위 스냅샷·시점 이동, API, Solar mock)
-├─ docs/                      발표 자료(slides.html → TrendPulse_발표.pdf), 발표 대본, 리뷰 문서
+├─ docs/                      발표 자료(slides.html → TrendPulse_발표.pdf), 발표 대본, 리뷰 문서, 활동 일지(ACTIVITY_LOG.md)
 └─ PROGRESS.md                진행 상황 · 스프린트별 반영 내역
 ```
 
@@ -198,7 +198,7 @@ TrendPulse/
 - 코드, 테스트, 실험 결과(JSON·표·그래프), 발표 PDF·HTML·대본, 진행 보고와 과거 리뷰를 포함한다. v0.3 실험 결과는 `experiments/results/v03/`, 에이전트 평가는 `experiments/results/agent_eval/`에 있다.
 - 가상환경(`.venv/`), 원본 데이터(`data/raw/`), 토큰 캐시(`data/processed/`), API 키·로컬 설정은 `.gitignore`로 제외한다. 원본 데이터는 빠른 시작의 다운로드 스크립트로 받고 캐시는 실행 시 생성한다.
 - 작업 폴더 상위의 초기 기획안과 대화·설명 스크린샷은 이 저장소에 포함하지 않는다.
-- `docs/FEEDBACK_2026-11-08.md`는 v0.1 검토 기록이며, 현재 반영 상태와 남은 작업은 `PROGRESS.md`에 정리되어 있다.
+- `docs/FEEDBACK_2026-11-08.md`는 v0.1 검토 기록이며, 현재 반영 상태와 남은 작업은 `PROGRESS.md`에, 날짜·시간순 작업 과정(시도·문제·결정)은 `docs/ACTIVITY_LOG.md`에 정리되어 있다.
 
 ## 사용한 오픈소스와 디자인 근거 (대시보드)
 - 글꼴: [Pretendard](https://github.com/orioncactus/pretendard) (SIL OFL) · [JetBrains Mono](https://www.jetbrains.com/lp/mono/) (SIL OFL) — jsDelivr CDN에서 불러오며, 오프라인이면 시스템 글꼴(맑은 고딕 등)로 대체된다. 그 밖의 외부 의존성은 없다(프레임워크·차트 라이브러리 없음).
