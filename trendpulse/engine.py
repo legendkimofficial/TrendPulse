@@ -54,6 +54,8 @@ class EngineConfig:
     half_life_days: float = 7.0  # used when decay_unit == "day"
     burst_ratio: float = 7.0     # long half-life / short half-life for burst detection
     burst_min: float = 3.0       # minimum short-window score for a burst candidate
+    # v0.4 ---------------------------------------------------------------------
+    min_evidence: int = 2        # a Top K row with <= this many recent articles is "thin" (E8)
 
     # (min, max) inclusive ranges; checked before the engine state is touched
     _RANGES = {
@@ -61,7 +63,7 @@ class EngineConfig:
         "dgim_n": (10, 100_000), "dgim_r": (2, 64), "snapshot_every": (1, 10_000),
         "new_entry_gap": (1, 10_000), "max_tracked": (1, 5_000), "warmup_factor": (0.0, 50.0),
         "absorb_ratio": (0.5, 1.0), "half_life_days": (0.5, 365.0), "burst_ratio": (2.0, 50.0),
-        "burst_min": (1.0, 50.0),
+        "burst_min": (1.0, 50.0), "min_evidence": (0, 50),
     }
 
     def validate(self) -> "EngineConfig":
@@ -111,6 +113,9 @@ class TrendEngine:
         self.articles = articles
         # calendar day number of every article (for per-day decay)
         self._day = [_date.fromisoformat(a.date).toordinal() for a in articles]
+        # articles per calendar month (dashboard timeline density; computed once)
+        months: Counter = Counter(a.date[:7] for a in articles)
+        self._months = [{"month": m, "count": n} for m, n in sorted(months.items())]
         self.reset(config or EngineConfig())
 
     # ------------------------------------------------------------------ setup
@@ -121,6 +126,7 @@ class TrendEngine:
         dc = cfg.decay_c
         self.pruned = DecayingWindow(dc, cfg.threshold, track_error=True)
         self.baseline = DecayingWindow(dc, None)
+        self._baseline_cache: tuple = (None, [])
         self.short = DecayingWindow(cfg.short_c, cfg.threshold)     # burst detector
         self._last_day: int | None = None
         self.postings: dict[str, list[int]] = {}
@@ -129,6 +135,8 @@ class TrendEngine:
         self.evictions = 0
         self.track_refusals = 0
         self.history: dict[str, deque] = {}
+        # (t, date, [(keyword, score), ...] top K) per snapshot -> rank-race chart (v0.4)
+        self.rank_snaps: deque = deque(maxlen=160)
         self.events: deque = deque(maxlen=60)
         self.first_entry: dict[str, dict] = {}
         self._last_in_topk: dict[str, int] = {}
@@ -210,6 +218,16 @@ class TrendEngine:
     # ------------------------------------------------------------------ snapshots
     def _ranked(self, window: DecayingWindow, k: int) -> list[tuple[str, float]]:
         """Displayed ranking: Top k after phrase absorption (if phrases are on)."""
+        if window is self.baseline and k == self.config.k:
+            # The exact window holds every keyword, so its Top K costs ~10 ms; state()
+            # needs it three times per tick (ranking, metrics, comparison view).
+            key = (self.pos, self.config.k)
+            if self._baseline_cache[0] != key:
+                self._baseline_cache = (key, self._ranked_uncached(window, k))
+            return self._baseline_cache[1]
+        return self._ranked_uncached(window, k)
+
+    def _ranked_uncached(self, window: DecayingWindow, k: int) -> list[tuple[str, float]]:
         if not self.config.phrases:
             return window.top_k(k)
         return absorb(window.top_k(3 * k), k, self.config.absorb_ratio)
@@ -232,6 +250,8 @@ class TrendEngine:
                 h.append((t, round(self.pruned.score(w), 3), None))
 
         self._topk_now = {w for w, _ in top[: cfg.k]}
+        self.rank_snaps.append((t, self.articles[t].date if t >= 0 else "",
+                                [(w, round(s, 2)) for w, s in top[: cfg.k]]))
         for rank, (w, s) in enumerate(top[: cfg.k], 1):
             last = self._last_in_topk.get(w)
             kind = "first" if last is None else ("reentry" if self._snap - last > cfg.new_entry_gap else None)
@@ -327,15 +347,20 @@ class TrendEngine:
         flags = uncertainty(top, errs, outside, self.pruned.error_bound(), complete)
         base_top = self._ranked(self.baseline, cfg.k)
         base_rank = {w: r for r, (w, _) in enumerate(base_top, 1)}
+        lo1, _, _, _ = self._recent_windows()
+        now = self.now
         rows = []
         for (rank, (w, s)), fl, err in zip(enumerate(top, 1), flags, errs):
             prev = self._prev_display.get(w)
             dg = self.dgim_info(w)
+            evidence = self.mentions_between(w, lo1, now)
             rows.append({
                 "rank": rank, "keyword": w, "score": round(s, 2),
                 "prev_rank": prev, "delta": (prev - rank) if prev else None,
                 "baseline_rank": base_rank.get(w),
                 "baseline_score": round(self.baseline.score(w), 2),
+                # v0.4: articles in the recent window (1/c days or articles) behind this row
+                "evidence": evidence, "thin": evidence <= cfg.min_evidence,
                 "dgim": {"estimate": dg["estimate"], "exact": dg["exact"],
                          "observed": dg["observed"], "partial": dg["partial"]} if dg else None,
                 "spark": [p[1] for p in list(self.history.get(w, ()))[-30:]],
@@ -351,7 +376,64 @@ class TrendEngine:
             kept = absorb([(r["keyword"], r["excess"]) for r in rows], k, self.config.absorb_ratio)
             keep = {w for w, _ in kept}
             rows = [r for r in rows if r["keyword"] in keep]
-        return rows[:k]
+        rows = rows[:k]
+        lo1, _, _, _ = self._recent_windows()
+        display = self._display
+        for r in rows:
+            r["evidence"] = self.mentions_between(r["keyword"], lo1, self.now)
+            r["rank"] = display.get(r["keyword"])          # None = not in the Top K right now
+        return rows
+
+    def baseline_ranking(self) -> list[dict]:
+        """Top K of the exact computation (every keyword kept), for the comparison view."""
+        shown = self._display
+        return [{"rank": r, "keyword": w, "score": round(s, 2), "pruned_rank": shown.get(w)}
+                for r, (w, s) in enumerate(self._ranked(self.baseline, self.config.k), 1)]
+
+    def rank_history(self, k: int = 10, n: int = 60) -> dict:
+        """Last ``n`` ranking snapshots (plus the current ranking) as rank series for
+        the keywords that were in the Top ``k`` of any of them: the rank-race chart.
+
+        Output: {"t": [...], "dates": [...], "series": {keyword: [rank | None, ...]},
+                 "k": k}. A None means the keyword was outside the Top k at that time.
+        """
+        k = max(1, min(k, self.config.k))
+        snaps = list(self.rank_snaps)[-n:]
+        now_top = [(w, 0.0) for w, _ in sorted(self._display.items(), key=lambda x: x[1])][:k]
+        t_now = self.now
+        if not snaps or snaps[-1][0] != t_now:
+            snaps.append((t_now, self.articles[max(t_now, 0)].date, now_top))
+        words: dict[str, None] = {}
+        for _, _, top in snaps:
+            for w, _ in top[:k]:
+                words.setdefault(w, None)
+        series = {w: [None] * len(snaps) for w in words}
+        for i, (_, _, top) in enumerate(snaps):
+            for r, (w, _) in enumerate(top[:k], 1):
+                series[w][i] = r
+        return {"t": [s[0] for s in snaps], "dates": [s[1] for s in snaps], "series": series, "k": k}
+
+    def timeline(self) -> dict:
+        """Static data for the dashboard timeline: article density per month and
+        the case-study events (markers)."""
+        from .cases import events_as_dicts
+        return {"months": self._months, "events": events_as_dicts(),
+                "first_date": self.articles[0].date, "last_date": self.articles[-1].date,
+                "total": len(self.articles)}
+
+    SEEK_FORWARD_MAX = 40_000   # beyond this many articles a forward seek restarts instead
+
+    def seek(self, date: str) -> str:
+        """Move the stream to ``date``. Forward and near: step through the articles
+        (Top K entry events stay intact). Backward or far: restart at that date with
+        the current settings (warm-up included). Returns "stepped" or "reset"."""
+        target = first_index_on_or_after(self.articles, date)
+        target = max(0, min(target, len(self.articles) - 1))
+        if target > self.now and target - self.pos <= self.SEEK_FORWARD_MAX:
+            self.step(target - self.pos + 1)
+            return "stepped"
+        self.reset(start_date=date)
+        return "reset"
 
     def metrics(self) -> dict:
         cfg = self.config
@@ -427,6 +509,9 @@ class TrendEngine:
             "clock": self.clock(), "config": asdict(self.config),
             "ranking": self.ranking(), "events": list(self.events)[:25],
             "burst": self.burst(10), "metrics": self.metrics(),
+            # v0.4: comparison view + rank-race chart
+            "baseline_ranking": self.baseline_ranking(),
+            "race": self.rank_history(k=10, n=60),
         }
 
     # ------------------------------------------------------------------ article lookups

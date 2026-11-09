@@ -8,6 +8,7 @@ from __future__ import annotations
 import os
 import threading
 from dataclasses import asdict, fields
+from datetime import date as _date
 
 from flask import Flask, jsonify, render_template, request
 
@@ -15,6 +16,7 @@ from trendpulse.agent import ask
 from trendpulse.data import Article
 from trendpulse.engine import EngineConfig, TrendEngine
 
+VERSION = "0.4"
 DEFAULT_START = "2016-01-01"
 # Demo scene used in the presentation: Justice Scalia died on 2016-02-13.
 DEMO = {"start_date": "2016-01-01", "warm_steps": 4000, "last_step": 100,
@@ -69,7 +71,7 @@ def create_app(articles: list[Article] | None = None, start_date: str | None = D
 
     @app.get("/")
     def index():
-        return render_template("index.html")
+        return render_template("index.html", version=VERSION)
 
     @app.get("/api/state")
     def state():
@@ -109,6 +111,24 @@ def create_app(articles: list[Article] | None = None, start_date: str | None = D
             engine.step(DEMO["last_step"])      # small last step -> realistic rank changes
             return jsonify({**engine.state(), "demo": DEMO})
 
+    @app.post("/api/seek")
+    def seek():
+        """Jump the stream to a date (timeline click). Forward & near: steps through the
+        articles; otherwise restarts at that date with the current settings."""
+        body = request.get_json(silent=True) or {}
+        date = str(body.get("date", "")).strip()
+        try:
+            _date.fromisoformat(date)
+        except ValueError:
+            return bad("date must be YYYY-MM-DD")
+        with lock:
+            how = engine.seek(date)
+            return jsonify({**engine.state(), "seek": how})
+
+    @app.get("/api/timeline")
+    def timeline():
+        return jsonify(engine.timeline())
+
     @app.get("/api/keyword/<path:word>")
     def keyword(word: str):
         with lock:
@@ -137,6 +157,7 @@ def create_app(articles: list[Article] | None = None, start_date: str | None = D
     @app.get("/api/info")
     def info():
         return jsonify({
+            "version": VERSION,
             "articles": len(articles), "first_date": articles[0].date, "last_date": articles[-1].date,
             "solar_enabled": bool(os.environ.get("UPSTAGE_API_KEY")),
             "solar_model": os.environ.get("UPSTAGE_MODEL", "solar-pro2"),
