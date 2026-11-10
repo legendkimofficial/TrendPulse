@@ -3,6 +3,8 @@
 > 빅데이터개론 그룹 프로젝트 · Team **cloudnine** · 프로토타입 v0.4
 > 키워드 목록 없이 뉴스 제목 스트림에서 화제를 발견하고, **저장 키워드 수를 줄였을 때 어떤 순위 오류가 생기는지** 측정한다.
 
+처음 프로젝트를 공부한다면 [프로젝트 이해 가이드](docs/프로젝트_이해_가이드.md)에서 주제·목적, 계산 원리, 실행하며 공부하는 순서를 확인한다.
+
 저장소: [legendkimofficial/TrendPulse](https://github.com/legendkimofficial/TrendPulse)
 
 ![dashboard](docs/img/dashboard.png)
@@ -127,7 +129,8 @@ TrendPulse/
 │  ├─ run_sprint3.py          E7~E11 → results/v03/
 │  └─ eval_agent.py           에이전트 평가 → results/agent_eval/ (report.md에 사람 평가 칸)
 ├─ tests/                     67개 (brute-force 비교, 불확실성 보장, 엔진 정책, 근거 수·순위 스냅샷·시점 이동, API, Solar mock)
-├─ docs/                      발표 자료(slides.html → TrendPulse_발표.pdf), 발표 대본, 리뷰 문서, 활동 일지(ACTIVITY_LOG.md)
+├─ docs/                      1차 발표 자료(TrendPulse_1차발표_v0.4.pptx/.pdf, 영어, 생성기 slides_v04/), 영어 대본(1차발표_대본_v0.4.md),
+│                             v0.3 발표 자료(slides.html → TrendPulse_발표.pdf, 발표_대본.md), 리뷰 문서, 활동 일지(ACTIVITY_LOG.md)
 └─ PROGRESS.md                진행 상황 · 스프린트별 반영 내역
 ```
 
