@@ -5,7 +5,7 @@
 
 - command: `python scripts/gkg_build.py --start 2024-10-01 --end 2024-10-01`
 - manifest: `experiments/results/gkg/input_manifest.json`
-- git: d5a01baf130c9ea84cd3e8ee97f6068ac9b5f548 (dirty=True), gkg.py sha256 a2a6ee04429b83f2…
+- git: 2e438d7bd9fab35cbaaca15429418c2fc097f582 (dirty=False), gkg.py sha256 a2a6ee04429b83f2…
 - config: {'include_countries': False, 'place_types': (2, 3, 4, 5), 'drop_self_orgs': True, 'dedup_urls': True}
 
 ```
@@ -19,7 +19,7 @@ per article  : persons 3.25, orgs 2.37, places 1.94
 time order   : 2024-10-01T00:00:00Z .. 2024-10-01T23:45:00Z, out of order 0
 stream sha256: f0c31c8cd77002118e69811f6baa01c89c210adec917ba3b6ebb569dee2c7a34
 raw sha256   : a94b0083515b83d1696e50f7270330db4e4a89db82c6a22d0ed029404b72fe1c
-run          : 11.8 s, peak RSS 49.8 MB (URL hash table 2.1 MB)
+run          : 11.5 s, peak RSS 50.2 MB (URL hash table 2.1 MB)
 ```
 <!-- input_manifest:end -->
 

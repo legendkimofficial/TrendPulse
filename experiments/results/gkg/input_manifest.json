@@ -1,12 +1,12 @@
 {
  "kind": "gkg_input_manifest",
  "version": 1,
- "created_utc": "2026-11-16T14:12:01Z",
+ "created_utc": "2026-11-16T14:12:44Z",
  "command": "python scripts/gkg_build.py --start 2024-10-01 --end 2024-10-01",
  "code": {
   "git": {
-   "commit": "d5a01baf130c9ea84cd3e8ee97f6068ac9b5f548",
-   "dirty": true
+   "commit": "2e438d7bd9fab35cbaaca15429418c2fc097f582",
+   "dirty": false
   },
   "gkg_py_sha256": "a2a6ee04429b83f2c8f104fec8f0bf9a1faa304e8fc3b5715f0a7e3250b152e0"
  },
@@ -86,8 +86,8 @@
   }
  ],
  "run": {
-  "seconds": 11.8,
-  "peak_rss_mb": 49.8,
+  "seconds": 11.5,
+  "peak_rss_mb": 50.2,
   "url_table_mb": 2.1
  }
 }
