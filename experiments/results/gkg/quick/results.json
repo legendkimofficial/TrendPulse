@@ -579,14 +579,10 @@
   ]
  },
  "meta": {
-  "command": "python experiments/run_gkg_experiments.py --quick",
-  "created_utc": "2026-11-16T15:59:42Z",
+  "command": "python experiments/run_gkg_experiments.py --quick --only E2",
+  "created_utc": "2026-11-16T18:42:17Z",
   "experiments_run": [
-   "E1",
-   "E2",
-   "E3",
-   "E4",
-   "E5"
+   "E2"
   ],
   "range": {
    "start": "2024-10-01",
@@ -600,7 +596,11 @@
    "stream_sha256_def": "sha256 over canonical_line(a) (same as input_manifest.json)"
   },
   "git": {
-   "commit": "70563998281a2e535a9e2f5677dc3212776684a9",
+   "commit": "90ffc30a6f75ce287193328da32aa3b418e4d47a",
+   "dirty": false
+  },
+  "git_end": {
+   "commit": "90ffc30a6f75ce287193328da32aa3b418e4d47a",
    "dirty": false
   },
   "python": "3.14.5",
@@ -608,10 +608,10 @@
   "code": {
    "gkg.py": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
    "gkg_engine.py": "38d954f8f46156743f2c8908d6faab3f84a6469bd3b29de71ddc15769a65f3b2",
-   "gkg_cache.py": "4992fe50aa55378bc660465e15b5e7a22a15cf0b0d722340cb204fbb5f5635d3",
+   "gkg_cache.py": "1c7eb5a23d9f03f58796441d7668014f0ea83b63f8e4969eb52baa971a55589c",
    "dgim.py": "f67ca7da44bf15a50d4ec1d6e1ccac5c031b07c0dd57e78e1654adaa1ff612d9",
    "sliding.py": "53452852dd79251fe51b98d085c09f0f2e9d2dfb0a057cf233ddc45d09afd9b0",
-   "run_gkg_experiments.py": "4b9bd1c012da2105c23d4eda607d9d040e20d9b99c242a8d8061357dd11fe553"
+   "run_gkg_experiments.py": "19c62a2b9e7b42c9953fcef597b186baa83c8f7d91777d8e3506c5790f7ba28e"
   },
   "settings": {
    "thetas": [
@@ -691,13 +691,236 @@
    ]
   },
   "seconds": {
-   "main": 44.7,
-   "E5 2%": 11.1,
-   "E5 5%": 11.1
+   "main": 27.5
   },
-  "peak_rss_gb": 0.42,
+  "peak_rss_gb": 0.25,
   "warnings": [
    "gkg_events.json 의 flash_vs_steady_reference/us_election 는 verified=false (출처 미확인)."
   ]
+ },
+ "E2_revised": {
+  "rule": {
+   "match": "match phrase = last word(s) of a comma-separated part of the key name (word units)",
+   "cutoff_hours_before_first_report": 24,
+   "top": 20,
+   "types": "event types unchanged; name matches of other kinds reported as types 불일치",
+   "candidates": "up to 5 matching keys among all qualified rows after the cut-off, ordered by best rank then first entry"
+  },
+  "events": [
+   {
+    "id": "milton",
+    "name": "허리케인 밀턴 플로리다 상륙",
+    "first_report_utc": "2024-10-10T00:30:00Z",
+    "types": [
+     "P",
+     "O",
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "han_kang",
+    "name": "한강 노벨문학상 발표",
+    "first_report_utc": "2024-10-10T11:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "liam_payne",
+    "name": "리암 페인 사망",
+    "first_report_utc": "2024-10-16T22:30:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "sinwar",
+    "name": "야히야 신와르 사망 발표",
+    "first_report_utc": "2024-10-17T16:55:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "valencia",
+    "name": "스페인 발렌시아 홍수",
+    "first_report_utc": "2024-10-29T19:11:00Z",
+    "types": [
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "quincy_jones",
+    "name": "퀸시 존스 사망 보도",
+    "first_report_utc": "2024-11-04T09:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   }
+  ],
+  "warmup_reference_only": [
+   {
+    "id": "helene",
+    "name": "허리케인 헬렌 상륙",
+    "first_report_utc": "2024-09-27T03:10:00Z",
+    "types": [
+     "P",
+     "O",
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "nasrallah",
+    "name": "하산 나스랄라 사망 발표 (이스라엘군)",
+    "first_report_utc": "2024-09-28T08:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   }
+  ]
+ },
+ "provenance": {
+  "E1": {
+   "command": "python experiments/run_gkg_experiments.py --quick",
+   "created_utc": "2026-11-16T15:59:42Z",
+   "git": {
+    "commit": "70563998281a2e535a9e2f5677dc3212776684a9",
+    "dirty": false
+   },
+   "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
+   "articles": 163360,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E2": {
+   "command": "python experiments/run_gkg_experiments.py --quick --only E2",
+   "created_utc": "2026-11-16T18:42:17Z",
+   "git": {
+    "commit": "90ffc30a6f75ce287193328da32aa3b418e4d47a",
+    "dirty": false
+   },
+   "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
+   "articles": 163360
+  },
+  "E3": {
+   "command": "python experiments/run_gkg_experiments.py --quick",
+   "created_utc": "2026-11-16T15:59:42Z",
+   "git": {
+    "commit": "70563998281a2e535a9e2f5677dc3212776684a9",
+    "dirty": false
+   },
+   "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
+   "articles": 163360,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E4": {
+   "command": "python experiments/run_gkg_experiments.py --quick",
+   "created_utc": "2026-11-16T15:59:42Z",
+   "git": {
+    "commit": "70563998281a2e535a9e2f5677dc3212776684a9",
+    "dirty": false
+   },
+   "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
+   "articles": 163360,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E5": {
+   "command": "python experiments/run_gkg_experiments.py --quick",
+   "created_utc": "2026-11-16T15:59:42Z",
+   "git": {
+    "commit": "70563998281a2e535a9e2f5677dc3212776684a9",
+    "dirty": false
+   },
+   "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
+   "articles": 163360,
+   "note": "git/code recorded at the end of that run"
+  }
  }
 }
