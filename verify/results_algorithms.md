@@ -1,57 +1,61 @@
-# 감쇠 윈도우 · DGIM 검증 결과
+# Decaying Window and DGIM Verification Results
 
-> 기존 알고리즘의 합성 입력 검증이다. GDELT 실데이터 재생, 최근 7일 만료 및 72시간 급상승은 후속 검증 범위다. Top K 이벤트는 50기사 간격에서 관측하며, 같은 키워드의 첫 진입과 재진입을 구분하지 않고 허용 오차 내에서 매칭한다. 시점차 0은 같은 스냅샷에서 관측됐음을 뜻한다.
+## Scope and setup
 
-- 실행 명령: `python verify/verify_algorithms.py` (저장소 루트에서)
-- 실행 환경: Python 3.12.2 / Windows-11-10.0.26200-SP0 / CPU 12개 · 2026-11-16 16:12
-- 감쇠 단위(현재 코드가 지원하는 단위): **기사 단위**(steps=1)와 **일 단위**(steps=직전 기사와의 날짜 차, 같은 날 0) — EngineConfig.decay_unit ∈ {article, day}.
-- 데이터: 합성 뉴스 스트림 48,000건 (2018-01-01 ~ 2024-12-17, 2,455일, 30일·60일 조용한 갭 포함, seed=20261116). 키워드 추출은 저장소 자체 규칙(tokenize + phrases, v0.3 기본). GDELT/HuffPost 로컬 데이터 없음 → 미실행 항목 참고.
+The verification covers the existing algorithms on a synthetic news stream. Replay on real GDELT data, seven-day expiration, and 72-hour surge detection remain pending. Top-K entries were evaluated every 50 articles. Event matching treated first entries and reentries alike and used a fixed tolerance for each decay mode. An offset of zero indicates a match at the same snapshot.
 
+- **Command** — `python verify/verify_algorithms.py` from the repository root.
+- **Environment** — Python 3.12.2 on Windows 11 (10.0.26200, SP0), 12 CPUs. The run was recorded at 16:12 on November 16, 2026.
+- **Data** — 48,000 synthetic news articles spanning January 1, 2018 through December 17, 2024 (2,455 days), with 30- and 60-day gaps. The random seed was `20261116`. Keyword extraction used the repository's default v0.3 token and phrase rules.
+- **Decay modes** — `EngineConfig.decay_unit` supports `article` (one step per article) and `day` (one step per elapsed calendar day, with zero steps between articles dated the same day).
+- **Overall result** — 28 passed, 0 failed, 2 not run, out of 30 checks. Runtime was 33.8 seconds.
 
-**V1 설정**: c=0.1, θ=0.5, 감쇠 단위=일(steps=날짜 차이, 같은 날 0) 및 기사(steps=1). 직접 합산은 score_t(w)=Σ_(i≤t, w∈doc_i) (1-c)^(T_t-T_i)을 키워드별로 float으로 계산.
+## V1. Direct-summation reference
 
+The direct-summation check used a decay rate of `c = 0.1` and a pruning threshold of `θ = 0.5`. For each keyword, the reference summed `(1 - c)^(T_t - T_i)` over all articles up to the current step that contained the keyword. The reference used floating-point arithmetic and evaluated both article-based and day-based decay.
 
-#### V2-1. 메모리 (평가 구간 평균값; Python 크기 = deep_sizeof(window), 오차 추적 상태 포함, 2,000건마다 표본)
+## V2. Decaying window
 
-| 감쇠 단위 | θ | 저장 키워드 수 (근사/기준) | 감소율 | 힙 항목 평균 | Python 집계 크기 (근사/기준) | 객체 감소율 | 근사 최대 키워드 | 누적 삭제 |
+### V2-1. Aggregation memory
+
+The table reports averages across samples taken every 2,000 articles, except where the column specifies a peak or cumulative total. Python aggregation size was measured with `deep_sizeof` and includes keyword lifetime and error-tracking state.
+
+| Decay unit | θ | Stored keywords (approx. / reference) | Keyword reduction | Mean heap entries | Python aggregation memory (approx. / reference) | Memory reduction | Peak approx. keywords | Cumulative removals |
 |---|---|---|---|---|---|---|---|---|
-| 기사 | 0.1 | 5,911 / 27,865 | 78.8% | 6,932 | 1.82 MB / 2.99 MB | 39.2% | 6133 | 76,610 |
-| 기사 | 0.5 | 2,735 / 27,865 | 90.2% | 3,366 | 0.84 MB / 2.99 MB | 71.9% | 2940 | 106,378 |
-| 기사 | 0.9 | 1,016 / 27,865 | 96.4% | 1,672 | 0.35 MB / 2.99 MB | 88.3% | 1107 | 139,685 |
-| 일 | 0.5 | 843 / 24,924 | 96.6% | 1,503 | 0.31 MB / 2.47 MB | 87.6% | 1091 | 172,784 |
+| Article | 0.1 | 5,911 / 27,865 | 78.8% | 6,932 | 1.82 MB / 2.99 MB | 39.2% | 6133 | 76,610 |
+| Article | 0.5 | 2,735 / 27,865 | 90.2% | 3,366 | 0.84 MB / 2.99 MB | 71.9% | 2940 | 106,378 |
+| Article | 0.9 | 1,016 / 27,865 | 96.4% | 1,672 | 0.35 MB / 2.99 MB | 88.3% | 1107 | 139,685 |
+| Day | 0.5 | 843 / 24,924 | 96.6% | 1,503 | 0.31 MB / 2.47 MB | 87.6% | 1091 | 172,784 |
 
+### V2-2. Top-K overlap and entry detection
 
-#### V2-2. Top K 일치율·진입 이벤트·탐지 지연 (측정 간격 50기사 스냅샷; 지연 해상도 = 50기사)
+Snapshots were taken every 50 articles. The matching tolerance was ±1,000 articles for article-based decay and ±11 days for day-based decay. Top-K overlap measures agreement with the unpruned reference.
 
-| 감쇠 단위 | θ | Top10 겹침 | Top20 겹침 평균 | 최저 | 순서까지 동일 | 기준 이벤트 | 대응(재현율) | 같은 스냅샷 | 이르게/늦게 | |시점차| 중앙/p95/최대(기사) | 허용범위 밖 늦은 진입 | 관측 종료까지 대기 | 기준 Top K 이탈 | 근사 단독 진입 |
+| Decay unit | θ | Top-10 overlap | Mean Top-20 overlap | Minimum Top-20 overlap | Identical order | Reference entries | Matched (recall) | Same snapshot | Early / late | Absolute offset in articles (median / p95 / max) | Late beyond tolerance | Pending at end | Left reference Top K | Approx.-only entries |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 기사 | 0.1 | 100.00% | 100.00% | 100.0% | 100.0% | 57 | 57 (100.0%) | 100.0% | 0.0% / 0.0% | 0 / 0 / 0 | 0 | 0 | 0 | 0 |
-| 기사 | 0.5 | 100.00% | 100.00% | 100.0% | 100.0% | 57 | 57 (100.0%) | 100.0% | 0.0% / 0.0% | 0 / 0 / 0 | 0 | 0 | 0 | 0 |
-| 기사 | 0.9 | 100.00% | 100.00% | 100.0% | 100.0% | 57 | 57 (100.0%) | 100.0% | 0.0% / 0.0% | 0 / 0 / 0 | 0 | 0 | 0 | 0 |
-| 일 | 0.5 | 99.98% | 99.94% | 60.0% | 99.3% | 217 | 214 (98.6%) | 100.0% | 0.0% / 0.0% | 0.0 / 0 / 0 | 0 | 0 | 3 | 12 |
+| Article | 0.1 | 100.00% | 100.00% | 100.0% | 100.0% | 57 | 57 (100.0%) | 100.0% | 0.0% / 0.0% | 0 / 0 / 0 | 0 | 0 | 0 | 0 |
+| Article | 0.5 | 100.00% | 100.00% | 100.0% | 100.0% | 57 | 57 (100.0%) | 100.0% | 0.0% / 0.0% | 0 / 0 / 0 | 0 | 0 | 0 | 0 |
+| Article | 0.9 | 100.00% | 100.00% | 100.0% | 100.0% | 57 | 57 (100.0%) | 100.0% | 0.0% / 0.0% | 0 / 0 / 0 | 0 | 0 | 0 | 0 |
+| Day | 0.5 | 99.98% | 99.94% | 60.0% | 99.3% | 217 | 214 (98.6%) | 100.0% | 0.0% / 0.0% | 0.0 / 0 / 0 | 0 | 0 | 3 | 12 |
 
+### V2-3. Score error and implementation bounds
 
-#### V2-3. 점수 오차와 구현 제공 상한의 비교
-
-| 감쇠 단위 | θ | TopK 합집합 최대 오차 | 전체 키워드 최대 오차 | 상한 θ/(1-θ) | 상한 초과 | key_error 초과 | 음수(근사>기준) |
+| Decay unit | θ | Max error across either Top K | Max error across all keywords | Bound θ/(1-θ) | Bound violations | `key_error` violations | Approx. score above reference |
 |---|---|---|---|---|---|---|---|
-| 기사 | 0.1 | 0.0 | 0.1048 | 0.1111 | 0 | 0 | 0 |
-| 기사 | 0.5 | 0.0 | 0.8528 | 1.0 | 0 | 0 | 0 |
-| 기사 | 0.9 | 0.0 | 3.7768 | 9.0 | 0 | 0 | 0 |
-| 일 | 0.5 | 0.4829 | 0.6947 | 1.0 | 0 | 0 | 0 |
+| Article | 0.1 | 0.0 | 0.1048 | 0.1111 | 0 | 0 | 0 |
+| Article | 0.5 | 0.0 | 0.8528 | 1.0 | 0 | 0 | 0 |
+| Article | 0.9 | 0.0 | 3.7768 | 9.0 | 0 | 0 | 0 |
+| Day | 0.5 | 0.4829 | 0.6947 | 1.0 | 0 | 0 | 0 |
 
-- Top K 일치율은 두 구현(전체 유지 vs 제거)의 결과가 얼마나 비슷한지를 나타내는 상대 비교 지표이지, 실제 화제를 맞힌 정확도가 아니다.
+## V3. DGIM setup
 
+For each tracked keyword, an article contributed one bit indicating whether its title contained the keyword. DGIM estimated the count in the index interval `(t-N, t]`. The table below reports the relative-error bound applied to each configuration. The midpoint and textbook estimates differed by 0.5 when the bucket list was nonempty.
 
-**V3 설정**: DGIM(N, r) 추정 구간 (t-N, t], 비트 = 키워드가 제목에 1회 이상 등장(문서 빈도). 상대 오차 상한 1/(2(r-1)) (textbook은 소량 구간 0.5 보정, 기존 tests/test_algorithms.py 관례).
+## V4. DGIM error, bucket counts, and memory
 
+The tracked keywords were `tracka` (246 articles), `trackb` (992), `trackc` (3,863), `trackd` (14,481), and `tracke` (2,186). Results are aggregated across the tracked keywords. Logical bits use the compact storage model implemented in `memory_bits()`. Python bytes use `deep_sizeof` to estimate the in-memory object size per tracked keyword.
 
-**V4 추적 키워드** (제목에 1회 이상 → 1): `tracka` 246회, `trackb` 992회, `trackc` 3,863회, `trackd` 14,481회, `tracke` 2,186회
-
-
-#### V4. DGIM 오차·버킷·메모리 (추적 키워드당 평균, 합성 스트림)
-
-| N | r | 추정 | 평가 수 | 절대 오차 평균 | 절대 오차 최대 | 상대오차 평균 | p95 | 최대 / 상한 | 부분창 절대 오차 최대 | 버킷 평균/최대 | 논리 bit DGIM | 논리 bit 정확 | Python B DGIM | Python B 정확 |
+| N | r | Estimator | Evaluations | Mean absolute error | Max absolute error | Mean relative error | p95 relative error | Max relative error / bound | Max partial-window absolute error | Buckets (mean / max) | DGIM logical bits | Exact logical bits | DGIM Python bytes | Exact Python bytes |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 500 | 2 | midpoint | 955 | 4.845 | 120.5 | 8.48% | 22.73% | 38.9% / 50% | 0.0 | 5.1 / 14 | 66 | 201 | 850 | 2,440 |
 | 500 | 3 | midpoint | 955 | 2.671 | 56.5 | 4.79% | 13.64% | 21.4% / 25% | 0.0 | 7.1 / 20 | 92 | 201 | 1,073 | 2,440 |
@@ -64,42 +68,29 @@
 | 8,000 | 3 | midpoint | 805 | 46.625 | 255.5 | 5.67% | 15.26% | 20.1% / 25% | 255.5 | 15.5 / 28 | 264 | 4,123 | 2,004 | 24,880 |
 | 8,000 | 5 | midpoint | 805 | 32.079 | 254.5 | 3.89% | 9.03% | 10.9% / 12% | 127.5 | 24.4 / 44 | 416 | 4,123 | 2,948 | 24,880 |
 
-- 논리 비트 = 압축 저장 가정 모델(`memory_bits()`); Python B = `deep_sizeof` 실제 객체 크기(키워드당). 두 값은 단위·의미가 다르며 별개로 해석해야 한다.
+## Check results
 
+All C2 and C2D checks passed. The tables in V2 report the measured score errors, Top-K overlap, and entry timing for each threshold. The three unmatched day-based entries left the reference Top K before a match was recorded.
 
-## 항목별 정리 (통과 / 실패 / 미실행)
-
-| ID | 항목 | 결과 | 비고 |
+| ID | Check | Status | Evidence |
 |---|---|---|---|
-| C1.1 | 기준(전체 유지) 점수 == 기사 가중치 직접 합산(일 단위, 같은 날/긴 간격 포함) | 통과 | 45건 전 시점 전 키워드 일치 (오차 < 1e-9) |
-| C1.2 | 손계산 기댓값(같은 시각 2건, 30일 간격 등) 대조 | 통과 |  |
-| C1.3 | 제거된 키워드 재등장: 점수 1부터 재시작, 오차 ≤ key_error·상한 | 통과 | drop일=39(39 예상), 재등장 점수=1.000000(1.0 예상), 기준=1.014318, 오차=0.014318 ≤ key_error=0.900, 상한=1.00 |
-| C1.4 | 제거 규칙(θ 미만 삭제)이 교과서 규칙과 임의 입력(일 단위 steps 혼합)에서 동일 | 통과 | 2000건 전 시점 집합·점수 일치 |
-| C1.5 | 기사 단위(steps=1) 감쇠도 직접 합산과 일치 | 통과 | 1500건·전 키워드 일치 |
-| C2.a | 점수 오차 상한(θ=0.1): 실제 오차가 상한 θ/(1-θ)와 key_error를 넘지 않음 | 통과 | TopK 합집합 최대 오차 0.0 ≤ 상한 0.1111, 전체 키워드 최대 0.1048, 상한 초과 0건, key_error 초과 0건, 음수(기준 초과) 0건 |
-| C2.b | Top K 구성원 일치율 산출(θ=0.1) · 두 구현 유사성 지표 | 통과 | Top10 100.00%, Top20 평균 100.00%, 최저 100.0%, 순서까지 동일 100.0% |
-| C2.c | 신규 진입 누락·탐지 지연(θ=0.1) · 측정 간격 50건 | 통과 | 기준 이벤트 57개 중 대응 57개(재현율 100.0%), 누락 0개 = 늦은 진입(허용 범위 밖) 0 + 관측 종료까지 대기 0 + 기준 Top K 이탈 0. 대응된 이벤트 시점차(기사 수) 중앙값 0, p95 0, 최대 0 (허용 범위 ±1000건) |
-| C2.a | 점수 오차 상한(θ=0.5): 실제 오차가 상한 θ/(1-θ)와 key_error를 넘지 않음 | 통과 | TopK 합집합 최대 오차 0.0 ≤ 상한 1.0, 전체 키워드 최대 0.8528, 상한 초과 0건, key_error 초과 0건, 음수(기준 초과) 0건 |
-| C2.b | Top K 구성원 일치율 산출(θ=0.5) · 두 구현 유사성 지표 | 통과 | Top10 100.00%, Top20 평균 100.00%, 최저 100.0%, 순서까지 동일 100.0% |
-| C2.c | 신규 진입 누락·탐지 지연(θ=0.5) · 측정 간격 50건 | 통과 | 기준 이벤트 57개 중 대응 57개(재현율 100.0%), 누락 0개 = 늦은 진입(허용 범위 밖) 0 + 관측 종료까지 대기 0 + 기준 Top K 이탈 0. 대응된 이벤트 시점차(기사 수) 중앙값 0, p95 0, 최대 0 (허용 범위 ±1000건) |
-| C2.a | 점수 오차 상한(θ=0.9): 실제 오차가 상한 θ/(1-θ)와 key_error를 넘지 않음 | 통과 | TopK 합집합 최대 오차 0.0 ≤ 상한 9.0, 전체 키워드 최대 3.7768, 상한 초과 0건, key_error 초과 0건, 음수(기준 초과) 0건 |
-| C2.b | Top K 구성원 일치율 산출(θ=0.9) · 두 구현 유사성 지표 | 통과 | Top10 100.00%, Top20 평균 100.00%, 최저 100.0%, 순서까지 동일 100.0% |
-| C2.c | 신규 진입 누락·탐지 지연(θ=0.9) · 측정 간격 50건 | 통과 | 기준 이벤트 57개 중 대응 57개(재현율 100.0%), 누락 0개 = 늦은 진입(허용 범위 밖) 0 + 관측 종료까지 대기 0 + 기준 Top K 이탈 0. 대응된 이벤트 시점차(기사 수) 중앙값 0, p95 0, 최대 0 (허용 범위 ±1000건) |
-| C2D.a | 점수 오차 상한(θ=0.5): 실제 오차가 상한 θ/(1-θ)와 key_error를 넘지 않음 | 통과 | TopK 합집합 최대 오차 0.4829 ≤ 상한 1.0, 전체 키워드 최대 0.6947, 상한 초과 0건, key_error 초과 0건, 음수(기준 초과) 0건 |
-| C2D.b | Top K 구성원 일치율 산출(θ=0.5) · 두 구현 유사성 지표 | 통과 | Top10 99.98%, Top20 평균 99.94%, 최저 60.0%, 순서까지 동일 99.3% |
-| C2D.c | 신규 진입 누락·탐지 지연(θ=0.5) · 측정 간격 50건 | 통과 | 기준 이벤트 217개 중 대응 214개(재현율 98.6%), 누락 3개 = 늦은 진입(허용 범위 밖) 0 + 관측 종료까지 대기 0 + 기준 Top K 이탈 3. 대응된 이벤트 시점차(기사 수) 중앙값 0.0, p95 0, 최대 0 (허용 범위 ±11일) |
-| C3.1 | 언급 없음: 추정치 0, 버킷 0 | 통과 | estimate(0)=0.0, estimate(100)=0.0, buckets=0 |
-| C3.2 | N 미축적 상태 + 버킷 합치기: 합친 버킷은 최신 타임스탬프 유지, 추정치는 참 범위 안 | 통과 | buckets=[[2, 1], [1, 2]] (기대 [[2,1],[1,2]]), estimate(2)=2.5 (기대 2.5, 참 범위 [2,3]) |
-| C3.3 | 오래된 언급이 창 밖으로 나가면 만료되어 추정치 감소 | 통과 | estimate(9)=2.5(2.5), estimate(11)=1.0(1.0, 정확), estimate(12)=0.0(0.0) |
-| C3.4 | 같은 시각 중복 add는 무시(제목 1회 이상 → 1) | 통과 | estimate(6)=2.0 (기대 2.0) |
-| C3.5 | midpoint와 textbook 추정치 차이는 버킷이 있으면 0.5, 비어 있으면 0 | 통과 | 300 step 무작위 스트림 전 시점 확인 |
-| C3.6 | 기사 제목 유무 비트(같은 추적 시작점·최근 N개)에서 DGIM≈직접 집계, 정확 집계==직접 집계 | 통과 | bits=[1, 1, 0, 1, 0, 1], N=4, DGIM 오류 없음, 정확 집계 오류 없음 |
-| C3.7 | 무작위 스트림 4000step: 불변식(크기 2의 거듭제곱·r개 이하·시간 감소) 및 상대 오차 상한 준수 | 통과 | r=2/midpoint 최대 상대오차 0.248; r=2/textbook 최대 상대오차 0.500; r=3/midpoint 최대 상대오차 0.202; r=3/textbook 최대 상대오차 0.500; r=5/midpoint 최대 상대오차 0.114; r=5/textbook 최대 상대오차 0.500 |
-| C4.1 | 재생 실험 전 구간에서 DGIM 오차가 상한 내, 실제 횟수 0일 때 추정 0 | 통과 | 상한 초과 0건, 0 구간 오측 0건 |
-| C4.2 | 효율적 정확 집계(ExactWindowCount) == 직접 집계(같은 창·같은 시작점) | 통과 | 불일치 0건 |
-| C4.3 | 이론 비트(memory_bits 모델)와 실제 Python 객체 크기(deep_sizeof) 구분 기록 | 통과 | 표 참조: 논리 비트는 버킷당 log2N+log2log2N(DGIM) / min(등장수·log2N, N)(정확) 가정, Python 열은 실제 리스트·deque 객체 크기 |
-| C5.1 | GDELT 기사 데이터 재생 검증 | 미실행 | 로컬에 재생 가능한 GDELT 기사 데이터가 없음(집계 CSV도 없음). 저장소에 GDELT 로더·참조가 없고 verify/verify_gdelt.py는 빈 플레이스홀더. 합성 입력으로 정확성만 검증함. |
-| C5.2 | HuffPost 데이터 별도 재생 실험 | 미실행 | data/raw/News_Category_Dataset_v3.json 없음(News_Category_Dataset_v3.json 미발견). 데이터가 있으면 본 스크립트의 V2/V4를 실제 기사 스트림에 적용해야 함. |
-| C5.3 | 합성 입력 생성·기록 | 통과 | 48,000건, 2018-01-01 ~ 2024-12-17 (2,455일, 긴 간격 30일·60일 포함), seed=20261116 |
-
-**총 30항목: 통과 28 / 실패 0 / 미실행 2** (소요 33.8초)
+| C1.1 | Day-based reference against direct summation | Passed | All keywords matched at every step across 45 articles, with error below 1e-9. The input included same-day articles and long gaps. |
+| C1.2 | Hand-calculated examples | Passed | Included two articles at the same time and a 30-day gap. |
+| C1.3 | Reappearance after pruning | Passed | The keyword was removed on day 39 and restarted at 1.000000 on reappearance. The reference score was 1.014318. Error was 0.014318, below `key_error` (0.900) and the bound (1.00). |
+| C1.4 | Pruning below θ against the textbook rule | Passed | Active sets and scores agreed at every step across 2,000 articles with mixed day increments. |
+| C1.5 | Article-based reference against direct summation | Passed | All keyword scores agreed across 1,500 articles. |
+| C2.a–c | Article-based score bounds, overlap, and entry timing at θ = 0.1, 0.5, and 0.9 | Passed (9 checks) | All 57 reference entries matched at the same snapshot for each threshold. See V2. |
+| C2D.a–c | Day-based score bounds, overlap, and entry timing at θ = 0.5 | Passed (3 checks) | 214 of 217 reference entries matched at the same snapshot. See V2. |
+| C3.1 | Stream with no mentions | Passed | Both queries (at 0 and 100) returned 0.0 with zero buckets. |
+| C3.2 | Partial window and bucket merge | Passed | The merged bucket retained the newer timestamp. Buckets were `[[2, 1], [1, 2]]` as expected. The estimate at index 2 was 2.5, within the expected interval [2, 3]. |
+| C3.3 | Window expiration | Passed | Estimates at indices 9, 11, and 12 were 2.5, 1.0, and 0.0, respectively. All matched the expected values. |
+| C3.4 | Duplicate adds at the same index | Passed | The estimate at index 6 was 2.0 as expected. |
+| C3.5 | Difference between midpoint and textbook estimators | Passed | The difference was 0.5 for nonempty buckets and zero for empty buckets at every step of a 300-step random stream. |
+| C3.6 | DGIM and exact counting against a direct count | Passed | The check used bits `[1, 1, 0, 1, 0, 1]` and `N = 4`, with a common tracking start. Both estimators met their respective checks. |
+| C3.7 | Bucket invariants and relative-error bounds | Passed | The 4,000-step random stream preserved power-of-two buckets, at most `r` buckets per size, and descending timestamps. For `r = 2, 3, 5`, midpoint maximum relative errors were 0.248, 0.202, and 0.114. The textbook maximum was 0.500 in each case. |
+| C4.1 | DGIM error bounds and windows with zero mentions | Passed | Zero bound violations and zero nonzero estimates on windows with an exact count of zero. |
+| C4.2 | Efficient exact count against a direct count | Passed | `ExactWindowCount` matched every query for the same window and tracking start. |
+| C4.3 | Logical storage and Python object size | Passed | V4 reports both measurements. The model assumes `log2(N) + log2(log2(N))` bits per DGIM bucket and `min(mentions × log2(N), N)` bits for exact counting. Python measurements cover the list and deque objects. |
+| C5.1 | GDELT replay | Not run | No local replay data or aggregate CSV was available. At the time of the run, the repository had no GDELT loader and `verify/verify_gdelt.py` was an empty placeholder. |
+| C5.2 | Separate HuffPost replay | Not run | `data/raw/News_Category_Dataset_v3.json` was unavailable. V2 and V4 can be run on the HuffPost article stream when the input is available. |
+| C5.3 | Synthetic input generation and recording | Passed | Generated 48,000 articles over 2,455 days with 30- and 60-day gaps using seed `20261116`. |
