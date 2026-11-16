@@ -77,6 +77,7 @@ def create_app(cache_path: str = CACHE_PATH, evidence_path: str = EVIDENCE_PATH)
         return jsonify({"t": s["t"], "articles": s["articles"], "variant": s["variant"], "tab": tab,
                         "kind": kind, "window": tb["window"], "status": tb["status"],
                         "status_ko": tb.get("label_ko"), "qualified": tb.get("qualified"),
+                        "candidates": tb.get("candidates"),
                         "elapsed_days": tb.get("elapsed_days"), "rows": tb["rows"][kind],
                         "gaps": s["gaps"], "countries": s["countries"], "events": s["events"]})
 

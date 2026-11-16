@@ -41,6 +41,8 @@
 .g-table tbody tr { cursor: pointer; transition: background .12s; }
 .g-table tbody tr:hover, .g-table tbody tr:focus-visible { background: var(--accent-wash); outline: none; }
 .g-table .rank { color: var(--muted); width: 28px; }
+.g-table tr.g-group th { text-align: left; font-size: 12.5px; color: var(--text); background: var(--surface-2); padding: 8px; cursor: default; }
+.g-table tbody tr.g-group:hover { background: transparent; }
 .g-kind { display: inline-block; font: 700 10px var(--font); padding: 1px 6px; border-radius: 5px; margin-right: 6px; vertical-align: 1px; }
 .g-kind.P { background: var(--accent-soft); color: var(--accent-ink); }
 .g-kind.O { background: var(--orange-soft); color: var(--orange-ink); }

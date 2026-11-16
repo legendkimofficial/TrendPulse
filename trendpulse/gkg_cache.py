@@ -10,7 +10,10 @@ Per stored snapshot (``payload`` JSON):
   tabs.major  7-day issues: 168 h window Top N per key kind, with burst/steady labels
   tabs.new    72-hour new issues: qualified keys by lift per key kind (status may be
               warming_up / insufficient, then no rows)
-  tabs.trend  30-day burst/steady: 720 h window Top N per key kind, with labels
+  tabs.trend  30-day burst/steady: candidates = 168 h window Top 2,000, labelled by
+              ratio = (r168+α)/(r720+α); per key kind three groups of 10 (row field
+              "group"): rising by ratio desc, cooling by ratio asc, steady by 168 h score.
+              Empty while the label is warming_up / insufficient.
   countries   country mentions (type-1 places) in a separate 168 h decaying window
   gaps        missing-slot ratio per window
   events      new-issue entry events since the previous stored snapshot
@@ -47,7 +50,7 @@ CACHE_PATH = os.path.join(PROCESSED, "gkg_cache.sqlite")
 EVIDENCE_PATH = os.path.join(PROCESSED, "gkg_app_evidence.sqlite")
 KINDS = {"all": None, "P": "P:", "O": "O:", "L": "L:"}
 KIND_KO = {"P": "인물", "O": "기관", "L": "장소"}
-CACHE_VERSION = 2
+CACHE_VERSION = 3
 LABEL_KO_ALL = {**LABELS_KO, "new": "신규 이슈"}
 
 
@@ -61,6 +64,7 @@ class CacheConfig:
     countries_n: int = 15
     dgim_n: int = 160_000             # ≈ one day of articles
     evidence_limit: int = 20
+    trend_group_n: int = 10           # rows per label group in the 30-day tab
 
 
 def module_hashes() -> dict:
@@ -113,6 +117,19 @@ def read_meta(path: str = CACHE_PATH) -> dict | None:
 
 def kind_of(key: str) -> str:
     return key[0]
+
+
+TREND_GROUPS = ("rising", "cooling", "steady")
+
+
+def trend_groups(cands: list[dict], n: int = 10) -> dict:
+    """30-day tab groups from labelled candidates given in 168h score order:
+    rising by ratio descending, cooling by ratio ascending, steady in 168h score order;
+    ties by key. Each group keeps at most n rows."""
+    rising = sorted((c for c in cands if c["label"] == "rising"), key=lambda c: (-c["ratio"], c["key"]))
+    cooling = sorted((c for c in cands if c["label"] == "cooling"), key=lambda c: (c["ratio"], c["key"]))
+    steady = [c for c in cands if c["label"] == "steady"]
+    return {"rising": rising[:n], "cooling": cooling[:n], "steady": steady[:n]}
 
 
 class _Collector:
@@ -231,11 +248,24 @@ class _Collector:
             ratio, lab = label_for(key)
             return self._row(eng, t, key, s, w168.rate_from_score(s, t), lab, g168, n, {"ratio": rnd(ratio)})
 
-        def trend_row(item):
-            key, s = item
-            ratio, lab = label_for(key)
-            return self._row(eng, t, key, s, w720.rate_from_score(s, t), lab, g720, n,
-                             {"ratio": rnd(ratio), "rate_168h": rnd(w168.bias_corrected_rate(key, t))})
+        # 30-day tab: candidates = 168h Top M; three groups per key kind (see trend_groups)
+        trend_rows = {k: [] for k in KINDS}
+        if trend_status == "ok":
+            cands = []
+            for key, s in w168.top(w168.top_m):
+                r168 = w168.rate_from_score(s, t)
+                r720 = w720.bias_corrected_rate(key, t)
+                if r168 is None or r720 is None:
+                    continue
+                ratio = smoothed_ratio(r168, r720, cfg_e.alpha)
+                cands.append({"key": key, "score": s, "rate": r168, "rate_720h": r720, "ratio": ratio,
+                              "label": trend_label(ratio, cfg_e.trend_factor)})
+            for kind, prefix in KINDS.items():
+                sub = [c for c in cands if prefix is None or c["key"].startswith(prefix)]
+                trend_rows[kind] = [
+                    self._row(eng, t, c["key"], c["score"], c["rate"], c["label"], max(g168, g720), n,
+                              {"ratio": rnd(c["ratio"]), "rate_720h": rnd(c["rate_720h"]), "group": group})
+                    for group, rows in trend_groups(sub, self.cfg.trend_group_n).items() for c in rows]
 
         new = det.get("new") or {}
         new_status = new.get("status", "warming_up")
@@ -259,9 +289,9 @@ class _Collector:
                         "qualified": len(eng.new_ranked),
                         "rows": self._per_kind(eng.new_ranked, new_row) if new_status == "ok"
                         else {k: [] for k in KINDS}},
-                "trend": {"window": "720h", "status": trend_status,
+                "trend": {"window": "168h", "status": trend_status,
                           "elapsed_days": trend.get("elapsed_days"),
-                          "rows": self._per_kind(w720.top(w720.top_m), trend_row)},
+                          "candidates": w168.top_m, "rows": trend_rows},
             },
             "countries": [{"name": k, "score": round(s, 2),
                            "rate": None if self.countries.rate_from_score(s, t) is None

@@ -198,7 +198,7 @@ class TimeDecayWindow:
         """Top k from the last snapshot as (key, score at t; default the snapshot time)."""
         if k > self.top_m:
             raise ValueError(f"k={k} exceeds top_m={self.top_m}")
-        if self.snap_t is None:
+        if self.snap_t is None or self._ref is None:     # no snapshot yet, or nothing added yet
             return []
         f = self._factor(self.snap_t if t is None else t)
         return [(key, v * f) for key, v in self._ranked[:k]]

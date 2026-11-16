@@ -143,6 +143,12 @@ class TimeDecayWindowTest(unittest.TestCase):
                 t = T0 + s_ * SLOT + SLOT                     # end of the slot
                 self.assertAlmostEqual(w.bias_corrected_rate("P:c", t), 16.0, delta=16 * 0.01)
 
+    def test_top_on_empty_window(self):
+        w = TimeDecayWindow(168)
+        w.snapshot(T0)                    # snapshot before any key was added
+        self.assertEqual(w.top(5), [])
+        self.assertEqual(w.top(5, T0 + 3600), [])
+
     def test_invalid_args(self):
         with self.assertRaises(ValueError):
             TimeDecayWindow(0)

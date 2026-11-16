@@ -83,6 +83,7 @@
     ];
     if (tab === "new") base.push(["lift", ""], ["72h 기사", ""]);
     if (tab !== "new") base.push(["ratio", ""]);
+    if (tab === "trend") base.splice(3, 1, ["168h 보도율/h", ""]);
     base.push(["근거 기사", ""], ["언론사(72h)", ""], ["분류", "l"], ["빈 구간", ""], ["θ", ""]);
     return base;
   }
@@ -102,9 +103,20 @@
     if (!rows.length) {
       $("tbody").innerHTML = `<tr><td colspan="${columns(s.tab).length}" class="l g-muted">${s.status === "ok" ? "조건을 통과한 키가 없습니다." : "보류 중이라 목록이 없습니다."}</td></tr>`;
     } else {
+      const GROUP_KO = {
+        rising: "최근 급증 · ratio 내림차순", cooling: "식는 중 · ratio 오름차순", steady: "꾸준 · 168h 점수순",
+      };
+      let lastGroup = null, gi = 0;
       $("tbody").innerHTML = rows.map((r, i) => {
+        let head = "";
+        if (s.tab === "trend" && r.group !== lastGroup) {
+          lastGroup = r.group; gi = 0;
+          const n = rows.filter((x) => x.group === r.group).length;
+          head = `<tr class="g-group"><th colspan="${columns(s.tab).length}" scope="colgroup">${esc(GROUP_KO[r.group] || r.group)} <span class="g-muted">(${n})</span></th></tr>`;
+        }
+        const rank = s.tab === "trend" ? ++gi : i + 1;
         const cells = [
-          `<td class="rank">${i + 1}</td>`,
+          `<td class="rank">${rank}</td>`,
           `<td class="name"><span class="g-kind ${esc(r.kind)}">${esc(KIND_KO[r.kind])}</span>${esc(r.name)}</td>`,
           `<td>${num(r.score, 1)}</td>`, `<td>${num(r.rate, 1)}</td>`,
         ];
@@ -116,14 +128,14 @@
           `<td class="l"><span class="g-label ${esc(r.label)}">${esc(r.label_ko)}</span></td>`,
           `<td>${pct(r.gap)}</td>`,
           `<td>${r.approx ? '<span class="g-approx" title="θ 삭제 근사: 과소추정 가능">근사</span>' : '<span class="g-muted" title="삭제 없는 정확 기준">정확</span>'}</td>`);
-        return `<tr tabindex="0" data-key="${esc(r.key)}">${cells.join("")}</tr>`;
+        return head + `<tr tabindex="0" data-key="${esc(r.key)}">${cells.join("")}</tr>`;
       }).join("");
     }
     $("tableFoot").textContent = s.tab === "new"
       ? `lift = (72h 보도율+1)/(168h 보도율+1). 후보는 72h 상위 2,000개, 조건: 최근 72시간 기사 ≥ 20, 언론사 ≥ 5 (조건 통과 ${num(s.qualified, 0)}개). 언론사 수는 최대 8곳까지 근사.`
       : s.tab === "major"
         ? "168h(7일) 감쇠 점수 순. ratio = (168h 보도율+1)/(720h 보도율+1): ≥1.5 최근 급증, 1/1.5~1.5 꾸준, <1/1.5 식는 중."
-        : "720h(30일) 감쇠 점수 순. 분류는 168h와 720h 보정 보도율의 비율로 정합니다.";
+        : `후보는 168h 상위 ${num(s.candidates, 0)}개. ratio = (168h 보도율+1)/(720h 보도율+1)로 나눈 세 칸: 최근 급증(≥1.5, ratio 큰 순) · 식는 중(<1/1.5, ratio 작은 순) · 꾸준(168h 점수순), 칸마다 10개. 키 종류 필터를 먼저 적용합니다.`;
   }
 
   function renderGaps(s) {

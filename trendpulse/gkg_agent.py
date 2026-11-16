@@ -75,9 +75,14 @@ class GkgTools:
         kind = kind if kind in ("all", "P", "O", "L") else "all"
         k = max(1, min(int(k or 10), 20))
         t = self.snap["tabs"][tab]
+        src = t["rows"][kind]
+        if tab == "trend":      # three groups: first k of each
+            src = [r for g in ("rising", "cooling", "steady") for r in [x for x in src if x.get("group") == g][:k]]
+        else:
+            src = src[:k]
         rows = [{"rank": i, "key": r["key"], "rate_per_hour": r["rate"], "label": r["label_ko"],
-                 "evidence": r["evidence"], "outlets": r["outlets"]}
-                for i, r in enumerate(t["rows"][kind][:k], 1)]
+                 "ratio": r.get("ratio"), "evidence": r["evidence"], "outlets": r["outlets"]}
+                for i, r in enumerate(src, 1)]
         return {"tab": TAB_KO[tab], "status": t["status"], "as_of": iso(self.snap["t"]), "rows": rows}
 
     def get_key_detail(self, key: str) -> dict:

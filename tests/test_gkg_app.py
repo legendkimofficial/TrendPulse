@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 from unittest import mock
 
 from trendpulse import gkg_agent
-from trendpulse.gkg_cache import CacheConfig, CacheReader, ensure_cache
+from trendpulse.gkg_cache import CacheConfig, CacheReader, ensure_cache, trend_groups
 
 DAYS = ("2024-10-01", "2024-10-02")
 
@@ -106,6 +106,8 @@ class AppTest(unittest.TestCase):
         self.assertTrue(persons and all(x["key"].startswith("P:") for x in persons))
         new = self.client.get("/api/gkg/snapshot?tab=new").get_json()
         self.assertEqual((new["status"], new["rows"]), ("warming_up", []))   # 2 days < 7
+        tr = self.client.get("/api/gkg/snapshot?tab=trend").get_json()
+        self.assertEqual((tr["status"], tr["rows"], tr["window"]), ("warming_up", [], "168h"))   # < 21 days
         self.assertEqual(self.client.get("/api/gkg/snapshot?tab=x").status_code, 400)
         self.assertEqual(self.client.get("/api/gkg/snapshot?kind=Z").status_code, 400)
         self.assertEqual(self.client.get("/api/gkg/snapshot?t=abc").status_code, 400)
@@ -195,6 +197,90 @@ class AppTest(unittest.TestCase):
             r = gkg_agent.ask(reader, "joe biden 왜?")
         self.assertEqual(r["mode"], "offline-fallback")
         self.assertIn("근거 검증", r["warning"])
+
+
+class TrendGroupsTest(unittest.TestCase):
+    def test_order_and_cap(self):
+        c = lambda k, ratio, lab: {"key": k, "ratio": ratio, "label": lab}  # noqa: E731
+        cands = [c("P:s1", 1.0, "steady"), c("P:r1", 1.6, "rising"), c("P:c1", 0.6, "cooling"),
+                 c("P:s2", 1.2, "steady"), c("P:r2", 2.4, "rising"), c("P:c2", 0.3, "cooling"),
+                 c("P:r3", 2.4, "rising"), c("P:s3", 0.9, "steady")]
+        g = trend_groups(cands, n=2)
+        self.assertEqual([x["key"] for x in g["rising"]], ["P:r2", "P:r3"])    # ratio desc, tie by key
+        self.assertEqual([x["key"] for x in g["cooling"]], ["P:c2", "P:c1"])   # ratio asc
+        self.assertEqual([x["key"] for x in g["steady"]], ["P:s1", "P:s2"])    # input (168h score) order
+        self.assertEqual(list(g), ["rising", "cooling", "steady"])
+
+
+class TrendTabTest(unittest.TestCase):
+    """22 days, so the 21-day warm-up is over at the end."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.mkdtemp(prefix="gkg_trend_")
+        root = os.path.join(cls.tmp, "gdelt")
+        d0 = datetime(2024, 9, 15, tzinfo=timezone.utc)
+        end = d0 + timedelta(days=22)
+        i, t = 0, d0
+        while t < end:
+            recs = []
+
+            def add(persons, n=1):
+                nonlocal i
+                for _ in range(n):
+                    recs.append({"id": f"x{i}", "ts": t.strftime("%Y%m%d%H%M%S"), "domain": f"s{i % 7}.com",
+                                 "url": f"https://s.com/{i}", "title": f"T{i}", "persons": persons, "orgs": [],
+                                 "places": [], "themes": [], "tone": None})
+                    i += 1
+            add(["Steady One"], 4)
+            add(["Steady Two"], 3)
+            add(["Org Holder"], 1)
+            if t < d0 + timedelta(days=6):
+                add(["Cool Six"], 4)
+            if t < d0 + timedelta(days=8):
+                add(["Cool Eight"], 4)
+            if t >= end - timedelta(hours=6):
+                add(["Burst Big"], 200)
+                add(["Burst Small"], 100)
+            day = t.strftime("%Y-%m-%d")
+            os.makedirs(os.path.join(root, "slim", day), exist_ok=True)
+            with gzip.open(os.path.join(root, "slim", day, t.strftime("%H%M") + ".jsonl.gz"), "wt",
+                           encoding="utf-8") as f:
+                for r in recs:
+                    f.write(json.dumps(r) + "\n")
+            t += timedelta(minutes=15)
+        cache, evid = os.path.join(cls.tmp, "c.sqlite"), os.path.join(cls.tmp, "e.sqlite")
+        ensure_cache(CacheConfig(), root=root, path=cache, evidence_path=evid, progress=None)
+        from app_gkg import create_app
+        cls.client = create_app(cache, evid).test_client()
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, ignore_errors=True)
+
+    def test_three_groups(self):
+        r = self.client.get("/api/gkg/snapshot?tab=trend&kind=all").get_json()
+        self.assertEqual(r["status"], "ok")
+        groups = {}
+        for row in r["rows"]:
+            groups.setdefault(row["group"], []).append(row)
+        self.assertEqual(list(groups), ["rising", "cooling", "steady"])
+        self.assertEqual([x["key"] for x in groups["rising"]], ["P:burst big", "P:burst small"])
+        self.assertEqual([x["key"] for x in groups["cooling"]], ["P:cool six", "P:cool eight"])
+        self.assertEqual([x["key"] for x in groups["steady"]], ["P:steady one", "P:steady two", "P:org holder"])
+        for row in groups["rising"]:
+            self.assertGreaterEqual(row["ratio"], 1.5)
+            self.assertEqual(row["label_ko"], "최근 급증")
+        for row in groups["cooling"]:
+            self.assertLess(row["ratio"], 1 / 1.5)
+        self.assertTrue(all(1 / 1.5 <= x["ratio"] < 1.5 for x in groups["steady"]))
+        self.assertGreater(groups["rising"][0]["ratio"], groups["rising"][1]["ratio"])
+        self.assertLess(groups["cooling"][0]["ratio"], groups["cooling"][1]["ratio"])
+
+    def test_kind_filter_applies(self):
+        self.assertEqual(self.client.get("/api/gkg/snapshot?tab=trend&kind=O").get_json()["rows"], [])
+        rows = self.client.get("/api/gkg/snapshot?tab=trend&kind=P").get_json()["rows"]
+        self.assertEqual(len(rows), 7)
 
 
 if __name__ == "__main__":
