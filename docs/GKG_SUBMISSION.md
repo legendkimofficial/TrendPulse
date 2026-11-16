@@ -5,6 +5,8 @@
 영향을 측정한다. 모든 수치의 출처는 `experiments/results/gkg/` 아래 JSON과 `summary.md`다.
 확인하지 못한 값은 **[미확인]**으로 표시했다.
 
+> 결과 파일의 커밋 번호는 이메일 수정 전 번호이며 대응표 참고: [docs/commit_map.md](commit_map.md)
+
 ## 1. 환경
 
 - Python 3.14.5 (Windows 11)에서 확인. 표준 라이브러리(sqlite3 포함) + `requirements.txt`(flask, matplotlib)만 사용.

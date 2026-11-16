@@ -1,5 +1,7 @@
 # GKG experiments summary
 
+> 결과 파일의 커밋 번호는 이메일 수정 전 번호이며 대응표 참고: [docs/commit_map.md](../../../docs/commit_map.md)
+
 <!-- gkg_experiments:begin -->
 ## GKG experiments (E1–E5)
 
