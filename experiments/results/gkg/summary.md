@@ -49,12 +49,12 @@ Measured on 2024-10-01 (`python scripts/gkg_build.py --start 2024-10-01 --end 20
 
 - command: `python scripts/gkg_run.py --start 2024-10-01 --end 2024-10-01`
 - result: `experiments/results/gkg/engine_2024-10-01_2024-10-01_72h-168h-720h_exact.json`
-- git: 07b6ffb29d7ceb4ac9227e0461bdc04ccba30f35 (dirty=True)
+- git: 43b1966dca5906da7ece872b2668b4917b20a989 (dirty=False)
 
 ```
 input   : 2024-10-01 .. 2024-10-01, 163,360 articles, 25 snapshots, stream sha256 c7d692a4709022ec…
-speed   : engine 31,813 articles/s, end-to-end 14,235 articles/s (read 6.34 s, engine 5.13 s)
-memory  : peak RSS 128.9 MB; decay structures ≈ 61.2 MB (key strings 281,424 unique, 17.8 MB)
+speed   : engine 20,394 articles/s, end-to-end 11,193 articles/s (read 6.59 s, engine 8.01 s)
+memory  : peak RSS 162.0 MB; decay structures ≈ 61.2 MB (key strings 281,424 unique, 17.8 MB)
     72h/exact      keys 281,424 (peak 281,424, deleted 0), ≈ 14.4 MB
    168h/exact      keys 281,424 (peak 281,424, deleted 0), ≈ 14.4 MB
    720h/exact      keys 281,424 (peak 281,424, deleted 0), ≈ 14.4 MB
@@ -93,6 +93,30 @@ evidence: 381 tracked keys, 6,121 articles, 11,211 postings, file 1.5 MB (data/g
    8. P:donald trump                              5206.7  221.7/h
    9. P:kamala harris                             5189.0  221.0/h
   10. L:london, london, city of, united kingdom    4999.1  212.9/h
+--- gaps (missing 15-min slots in each window's recent span)
+  72h 0.0% of 96, 168h 0.0% of 96, 720h 0.0% of 96
+--- new issues 72h (lift = (r72+1)/(r168+1)), status ok, 1916 keys passed >=20 articles & >=5 outlets; entry events in run: 153
+   1. P:erica wolff                            lift 1.05  r72 9.5/h  r168 9.0/h  articles 201  outlets 8
+   2. P:kunta kinte                            lift 1.05  r72 26.8/h  r168 25.5/h  articles 579  outlets 8
+   3. P:john amos                              lift 1.05  r72 29.4/h  r168 28.0/h  articles 637  outlets 8
+   4. P:mary tyler moore                       lift 1.05  r72 25.3/h  r168 24.1/h  articles 547  outlets 8
+   5. P:von miller                             lift 1.05  r72 5.7/h  r168 5.4/h  articles 120  outlets 8
+   6. P:gordy howard                           lift 1.05  r72 18.6/h  r168 17.7/h  articles 402  outlets 8
+   7. P:alex haley                             lift 1.05  r72 20.0/h  r168 19.0/h  articles 433  outlets 8
+   8. P:norman lear                            lift 1.05  r72 20.9/h  r168 19.9/h  articles 452  outlets 8
+   9. P:hank stram                             lift 1.05  r72 16.6/h  r168 15.8/h  articles 360  outlets 8
+  10. P:belinda foster                         lift 1.05  r72 19.6/h  r168 18.7/h  articles 425  outlets 8
+--- 168h Top 10 burst/steady (ratio = (r168+1)/(r720+1)), status warming_up, elapsed 0.99 days
+   1. L:new york, united states                ratio 1.01  warming_up (판별 준비 중)
+   2. L:washington, washington, united states  ratio 1.01  warming_up (판별 준비 중)
+   3. P:joe biden                              ratio 1.00  warming_up (판별 준비 중)
+   4. L:georgia, united states                 ratio 1.00  warming_up (판별 준비 중)
+   5. L:texas, united states                   ratio 1.01  warming_up (판별 준비 중)
+   6. L:florida, united states                 ratio 1.01  warming_up (판별 준비 중)
+   7. O:instagram                              ratio 1.01  warming_up (판별 준비 중)
+   8. P:donald trump                           ratio 1.00  warming_up (판별 준비 중)
+   9. P:kamala harris                          ratio 1.01  warming_up (판별 준비 중)
+  10. L:london, london, city of, united kingdom ratio 1.00  warming_up (판별 준비 중)
 ```
 <!-- engine_2024-10-01_2024-10-01_72h-168h-720h_exact:end -->
 
@@ -119,3 +143,30 @@ evidence: 381 tracked keys, 6,121 articles, 11,211 postings, file 1.5 MB (data/g
   (13,149 on 2024-10-01, `country_orgs_dropped` in input_manifest.json). "L:washington, washington,
   united states" (type 3 US city, likely Washington D.C. geocoded to Washington state [미확인]) is
   left as is.
+
+## Known limitations: detection (P3)
+
+Spec: lift = (r72+α)/(r168+α), α=1, candidates = 72h Top 2,000, ≥20 articles and ≥5 outlets in 72 h,
+Top 10 by lift; trend ratio = (r168+α)/(r720+α), F=2, 14-day warm-up; hold only when a used window has
+> 5 % missing 15-min slots. Code: `trendpulse/gkg_engine.py`; tests: `tests/test_gkg_detect.py`.
+
+- **Candidate restriction (approximation):** only keys in the 72 h window's Top 2,000 are scored. A key
+  with a high lift but a 72 h score below the 2,000th is never a new issue.
+- **Outlet / article counts (approximation):** a key is tracked from the article at which its 72 h score
+  reaches 3. Every mention in the last 72 h weighs ≥ 0.5 in that score, so fewer than 6 mentions precede
+  tracking: articles and outlets are under-counted by at most 5. Up to 8 outlets are kept per key
+  (most recent last-seen time wins), so the outlet count is exact up to 8 for the tracked period and
+  capped at 8, enough for the ≥ 5 test. Articles are counted in whole UTC hours (71–72 h of history).
+  Keys with no article in the last 72 h are swept at every snapshot and restart from 0.
+  On 2024-10-01: 35,461 keys tracked, ≈ 31.5 MB (key/domain strings not counted).
+- **Trend labels cannot reach "rising" early (mathematical limit of the spec):** with bias-corrected rates
+  the largest possible ratio (instantaneous burst, α → 0) at elapsed e is
+  720·(1−2^(−e/720)) / (168·(1−2^(−e/168))): 1.58 at day 14, 1.84 at day 20, **2.0 only from day 23.7**,
+  2.26 at day 30, 3.25 at day 61. So between day 14 and ≈ day 24 no key can be labelled 최근 급증.
+  At day 30 a key that appeared from nothing at a constant rate is "rising" only if it started within
+  the last ≈ 3 days (2.18 after 1 day, 2.02 after 3, 1.89 after 5, 1.61 after 10).
+- **New issues have no warm-up in the spec:** on day 1 all lifts are ≈ 1.05 and the list ranks what was
+  reported late in the day (2024-10-01: the John Amos obituary and its co-mentioned names), with 153
+  entry events (151 first, 2 re-entry) in one day. Co-mentioned names of one story fill several slots.
+- **Gaps:** a slot counts as present if it had at least one article; windows are clipped at the stream
+  start. A held new-issue snapshot records no events and keeps the previous Top K.

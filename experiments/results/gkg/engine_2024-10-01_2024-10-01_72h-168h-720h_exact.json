@@ -1,15 +1,15 @@
 {
  "kind": "gkg_engine_run",
  "version": 1,
- "created_utc": "2026-11-16T14:35:09Z",
+ "created_utc": "2026-11-16T14:39:42Z",
  "command": "python scripts/gkg_run.py --start 2024-10-01 --end 2024-10-01",
  "code": {
   "git": {
-   "commit": "07b6ffb29d7ceb4ac9227e0461bdc04ccba30f35",
-   "dirty": true
+   "commit": "43b1966dca5906da7ece872b2668b4917b20a989",
+   "dirty": false
   },
   "gkg_py_sha256": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
-  "gkg_engine_py_sha256": "616ff709f1fb2a87fe285481977c22c8ba27fdda0acb4ccb3e6c3cc5e4e6d9e0",
+  "gkg_engine_py_sha256": "9a4a541e98ce6ff4e3956b61cddef7d833fc7c5815f0cdf5c6732c966aff0f91",
   "gkg_evidence_py_sha256": "65b80ac01f7a7f00d565d258a628d5ff64f5bb82823fc15160e70fce32ebff6c"
  },
  "python": "3.14.5",
@@ -46,20 +46,33 @@
   "prune_every_hours": 6.0,
   "evidence_path": "data/gdelt/processed/evidence.sqlite",
   "evidence_top": 200,
-  "evidence_per_day_cap": 30
+  "evidence_per_day_cap": 30,
+  "detect": true,
+  "detect_variant": "exact",
+  "alpha": 1.0,
+  "new_k": 10,
+  "new_candidates": 2000,
+  "new_min_articles": 20,
+  "new_min_outlets": 5,
+  "activate_score": 3.0,
+  "max_outlets": 8,
+  "trend_k": 10,
+  "trend_factor": 2.0,
+  "trend_warmup_days": 14.0,
+  "gap_limit": 0.05
  },
  "snapshots": 25,
  "last_snapshot_utc": "2024-10-01T23:45:00Z",
  "timing": {
-  "wall_s": 13.52,
-  "read_s": 6.34,
-  "engine_s": 5.13,
-  "hash_s": 2.04,
-  "articles_per_s_engine": 31813,
-  "articles_per_s_end_to_end": 14235,
+  "wall_s": 16.66,
+  "read_s": 6.59,
+  "engine_s": 8.01,
+  "hash_s": 2.07,
+  "articles_per_s_engine": 20394,
+  "articles_per_s_end_to_end": 11193,
   "note": "engine_s = decay updates + snapshots + evidence writes; end-to-end excludes the hash"
  },
- "peak_rss_mb": 128.9,
+ "peak_rss_mb": 162.0,
  "memory": {
   "decay_windows": [
    {
@@ -111,6 +124,16 @@
    "note": "key strings are shared by all windows; counted once"
   },
   "decay_total_bytes": 61158413,
+  "activity_tracker": {
+   "tracked_keys": 35461,
+   "hour_buckets": 159972,
+   "outlet_entries": 142044,
+   "activations": 35461,
+   "swept": 0,
+   "estimate_bytes": 31539320,
+   "note": "key and domain strings are shared with the stream; not counted"
+  },
+  "slot_coverage_bytes": 156,
   "evidence": {
    "path": "data/gdelt/processed/evidence.sqlite",
    "tracked_keys": 381,
@@ -278,5 +301,1313 @@
     "rate_per_hour": 212.90389349510278
    }
   ]
- }
+ },
+ "detection": {
+  "t": 1727826300,
+  "gaps": {
+   "72h": {
+    "missing_ratio": 0.0,
+    "expected_slots": 96,
+    "insufficient": false
+   },
+   "168h": {
+    "missing_ratio": 0.0,
+    "expected_slots": 96,
+    "insufficient": false
+   },
+   "720h": {
+    "missing_ratio": 0.0,
+    "expected_slots": 96,
+    "insufficient": false
+   }
+  },
+  "new": {
+   "status": "ok",
+   "top": [
+    {
+     "key": "P:erica wolff",
+     "lift": 1.0506040262317544,
+     "rate_72h": 9.461375676371079,
+     "rate_168h": 8.957486755398543,
+     "articles_72h": 201,
+     "outlets_72h": 8,
+     "rank": 1
+    },
+    {
+     "key": "P:kunta kinte",
+     "lift": 1.0492879854457657,
+     "rate_72h": 26.76795900953803,
+     "rate_168h": 25.463620469018764,
+     "articles_72h": 579,
+     "outlets_72h": 8,
+     "rank": 2
+    },
+    {
+     "key": "P:john amos",
+     "lift": 1.0491844921331877,
+     "rate_72h": 29.42163341787284,
+     "rate_168h": 27.99550426638502,
+     "articles_72h": 637,
+     "outlets_72h": 8,
+     "rank": 3
+    },
+    {
+     "key": "P:mary tyler moore",
+     "lift": 1.04896139374149,
+     "rate_72h": 25.286241547750116,
+     "rate_168h": 24.05930313983338,
+     "articles_72h": 547,
+     "outlets_72h": 8,
+     "rank": 4
+    },
+    {
+     "key": "P:von miller",
+     "lift": 1.0483762269098236,
+     "rate_72h": 5.714593254735592,
+     "rate_168h": 5.4047553563165165,
+     "articles_72h": 120,
+     "outlets_72h": 8,
+     "rank": 5
+    },
+    {
+     "key": "P:gordy howard",
+     "lift": 1.0482943074728008,
+     "rate_72h": 18.62089859544912,
+     "rate_168h": 17.716975238328484,
+     "articles_72h": 402,
+     "outlets_72h": 8,
+     "rank": 6
+    },
+    {
+     "key": "P:alex haley",
+     "lift": 1.0482085642869972,
+     "rate_72h": 19.990937070575658,
+     "rate_168h": 19.025534789303997,
+     "articles_72h": 433,
+     "outlets_72h": 8,
+     "rank": 7
+    },
+    {
+     "key": "P:norman lear",
+     "lift": 1.0481488806662467,
+     "rate_72h": 20.903849313622246,
+     "rate_168h": 19.897650818173137,
+     "articles_72h": 452,
+     "outlets_72h": 8,
+     "rank": 8
+    },
+    {
+     "key": "P:hank stram",
+     "lift": 1.0481277809465457,
+     "rate_72h": 16.647927981252586,
+     "rate_168h": 15.837572958246609,
+     "articles_72h": 360,
+     "outlets_72h": 8,
+     "rank": 9
+    },
+    {
+     "key": "P:belinda foster",
+     "lift": 1.048098735632978,
+     "rate_72h": 19.62106080212643,
+     "rate_168h": 18.674731111733244,
+     "articles_72h": 425,
+     "outlets_72h": 8,
+     "rank": 10
+    }
+   ],
+   "events": [
+    {
+     "t": 1727826300,
+     "key": "P:von miller",
+     "kind": "first",
+     "rank": 5,
+     "lift": 1.0483762269098236
+    },
+    {
+     "t": 1727826300,
+     "key": "P:norman lear",
+     "kind": "re-entry",
+     "rank": 8,
+     "lift": 1.0481488806662467
+    },
+    {
+     "t": 1727826300,
+     "key": "P:belinda foster",
+     "kind": "re-entry",
+     "rank": 10,
+     "lift": 1.048098735632978
+    }
+   ],
+   "qualified": 1916
+  },
+  "trend": {
+   "status": "warming_up",
+   "elapsed_days": 0.9895833333333334,
+   "top": [
+    {
+     "key": "L:new york, united states",
+     "score_168h": 10863.308271027727,
+     "rate_168h": 480.1787232171989,
+     "rate_720h": 476.6145047016693,
+     "ratio": 1.0074625424488646,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "L:washington, washington, united states",
+     "score_168h": 7533.555632935641,
+     "rate_168h": 332.99737380706244,
+     "rate_720h": 331.1647607919005,
+     "ratio": 1.0055171807231835,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "P:joe biden",
+     "score_168h": 5681.411066326277,
+     "rate_168h": 251.1290892090761,
+     "rate_720h": 249.98624030402075,
+     "ratio": 1.004553432505587,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "L:georgia, united states",
+     "score_168h": 5513.5307068038055,
+     "rate_168h": 243.70846054996522,
+     "rate_720h": 242.54109182444822,
+     "ratio": 1.0047933131808346,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "L:texas, united states",
+     "score_168h": 5385.568073141105,
+     "rate_168h": 238.0522706933689,
+     "rate_720h": 236.73396269684486,
+     "ratio": 1.0055453077951892,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "L:florida, united states",
+     "score_168h": 5173.596092413651,
+     "rate_168h": 228.68270918189205,
+     "rate_720h": 227.12040770283008,
+     "ratio": 1.0068485827059241,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "O:instagram",
+     "score_168h": 5088.720711127343,
+     "rate_168h": 224.9310571803258,
+     "rate_720h": 223.66942435814812,
+     "ratio": 1.0056155074317834,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "P:donald trump",
+     "score_168h": 5040.13087007006,
+     "rate_168h": 222.78329452293735,
+     "rate_720h": 221.74513253986706,
+     "ratio": 1.0046607617020968,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "P:kamala harris",
+     "score_168h": 5032.566789826332,
+     "rate_168h": 222.4489479037373,
+     "rate_720h": 220.98981714328522,
+     "ratio": 1.0065729625765234,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    },
+    {
+     "key": "L:london, london, city of, united kingdom",
+     "score_168h": 4836.513703158715,
+     "rate_168h": 213.78303154657024,
+     "rate_720h": 212.90389349510278,
+     "ratio": 1.0041099675050449,
+     "label": "warming_up",
+     "label_ko": "판별 준비 중"
+    }
+   ]
+  }
+ },
+ "new_events": [
+  {
+   "t": 1727744400,
+   "key": "O:hygiene bank",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0018334157865394
+  },
+  {
+   "t": 1727744400,
+   "key": "P:patrick roach",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0018334157865394
+  },
+  {
+   "t": 1727744400,
+   "key": "P:ruth brock",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0018334157865394
+  },
+  {
+   "t": 1727744400,
+   "key": "P:ronald reagan",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0010575006576765
+  },
+  {
+   "t": 1727744400,
+   "key": "P:stephanie wheatley",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0010307539814916
+  },
+  {
+   "t": 1727744400,
+   "key": "O:university of amsterdam",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0009451869183965
+  },
+  {
+   "t": 1727744400,
+   "key": "L:amsterdam, noord-holland, netherlands",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0008549372052433
+  },
+  {
+   "t": 1727744400,
+   "key": "O:morgan",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0007632915217317
+  },
+  {
+   "t": 1727744400,
+   "key": "L:brooklyn, new york, united states",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0006667326949958
+  },
+  {
+   "t": 1727744400,
+   "key": "O:los angeles times",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0006600014898483
+  },
+  {
+   "t": 1727748000,
+   "key": "P:shinzo abe",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0040362011419872
+  },
+  {
+   "t": 1727748000,
+   "key": "P:yoshimasa hayashi",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0039279238638525
+  },
+  {
+   "t": 1727748000,
+   "key": "O:australian cyber security centre",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0030750192849867
+  },
+  {
+   "t": 1727748000,
+   "key": "P:darryl parrish",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0030750192849867
+  },
+  {
+   "t": 1727748000,
+   "key": "O:office scandal",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0029333435775032
+  },
+  {
+   "t": 1727748000,
+   "key": "P:shigeru ishiba",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0028229700543232
+  },
+  {
+   "t": 1727748000,
+   "key": "P:sergeant hulley",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0028192546098769
+  },
+  {
+   "t": 1727748000,
+   "key": "P:sergeant phillip hulley",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0028192546098769
+  },
+  {
+   "t": 1727748000,
+   "key": "P:amanda abbington",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0027749764040839
+  },
+  {
+   "t": 1727748000,
+   "key": "P:giovanni pernice",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0027749764040839
+  },
+  {
+   "t": 1727751600,
+   "key": "O:international protection office",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.006062427305656
+  },
+  {
+   "t": 1727751600,
+   "key": "P:jamie oliver",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0058789566961033
+  },
+  {
+   "t": 1727751600,
+   "key": "P:karleen minney",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0058789566961033
+  },
+  {
+   "t": 1727751600,
+   "key": "P:mark serrels",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0058789566961033
+  },
+  {
+   "t": 1727751600,
+   "key": "P:micheal martin",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0056445797005367
+  },
+  {
+   "t": 1727751600,
+   "key": "P:roderic ogorman",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.005552087217807
+  },
+  {
+   "t": 1727751600,
+   "key": "P:paschal donohoe",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.005412643601087
+  },
+  {
+   "t": 1727751600,
+   "key": "P:simon harris",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0053714419914666
+  },
+  {
+   "t": 1727751600,
+   "key": "P:jack chambers",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0052460687957627
+  },
+  {
+   "t": 1727751600,
+   "key": "O:green party",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0051327484532637
+  },
+  {
+   "t": 1727755200,
+   "key": "P:elle salagaras",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0093915531027131
+  },
+  {
+   "t": 1727755200,
+   "key": "P:sawyer hemsley",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0093915531027131
+  },
+  {
+   "t": 1727755200,
+   "key": "O:queensland police",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0088045744997014
+  },
+  {
+   "t": 1727755200,
+   "key": "L:southport, queensland, australia",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0085085023014475
+  },
+  {
+   "t": 1727755200,
+   "key": "O:southport magistrates court on",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0085085023014475
+  },
+  {
+   "t": 1727755200,
+   "key": "P:garcaa marin",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0080140553527042
+  },
+  {
+   "t": 1727755200,
+   "key": "P:yahaira garcia marin",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0080140553527042
+  },
+  {
+   "t": 1727755200,
+   "key": "P:felix marquez",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0079387804881934
+  },
+  {
+   "t": 1727755200,
+   "key": "L:coyuca, guerrero, mexico",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.007853610589895
+  },
+  {
+   "t": 1727755200,
+   "key": "L:acapulco, guerrero, mexico",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.007756272407551
+  },
+  {
+   "t": 1727758800,
+   "key": "O:triton club cab",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0096253842038778
+  },
+  {
+   "t": 1727758800,
+   "key": "O:mitsubishi",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0083277982288996
+  },
+  {
+   "t": 1727758800,
+   "key": "P:david b agus",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0083187218755574
+  },
+  {
+   "t": 1727758800,
+   "key": "P:natalie previtera",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0083187218755574
+  },
+  {
+   "t": 1727758800,
+   "key": "O:club cab",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0079424999877507
+  },
+  {
+   "t": 1727762400,
+   "key": "O:playstation network",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0131749908740617
+  },
+  {
+   "t": 1727762400,
+   "key": "P:alex dalziel",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0127945053390353
+  },
+  {
+   "t": 1727762400,
+   "key": "O:ballarat magistrate court on",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.012744844154982
+  },
+  {
+   "t": 1727762400,
+   "key": "O:clunes national hotel",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.012556417067627
+  },
+  {
+   "t": 1727762400,
+   "key": "O:service status",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.012540555715152
+  },
+  {
+   "t": 1727762400,
+   "key": "O:clunes cricket club",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0125110993496773
+  },
+  {
+   "t": 1727762400,
+   "key": "L:clunes, new south wales, australia",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.012474616574202
+  },
+  {
+   "t": 1727762400,
+   "key": "O:commonwealth development office fcdogovuk smoke",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0124167142920886
+  },
+  {
+   "t": 1727762400,
+   "key": "O:university of newcastle",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.012159513040352
+  },
+  {
+   "t": 1727762400,
+   "key": "P:harold daggett",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0116857733967775
+  },
+  {
+   "t": 1727766000,
+   "key": "O:spirits council of the united states",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0131598632566428
+  },
+  {
+   "t": 1727766000,
+   "key": "P:chris swonger",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0131598632566428
+  },
+  {
+   "t": 1727766000,
+   "key": "P:jeff sloan",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0131598632566428
+  },
+  {
+   "t": 1727766000,
+   "key": "P:kyle henderson",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0131598632566428
+  },
+  {
+   "t": 1727766000,
+   "key": "P:ryan petersen",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0131598632566428
+  },
+  {
+   "t": 1727766000,
+   "key": "P:julie su",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0126809726671147
+  },
+  {
+   "t": 1727766000,
+   "key": "O:middle east airlines",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0126557099694282
+  },
+  {
+   "t": 1727769600,
+   "key": "P:andrea baldo",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0166620239627795
+  },
+  {
+   "t": 1727769600,
+   "key": "P:roger saul",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.016383128807281
+  },
+  {
+   "t": 1727769600,
+   "key": "P:thierry andretta",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.016383128807281
+  },
+  {
+   "t": 1727769600,
+   "key": "O:frasers group",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0162790497798981
+  },
+  {
+   "t": 1727769600,
+   "key": "L:komae, tokyo, japan",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.01603660433369
+  },
+  {
+   "t": 1727769600,
+   "key": "O:debenhams",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0158675048457904
+  },
+  {
+   "t": 1727769600,
+   "key": "P:kate moss",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.015346287721825
+  },
+  {
+   "t": 1727769600,
+   "key": "P:spencer platt getty",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0152373031210722
+  },
+  {
+   "t": 1727769600,
+   "key": "O:national youth conference",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0145689323209934
+  },
+  {
+   "t": 1727773200,
+   "key": "O:council of europe",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0197689697315386
+  },
+  {
+   "t": 1727773200,
+   "key": "O:parliamentary assembly of the council of europe",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0188058530028927
+  },
+  {
+   "t": 1727773200,
+   "key": "P:julian assange",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0186418679914553
+  },
+  {
+   "t": 1727773200,
+   "key": "O:pace of the european council",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0182910643995426
+  },
+  {
+   "t": 1727773200,
+   "key": "P:kristinn hrafnssson",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0182910643995426
+  },
+  {
+   "t": 1727773200,
+   "key": "P:belmarsh julian assange",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0180819352211574
+  },
+  {
+   "t": 1727776800,
+   "key": "L:uthai, phra nakhon si ayutthaya, thailand",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0210282020089707
+  },
+  {
+   "t": 1727776800,
+   "key": "P:anutin charnvirakul",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0206550505479497
+  },
+  {
+   "t": 1727776800,
+   "key": "P:suriya jungrungruengkit",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0205309894350512
+  },
+  {
+   "t": 1727776800,
+   "key": "L:achrafieh, beyrouth, lebanon",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0204724352556191
+  },
+  {
+   "t": 1727776800,
+   "key": "P:piyalak thinkaew",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0203538042863702
+  },
+  {
+   "t": 1727776800,
+   "key": "L:nonthaburi, nonthaburi, thailand",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0200687485606643
+  },
+  {
+   "t": 1727776800,
+   "key": "O:tory party",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0198758584389243
+  },
+  {
+   "t": 1727776800,
+   "key": "P:dominic grieve",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0198758584389243
+  },
+  {
+   "t": 1727776800,
+   "key": "O:ruamkatanyu foundation",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0198563807080883
+  },
+  {
+   "t": 1727776800,
+   "key": "L:ayutthaya, phra nakhon si ayutthaya, thailand",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0196689912268522
+  },
+  {
+   "t": 1727780400,
+   "key": "L:rangsit, pathum thani, thailand",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0225053260037116
+  },
+  {
+   "t": 1727780400,
+   "key": "L:westbourne, west sussex, united kingdom",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0217114859809244
+  },
+  {
+   "t": 1727784000,
+   "key": "P:mohammed afif",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0240557129892
+  },
+  {
+   "t": 1727784000,
+   "key": "P:palestinian hamas",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0235422308181772
+  },
+  {
+   "t": 1727784000,
+   "key": "P:daniel hagari",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0234146129498851
+  },
+  {
+   "t": 1727784000,
+   "key": "P:mcburney pa andy",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0224575759583205
+  },
+  {
+   "t": 1727787600,
+   "key": "P:ben birchall",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.025787612960365
+  },
+  {
+   "t": 1727787600,
+   "key": "P:kevin bentley",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.025724203694917
+  },
+  {
+   "t": 1727787600,
+   "key": "O:councillor association",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0256759937414441
+  },
+  {
+   "t": 1727787600,
+   "key": "O:poole council in dorset",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0256759937414441
+  },
+  {
+   "t": 1727787600,
+   "key": "P:phil broadhead",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0256759937414441
+  },
+  {
+   "t": 1727787600,
+   "key": "P:nick hopkinson",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0254694974203946
+  },
+  {
+   "t": 1727787600,
+   "key": "P:hazel cheeseman",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.025461582576338
+  },
+  {
+   "t": 1727787600,
+   "key": "P:alpha centauri",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0253788091309148
+  },
+  {
+   "t": 1727787600,
+   "key": "O:health ash",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0253387816627177
+  },
+  {
+   "t": 1727791200,
+   "key": "P:gonzalez hernandez",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0279455494575784
+  },
+  {
+   "t": 1727791200,
+   "key": "P:jonay gonzalez hernandez",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0279455494575784
+  },
+  {
+   "t": 1727791200,
+   "key": "P:numera anwar",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.027547340345594
+  },
+  {
+   "t": 1727791200,
+   "key": "L:paranal, antofagasta, chile",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0274144975098491
+  },
+  {
+   "t": 1727791200,
+   "key": "O:population survey",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.027286627759726
+  },
+  {
+   "t": 1727794800,
+   "key": "P:lauren alaina",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0321947932742062
+  },
+  {
+   "t": 1727794800,
+   "key": "P:jay demarcus",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0312401621347713
+  },
+  {
+   "t": 1727794800,
+   "key": "P:joe don rooney",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0312401621347713
+  },
+  {
+   "t": 1727794800,
+   "key": "P:gary levox",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0310881394783353
+  },
+  {
+   "t": 1727794800,
+   "key": "L:pedro fernandez, cienfuegos, cuba",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0286731054538425
+  },
+  {
+   "t": 1727794800,
+   "key": "P:alfredo alcasar",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0286731054538425
+  },
+  {
+   "t": 1727794800,
+   "key": "P:flor elena",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0286731054538425
+  },
+  {
+   "t": 1727794800,
+   "key": "P:flor elena fernandez",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0286731054538425
+  },
+  {
+   "t": 1727794800,
+   "key": "P:flor maria parra",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0286731054538425
+  },
+  {
+   "t": 1727798400,
+   "key": "P:frank fritz",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.0382684310872077
+  },
+  {
+   "t": 1727798400,
+   "key": "P:mike wolfe",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.0381831294498287
+  },
+  {
+   "t": 1727798400,
+   "key": "P:edoardo mapelli mozzi",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0354039484628539
+  },
+  {
+   "t": 1727798400,
+   "key": "P:mapelli mozzi",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.034823233626539
+  },
+  {
+   "t": 1727798400,
+   "key": "P:alessandro mapelli mozzi",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0324254201699472
+  },
+  {
+   "t": 1727798400,
+   "key": "O:helen arkell dyslexia centre",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0319463630442112
+  },
+  {
+   "t": 1727802000,
+   "key": "L:gulf of oman, oceans (general), oceans",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0324466971759034
+  },
+  {
+   "t": 1727802000,
+   "key": "P:chris j ratcliffe",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0316576838990275
+  },
+  {
+   "t": 1727805600,
+   "key": "O:university of cincinnati",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.0378760786608972
+  },
+  {
+   "t": 1727805600,
+   "key": "O:iranian embassy",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0378205288806535
+  },
+  {
+   "t": 1727805600,
+   "key": "P:olivia rodrigo",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0376820966800164
+  },
+  {
+   "t": 1727805600,
+   "key": "P:shailaja paik",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0374137558458918
+  },
+  {
+   "t": 1727805600,
+   "key": "O:macarthur fellows program",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0363014986379528
+  },
+  {
+   "t": 1727805600,
+   "key": "P:ebony g patterson",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0362233145731798
+  },
+  {
+   "t": 1727805600,
+   "key": "P:nicola dell",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0361206830870278
+  },
+  {
+   "t": 1727805600,
+   "key": "P:marlies carruth",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0360271456096228
+  },
+  {
+   "t": 1727809200,
+   "key": "P:blake shelton",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.039546857165912
+  },
+  {
+   "t": 1727809200,
+   "key": "O:simmons bank arena",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.039255044525589
+  },
+  {
+   "t": 1727809200,
+   "key": "P:lolita c baldor",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0382090922562903
+  },
+  {
+   "t": 1727809200,
+   "key": "P:abbas nilforushan",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0380787188701432
+  },
+  {
+   "t": 1727812800,
+   "key": "P:john amos",
+   "kind": "first",
+   "rank": 1,
+   "lift": 1.046094741118067
+  },
+  {
+   "t": 1727812800,
+   "key": "P:kunta kinte",
+   "kind": "first",
+   "rank": 2,
+   "lift": 1.045615755662957
+  },
+  {
+   "t": 1727812800,
+   "key": "P:jimmie walker",
+   "kind": "first",
+   "rank": 3,
+   "lift": 1.044943151671745
+  },
+  {
+   "t": 1727812800,
+   "key": "P:esther rolle",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0447706740208667
+  },
+  {
+   "t": 1727812800,
+   "key": "P:alex haley",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0447362661131276
+  },
+  {
+   "t": 1727812800,
+   "key": "P:maude james evans",
+   "kind": "first",
+   "rank": 6,
+   "lift": 1.0446408373357943
+  },
+  {
+   "t": 1727812800,
+   "key": "P:belinda foster",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0446079159909547
+  },
+  {
+   "t": 1727812800,
+   "key": "P:norman lear",
+   "kind": "first",
+   "rank": 8,
+   "lift": 1.0445466627121591
+  },
+  {
+   "t": 1727812800,
+   "key": "P:john allen amos jr",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0443784047333673
+  },
+  {
+   "t": 1727812800,
+   "key": "P:mary tyler moore",
+   "kind": "first",
+   "rank": 10,
+   "lift": 1.0443477205186473
+  },
+  {
+   "t": 1727820000,
+   "key": "P:gordy howard",
+   "kind": "first",
+   "rank": 4,
+   "lift": 1.0490763660176434
+  },
+  {
+   "t": 1727823600,
+   "key": "P:erica wolff",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0490758792691162
+  },
+  {
+   "t": 1727823600,
+   "key": "P:hank stram",
+   "kind": "first",
+   "rank": 7,
+   "lift": 1.0489600293503638
+  },
+  {
+   "t": 1727823600,
+   "key": "P:ted baxter",
+   "kind": "first",
+   "rank": 9,
+   "lift": 1.0488465512430554
+  },
+  {
+   "t": 1727826300,
+   "key": "P:von miller",
+   "kind": "first",
+   "rank": 5,
+   "lift": 1.0483762269098236
+  },
+  {
+   "t": 1727826300,
+   "key": "P:norman lear",
+   "kind": "re-entry",
+   "rank": 8,
+   "lift": 1.0481488806662467
+  },
+  {
+   "t": 1727826300,
+   "key": "P:belinda foster",
+   "kind": "re-entry",
+   "rank": 10,
+   "lift": 1.048098735632978
+  }
+ ]
 }
