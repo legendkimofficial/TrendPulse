@@ -679,7 +679,7 @@ def main() -> int:
     print(f"GKG experiments {sorted(exps)} on {args.start} .. {args.end}: about {total:,} articles")
     print(f"estimated time: main replay {est_main / 60:.0f} min + E5 {est_e5 / 60:.0f} min "
           f"= {(est_main + est_e5) / 60:.0f} min (rates {RATE_MAIN:,.0f}/s and {RATE_E5:,.0f}/s; actual ETA below)")
-    print("estimated peak memory: ≤ 9 GB for the full range (15 + 3 decay windows, 2 detectors) — one pass")
+    print("estimated peak memory: ≤ 9 GB for the full range (engine A 12 + engine B 3 decay windows, 2 detectors) — one pass")
 
     res = {}
     old_path = os.path.join(out_dir, "results.json")
