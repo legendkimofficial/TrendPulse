@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko" data-theme="system">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trend Pulse GKG</title>
+  <meta name="description" content="GDELT GKG 영어 기사 흐름에서 7일 주요 이슈, 72시간 신규 이슈, 30일 반짝·꾸준을 감쇠 윈도우로 보여 주는 대시보드">
+  <script>
+    try { document.documentElement.dataset.theme = localStorage.getItem("tp-theme") || "system"; } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.2.6/index.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v={{ version }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='gkg.css') }}?v={{ version }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236250d6'/><path d='M4 18h6l3-8 5 14 3-6h7' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
+<svg hidden aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-prev" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+</svg>
+
+<header class="g-appbar">
+  <div class="g-appbar-inner">
+    <div class="g-brand">
+      <span class="g-logo" aria-hidden="true"></span>
+      <div>
+        <div class="g-brand-name">Trend Pulse <span class="g-tag">GKG</span></div>
+        <div class="g-brand-sub" id="range">GDELT GKG 2.1 · 영어 기사</div>
+      </div>
+    </div>
+    <div class="g-clock">
+      <div class="g-clock-date" id="clock">—</div>
+      <div class="g-clock-meta" id="clockMeta">캐시 불러오는 중</div>
+    </div>
+    <button class="icon-btn" id="themeBtn" type="button" aria-label="테마 바꾸기" title="테마 바꾸기">
+      <svg><use href="#i-moon"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="g-page">
+  <section class="card g-controls" aria-label="시점과 보기 선택">
+    <div class="g-time">
+      <button class="icon-btn" id="prevBtn" type="button" aria-label="6시간 전"><svg><use href="#i-prev"/></svg></button>
+      <input type="range" id="slider" min="0" max="0" value="0" step="1" aria-label="시점 (6시간 단위)">
+      <button class="icon-btn" id="nextBtn" type="button" aria-label="6시간 뒤"><svg><use href="#i-next"/></svg></button>
+      <span class="g-time-label" id="sliderLabel">—</span>
+    </div>
+    <div class="g-pick">
+      <div class="seg" role="tablist" aria-label="보기" id="tabs">
+        <button type="button" role="tab" data-tab="major" aria-selected="true">7일 주요 이슈</button>
+        <button type="button" role="tab" data-tab="new" aria-selected="false">72시간 신규</button>
+        <button type="button" role="tab" data-tab="trend" aria-selected="false">30일 반짝·꾸준</button>
+      </div>
+      <div class="seg" aria-label="키 종류" id="kinds">
+        <button type="button" data-kind="all" aria-pressed="true">전체</button>
+        <button type="button" data-kind="P" aria-pressed="false">인물</button>
+        <button type="button" data-kind="O" aria-pressed="false">기관</button>
+        <button type="button" data-kind="L" aria-pressed="false">장소</button>
+      </div>
+    </div>
+    <div class="g-gaps" id="gaps" aria-label="빈 구간 비율"></div>
+  </section>
+
+  <div class="g-grid">
+    <section class="card g-main" aria-labelledby="tableTitle">
+      <div class="card-head">
+        <h2 id="tableTitle">7일 주요 이슈</h2>
+        <span class="t-hint" id="tableHint"></span>
+      </div>
+      <div class="g-status" id="status" hidden></div>
+      <div class="table-wrap">
+        <table class="g-table" id="table">
+          <thead><tr id="thead"></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <p class="foot" id="tableFoot"></p>
+    </section>
+
+    <aside class="g-side">
+      <section class="card" aria-labelledby="ctyTitle">
+        <h2 id="ctyTitle">나라 언급</h2>
+        <p class="caption">순위 키와 별도로 센 나라(type 1 장소) 언급 · 168시간 감쇠, 보정 보도율</p>
+        <ol class="g-cty" id="countries"></ol>
+      </section>
+      <section class="card" aria-labelledby="evTitle">
+        <h2 id="evTitle">신규 진입</h2>
+        <p class="caption">직전 6시간 동안 72시간 신규 Top 10에 들어온 키</p>
+        <ul class="g-events" id="events"></ul>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card g-agent" aria-labelledby="agentTitle">
+    <div class="card-head">
+      <h2 id="agentTitle"><svg class="h-ic"><use href="#i-sparkles"/></svg>에이전트에게 묻기</h2>
+      <span class="t-hint" id="agentMode"></span>
+    </div>
+    <form id="askForm" class="g-ask">
+      <input id="question" type="text" autocomplete="off" placeholder="예: joe biden 왜 많이 나와? (선택한 시점 기준)" aria-label="질문">
+      <button class="btn primary" type="submit" id="askBtn">묻기</button>
+    </form>
+    <div class="g-answer" id="answer" aria-live="polite"></div>
+  </section>
+</main>
+
+<div class="drawer-backdrop" id="backdrop" hidden></div>
+<aside class="drawer g-drawer" id="drawer" aria-labelledby="dTitle" hidden>
+  <div class="drawer-head">
+    <div>
+      <div class="t-hint" id="dKind"></div>
+      <h2 id="dTitle">—</h2>
+    </div>
+    <button class="icon-btn" id="dClose" type="button" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-body" id="dBody"></div>
+</aside>
+
+<script src="{{ url_for('static', filename='gkg.js') }}?v={{ version }}"></script>
+</body>
+</html>

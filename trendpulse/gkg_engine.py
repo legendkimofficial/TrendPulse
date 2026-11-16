@@ -428,6 +428,7 @@ class GkgEngine:
             self.activity = ActivityTracker(int(self.half_lives["72h"]), cfg.activate_score, cfg.max_outlets)
         self.detection: dict | None = None         # result of the latest snapshot
         self.new_events: list[dict] = []           # entry events into the new-issue Top K
+        self.new_ranked: list[dict] = []           # every qualified key of the last judged snapshot, by lift
         self._prev_new: list[str] = []             # new-issue Top K of the last judged snapshot
         self._ever_new: set[str] = set()
 
@@ -510,6 +511,7 @@ class GkgEngine:
         w72, w168, act = self._w72, self._w168, self.activity
         start = w72.start
         elapsed_days = (t - start) / 86400.0 if start is not None else 0.0
+        self.new_ranked = []
         if elapsed_days < cfg.new_warmup_days:
             return {"status": "warming_up", "label": LABELS_KO["warming_up"], "elapsed_days": elapsed_days,
                     "top": [], "events": []}
@@ -533,6 +535,7 @@ class GkgEngine:
             rows.append({"key": key, "lift": smoothed_ratio(r72, r168, cfg.alpha), "rate_72h": r72,
                          "rate_168h": r168, "articles_72h": n, "outlets_72h": o})
         rows.sort(key=lambda r: (-r["lift"], r["key"]))
+        self.new_ranked = rows
         top = rows[:cfg.new_k]
         for i, r in enumerate(top, 1):
             r["rank"] = i
