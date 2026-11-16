@@ -1,0 +1,577 @@
+{
+ "kind": "gkg_input_manifest",
+ "version": 1,
+ "created_utc": "2026-11-16T18:48:07Z",
+ "command": "python scripts/gkg_build.py --start 2024-09-15 --end 2024-11-14 --out experiments/results/gkg/manifest_61d/input_manifest.json",
+ "code": {
+  "git": {
+   "commit": "f19ff63a9179f2ac8c4f705a8618b691f8b7a538",
+   "dirty": false
+  },
+  "gkg_py_sha256": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
+  "country_names_sha256": "d736e1b9ad4570493706732b754857aea8e9797daecfddead15301d4fad08ef5",
+  "country_names": 250
+ },
+ "python": "3.14.5",
+ "seed": null,
+ "root": "data/gdelt",
+ "range": {
+  "start": "2024-09-15",
+  "end": "2024-11-14",
+  "days": 61
+ },
+ "config": {
+  "include_countries": false,
+  "place_types": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "drop_self_orgs": true,
+  "drop_country_orgs": true,
+  "dedup_urls": true
+ },
+ "hashes": {
+  "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+  "stream_sha256_def": "sha256 over canonical_line(a) for every yielded article: JSON [idx,ts,domain,url,title,keys,countries,tone] + '\\n', UTF-8",
+  "raw_files_sha256": "0172f9374476a14cd73ca040947d41ae2afc058552fbfd1390575c522dfec230",
+  "raw_files_sha256_def": "sha256 over '<day>/<HHMM>.jsonl.gz\\n<bytes>\\n' + file bytes, in read order"
+ },
+ "totals": {
+  "articles": 8313313,
+  "lines": 8313432,
+  "bad_lines": 119,
+  "duplicate_urls_removed": 0,
+  "empty_urls": 0,
+  "self_orgs_dropped": 82887,
+  "country_orgs_dropped": 570753,
+  "ts_out_of_order": 0,
+  "with_title": 8298197,
+  "without_keys": 595354,
+  "domains": 17168,
+  "first_ts": "2024-09-15T00:00:00Z",
+  "last_ts": "2024-11-14T23:45:00Z"
+ },
+ "slots": {
+  "expected": 5856,
+  "read": 5856,
+  "missing_on_server": 0,
+  "not_downloaded": 0
+ },
+ "keys": {
+  "distinct": {
+   "persons": 3243869,
+   "orgs": 1939430,
+   "places": 240996,
+   "countries": 252
+  },
+  "mentions": {
+   "persons": 27265319,
+   "orgs": 18842682,
+   "places": 15793902
+  },
+  "per_article": {
+   "persons": 3.28,
+   "orgs": 2.267,
+   "places": 1.9
+  },
+  "distinct_def": "distinct keys counted by 64-bit SHA-1 prefix"
+ },
+ "log_mismatch": [],
+ "per_day": [
+  {
+   "day": "2024-09-15",
+   "articles": 78556,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-16",
+   "articles": 145871,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-17",
+   "articles": 163251,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-18",
+   "articles": 167659,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-19",
+   "articles": 160683,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-20",
+   "articles": 151662,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-21",
+   "articles": 89852,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-22",
+   "articles": 77324,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-23",
+   "articles": 143595,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-24",
+   "articles": 161498,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-25",
+   "articles": 167175,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-26",
+   "articles": 164947,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-27",
+   "articles": 154614,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-28",
+   "articles": 87603,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-29",
+   "articles": 78115,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-09-30",
+   "articles": 146181,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-01",
+   "articles": 163360,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-02",
+   "articles": 161567,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-03",
+   "articles": 159699,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-04",
+   "articles": 155072,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-05",
+   "articles": 85728,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-06",
+   "articles": 75217,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-07",
+   "articles": 141536,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-08",
+   "articles": 164183,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-09",
+   "articles": 164606,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-10",
+   "articles": 160835,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-11",
+   "articles": 154699,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-12",
+   "articles": 85382,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-13",
+   "articles": 74818,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-14",
+   "articles": 138845,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-15",
+   "articles": 161098,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-16",
+   "articles": 169566,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-17",
+   "articles": 170758,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-18",
+   "articles": 154646,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-19",
+   "articles": 86642,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-20",
+   "articles": 76769,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-21",
+   "articles": 144000,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-22",
+   "articles": 160905,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-23",
+   "articles": 166420,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-24",
+   "articles": 166148,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-25",
+   "articles": 153969,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-26",
+   "articles": 87738,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-27",
+   "articles": 76769,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-28",
+   "articles": 142403,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-29",
+   "articles": 161501,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-30",
+   "articles": 161637,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-10-31",
+   "articles": 156736,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-01",
+   "articles": 150842,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-02",
+   "articles": 87009,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-03",
+   "articles": 73211,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-04",
+   "articles": 141804,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-05",
+   "articles": 159944,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-06",
+   "articles": 175571,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-07",
+   "articles": 161533,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-08",
+   "articles": 154316,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-09",
+   "articles": 88613,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-10",
+   "articles": 71686,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-11",
+   "articles": 134480,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-12",
+   "articles": 160499,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-13",
+   "articles": 167996,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  },
+  {
+   "day": "2024-11-14",
+   "articles": 163971,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  }
+ ],
+ "run": {
+  "seconds": 588.8,
+  "peak_rss_mb": 440.2,
+  "url_table_mb": 134.2
+ }
+}

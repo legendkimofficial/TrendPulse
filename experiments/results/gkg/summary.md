@@ -543,3 +543,100 @@ v0.4 `style.css`를 그대로 불러온 뒤 GKG 부분만 더한다. 같은 아�
 - 확인 중 본 것: GKG에 "helene" 키가 없고(허리케인은 인물·기관·장소로 잡히지 않음) "han kang"은
   `L:han kang, south korea (general), south korea` 장소 키로만 기록되어 있어, 사건 장면이 키를 못 찾으면 그렇다고 알린다.
 - 사람이 실제 브라우저로 눌러 본 확인은 아직 없다 **[미확인]**.
+
+<!-- app_cache_2024-09-15_2024-11-14:begin -->
+## Dashboard cache 2024-09-15_2024-11-14
+
+- command: `python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-11-14`
+- result: `experiments/results/gkg/app_cache_2024-09-15_2024-11-14.json`
+- git: b14e6c4425ca077aed784af605f13277f9d26070 (dirty=False), fingerprint 90f8eba3bfdad3b1…
+
+```
+range      : 2024-09-15 .. 2024-11-14, 8,313,313 articles, 245 cached 6-hour snapshots, 841 new-issue entry events
+build      : 1542.6 s (5,389 articles/s), peak RSS 1963.6 MB (numbers from the earlier build; cache reused)
+decay      : ≈ 1105.4 MB (72h 5,424,295 keys, 168h 5,424,295 keys, 720h 5,424,295 keys)
+tracker    : 159,151 keys, ≈ 180.2 MB
+evidence   : 3,688 keys, 847,212 articles, 1,356,312 postings (cap 30/day, 15,964,207 truncated), 203.7 MB
+dgim       : 3,678 keys, 17,173 buckets
+```
+<!-- app_cache_2024-09-15_2024-11-14:end -->
+
+## 사후 수정: E2 매칭 규칙 (2026-11-17)
+
+**왜.** 전체 실행의 원래 E2 결과를 본 뒤 두 가지 문제가 드러났다. (1) 부분 문자열 매칭 때문에 허리케인 밀턴이
+첫 보도 375.5시간 전의 `L:bletchley, milton keynes, united kingdom`(영국 지명)으로 "포착"되었다. (2) 한강은
+GKG가 인물이 아니라 장소(`L:han kang, south korea …`)로 태깅해 types=P 에 걸려 놓침으로만 보였고, 이유가 드러나지 않았다.
+사건 목록(`experiments/gkg_events.json`)은 실험 전에 확정한 것이라 고치지 않았고, 원래 규칙과 결과도 그대로 둔다.
+
+**무엇을.** 수정 규칙을 별도로 추가했다(`run_gkg_experiments.py` 의 `e2_revised`, `summarize_e2_revised`; 결과는 `results.json` 의 `E2_revised`).
+- 이름 매칭: match 문자열이 키 이름을 쉼표로 나눈 한 부분의 **끝 단어(들)과 단어 단위로 같을 때**만 인정.
+  "milton" 은 "hurricane milton", "milton, florida" 에는 맞고 "milton keynes", "milton rebecca blackwell" 에는 안 맞는다. 예외 목록은 없다.
+- 진입 시각이 `first_report_utc − 24h` 이후인 것만 인정.
+- types 는 그대로. 이름은 맞지만 종류가 types 밖이면 "types 불일치"로 따로 표시.
+- 사건마다 수정 규칙에 맞는 후보 키(신규 조건 통과 행 전체, 20위 밖 포함) 최고 순위 순 상위 5개와 진입 시각을 함께 기록.
+- 실행: 깨끗한 커밋 f19ff63 에서 `python experiments/run_gkg_experiments.py --only E2`(시작·끝 모두 dirty=False).
+  같은 실행에서 원래 규칙 결과가 이전 전체 실행과 바이트 단위로 같음을 확인했다(E1–E5 모두 동일).
+
+**원래 결과.** 정확·θ=0.5 모두 같다: 포착 4(밀턴 −375.5h 오매칭 포함), 놓침 2(han_kang, liam_payne).
+실질 포착은 sinwar +6.1h, valencia +18.8h(`L:utiel, valenciana, spain`), quincy_jones +2.0h.
+
+**수정 결과.** 포착 3(sinwar +6.1h, valencia +40.8h, quincy_jones +2.0h), types 불일치 1(han_kang +6.0h, 장소 키),
+놓침 2(milton, liam_payne). 정확과 θ=0.5 의 결과가 같아 θ=0.5 삭제가 신규 포착을 늦춘 사례는 이 6건에서 없었다.
+수정 규칙에서도 남는 문제(규칙을 더 고치지 않고 기록만 함):
+- **valencia**: 수정 규칙이 잡은 키는 `L:valencia, carabobo, venezuela`(베네수엘라 도시)다. 근거 기사 10/29~11/02 100건 중
+  제목에 "spain" 67건, "flood" 71건이라 GKG가 스페인 발렌시아 홍수 기사를 베네수엘라 발렌시아로 지오코딩한 것으로 보인다.
+  원래 규칙이 잡은 `utiel, valenciana, spain` 은 "valenciana" 가 "valencia" 와 단어가 달라 수정 규칙에서 빠진다.
+- **milton**: 수정 규칙에 맞는 키가 컷오프 뒤 한 번도 신규 조건을 통과하지 않았다. 61일 캐시의 기록 키 중 허리케인 밀턴을
+  가리키는 키가 없다(허리케인 이름은 인물·기관·장소로 잘 잡히지 않음; "helene" 도 같다).
+- **liam_payne**: 10/17 제목에 "liam payne" 이 든 기사 8,738건의 인물 목록에 "liam payne" 이 없다(대신 niall horan 4,632,
+  louis tomlinson 4,392 …). 10/18 신규 Top 20 은 거의 이 사건(동료 멤버, 호텔, karen payne)으로 채워졌지만 사건 이름 키가 없어 놓침.
+  내려받기 스크립트는 V1PERSONS 를 그대로 옮기므로 GKG 쪽 누락으로 보이나, 원본 zip 을 보관하지 않아 원본에서는 **[미확인]**.
+
+## 61일 입력 manifest와 57건 차이 (2026-11-17)
+
+- 명령: `python scripts/gkg_build.py --start 2024-09-15 --end 2024-11-14 --out experiments/results/gkg/manifest_61d/input_manifest.json`
+  (기본 `--out` 은 2024-10-01 manifest 와 summary 의 "Input manifest" 절을 덮어쓰므로 하위 폴더에 따로 썼다.
+  그 폴더의 `summary.md` 에 manifest 요약이 있다.)
+- 결과: 15분 슬롯 5,856개 모두 읽음(서버 없음 0, 미다운로드 0). 줄 8,313,432개 중 기사 8,313,313건,
+  **중복 URL 0, 빈 URL 0, 깨진 줄 119**, 시각 역순 0. stream SHA-256 `fb77326c…`(전체 실험 입력 해시와 같음),
+  raw SHA-256 `0172f937…`. 588.8초, peak RSS 440 MB.
+- 내려받기 기록(`data/gdelt/download_log.csv`) 합계: rows 8,313,390, kept 8,313,370, malformed 20.
+
+**원인 (확인함):** 제목 57건에 U+2028(LINE SEPARATOR) 문자가 67개 들어 있다. 내려받기 스크립트는
+`json.dumps(..., ensure_ascii=False)` 로 한 줄에 기사 하나를 쓰는데, JSON은 U+2028 을 이스케이프하지 않아 그대로 남는다.
+`trendpulse/gkg.py` 의 `iter_articles` 는 `text.splitlines()` 로 줄을 나누고, `splitlines` 는 `\n` 뿐 아니라 U+2028 에서도 끊는다.
+그래서 이 57개 기사가 119조각으로 갈라져 모두 "깨진 줄"로 버려졌다(8,313,370 − 57 = 8,313,313, 조각 119 = 깨진 줄 119).
+`\n` 으로만 나누면 57건 모두 정상 JSON 으로 읽힌다. 57건은 36일에 흩어져 있다(하루 최대 5건). 예: "Gary Best: Four years,␤two court␤cases …"
+
+**영향과 처리:** 전체의 0.0007%라 순위·판별에 주는 영향은 무시할 만하다고 본다(검증은 안 함 **[미확인]**).
+`gkg.py` 를 고치면 입력 스트림과 해시가 바뀌어 지금까지의 모든 결과(E1–E5, 대시보드 캐시)를 다시 만들어야 하므로
+고치지 않고 한계로 기록했다. 고칠지는 결정이 필요하다.
+
+## E3·E4 결과 확인 (2026-11-17)
+
+E3 (반짝/꾸준):
+- **선거 참고 키가 "최근 급증"이 되지 않음.** P:donald trump, P:kamala harris 의 ratio 는 11/7~11/8 에 최대 1.42 / 1.416 으로
+  F=1.5 에 못 미쳐 기간 내내 "꾸준"이다. `flash_vs_steady_reference/us_election` 의 기대("11월 6일 전후 '최근 급증'", verified=false)는
+  맞지 않았다. 원래 보도량이 매우 큰 키는 일주일 보도율이 30일 평균보다 50% 이상 늘어야 급증이 되는데 약 40% 늘었다.
+  판별 규칙은 바꾸지 않았다.
+- **날짜별 급증 후보 수가 다름**: 10/15 29개 → 11/01 155 → 11/08 202 → 11/14 195. 선거 기간의 실제 증가도 있지만,
+  10/15 는 스트림 시작 후 30일째라 ratio 상한이 낮다(설계 변경 절의 상한 표: 경과일이 짧을수록 상한이 작다). 날짜끼리 개수를 바로 비교하면 안 된다.
+- **GKG 이름 문제가 그대로 보임**: "quincy jones" 와 "quincy jone" 이 둘 다 급증, "white house"·"national hurricane center" 가
+  장소와 기관으로 중복, "binyamina, h_efa, israel" 같은 행정구역 표기, "p solutions" 같은 의미 없는 기관. 거르지 않았다.
+- 식는 중 칸은 허리케인 헬렌·밀턴 지역(tampa, fort myers, siesta key …)과 9월 말 중동 사건(nasrallah, haniyeh)으로 채워져 해석과 맞다.
+
+E4 (DGIM):
+- 모든 설정에서 최대 상대오차가 이론 상한 안이다(r=2: 37.2% / 37.5% < 50%, r=4: 14.2% < 16.7%).
+  평균은 r=2 약 10%, r=4 약 4.5%이고 N(10,000 / 50,000)에 따라 거의 변하지 않는다(상한이 r 에만 의존한다는 이론과 같음).
+- 메모리: Top 10 키에서 DGIM 이 정확 대비 N=10,000 에서 4%(221 / 5,502 bit), N=50,000 에서 1%(332 / 31,293 bit).
+- 주의할 점: "low"(10,000위) 그룹은 키 하나(O:kent police)이고 창 안 정확 개수 평균이 2건(N=10,000) / 8건(N=50,000)이라
+  상대오차(3.1% / 8.7%, r=4 2.1%)가 작게 나와도 일반화할 수 없다. 개수가 작으면 DGIM 버킷이 거의 정확해서 그렇다.
+  "mid"·"high" 도 각각 키 하나다. 이상한 값은 없었다.
+
+## 61일 대시보드 캐시 (정확, 2026-11-17)
+
+- `python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-11-14` (위 "Dashboard cache 2024-09-15_2024-11-14" 절, 숫자는 같은 캐시를 만든
+  재생 기록). 캐시는 E2 재실행과 동시에 `ensure_cache` 로 만들었고(1,542.6초, peak RSS 1,963.6 MB), 기록 스크립트는 그 캐시를 재사용했다.
+- 8,313,313건, 6시간 스냅샷 245개, 신규 진입 이벤트 841건. 감쇠 창 ≈ 1,105.4 MB(창마다 5,424,295키), 근거 3,688키·203.7 MB.
+- θ=0.5 변형은 30일(2024-09-15~10-14) 그대로다. 대시보드는 두 캐시를 모두 보여 주고, θ 캐시를 고르면 그 범위로 시점이 제한된다.
+  30일 θ 캐시의 마지막 23:45 스냅샷은 61일 정확 캐시에 같은 시각이 없어 그 시점에서만 "정확" 열이 없다.
