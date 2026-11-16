@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import sqlite3
 import urllib.error
 from datetime import datetime, timezone
 
@@ -133,7 +134,29 @@ def check_citations(answer: str, tools: GkgTools, need_cite: bool) -> list[str]:
     return problems
 
 
+def citations(reader: CacheReader, answer: str) -> list[dict]:
+    """Stored article info for each [#idx] in the answer (valid = found in the evidence file)."""
+    ids = sorted({int(x) for x in CITE_RE.findall(answer or "")})
+    if not ids or not os.path.exists(reader.evidence_path):
+        return [{"idx": i, "valid": False} for i in ids]
+    db = sqlite3.connect(reader.evidence_path)
+    try:
+        rows = db.execute(f"SELECT idx, ts, domain, url, title FROM articles WHERE idx IN ({','.join('?' * len(ids))})",
+                          ids).fetchall()
+    finally:
+        db.close()
+    found = {r[0]: dict(zip(("idx", "ts", "domain", "url", "title"), r)) for r in rows}
+    return [{**found[i], "valid": True} if i in found else {"idx": i, "valid": False} for i in ids]
+
+
 def ask(reader: CacheReader, question: str, t: int | None = None, key: str | None = None) -> dict:
+    """Answer plus ``citations`` (article info for every cited [#idx])."""
+    out = _ask(reader, question, t, key)
+    out["citations"] = citations(reader, out.get("answer", ""))
+    return out
+
+
+def _ask(reader: CacheReader, question: str, t: int | None = None, key: str | None = None) -> dict:
     tools = GkgTools(reader, t)
     key = guess_key(tools, question) or (tools.resolve(key) if key else None)
     api_key = os.environ.get("UPSTAGE_API_KEY", "").strip()

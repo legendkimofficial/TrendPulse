@@ -29,12 +29,26 @@ snapshot where they first appear. Earlier articles of a key have no evidence.
 Evidence articles are kept in a separate sqlite file
 (``data/gdelt/processed/gkg_app_evidence.sqlite``) so running scripts/gkg_run.py does
 not overwrite the dashboard's evidence.
+
+Cache version 4 (v0.4-style dashboard) adds, next to ``snapshots``:
+  ranks   (t, tab, kind, grp, rank, key)   every displayed row; rank within the trend group
+  watch   (key, first_t)                   keys whose rates are recorded: evidence-tracked keys
+                                           (any window's Top 200) plus every displayed key, from
+                                           the first stored snapshot where they qualify
+  series  (key, t, r72, r168, r720)        bias-corrected rates per hour of watched keys
+  events  (t, key, kind, rank, lift)       new-issue entry events
+  payload.stats                            window key counts and estimated decay-window bytes
+  meta.days                                articles per UTC day and missing 15-minute slots
+A θ variant lives in its own pair of files (``gkg_cache_theta0.5.sqlite`` and
+``gkg_app_evidence_theta0.5.sqlite``); the dashboard offers every cache file it finds.
 """
 from __future__ import annotations
 
+import calendar
 import hashlib
 import json
 import os
+import re
 import sqlite3
 import time
 from dataclasses import asdict, dataclass
@@ -46,11 +60,33 @@ from trendpulse.gkg_engine import (LABELS_KO, GkgEngine, GkgEngineConfig, TimeDe
                                    smoothed_ratio, trend_label, variant_name)
 
 PROCESSED = os.path.join(REPO_ROOT, "data", "gdelt", "processed")
-CACHE_PATH = os.path.join(PROCESSED, "gkg_cache.sqlite")
-EVIDENCE_PATH = os.path.join(PROCESSED, "gkg_app_evidence.sqlite")
 KINDS = {"all": None, "P": "P:", "O": "O:", "L": "L:"}
 KIND_KO = {"P": "인물", "O": "기관", "L": "장소"}
-CACHE_VERSION = 3
+CACHE_VERSION = 4
+
+
+def cache_paths(theta: float | None = None, directory: str = PROCESSED) -> tuple[str, str]:
+    """(cache, evidence) file paths of a θ variant (None = exact)."""
+    tag = "" if theta is None else f"_theta{theta:g}"
+    return (os.path.join(directory, f"gkg_cache{tag}.sqlite"),
+            os.path.join(directory, f"gkg_app_evidence{tag}.sqlite"))
+
+
+CACHE_PATH, EVIDENCE_PATH = cache_paths(None)
+_CACHE_NAME = re.compile(r"gkg_cache(?:_theta([0-9.]+))?\.sqlite")
+
+
+def discover_variants(directory: str = PROCESSED) -> dict[str, tuple[str, str]]:
+    """Every cache file in ``directory``: {variant name: (cache, evidence)}; exact first."""
+    found = []
+    if os.path.isdir(directory):
+        for name in os.listdir(directory):
+            m = _CACHE_NAME.fullmatch(name)
+            if m:
+                theta = float(m.group(1)) if m.group(1) else None
+                found.append((theta is not None, theta or 0.0, variant_name(theta),
+                              cache_paths(theta, directory)))
+    return {v: paths for _, _, v, paths in sorted(found)}
 LABEL_KO_ALL = {**LABELS_KO, "new": "신규 이슈"}
 
 
@@ -147,6 +183,7 @@ class _Collector:
         self.stored = 0
         self.events_seen = 0
         self.variant = variant_name(cfg.theta)
+        self.watch: dict[str, int] = {}
 
     def __call__(self, eng: GkgEngine, t: float) -> None:
         # Dashboard-only addition: keys shown in the new-issue list are tracked for evidence
@@ -164,11 +201,54 @@ class _Collector:
 
     def store(self, eng: GkgEngine, t: float) -> None:
         payload = self.payload(eng, t)
+        ti = int(t)
         self.db.execute("INSERT OR REPLACE INTO snapshots VALUES (?,?,?)",
-                        (int(t), eng.articles, json.dumps(payload, ensure_ascii=False)))
+                        (ti, eng.articles, json.dumps(payload, ensure_ascii=False)))
+        shown = []
+        for tab, tb in payload["tabs"].items():
+            for kind, rows in tb["rows"].items():
+                gi, last = 0, None
+                for i, r in enumerate(rows, 1):
+                    grp = r.get("group") or ""
+                    gi = gi + 1 if grp == last else 1
+                    last = grp
+                    shown.append((ti, tab, kind, grp, gi if tab == "trend" else i, r["key"]))
+        self.db.executemany("INSERT INTO ranks VALUES (?,?,?,?,?,?)", shown)
+        self.db.executemany("INSERT INTO events VALUES (?,?,?,?,?)",
+                            [(e["t"], e["key"], e["kind"], e["rank"], e.get("lift")) for e in payload["events"]])
+        self._series(eng, t, [r[5] for r in shown])
         self.db.commit()
         self.stored += 1
         self.last_t = int(t)
+
+    def _series(self, eng: GkgEngine, t: float, shown: list[str]) -> None:
+        """Rates of watched keys (evidence-tracked ∪ displayed so far) at this snapshot."""
+        new = list(dict.fromkeys(k for k in list(self.evidence.tracked) + shown if k not in self.watch))
+        for k in new:
+            self.watch[k] = int(t)
+        self.db.executemany("INSERT OR IGNORE INTO watch VALUES (?,?)", [(k, int(t)) for k in new])
+        v = self.variant
+        ws = [eng.windows.get((name, v)) for name in ("72h", "168h", "720h")]
+
+        def r(w, key):
+            if w is None:
+                return None
+            x = w.bias_corrected_rate(key, t)
+            return None if x is None else round(x, 4)
+        self.db.executemany("INSERT OR REPLACE INTO series VALUES (?,?,?,?,?)",
+                            [(k, int(t), r(ws[0], k), r(ws[1], k), r(ws[2], k)) for k in self.watch])
+
+    def _stats(self, eng: GkgEngine) -> dict:
+        v = self.variant
+        keys, total = {}, 0
+        for name in ("72h", "168h", "720h"):
+            w = eng.windows.get((name, v))
+            if w is not None:
+                m = w.memory_bytes()
+                keys[name] = m["keys"]
+                total += m["estimate_bytes"]
+        return {"keys": keys, "decay_bytes": total, "evidence_keys": len(self.evidence.tracked),
+                "dgim_keys": len(self.dgims), "watched": len(self.watch)}
 
     # ------------------------------------------------------------------ rows
     def _evidence_count(self, key: str, n_articles: int) -> int:
@@ -281,7 +361,7 @@ class _Collector:
         self.events_seen = len(eng.new_events)
         return {
             "t": int(t), "articles": n, "variant": v,
-            "gaps": gaps,
+            "gaps": gaps, "stats": self._stats(eng),
             "tabs": {
                 "major": {"window": "168h", "status": trend_status,
                           "rows": self._per_kind(w168.top(top_m), major_row)},
@@ -301,9 +381,36 @@ class _Collector:
         }
 
 
-def build_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, path: str = CACHE_PATH,
-                evidence_path: str = EVIDENCE_PATH, progress=print) -> dict:
+SCHEMA = """
+CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT);
+CREATE TABLE snapshots (t INTEGER PRIMARY KEY, articles INTEGER, payload TEXT);
+CREATE TABLE ranks (t INTEGER, tab TEXT, kind TEXT, grp TEXT, rank INTEGER, key TEXT);
+CREATE INDEX ranks_tab ON ranks (tab, kind, t);
+CREATE INDEX ranks_key ON ranks (key, t);
+CREATE TABLE watch (key TEXT PRIMARY KEY, first_t INTEGER) WITHOUT ROWID;
+CREATE TABLE series (key TEXT, t INTEGER, r72 REAL, r168 REAL, r720 REAL, PRIMARY KEY (key, t)) WITHOUT ROWID;
+CREATE TABLE events (t INTEGER, key TEXT, kind TEXT, rank INTEGER, lift REAL);
+CREATE INDEX events_t ON events (t);
+"""
+
+
+def day_table(root: str, start: str, end: str, per_day: dict[int, int]) -> list[dict]:
+    """Articles per UTC day (from the replay) and the day's missing 15-minute slots (HHMM.missing)."""
+    out = []
+    for day in list_days(root, start, end):
+        d = os.path.join(root, "slim", day)
+        names = os.listdir(d)
+        dn = int(calendar.timegm(time.strptime(day, "%Y-%m-%d"))) // 86400
+        out.append({"date": day, "articles": per_day.get(dn, 0),
+                    "missing": sorted(n[:4] for n in names if n.endswith(".missing")),
+                    "files": sum(1 for n in names if n.endswith(".jsonl.gz"))})
+    return out
+
+
+def build_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, path: str | None = None,
+                evidence_path: str | None = None, progress=print) -> dict:
     """Replay the stream and write the cache. Returns the meta dict."""
+    path, evidence_path = _paths(cfg, path, evidence_path)
     start, end = resolve_range(cfg, root)
     fp = fingerprint(cfg, root)
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
@@ -313,8 +420,7 @@ def build_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, p
     db = sqlite3.connect(tmp)
     db.execute("PRAGMA journal_mode=OFF")
     db.execute("PRAGMA synchronous=OFF")
-    db.executescript("CREATE TABLE meta (key TEXT PRIMARY KEY, value TEXT);"
-                     "CREATE TABLE snapshots (t INTEGER PRIMARY KEY, articles INTEGER, payload TEXT);")
+    db.executescript(SCHEMA)
 
     ecfg = GkgEngineConfig(thresholds=(cfg.theta,), detect_variant=variant_name(cfg.theta),
                            evidence_path=evidence_path)
@@ -326,8 +432,11 @@ def build_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, p
     tracked = eng.evidence.tracked
     t0 = time.time()
     last_print = t0
+    per_day: dict[int, int] = {}
     for a in iter_articles(start, end, root=root):
         eng.process(a)
+        d = a.ts // 86400
+        per_day[d] = per_day.get(d, 0) + 1
         if a.countries:
             countries.add(a.countries, a.ts)
         for k in a.keys:
@@ -353,7 +462,8 @@ def build_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, p
             "new_events": len(eng.new_events), "seconds": round(seconds, 1),
             "articles_per_s": round(eng.articles / seconds) if seconds else None,
             "peak_rss_mb": round(rss / 1e6, 1) if rss else None, "memory": mem,
-            "code": module_hashes(), "built_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
+            "code": module_hashes(), "built_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "days": day_table(root, start, end, per_day)}
     db.execute("INSERT INTO meta VALUES ('meta', ?)", (json.dumps(meta, ensure_ascii=False),))
     db.commit()
     db.close()
@@ -364,9 +474,16 @@ def build_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, p
     return meta
 
 
-def ensure_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, path: str = CACHE_PATH,
-                 evidence_path: str = EVIDENCE_PATH, rebuild: bool = False, progress=print) -> dict:
-    """Reuse the cache if its fingerprint matches, otherwise rebuild it."""
+def _paths(cfg: CacheConfig, path: str | None, evidence_path: str | None) -> tuple[str, str]:
+    c, e = cache_paths(cfg.theta)
+    return path or c, evidence_path or e
+
+
+def ensure_cache(cfg: CacheConfig = CacheConfig(), *, root: str = DEFAULT_ROOT, path: str | None = None,
+                 evidence_path: str | None = None, rebuild: bool = False, progress=print) -> dict:
+    """Reuse the cache if its fingerprint matches, otherwise rebuild it. Default files depend on
+    cfg.theta (see cache_paths)."""
+    path, evidence_path = _paths(cfg, path, evidence_path)
     meta = read_meta(path)
     fp = fingerprint(cfg, root)
     if not rebuild and meta and meta.get("fingerprint") == fp and os.path.exists(evidence_path):
@@ -448,3 +565,100 @@ class CacheReader:
             db.close()
         return {"tracked": True, "first_tracked_ts": k[1], "total": total,
                 "articles": [dict(zip(("idx", "ts", "domain", "url", "title"), r)) for r in rows]}
+
+    # ------------------------------------------------------------------ v4 tables (dashboard v0.4 layout)
+    def _q(self, sql: str, args=(), path: str | None = None) -> list[tuple]:
+        db = sqlite3.connect(path or self.path)
+        try:
+            return db.execute(sql, args).fetchall()
+        finally:
+            db.close()
+
+    def prev_time(self, t: int) -> int | None:
+        i = self.times.index(t)
+        return self.times[i - 1] if i > 0 else None
+
+    def ranks(self, t: int, tab: str, kind: str) -> dict[str, tuple[int, str]]:
+        return {k: (r, g) for k, r, g in self._q(
+            "SELECT key, rank, grp FROM ranks WHERE tab=? AND kind=? AND t=?", (tab, kind, t))}
+
+    def race(self, t: int, tab: str, kind: str, grp: str = "", n: int = 28, k: int = 10) -> dict:
+        """Ranks (≤ k) of the displayed rows over the last n stored snapshots up to t."""
+        i = self.times.index(self.nearest(t))
+        times = self.times[max(0, i - n + 1): i + 1]
+        rows = self._q("SELECT t, key, rank FROM ranks WHERE tab=? AND kind=? AND grp=? AND t>=? AND t<=? AND rank<=?",
+                       (tab, kind, grp, times[0], times[-1], k))
+        pos = {x: j for j, x in enumerate(times)}
+        series: dict[str, list] = {}
+        for tt, key, rank in rows:
+            series.setdefault(key, [None] * len(times))[pos[tt]] = rank
+        return {"t": times, "k": k, "series": series}
+
+    def series(self, keys: list[str], t: int | None = None, start: int | None = None) -> dict:
+        """Rates per hour (r72, r168, r720) of watched keys at every stored snapshot in [start, t]."""
+        t = self.nearest(t)
+        times = [x for x in self.times if x <= t and (start is None or x >= start)]
+        pos = {x: j for j, x in enumerate(times)}
+        out = {}
+        for key in keys:
+            s = {"r72": [None] * len(times), "r168": [None] * len(times), "r720": [None] * len(times)}
+            first = self._q("SELECT first_t FROM watch WHERE key=?", (key,))
+            if times:
+                for tt, a, b, c in self._q("SELECT t, r72, r168, r720 FROM series WHERE key=? AND t>=? AND t<=?",
+                                           (key, times[0], times[-1])):
+                    j = pos.get(tt)
+                    if j is not None:
+                        s["r72"][j], s["r168"][j], s["r720"][j] = a, b, c
+            s["watched_from"] = first[0][0] if first else None
+            out[key] = s
+        return {"t": times, "series": out}
+
+    def rates_at(self, key: str, t: int) -> dict | None:
+        r = self._q("SELECT r72, r168, r720 FROM series WHERE key=? AND t=?", (key, t))
+        return dict(zip(("r72", "r168", "r720"), r[0])) if r else None
+
+    def search(self, q: str, limit: int = 20) -> list[str]:
+        """Watched keys whose name contains q (prefix matches first)."""
+        q = " ".join(q.lower().split())
+        if not q:
+            return []
+        like = "%" + q.replace("!", "!!").replace("%", "!%").replace("_", "!_") + "%"
+        rows = [k for (k,) in self._q("SELECT key FROM watch WHERE substr(key, 3) LIKE ? ESCAPE '!'", (like,))]
+        rows.sort(key=lambda k: (not k[2:].startswith(q), len(k), k))
+        return rows[:limit]
+
+    def events_upto(self, t: int, limit: int = 200) -> dict:
+        rows = self._q("SELECT t, key, kind, rank, lift FROM events WHERE t<=? ORDER BY t DESC, rank LIMIT ?",
+                       (t, limit))
+        counts = dict(self._q("SELECT kind, COUNT(*) FROM events WHERE t<=? GROUP BY kind", (t,)))
+        return {"total": sum(counts.values()), "first": counts.get("first", 0),
+                "reentry": counts.get("re-entry", 0),
+                "rows": [dict(zip(("t", "key", "kind", "rank", "lift"), r)) for r in rows]}
+
+    def key_events(self, key: str, t: int) -> list[dict]:
+        return [dict(zip(("t", "kind", "rank", "lift"), r)) for r in self._q(
+            "SELECT t, kind, rank, lift FROM events WHERE key=? AND t<=? ORDER BY t", (key, t))]
+
+    def cooccurring(self, key: str, n_articles: int, limit: int = 12, sample: int = 300) -> dict:
+        """Other tracked keys in the key's newest ``sample`` evidence articles, and their outlets.
+        Only postings that were stored count (tracked keys, 30 per key per UTC day)."""
+        if not os.path.exists(self.evidence_path):
+            return {"keys": [], "domains": [], "articles": 0}
+        db = sqlite3.connect(self.evidence_path)
+        try:
+            k = db.execute("SELECT key_id FROM keys WHERE key=?", (key,)).fetchone()
+            if not k:
+                return {"keys": [], "domains": [], "articles": 0}
+            idx = [i for (i,) in db.execute("SELECT idx FROM postings WHERE key_id=? AND idx<? "
+                                            "ORDER BY idx DESC LIMIT ?", (k[0], n_articles, sample))]
+            if not idx:
+                return {"keys": [], "domains": [], "articles": 0}
+            marks = ",".join("?" * len(idx))
+            keys = db.execute(f"SELECT k.key, COUNT(*) c FROM postings p JOIN keys k ON k.key_id=p.key_id "
+                              f"WHERE p.idx IN ({marks}) AND p.key_id<>? GROUP BY k.key ORDER BY c DESC, k.key "
+                              f"LIMIT ?", (*idx, k[0], limit)).fetchall()
+            doms = db.execute(f"SELECT domain, COUNT(*) c FROM articles WHERE idx IN ({marks}) "
+                              f"GROUP BY domain ORDER BY c DESC, domain LIMIT 8", idx).fetchall()
+        finally:
+            db.close()
+        return {"keys": keys, "domains": doms, "articles": len(idx)}

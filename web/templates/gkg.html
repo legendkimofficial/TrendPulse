@@ -4,10 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Trend Pulse GKG</title>
-  <meta name="description" content="GDELT GKG 영어 기사 흐름에서 7일 주요 이슈, 72시간 신규 이슈, 30일 반짝·꾸준을 감쇠 윈도우로 보여 주는 대시보드">
+  <meta name="description" content="GDELT GKG 영어 기사 흐름을 6시간 스냅샷으로 재생하며 7일 주요 이슈, 72시간 신규 이슈, 30일 반짝·꾸준을 감쇠 윈도우로 보여 주는 대시보드">
   <script>
+    // Same theme key as v0.4: the saved theme is applied before the first paint.
     try { document.documentElement.dataset.theme = localStorage.getItem("tp-theme") || "system"; } catch (e) {}
   </script>
+  <!-- Pretendard (SIL OFL), JetBrains Mono (SIL OFL); offline the system fonts in style.css take over. -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/jetbrains-mono@5.2.6/index.min.css">
@@ -16,114 +18,318 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236250d6'/><path d='M4 18h6l3-8 5 14 3-6h7' stroke='white' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
-<a class="skip" href="#main">본문으로 건너뛰기</a>
+<!-- Lucide icons (ISC licence, https://lucide.dev), same sprite as v0.4 -->
 <svg hidden aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
-  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
-  <symbol id="i-prev" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
-  <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
-  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="4" width="4" height="16" rx="1"/><rect x="6" y="4" width="4" height="16" rx="1"/></symbol>
+  <symbol id="i-step" viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></symbol>
+  <symbol id="i-restart" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
   <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></symbol>
+  <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-clapper" viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
 </svg>
 
-<header class="g-appbar">
-  <div class="g-appbar-inner">
-    <div class="g-brand">
-      <span class="g-logo" aria-hidden="true"></span>
-      <div>
-        <div class="g-brand-name">Trend Pulse <span class="g-tag">GKG</span></div>
-        <div class="g-brand-sub" id="range">GDELT GKG 2.1 · 영어 기사</div>
+<a class="skip" href="#rankCard">본문으로 건너뛰기</a>
+
+<header class="appbar">
+  <div class="appbar-inner">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" class="logo" aria-hidden="true"><rect width="32" height="32" rx="8"/><path d="M4 18h6l3-8 5 14 3-6h7"/></svg>
+      <div class="brand-text">
+        <div class="brand-name">Trend Pulse <span class="ver">{{ version }}</span></div>
+        <div class="brand-sub" id="brandSub">GDELT GKG 2.1 영어 기사 흐름 · 감쇠 윈도우 이슈 순위 · DGIM 근사 집계</div>
       </div>
     </div>
-    <div class="g-clock">
-      <div class="g-clock-date" id="clock">—</div>
-      <div class="g-clock-meta" id="clockMeta">캐시 불러오는 중</div>
+
+    <div class="clock" aria-live="polite" aria-atomic="true">
+      <div class="clock-row">
+        <span class="live" id="liveDot" data-state="paused"><span class="dot"></span><span id="liveLabel">일시정지</span></span>
+        <span class="clock-date" id="clockDate">—</span>
+      </div>
+      <div class="clock-meta" id="clockMeta">캐시 불러오는 중</div>
     </div>
-    <button class="icon-btn" id="themeBtn" type="button" aria-label="테마 바꾸기" title="테마 바꾸기">
-      <svg><use href="#i-moon"/></svg>
-    </button>
+
+    <div class="appbar-actions">
+      <button class="icon-btn" id="btnShare" title="현재 화면 링크 복사" aria-label="현재 화면 링크 복사"><svg><use href="#i-link"/></svg></button>
+      <button class="icon-btn" id="btnTheme" title="테마 전환 (시스템 → 라이트 → 다크)" aria-label="테마 전환"><svg class="th-system"><use href="#i-monitor"/></svg><svg class="th-light"><use href="#i-sun"/></svg><svg class="th-dark"><use href="#i-moon"/></svg></button>
+      <button class="icon-btn" id="btnHelp" title="이 화면 읽는 법 (?)" aria-label="도움말"><svg><use href="#i-help"/></svg></button>
+      <button class="btn" id="btnSettings"><svg><use href="#i-settings"/></svg><span>설정</span></button>
+    </div>
   </div>
 </header>
 
-<main id="main" class="g-page">
-  <section class="card g-controls" aria-label="시점과 보기 선택">
-    <div class="g-time">
-      <button class="icon-btn" id="prevBtn" type="button" aria-label="6시간 전"><svg><use href="#i-prev"/></svg></button>
-      <input type="range" id="slider" min="0" max="0" value="0" step="1" aria-label="시점 (6시간 단위)">
-      <button class="icon-btn" id="nextBtn" type="button" aria-label="6시간 뒤"><svg><use href="#i-next"/></svg></button>
-      <span class="g-time-label" id="sliderLabel">—</span>
-    </div>
-    <div class="g-pick">
-      <div class="seg" role="tablist" aria-label="보기" id="tabs">
-        <button type="button" role="tab" data-tab="major" aria-selected="true">7일 주요 이슈</button>
-        <button type="button" role="tab" data-tab="new" aria-selected="false">72시간 신규</button>
-        <button type="button" role="tab" data-tab="trend" aria-selected="false">30일 반짝·꾸준</button>
+<section class="transport" aria-label="재생 제어">
+  <div class="transport-inner">
+    <div class="t-group">
+      <button id="btnPlay" class="btn primary" title="재생 / 일시정지 (Space)" aria-pressed="false">
+        <svg class="ic-play"><use href="#i-play"/></svg><svg class="ic-pause"><use href="#i-pause"/></svg><span>재생</span>
+      </button>
+      <button id="btnStep" class="btn" title="한 칸(6시간) 진행 (→)"><svg><use href="#i-step"/></svg><span>한 칸</span></button>
+      <div class="seg" role="radiogroup" aria-label="속도 (틱당 이동 시간)" id="speed">
+        <button type="button" role="radio" data-v="1" aria-checked="true">6시간</button>
+        <button type="button" role="radio" data-v="2" aria-checked="false">12시간</button>
+        <button type="button" role="radio" data-v="4" aria-checked="false">1일</button>
+        <button type="button" role="radio" data-v="8" aria-checked="false">2일</button>
       </div>
-      <div class="seg" aria-label="키 종류" id="kinds">
-        <button type="button" data-kind="all" aria-pressed="true">전체</button>
-        <button type="button" data-kind="P" aria-pressed="false">인물</button>
-        <button type="button" data-kind="O" aria-pressed="false">기관</button>
-        <button type="button" data-kind="L" aria-pressed="false">장소</button>
-      </div>
+      <span class="t-hint">틱당</span>
     </div>
-    <div class="g-gaps" id="gaps" aria-label="빈 구간 비율"></div>
-  </section>
 
-  <div class="g-grid">
-    <section class="card g-main" aria-labelledby="tableTitle">
+    <div class="t-group">
+      <label class="field">
+        <span>시점</span>
+        <select id="preset" aria-label="사건 프리셋"></select>
+      </label>
+      <input type="date" id="customDate" hidden aria-label="날짜 직접 선택 (UTC 00:00)">
+      <button id="btnDemo" class="btn" title="선택한 사건 장면: 첫 보도 24시간 뒤, 72시간 신규 탭, 해당 키 선택, 에이전트 질문"><svg><use href="#i-clapper"/></svg><span>사건 장면</span></button>
+      <button id="btnReset" class="btn" title="스트림 처음으로"><svg><use href="#i-restart"/></svg><span>처음으로</span></button>
+    </div>
+  </div>
+
+  <div class="timeline" id="timeline" aria-label="61일 타임라인 (클릭하면 그 시점으로 이동)">
+    <svg id="timelineSvg" preserveAspectRatio="none" role="img" aria-label="일별 기사 수, 빠진 15분 슬롯, 사건, 현재 위치"></svg>
+    <div class="tl-cursor" id="tlCursor"></div>
+    <div class="tl-tip" id="tlTip" hidden></div>
+    <div class="tl-axis" id="tlAxis"></div>
+  </div>
+</section>
+
+<main class="page">
+  <section class="kpis" id="kpis" aria-label="핵심 지표"></section>
+
+  <div class="grid">
+    <section class="card rank-card" id="rankCard">
       <div class="card-head">
-        <h2 id="tableTitle">7일 주요 이슈</h2>
-        <span class="t-hint" id="tableHint"></span>
+        <div class="card-title">
+          <h2><span id="tabTitle">7일 주요 이슈</span> Top <span id="kLabel">20</span></h2>
+          <span class="badge" id="variantBadge" title="θ 삭제 여부">정확</span>
+        </div>
+        <div class="card-tools">
+          <div class="seg small" role="tablist" aria-label="보기" id="rankView">
+            <button role="tab" data-view="table" aria-selected="true">순위표</button>
+            <button role="tab" data-view="race" aria-selected="false">순위 흐름</button>
+            <button role="tab" data-view="compare" aria-selected="false">보도율 비교</button>
+          </div>
+          <button class="icon-btn small" id="btnCsv" title="현재 순위를 CSV로 내려받기" aria-label="CSV 내려받기"><svg><use href="#i-download"/></svg></button>
+        </div>
+      </div>
+      <div class="g-pick">
+        <div class="seg small" role="tablist" aria-label="탭" id="tabs">
+          <button type="button" role="tab" data-tab="major" aria-selected="true">7일 주요 이슈</button>
+          <button type="button" role="tab" data-tab="new" aria-selected="false">72시간 신규</button>
+          <button type="button" role="tab" data-tab="trend" aria-selected="false">30일 반짝·꾸준</button>
+        </div>
+        <div class="seg small" role="radiogroup" aria-label="키 종류" id="kinds">
+          <button type="button" role="radio" data-kind="all" aria-checked="true">전체</button>
+          <button type="button" role="radio" data-kind="P" aria-checked="false">인물</button>
+          <button type="button" role="radio" data-kind="O" aria-checked="false">기관</button>
+          <button type="button" role="radio" data-kind="L" aria-checked="false">장소</button>
+        </div>
       </div>
       <div class="g-status" id="status" hidden></div>
-      <div class="table-wrap">
-        <table class="g-table" id="table">
-          <thead><tr id="thead"></tr></thead>
-          <tbody id="tbody"></tbody>
-        </table>
+
+      <div id="viewTable" class="view">
+        <div class="table-wrap">
+          <table class="rank-table">
+            <thead><tr id="thead"></tr></thead>
+            <tbody id="rankBody"></tbody>
+          </table>
+        </div>
+        <p class="foot" id="rankFoot"></p>
       </div>
-      <p class="foot" id="tableFoot"></p>
+
+      <div id="viewRace" class="view" hidden>
+        <p class="caption" id="raceCaption">최근 7일(스냅샷 28개) 동안 Top 10 안 순위가 어떻게 움직였는지. 선택한 키는 강조, 나머지는 회색. 선 끝의 이름을 누르면 상세가 열립니다.</p>
+        <div class="chart-wrap" id="raceChart"></div>
+      </div>
+
+      <div id="viewCompare" class="view" hidden>
+        <div class="g-cmp-head">
+          <p class="caption" id="compareCaption">고른 키(최대 3개)의 보정 보도율(시간당 기사 수) 추이. 키를 고르지 않으면 현재 목록 상위 3개를 보여 줍니다.</p>
+          <div class="seg small" role="radiogroup" aria-label="보도율 창" id="cmpField">
+            <button type="button" role="radio" data-f="r72" aria-checked="false">72h</button>
+            <button type="button" role="radio" data-f="r168" aria-checked="true">168h</button>
+            <button type="button" role="radio" data-f="r720" aria-checked="false">720h</button>
+          </div>
+        </div>
+        <div class="chart-wrap" id="compareChart"></div>
+      </div>
     </section>
 
-    <aside class="g-side">
-      <section class="card" aria-labelledby="ctyTitle">
-        <h2 id="ctyTitle">나라 언급</h2>
-        <p class="caption">순위 키와 별도로 센 나라(type 1 장소) 언급 · 168시간 감쇠, 보정 보도율</p>
-        <ol class="g-cty" id="countries"></ol>
+    <aside class="rail">
+      <section class="card">
+        <div class="card-head">
+          <div class="card-title"><h2><svg class="h-ic"><use href="#i-flame"/></svg>급상승</h2></div>
+          <span class="badge soft" title="72시간 신규 이슈 상위: lift = (72h 보도율+1)/(168h 보도율+1)">72시간 신규 상위</span>
+        </div>
+        <ul class="list" id="burst"><li class="empty">불러오는 중…</li></ul>
       </section>
-      <section class="card" aria-labelledby="evTitle">
-        <h2 id="evTitle">신규 진입</h2>
-        <p class="caption">직전 6시간 동안 72시간 신규 Top 10에 들어온 키</p>
-        <ul class="g-events" id="events"></ul>
+
+      <section class="card">
+        <div class="card-head">
+          <div class="card-title"><h2><svg class="h-ic"><use href="#i-sparkles"/></svg>신규 Top 10 진입 기록</h2><span class="badge soft" id="eventCount">0</span></div>
+          <div class="seg small" role="radiogroup" aria-label="진입 종류" id="eventFilter">
+            <button role="radio" data-f="all" aria-checked="true">전체</button>
+            <button role="radio" data-f="first" aria-checked="false">첫 진입</button>
+            <button role="radio" data-f="re-entry" aria-checked="false">재진입</button>
+          </div>
+        </div>
+        <p class="caption" id="eventCaption">첫 진입 = 이번 스트림에서 처음 72시간 신규 Top 10에 들어옴 · 재진입 = 빠졌다가 복귀 (시간별 판정)</p>
+        <ul class="list" id="events"><li class="empty">불러오는 중…</li></ul>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div class="card-title"><h2><svg class="h-ic"><use href="#i-layers"/></svg>메모리 절약의 대가</h2></div>
+          <div class="seg small" role="radiogroup" aria-label="창" id="memWin">
+            <button role="radio" data-w="72h" aria-checked="false">72h</button>
+            <button role="radio" data-w="168h" aria-checked="true">168h</button>
+            <button role="radio" data-w="720h" aria-checked="false">720h</button>
+          </div>
+        </div>
+        <div class="metrics" id="metrics"><p class="empty">불러오는 중…</p></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <div class="card-title"><h2><svg class="h-ic"><use href="#i-globe"/></svg>나라 언급</h2></div>
+          <span class="badge soft" title="순위 키와 별도로 센 나라(type 1 장소) 언급, 168시간 감쇠">168h 보도율</span>
+        </div>
+        <ol class="g-cty" id="countries"></ol>
       </section>
     </aside>
   </div>
 
-  <section class="card g-agent" aria-labelledby="agentTitle">
+  <section class="card agent" id="agentCard">
     <div class="card-head">
-      <h2 id="agentTitle"><svg class="h-ic"><use href="#i-sparkles"/></svg>에이전트에게 묻기</h2>
-      <span class="t-hint" id="agentMode"></span>
+      <div class="card-title"><h2><svg class="h-ic"><use href="#i-bot"/></svg>Solar 에이전트에게 묻기</h2><span class="badge soft" id="agentMode">확인 중…</span></div>
+      <button class="btn ghost small" id="btnClearChat" hidden>대화 지우기</button>
     </div>
-    <form id="askForm" class="g-ask">
-      <input id="question" type="text" autocomplete="off" placeholder="예: joe biden 왜 많이 나와? (선택한 시점 기준)" aria-label="질문">
-      <button class="btn primary" type="submit" id="askBtn">묻기</button>
+    <div class="chat" id="chat">
+      <div class="chat-empty" id="chatEmpty">
+        <p>질문하면 에이전트가 현재 시점의 목록·근거 기사 도구를 호출해 인용과 함께 설명합니다. 질문하는 동안 재생은 멈춥니다.</p>
+        <div class="suggest" id="suggest"></div>
+      </div>
+    </div>
+    <form id="askForm" class="ask">
+      <input id="askInput" placeholder="예: joe biden 왜 많이 나와?" autocomplete="off" aria-label="질문">
+      <button class="btn primary" type="submit">질문</button>
     </form>
-    <div class="g-answer" id="answer" aria-live="polite"></div>
   </section>
+
+  <footer class="notes">
+    <p><b>해석의 한계</b> · 순위는 GDELT GKG가 수집한 영어 웹 기사 안에서 관찰한 보도량이며 사회 전체의 관심도를 뜻하지 않습니다.
+    인물·기관·장소 이름은 GKG의 자동 태깅을 그대로 쓰므로 장소가 인물로 잡히거나("P:los angeles") 같은 사람이 두 이름으로 나뉘는 오류가 있습니다.
+    언론사 수는 최대 8곳까지 근사하고, 근거 기사는 키마다 UTC 하루 30건까지 저장한 표본입니다. 빠진 15분 슬롯이 창의 5%를 넘으면 판별을 보류합니다.</p>
+    <p>Team cloudnine · 빅데이터개론 그룹 프로젝트 · 데이터: GDELT GKG 2.1 · 글꼴 Pretendard · 아이콘 Lucide</p>
+  </footer>
 </main>
 
-<div class="drawer-backdrop" id="backdrop" hidden></div>
-<aside class="drawer g-drawer" id="drawer" aria-labelledby="dTitle" hidden>
+<!-- Key detail: slide-over drawer -->
+<div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+<aside class="drawer" id="drawer" aria-label="키 상세" aria-hidden="true">
   <div class="drawer-head">
-    <div>
-      <div class="t-hint" id="dKind"></div>
-      <h2 id="dTitle">—</h2>
-    </div>
-    <button class="icon-btn" id="dClose" type="button" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
+    <form id="lookup" class="lookup" role="search">
+      <svg><use href="#i-search"/></svg>
+      <input id="lookupInput" list="lookupList" placeholder="키 검색 (영어 이름, / 키)" autocomplete="off" aria-label="키 검색">
+      <datalist id="lookupList"></datalist>
+    </form>
+    <button class="icon-btn" id="btnDrawerClose" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
   </div>
-  <div class="drawer-body" id="dBody"></div>
+  <div id="detailBody" class="drawer-body">
+    <p class="empty">순위표에서 키를 선택하거나 검색하세요.</p>
+  </div>
 </aside>
+
+<!-- Settings dialog -->
+<dialog id="settingsDlg" class="dlg">
+  <form method="dialog" class="dlg-inner" id="settingsForm">
+    <header class="dlg-head">
+      <h2>설정</h2>
+      <div class="presets">
+        <span class="t-hint">프리셋</span>
+        <button type="button" class="btn small" data-preset="default">기본 (Top 20 · 정확)</button>
+      </div>
+      <button type="button" class="icon-btn" id="btnSettingsClose" aria-label="닫기"><svg><use href="#i-close"/></svg></button>
+    </header>
+    <div class="dlg-body">
+      <fieldset>
+        <legend>표시</legend>
+        <label>순위 크기 K <input id="cfgK" type="number" min="5" max="20" value="20"><small>캐시에는 탭·종류마다 20개(30일 탭은 칸마다 10개)가 저장되어 있습니다</small></label>
+        <label>근거 얇음 기준 (근거 기사 ≤) <input id="cfgThin" type="number" min="0" max="50" value="0"><small>저장된 근거 기사가 이 값 이하인 행을 흐리게 표시 (0이면 없는 행만)</small></label>
+      </fieldset>
+      <fieldset>
+        <legend>θ 변형 (캐시)</legend>
+        <label>캐시 선택 <select id="cfgVariant"></select><small id="cfgVariantHint">미리 만든 캐시만 고를 수 있습니다</small></label>
+        <p class="hint">다른 θ는 <code>python scripts/gkg_app_cache.py --start … --end … --theta 0.5</code>로 캐시를 만든 뒤 서버를 다시 시작하면 여기에 나타납니다.</p>
+      </fieldset>
+      <fieldset>
+        <legend>엔진 설정 (캐시를 만들 때 고정, 읽기 전용)</legend>
+        <dl class="g-cfg" id="cfgEngine"></dl>
+      </fieldset>
+    </div>
+    <footer class="dlg-foot">
+      <span class="t-hint" id="settingsError" role="alert"></span>
+      <button type="button" class="btn" id="btnSettingsCancel">취소</button>
+      <button type="button" class="btn primary" id="btnSettingsApply">적용</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- Help dialog -->
+<dialog id="helpDlg" class="dlg">
+  <div class="dlg-inner">
+    <header class="dlg-head"><h2>이 화면 읽는 법</h2><button type="button" class="icon-btn" id="btnHelpClose" aria-label="닫기"><svg><use href="#i-close"/></svg></button></header>
+    <div class="dlg-body help">
+      <ol class="steps">
+        <li><b>재생</b>을 누르면 2024년 가을 영어 뉴스 흐름을 6시간 단위로 넘겨 봅니다. 위의 타임라인(막대 = 하루 기사 수, 빨간 눈금 = 빠진 15분 파일, ◆ = 사건)을 누르면 그 시점으로 이동합니다.</li>
+        <li>순위 카드의 탭: <b>7일 주요 이슈</b>는 일주일 동안 많이 보도된 이름, <b>72시간 신규</b>는 최근 사흘에 평소보다 갑자기 많아진 이름, <b>30일 반짝·꾸준</b>은 최근 7일이 지난 30일보다 많은지(급증)·적은지(식는 중)·비슷한지(꾸준)입니다.</li>
+        <li>이름을 누르면 오른쪽에 <b>보도율 추이·근거 기사·DGIM</b>이 열립니다. 아래 <b>Solar 에이전트</b>에게 "왜 많이 나와?"라고 물으면 근거 기사를 조회해 인용과 함께 답합니다.</li>
+      </ol>
+      <h3>용어</h3>
+      <dl class="glossary">
+        <dt><b>보정 보도율</b></dt><dd>시간당 기사 수. 오래된 기사일수록 덜 세는 감쇠 점수를 시간당 건수로 바꾼 값이고, 스트림 시작 직후 점수가 덜 쌓인 만큼을 보정했습니다.</dd>
+        <dt><b>lift</b></dt><dd>(최근 72시간 보도율 + 1) ÷ (최근 7일 보도율 + 1). 1보다 클수록 "요 사흘 사이 갑자기 늘었다". 최근 72시간 기사 20건, 언론사 5곳 이상만 후보입니다.</dd>
+        <dt><b>ratio</b></dt><dd>(최근 7일 보도율 + 1) ÷ (최근 30일 보도율 + 1). 1.5 이상 <span class="g-label rising">최근 급증</span>, 1/1.5 미만 <span class="g-label cooling">식는 중</span>, 그 사이 <span class="g-label steady">꾸준</span>.</dd>
+        <dt><b>θ (세타)</b></dt><dd>메모리를 아끼려고 점수가 θ보다 작아진 이름을 지우는 기준. 클수록 메모리는 줄고 순위가 정확 계산과 달라질 수 있습니다. 오른쪽 "메모리 절약의 대가" 카드가 실험 결과입니다.</dd>
+        <dt><span class="g-label insufficient">근거 부족</span></dt><dd>판별에 쓰는 창에서 빠진 15분 파일이 5%를 넘어 판정을 보류함</dd>
+        <dt><span class="g-label warming_up">판별 준비 중</span></dt><dd>스트림 시작 후 아직 충분히 쌓이지 않음 (신규 이슈 7일, 반짝·꾸준 21일)</dd>
+        <dt><span class="chip new">진입</span> <span class="delta up">▲3</span></dt><dd>직전 스냅샷(6시간 전) 목록에 없다가 들어옴 / 순위가 세 계단 오름</dd>
+        <dt><span class="evi"><i style="--w:60%"></i> 7</span></dt><dd>저장된 근거 기사 수 (키가 어느 창이든 Top 200에 든 뒤부터, 하루 30건까지)</dd>
+        <dt><b>DGIM ≈</b></dt><dd>최근 16만 건(약 하루) 기사 중 그 이름이 나온 기사 수의 근사값 (추적 시작 이후만 셈)</dd>
+      </dl>
+      <h3>단축키</h3>
+      <dl class="keys">
+        <dt><kbd>Space</kbd></dt><dd>재생 / 일시정지</dd>
+        <dt><kbd>→</kbd></dt><dd>한 칸(6시간) 진행 <span class="t-hint">(<kbd>←</kbd> 한 칸 뒤로: GKG 추가)</span></dd>
+        <dt><kbd>/</kbd></dt><dd>키 검색</dd>
+        <dt><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></dt><dd>순위표 / 순위 흐름 / 보도율 비교</dd>
+        <dt><kbd>?</kbd></dt><dd>이 도움말</dd>
+        <dt><kbd>Esc</kbd></dt><dd>패널 닫기</dd>
+      </dl>
+    </div>
+    <footer class="dlg-foot"><button type="button" class="btn primary" id="btnHelpOk">알겠어요</button></footer>
+  </div>
+</dialog>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="tooltip" id="tooltip" role="tooltip" hidden></div>
 
 <script src="{{ url_for('static', filename='gkg.js') }}?v={{ version }}"></script>
 </body>

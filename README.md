@@ -25,10 +25,16 @@
 | 테스트 | `python -m unittest discover -s tests` | |
 
 - 코드: `trendpulse/gkg.py`(스트림·키), `gkg_engine.py`(감쇠 창·판별), `gkg_evidence.py`(근거 sqlite),
-  `gkg_cache.py`(대시보드 캐시), `gkg_agent.py`(질문 답변), `app_gkg.py`, `web/templates/gkg.html`.
-- 대시보드: 탭 3개, 키 종류 필터(인물·기관·장소), 나라 언급은 별도 칸, 행마다 점수·보정 보도율·근거 기사 수·
-  언론사 수·분류·빈 구간 비율·θ 근사 여부, 행 클릭 시 근거 기사와 DGIM 최근 N건 언급 수, 6시간 단위 시점 슬라이더,
-  에이전트 질문(`UPSTAGE_API_KEY`가 있으면 Solar, 없으면 오프라인 요약).
+  `gkg_cache.py`(대시보드 캐시), `gkg_agent.py`(질문 답변), `app_gkg.py`, `web/templates/gkg.html`,
+  `web/static/gkg.js`, `web/static/gkg.css`(v0.4 `style.css` 위에 추가).
+- 대시보드(gkg-0.4): HuffPost v0.4 화면과 같은 레이아웃·카드·색·아이콘. 6시간 스냅샷 재생(재생/일시정지/한 칸/속도/처음으로),
+  사건 프리셋(`experiments/gkg_events.json`)·날짜 선택·사건 장면, 일별 기사 수 타임라인(빠진 슬롯·사건 표시, 클릭 이동),
+  KPI 5개, 탭 3개 × 키 종류 필터, 보기 3종(순위표 / 순위 흐름 / 선택 키 보도율 비교)과 CSV, 급상승(72시간 신규 상위),
+  신규 Top 10 진입 기록, 메모리 절약의 대가(실험 E1 결과), 나라 언급, 상세 드로어(키 검색·보도율 추이·근거 기사·
+  함께 등장한 키·DGIM), 설정(Top K·근거 얇음 기준·θ 캐시 선택), 도움말, 테마, 링크 공유, v0.4 단축키,
+  에이전트 질문(`UPSTAGE_API_KEY`가 있으면 Solar, 없으면 오프라인 요약). θ 변형은
+  `python scripts/gkg_app_cache.py --start … --end … --theta 0.5`로 캐시를 만들면 설정에서 고를 수 있다.
+  기능 대응표: `experiments/results/gkg/summary.md`의 "대시보드 v0.4 기능 대응".
 - 재현 명령·데이터·결과·한계: [docs/GKG_SUBMISSION.md](docs/GKG_SUBMISSION.md),
   수치와 설계 변경 기록: [experiments/results/gkg/summary.md](experiments/results/gkg/summary.md).
 

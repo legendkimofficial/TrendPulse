@@ -372,11 +372,11 @@ Remaining limitation (not changed): names co-mentioned in one story fill several
 
 - command: `python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14`
 - result: `experiments/results/gkg/app_cache_2024-09-15_2024-10-14.json`
-- git: 1ee22f7174d56cc74c95a88fa9e2ecd4bd4737e6 (dirty=False), fingerprint 4ebcee2e9f7b8be0…
+- git: 0340e4805929bfb653333ca018c19280b45e8e1f (dirty=True), fingerprint 1846173a2c22def0…
 
 ```
 range      : 2024-09-15 .. 2024-10-14, 4,024,133 articles, 121 cached 6-hour snapshots, 422 new-issue entry events
-build      : 655.2 s (6,141 articles/s), peak RSS 1367.5 MB
+build      : 701.6 s (5,735 articles/s), peak RSS 1368.3 MB
 decay      : ≈ 800.7 MB (72h 3,182,782 keys, 168h 3,182,782 keys, 720h 3,182,782 keys)
 tracker    : 125,391 keys, ≈ 140.2 MB
 evidence   : 2,092 keys, 327,414 articles, 526,063 postings (cap 30/day, 7,309,010 truncated), 78.8 MB
@@ -411,3 +411,89 @@ kind = all):
 - Visible GKG artifacts (not filtered): place names tagged as persons ("P:los angeles", "P:las vegas") and
   publisher boilerplate tagged as organizations ("O:a red ventures company", "O:australian community media").
   The same event can appear under two name forms ("P:ryan wesley routh", "P:ryan routh").
+
+<!-- app_cache_2024-09-15_2024-10-14_theta0.5:begin -->
+## Dashboard cache 2024-09-15_2024-10-14_theta0.5
+
+- command: `python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14 --theta 0.5`
+- result: `experiments/results/gkg/app_cache_2024-09-15_2024-10-14_theta0.5.json`
+- git: 0340e4805929bfb653333ca018c19280b45e8e1f (dirty=True), fingerprint 76df3b37340a80e2…
+
+```
+range      : 2024-09-15 .. 2024-10-14, 4,024,133 articles, 121 cached 6-hour snapshots, 419 new-issue entry events
+build      : 966.7 s (4,163 articles/s), peak RSS 1163.3 MB
+decay      : ≈ 545.6 MB (72h 702,178 keys, 168h 1,443,837 keys, 720h 3,182,782 keys)
+tracker    : 122,660 keys, ≈ 138.6 MB
+evidence   : 2,090 keys, 327,368 articles, 525,999 postings (cap 30/day, 7,309,006 truncated), 78.7 MB
+dgim       : 2,084 keys, 11,996 buckets
+```
+<!-- app_cache_2024-09-15_2024-10-14_theta0.5:end -->
+
+## 대시보드 v0.4 기능 대응 (2026-11-17, gkg-0.4, 캐시 v4)
+
+HuffPost v0.4 화면(`web/templates/index.html`, `web/static/app.js`, `style.css`)의 기능과 디자인을 GKG 대시보드에 옮겼다.
+v0.4 파일과 `app.py`는 수정하지 않았고, GKG 전용 파일(`web/templates/gkg.html`, `web/static/gkg.js`, `web/static/gkg.css`)이
+v0.4 `style.css`를 그대로 불러온 뒤 GKG 부분만 더한다. 같은 아이콘 스프라이트(Lucide), 색 토큰, 카드·칩·차트 클래스를 쓴다.
+
+캐시 형식 변경(CACHE_VERSION 3 → 4): `ranks`(표시 행 순위), `watch`·`series`(키별 72h/168h/720h 보정 보도율),
+`events`(신규 진입), 스냅샷 `stats`(창별 키 수·감쇠 메모리 추정), meta `days`(일별 기사 수·빠진 슬롯).
+θ 변형은 별도 파일(`gkg_cache_theta0.5.sqlite`)로 두고 서버가 찾은 캐시를 모두 설정에 보여 준다.
+30일 캐시를 정확·θ=0.5 두 벌 다시 만들었다(위 "Dashboard cache" 절). 정확 캐시의 기사 수·스냅샷·진입 이벤트·근거·DGIM
+수치는 v3 캐시와 같다(재생 시간만 다름: 다른 실험과 동시에 돌려 701.6초).
+두 캐시 기록의 `dirty=True`는 이 커밋에 들어가는 작업 트리에서 만들었기 때문이며, 기록된 코드 해시는 이 커밋의 파일과 같다.
+
+| v0.4 기능 | GKG 대응 | 상태 |
+|---|---|---|
+| 헤더: 로고·버전·재생 상태·시계 | 같은 앱바. 시계 = 스냅샷 시각(UTC), 메타 = 스냅샷 i/N·처리 기사 수·θ 변형 | 구현 |
+| 재생 / 일시정지 | 6시간 스냅샷을 0.9초마다 넘김, 끝에서 자동 정지 | 구현 |
+| 한 틱 진행 | 한 칸(6시간). `←` 한 칸 뒤로를 추가 | 구현 |
+| 속도 (기사/틱 20~1,000) | 틱당 6시간 / 12시간 / 1일 / 2일 | 구현 |
+| 시작일 프리셋 | `gkg_events.json` 사건(E2 6개 + 워밍업 참고 2개), 첫 보도 이후 첫 스냅샷으로 이동. 캐시 범위 밖 사건은 숨김 | 구현 |
+| 날짜 직접 입력 | 날짜 선택(UTC 00:00), 캐시 범위로 제한 | 구현 |
+| 다시 시작 | 처음으로(첫 스냅샷) | 구현 |
+| 데모 장면 | 사건 장면: 고른 사건(없으면 첫 E2 사건) 첫 보도 24시간 뒤, 72시간 탭, 사건 이름이 든 키 선택, 에이전트 질문 | 구현 |
+| 타임라인 (월별 밀도·사건·커서·클릭 이동) | 일별 기사 수 막대, 빠진 15분 슬롯 빨간 눈금, 사건 ◆(워밍업은 회색), 재생 구간·커서, 클릭/◆ 클릭 이동, 툴팁 | 구현 |
+| KPI 5개 | 누적 기사 수 · 추적 키 수(168h) · 감쇠 메모리 · 빈 구간 비율 · 현재 신규 이슈 수 | 구현 |
+| KPI "Top K 일치"·"점수 최대 오차" | 실시간 정확 재계산이 없으므로 "메모리 절약의 대가" 카드(E1)와 순위표 "정확" 열로 옮김 | 부분 |
+| 순위표: 변동·진입 칩·FLIP 이동·점수 막대·근거·스파크라인·DGIM | 탭별 열. 변동은 6시간 전 스냅샷 대비, 스파크라인은 최근 7일 보도율(72h 탭은 72h, 그 밖은 168h), 점수 막대는 탭 지표(점수/lift/ratio) | 구현 |
+| 순위표 "정확" 열 | θ 변형 캐시를 볼 때 같은 시각의 정확 캐시 순위(다르면 주황) | 구현 |
+| `≈` (순서가 바뀔 수 있음) 표시 | 불가: 캐시에 키별 오차 상한을 저장하지 않음. "정확" 열로 직접 비교 | 불가 |
+| 근거 얇은 행 흐리게 | 설정의 "근거 얇음 기준"(저장 근거 기사 ≤ n) | 구현 |
+| 탭 3개 + 키 종류 필터 | 그대로 유지(7일 / 72시간 / 30일 × 전체·인물·기관·장소) | 구현 |
+| 보기: 순위표 | 그대로 | 구현 |
+| 보기: 순위 흐름 | 최근 28개 스냅샷(7일)의 Top 10 범프 차트. 30일 탭은 "최근 급증" 칸만 | 부분(30일 탭은 한 칸) |
+| 보기: 정확 비교 (기울기 차트) | 지시대로 "선택 키 보도율 비교 차트"로 바꿈: 고른 키 최대 3개(없으면 목록 상위 3개)의 72h/168h/720h 보도율 추이, 표에서 Shift+클릭이나 드로어 버튼으로 고름 | 구현(대체) |
+| CSV 내려받기 | 현재 탭·종류·시점의 행, 메타 줄(시각·탭·변형·캐시 지문) | 구현 |
+| 급상승 카드 | 72시간 신규 상위 10: lift, 72h 기사·언론사, 7일 순위 태그(없으면 "7일 Top 20 밖") | 구현 |
+| Top K 진입 기록 (전체/첫/재진입) | 신규 Top 10 entry 이벤트, 이 시점까지 최근 150건, 필터 3종, 개수 배지 | 구현 |
+| 첫 진입 토스트 | 재생 중 새 첫 진입 알림(누르면 상세) | 구현 |
+| 메모리 절약의 대가 | `experiments/results/gkg/results.json` E1: 창(72h/168h/720h)별 θ마다 평균 키 수·MB·Top-20 겹침·순서 동일·상대 오차, 명령·입력 해시. 파일이 없으면 "실험 결과 대기 중". 현재 캐시의 감쇠 메모리도 표시 | 구현 |
+| (GKG 추가) 나라 언급 | 기존 GKG 칸 유지(168h 보도율) | 구현 |
+| 에이전트: 제안 질문·도구 기록·인용 링크·검증 배지·대화 지우기 | 같은 채팅 UI. 답변에 `citations`(인용 idx의 기사 URL·제목)를 더해 링크로 표시 | 구현 |
+| 상세 드로어: 키워드 검색 | 기록된 키(목록 또는 Top 200에 든 적 있는 키) 부분 일치 검색·자동완성. 한 번도 기록되지 않은 키는 찾을 수 없음 | 부분 |
+| 상세: 점수 추이 차트 | 72h/168h/720h 보도율 추이와 십자선 툴팁. 키가 기록되기 시작한 뒤부터만 값이 있음 | 부분 |
+| 상세: 근거 기사 | 최신 20건, 위 3건 강조, 원문 링크 | 구현 |
+| 상세: 함께 등장한 단어 | 함께 등장한 추적 키(근거 기사 최근 300건 기준) | 부분(저장된 postings만) |
+| 상세: 카테고리 칩 | 언론사(도메인) 칩으로 대체 | 구현(대체) |
+| 상세: 근사/정확 점수, 최근/이전 구간 기사 수 타일 | 168h vs 720h 보도율 타일, lift(신규)·ratio(그 밖) 타일 | 구현(대체) |
+| 상세: DGIM 상자 | 그 시점 목록에 있는 키의 DGIM 추정치·관측 구간·오차 상한 | 부분(목록 밖이면 값 없음) |
+| 상세: DGIM 추적 고정 버튼 | 불가: 캐시를 미리 계산하므로 추적 대상을 실행 중에 바꿀 수 없음 | 불가 |
+| 설정: Top K·근거 기준 | Top K 5~20(30일 탭은 칸마다 최대 10), 근거 얇음 기준 | 구현 |
+| 설정: θ | 캐시된 θ 변형 선택(현재 정확, θ=0.5) | 구현 |
+| 설정: 감쇠 단위·반감기·c·구 묶기·DGIM N·r·급상승 비율 | 불가: 캐시를 만들 때 고정. 엔진 설정을 읽기 전용으로 표시 | 불가 |
+| 설정 프리셋 | "기본"(Top 20·정확) | 구현 |
+| 도움말 (첫 방문 자동) | lift, ratio, 보정 보도율, θ, 근거 부족, 판별 준비 중, 진입·변동, 근거, DGIM을 쉬운 말로 + 단축키 | 구현 |
+| 테마 (시스템/라이트/다크) | 같은 3단 순환·같은 저장 키(`tp-theme`) | 구현 |
+| 현재 화면 링크 공유 | URL에 시점 `t`, `tab`, `kind`, `view`, `key`, `v`(θ 변형), `k`, `cmp`; `q`(질문), `demo=1`도 읽음 | 구현 |
+| 단축키 | Space, →, /, 1·2·3, ?, Esc(v0.4와 같음) + ← | 구현 |
+| 하단 해석의 한계 | GKG 태깅 오류·언론사 근사·근거 표본·빈 구간 보류 | 구현 |
+
+확인한 것:
+- 테스트 11개 추가(`tests/test_gkg_app.py`: `DashboardV04Test` 10개, `TrendTabTest` 1개). 전체 136개 통과.
+- 22일 합성 스트림 캐시를 headless Edge로 열어 화면을 캡처하고, DevTools 프로토콜로 재생·한 칸·Space·1/2/3·탭·종류·
+  `/` 검색·Esc·설정(θ 변형·K 적용)·도움말·이벤트 필터·프리셋·CSV·테마·링크·에이전트·사건 장면을 조작했다. JS 예외 0건.
+- 실제 30일 캐시(`python app_gkg.py --start 2024-09-15 --end 2024-10-14`)를 headless Edge로 열어 72시간·30일 탭,
+  라이트·다크를 캡처하고 위와 같은 조작을 했다. JS 예외 0건. `/api/gkg/state`(순위 흐름 포함) 약 0.04초, 키 상세 약 0.16초.
+- 확인 중 본 것: GKG에 "helene" 키가 없고(허리케인은 인물·기관·장소로 잡히지 않음) "han kang"은
+  `L:han kang, south korea (general), south korea` 장소 키로만 기록되어 있어, 사건 장면이 키를 못 찾으면 그렇다고 알린다.
+- 사람이 실제 브라우저로 눌러 본 확인은 아직 없다 **[미확인]**.
