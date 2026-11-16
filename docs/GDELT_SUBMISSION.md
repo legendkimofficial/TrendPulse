@@ -37,6 +37,8 @@ The collector reads gzip JSON Lines from GDELT 3.0 GAL and uses the batch filena
 
 ## Evidence
 
+- [Input manifest](../experiments/results/gdelt/input_manifest.json) with batch hashes and collection gaps
+
 - [GAL experiment summary](../experiments/results/gdelt/summary.md) and [machine-readable results](../experiments/results/gdelt/results.json)
 - [Dashboard API capture](../experiments/results/gdelt/app_api_evidence.json)
 - [Offline demo report](../experiments/results/gdelt/solar_demo.md) and [structured trace](../experiments/results/gdelt/solar_demo.json)
