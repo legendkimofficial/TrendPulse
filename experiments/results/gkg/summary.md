@@ -100,9 +100,10 @@ evidence: 382 tracked keys, 95,586 articles, 308,728 postings, file 24.4 MB (dat
   previous Top M plus keys updated since the last snapshot. Tested against a full sort with and
   without pruning (`tests/test_gkg_engine.py`).
 - With a threshold θ, a deleted key restarts at 0, so scores are always under-estimates. θ=None is exact.
-- `bias_corrected_rate` is None while elapsed = 0 (first batch). One snapshot per 15-min batch would
-  see each batch as an instantaneous burst; with the 60-min snapshot interval the bias is ≈ 2^(Δ/2h)
-  (+0.1 % for h=72 h).
+- `bias_corrected_rate` is None while elapsed = 0 (first batch). GKG stamps a whole 15-min file
+  with one ts, so the formula (which assumes a continuous flow) over-states a steady rate by about
+  2^(7.5 min / h) − 1: +0.12 % for h = 72 h, less for 168 h / 720 h (test: constant 16/h within 1 %).
+  In the first hours the correction divides by a small number, so rates there are noisy.
 - Evidence store: postings start at the snapshot where a key first enters any Top 200 (no backfill).
   Earlier articles about that key have no postings; `keys.first_tracked_ts` records where coverage
   starts. On 2024-10-01 the store held 95,586 of 163,360 articles (59 %), 24.4 MB, because broad keys
