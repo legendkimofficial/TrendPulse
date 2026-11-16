@@ -1,9 +1,15 @@
-# 종단 시연 증거 (7일 순위 → 72h 급상승 → 관련 기사 → Solar)
+# End-to-End Demo Evidence
 
-- 입력 SHA-256 `0c5043b3874e3b07f2343687d0d70cc5c03bfdf40446d666859356221bc3c00f` · 기준 시각 2026-11-15T12:00:00Z · 재생 755,193건 · 키워드 `u.s.`
-- Solar: 오프라인 모드(UPSTAGE_API_KEY 없음)
+- Input SHA-256: `0c5043b3874e3b07f2343687d0d70cc5c03bfdf40446d666859356221bc3c00f`
+- Replay position: 755,193 articles as of November 15, 2026, at 12:00 UTC
+- Keyword: `u.s.`
+- Response mode: offline template. The Upstage API key was unavailable.
+- The data gap deferred the 72-hour surge calculation.
 
-## Solar 답변
+## Captured offline response
+
+The response below preserves the original Korean output for comparison with the structured trace.
+
 ```
 **u.s.** — 2026-11-15T12:00:00Z 관측 기준 순위 1, 7일 점수 9251.25, 72시간 급상승 보류(collection_gap).
 - 7일 내 제목 언급 24790건, 보도 매체 3314곳 (발행국: AE, AT, AU, AZ, BB, BD, BN, BZ).
@@ -17,14 +23,8 @@
 ※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다.
 ```
 
-## 도구 호출 추적
-- `get_topic_stats({"keyword": "u.s."})` → 순위 1, 점수 9251.25
-- `search_related_news({"keyword": "u.s.", "limit": 6})` → 기사 6건
+## Tool trace and checks
 
-## 검증
-- 통과 — 도구 호출됨: ['get_topic_stats', 'search_related_news']
-- 통과 — 동일 키워드 사용: u.s.
-- 통과 — 동일 기준 시각(as_of): {'pos': 755193, 't_iso': '2026-11-15T12:00:00Z'}
-- 통과 — 인용 기사가 도구 결과에 존재: [(755134, True), (755129, True), (755122, True), (755025, True)]
-- 통과 — 답변 수치 == 엔진 점수: engine=9251.25
-- 통과 — 오프라인 응답 표시: offline
+The demo recorded `get_topic_stats` returning rank 1 and a score of 9251.25. It also recorded `search_related_news` returning six articles for the same keyword. All six checks passed: the expected tools ran, the keyword and replay position agreed, all four cited IDs appeared in the tool results, the score matched the engine, and the response identified its mode as offline.
+
+See [the original structured trace](solar_demo.json) for exact inputs and outputs.

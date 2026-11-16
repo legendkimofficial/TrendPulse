@@ -25,17 +25,14 @@
 
 다크 테마 화면은 `docs/img/v04_dark.png`에 있다.
 
-## GDELT GAL 제출 버전 (`codex/gdelt-submission` 브랜치)
+## GDELT GAL verification (`project-verification`)
 
-HuffPost 재생 대신 **실제 GDELT GAL 원본**(2026-11-09~15 UTC, 영어 789,845건)을
-관측 시각 순으로 재생하는 제출 버전이다. 7일 감쇠 순위(반감기 48시간)·72시간
-급상승(비중 차이 pp)·감쇠 윈도우/DGIM 비교 실험·Solar 에이전트까지 한 흐름으로
-재현하는 절차는 [docs/GDELT_SUBMISSION.md](docs/GDELT_SUBMISSION.md)를 따른다.
+The GDELT dashboard replays 789,845 English-language articles observed on November 9–15, 2026 (UTC). See the [verification report](docs/GDELT_SUBMISSION.md) for setup, experiments, evidence, and remaining checks.
 
 ```bash
 python scripts/fetch_gdelt_gal.py collect --start 2026-11-09 --end 2026-11-15
 python scripts/fetch_gdelt_gal.py normalize && python scripts/fetch_gdelt_gal.py verify
-python -m unittest discover -s tests          # 기존 67 + GAL 25
+python -m unittest discover -s tests          # 67 existing + 25 GAL
 python experiments/run_gal_experiments.py     # 감쇠 비교 + DGIM
 python app_gdelt.py                           # http://127.0.0.1:5001
 python experiments/demo_solar.py              # 종단 시연 증거
