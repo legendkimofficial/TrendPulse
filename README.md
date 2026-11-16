@@ -9,6 +9,36 @@
 
 ![dashboard](docs/img/dashboard.png)
 
+## GKG 브랜치 (`gdelt-gkg`)
+
+키워드 목록 없이 **GDELT GKG 2.1 영어 기사 흐름**(2024-09-15 ~ 2024-11-14, 하루 약 16만 건)에서
+인물·기관·장소 키로 **7일 주요 이슈 / 72시간 신규 이슈 / 30일 반짝·꾸준**을 시간 감쇠 윈도우(반감기
+72·168·720시간)로 찾고, 낮은 점수 삭제(θ)의 영향을 측정한다. 기존 HuffPost 코드(`app.py` 등)는 그대로다.
+
+| 단계 | 명령 | 결과 |
+|---|---|---|
+| 내려받기 | `python scripts/gdelt_download.py --start 2024-09-15 --end 2024-11-14` | `data/gdelt/slim/` (원본, 읽기 전용) |
+| 입력 점검 | `python scripts/gkg_build.py --start 2024-10-01 --end 2024-10-01` | `experiments/results/gkg/input_manifest.json` |
+| 엔진 재생 | `python scripts/gkg_run.py --start 2024-10-01 --end 2024-10-01` | `experiments/results/gkg/engine_*.json` |
+| 대시보드 | `python app_gkg.py` → http://127.0.0.1:5002 | 시작 시 전체 재생 → `data/gdelt/processed/gkg_cache.sqlite` |
+| 캐시 기록 | `python scripts/gkg_app_cache.py --start … --end …` | `experiments/results/gkg/app_cache_*.json` |
+| 테스트 | `python -m unittest discover -s tests` | |
+
+- 코드: `trendpulse/gkg.py`(스트림·키), `gkg_engine.py`(감쇠 창·판별), `gkg_evidence.py`(근거 sqlite),
+  `gkg_cache.py`(대시보드 캐시), `gkg_agent.py`(질문 답변), `app_gkg.py`, `web/templates/gkg.html`,
+  `web/static/gkg.js`, `web/static/gkg.css`(v0.4 `style.css` 위에 추가).
+- 대시보드(gkg-0.4): HuffPost v0.4 화면과 같은 레이아웃·카드·색·아이콘. 6시간 스냅샷 재생(재생/일시정지/한 칸/속도/처음으로),
+  사건 프리셋(`experiments/gkg_events.json`)·날짜 선택·사건 장면, 일별 기사 수 타임라인(빠진 슬롯·사건 표시, 클릭 이동),
+  KPI 5개, 탭 3개 × 키 종류 필터, 보기 3종(순위표 / 순위 흐름 / 선택 키 보도율 비교)과 CSV, 급상승(72시간 신규 상위),
+  신규 Top 10 진입 기록, 메모리 절약의 대가(실험 E1 결과), 나라 언급, 상세 드로어(키 검색·보도율 추이·근거 기사·
+  함께 등장한 키·DGIM), 설정(Top K·근거 얇음 기준·θ 캐시 선택), 도움말, 테마, 링크 공유, v0.4 단축키,
+  에이전트 질문(모델: `LLM_API_KEY`·`LLM_BASE_URL`·`LLM_MODEL`이 모두 있으면 그 OpenAI 호환 API, 아니면 `UPSTAGE_API_KEY`로 Solar,
+  둘 다 없으면 오프라인 요약; 키는 환경변수로만). θ 변형은
+  `python scripts/gkg_app_cache.py --start … --end … --theta 0.5`로 캐시를 만들면 설정에서 고를 수 있다.
+  기능 대응표: `experiments/results/gkg/summary.md`의 "대시보드 v0.4 기능 대응".
+- 재현 명령·데이터·결과·한계: [docs/GKG_SUBMISSION.md](docs/GKG_SUBMISSION.md),
+  수치와 설계 변경 기록: [experiments/results/gkg/summary.md](experiments/results/gkg/summary.md).
+
 ## v0.4에서 달라진 점 (UI 중심 스프린트)
 
 | 영역 | 내용 |

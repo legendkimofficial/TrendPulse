@@ -1,0 +1,334 @@
+{
+ "kind": "gkg_app_cache",
+ "command": "python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14",
+ "git": {
+  "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+  "dirty": true
+ },
+ "version": 4,
+ "fingerprint": "1846173a2c22def0c2784d95639f737e99fab5f606795cde7a22b3a72d8b6575",
+ "config": {
+  "start": "2024-09-15",
+  "end": "2024-10-14",
+  "theta": null,
+  "store_every_hours": 6.0,
+  "top_n": 20,
+  "countries_n": 15,
+  "dgim_n": 160000,
+  "evidence_limit": 20,
+  "trend_group_n": 10
+ },
+ "engine_config": {
+  "windows": [
+   [
+    "72h",
+    72.0
+   ],
+   [
+    "168h",
+    168.0
+   ],
+   [
+    "720h",
+    720.0
+   ]
+  ],
+  "thresholds": [
+   null
+  ],
+  "top_m": 2000,
+  "snapshot_every_minutes": 60.0,
+  "prune_every_hours": 6.0,
+  "evidence_top": 200,
+  "evidence_per_day_cap": 30,
+  "detect": true,
+  "detect_variant": "exact",
+  "alpha": 1.0,
+  "new_k": 10,
+  "new_warmup_days": 7.0,
+  "new_candidates": 2000,
+  "new_min_articles": 20,
+  "new_min_outlets": 5,
+  "activate_score": 3.0,
+  "max_outlets": 8,
+  "trend_k": 10,
+  "trend_factor": 1.5,
+  "trend_warmup_days": 21.0,
+  "gap_limit": 0.05
+ },
+ "range": {
+  "start": "2024-09-15",
+  "end": "2024-10-14"
+ },
+ "articles": 4024133,
+ "snapshots": 121,
+ "new_events": 422,
+ "seconds": 701.6,
+ "articles_per_s": 5735,
+ "peak_rss_mb": 1368.3,
+ "memory": {
+  "decay_windows": [
+   {
+    "window": "72h",
+    "variant": "exact",
+    "half_life_hours": 72.0,
+    "threshold": null,
+    "peak_keys": 3182782,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 3182782,
+    "dict_bytes": 123033008,
+    "float_bytes": 76386768,
+    "estimate_bytes": 199419776
+   },
+   {
+    "window": "168h",
+    "variant": "exact",
+    "half_life_hours": 168.0,
+    "threshold": null,
+    "peak_keys": 3182782,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 3182782,
+    "dict_bytes": 123033008,
+    "float_bytes": 76386768,
+    "estimate_bytes": 199419776
+   },
+   {
+    "window": "720h",
+    "variant": "exact",
+    "half_life_hours": 720.0,
+    "threshold": null,
+    "peak_keys": 3182782,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 3182782,
+    "dict_bytes": 123033008,
+    "float_bytes": 76386768,
+    "estimate_bytes": 199419776
+   }
+  ],
+  "key_strings": {
+   "unique": 3182782,
+   "bytes": 202413178,
+   "note": "key strings are shared by all windows; counted once"
+  },
+  "decay_total_bytes": 800672506,
+  "activity_tracker": {
+   "tracked_keys": 125391,
+   "hour_buckets": 730605,
+   "outlet_entries": 614146,
+   "activations": 670887,
+   "swept": 545496,
+   "estimate_bytes": 140211772,
+   "note": "key and domain strings are shared with the stream; not counted"
+  },
+  "slot_coverage_bytes": 3108,
+  "evidence": {
+   "tracked_keys": 2092,
+   "articles": 327414,
+   "postings": 526063,
+   "per_day_cap": 30,
+   "truncated_postings": 7309010,
+   "file_bytes": 78782464
+  },
+  "dgim": {
+   "keys": 2086,
+   "buckets": 11998
+  }
+ },
+ "code": {
+  "gkg.py": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
+  "gkg_engine.py": "38d954f8f46156743f2c8908d6faab3f84a6469bd3b29de71ddc15769a65f3b2",
+  "gkg_evidence.py": "65b80ac01f7a7f00d565d258a628d5ff64f5bb82823fc15160e70fce32ebff6c",
+  "gkg_cache.py": "1c7eb5a23d9f03f58796441d7668014f0ea83b63f8e4969eb52baa971a55589c",
+  "gkg_country_names.txt": "d736e1b9ad4570493706732b754857aea8e9797daecfddead15301d4fad08ef5"
+ },
+ "built_utc": "2026-11-16T17:57:14Z",
+ "days": [
+  {
+   "date": "2024-09-15",
+   "articles": 78556,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-16",
+   "articles": 145871,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-17",
+   "articles": 163251,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-18",
+   "articles": 167659,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-19",
+   "articles": 160683,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-20",
+   "articles": 151662,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-21",
+   "articles": 89852,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-22",
+   "articles": 77324,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-23",
+   "articles": 143595,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-24",
+   "articles": 161498,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-25",
+   "articles": 167175,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-26",
+   "articles": 164947,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-27",
+   "articles": 154614,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-28",
+   "articles": 87603,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-29",
+   "articles": 78115,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-09-30",
+   "articles": 146181,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-01",
+   "articles": 163360,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-02",
+   "articles": 161567,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-03",
+   "articles": 159699,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-04",
+   "articles": 155072,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-05",
+   "articles": 85728,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-06",
+   "articles": 75217,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-07",
+   "articles": 141536,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-08",
+   "articles": 164183,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-09",
+   "articles": 164606,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-10",
+   "articles": 160835,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-11",
+   "articles": 154699,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-12",
+   "articles": 85382,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-13",
+   "articles": 74818,
+   "missing": [],
+   "files": 96
+  },
+  {
+   "date": "2024-10-14",
+   "articles": 138845,
+   "missing": [],
+   "files": 96
+  }
+ ],
+ "rebuilt": true
+}

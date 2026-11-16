@@ -1,0 +1,83 @@
+/* Trend Pulse GKG: additions on top of the v0.4 stylesheet (style.css, unchanged).
+   Same tokens, cards, chips and chart classes; only GKG-specific pieces live here. */
+
+/* tab + kind pickers under the rank-card head */
+.g-pick { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; margin: -4px 0 12px; }
+.g-status { border-radius: 10px; padding: 9px 12px; font-size: 13px; margin-bottom: 10px; background: var(--warn-soft); color: var(--warn-ink); }
+.g-status.info { background: var(--accent-soft); color: var(--accent-ink); }
+
+/* key kind and label chips */
+.g-kind { display: inline-block; font: 700 10px var(--font); padding: 1px 6px; border-radius: 5px; margin-right: 6px; vertical-align: 1px; }
+.g-kind.P { background: var(--accent-soft); color: var(--accent-ink); }
+.g-kind.O { background: var(--orange-soft); color: var(--orange-ink); }
+.g-kind.L { background: var(--good-soft); color: var(--good-ink); }
+.g-label { display: inline-block; font: 600 11px var(--font); padding: 2px 8px; border-radius: 999px; background: var(--surface-2); color: var(--text-2); white-space: nowrap; }
+.g-label.rising { background: var(--orange-soft); color: var(--orange-ink); }
+.g-label.steady { background: var(--accent-soft); color: var(--accent-ink); }
+.g-label.cooling { background: var(--surface-3); color: var(--muted); }
+.g-label.new { background: var(--warn-soft); color: var(--warn-ink); }
+.g-label.insufficient { background: var(--bad-soft); color: var(--bad-ink); }
+.g-label.warming_up { background: var(--surface-2); color: var(--muted); }
+.g-muted { color: var(--muted); }
+
+/* rank table: group rows of the 30-day tab, compare marker */
+.rank-table tr.g-group td { background: var(--surface-2); font: 600 12.5px var(--font); color: var(--text); cursor: default; padding: 7px 10px; }
+.rank-table tbody tr.g-group:hover { background: var(--surface-2); }
+.rank-table td.kw .g-cmp-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: 6px; vertical-align: 1px; }
+.g-cmp-dot.s1 { background: var(--accent); } .g-cmp-dot.s2 { background: var(--orange); } .g-cmp-dot.s3 { background: var(--aqua); }
+/* GKG has more columns than v0.4: keep names readable, shrink the score column */
+.rank-table td.kw { min-width: 190px; font-size: 14px; line-height: 1.3; padding-top: 5px; padding-bottom: 5px; }
+.rank-table .scorecol { width: 18%; }
+.rank-table .scorebar .track { max-width: 90px; min-width: 40px; }
+.rank-table .g-num { font-family: var(--mono); font-size: 12.5px; text-align: right; white-space: nowrap; }
+
+/* timeline: one bar per day, missing slots under the baseline */
+.timeline .day { fill: var(--accent); opacity: .22; }
+.timeline .day.cur { opacity: .5; }
+.timeline .miss { fill: var(--bad); opacity: .85; }
+.timeline .ev.warmup { stroke: var(--text-2); }
+.timeline .ev.warmup:hover, .timeline .ev.warmup.hot { fill: var(--text-2); }
+
+/* compare view */
+.g-cmp-head { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }
+.g-cmp-head .caption { margin: 0 0 8px; }
+.legend button.g-x { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 0 2px; font-size: 14px; line-height: 1; }
+.legend button.g-x:hover { color: var(--text); }
+.chart .series.s1.r72, .chart .series.s2.r72, .chart .series.s3.r72 { stroke-dasharray: 5 4; }
+.chart .line.r720 { stroke: var(--ctx); stroke-width: 1.4; fill: none; }
+.chart .line.r72 { stroke: var(--orange); stroke-width: 1.8; fill: none; }
+
+/* memory card (E1) */
+.metric .g-overlap { font-family: var(--mono); font-size: 12px; color: var(--text-2); }
+.metric.exact .membar div { background: var(--ctx); }
+.metric .label .badge { margin-left: 6px; }
+.g-e1-meta { grid-column: 1 / -1; font-size: 11.5px; color: var(--muted); line-height: 1.5; word-break: break-all; }
+
+/* countries */
+.g-cty { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; }
+.g-cty li { display: grid; grid-template-columns: 1fr auto; gap: 8px; font-size: 13px; padding: 4px 0; border-bottom: 1px dashed var(--border); position: relative; }
+.g-cty li span:last-child { font-family: var(--mono); font-size: 12px; color: var(--text-2); }
+.g-cty li i { position: absolute; left: 0; bottom: -1px; height: 2px; background: var(--accent); opacity: .5; border-radius: 1px; }
+
+/* settings: read-only engine config */
+.g-cfg { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; font-size: 12.5px; }
+.g-cfg dt { color: var(--muted); }
+.g-cfg dd { margin: 0; font-family: var(--mono); }
+.dlg-body code { font: 12px var(--mono); background: var(--surface-2); padding: 1px 5px; border-radius: 5px; }
+
+/* agent answer: bullet lists from the offline template */
+.bubble.bot .text ul { margin: 4px 0; padding-left: 20px; }
+.bubble.bot .text p { margin: 0 0 6px; }
+
+/* drawer additions */
+.d-entry .g-label { margin-right: 4px; }
+.g-legend-inline { display: flex; gap: 12px; font-size: 12px; color: var(--muted); margin: 4px 0 0; flex-wrap: wrap; }
+.g-legend-inline i { display: inline-block; width: 14px; border-top: 2px solid; margin-right: 5px; vertical-align: 3px; }
+.g-legend-inline i.r72 { border-color: var(--orange); }
+.g-legend-inline i.r168 { border-color: var(--accent); }
+.g-legend-inline i.r720 { border-color: var(--ctx); }
+
+@media (max-width: 560px) {
+  .g-pick .seg { overflow-x: auto; max-width: 100%; }
+  .g-cmp-head { flex-direction: column; }
+}

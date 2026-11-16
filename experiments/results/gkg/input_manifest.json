@@ -1,0 +1,97 @@
+{
+ "kind": "gkg_input_manifest",
+ "version": 1,
+ "created_utc": "2026-11-16T14:34:55Z",
+ "command": "python scripts/gkg_build.py --start 2024-10-01 --end 2024-10-01",
+ "code": {
+  "git": {
+   "commit": "07b6ffb29d7ceb4ac9227e0461bdc04ccba30f35",
+   "dirty": false
+  },
+  "gkg_py_sha256": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
+  "country_names_sha256": "d736e1b9ad4570493706732b754857aea8e9797daecfddead15301d4fad08ef5",
+  "country_names": 250
+ },
+ "python": "3.14.5",
+ "seed": null,
+ "root": "data/gdelt",
+ "range": {
+  "start": "2024-10-01",
+  "end": "2024-10-01",
+  "days": 1
+ },
+ "config": {
+  "include_countries": false,
+  "place_types": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "drop_self_orgs": true,
+  "drop_country_orgs": true,
+  "dedup_urls": true
+ },
+ "hashes": {
+  "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
+  "stream_sha256_def": "sha256 over canonical_line(a) for every yielded article: JSON [idx,ts,domain,url,title,keys,countries,tone] + '\\n', UTF-8",
+  "raw_files_sha256": "a94b0083515b83d1696e50f7270330db4e4a89db82c6a22d0ed029404b72fe1c",
+  "raw_files_sha256_def": "sha256 over '<day>/<HHMM>.jsonl.gz\\n<bytes>\\n' + file bytes, in read order"
+ },
+ "totals": {
+  "articles": 163360,
+  "lines": 163360,
+  "bad_lines": 0,
+  "duplicate_urls_removed": 0,
+  "empty_urls": 0,
+  "self_orgs_dropped": 1641,
+  "country_orgs_dropped": 13149,
+  "ts_out_of_order": 0,
+  "with_title": 163063,
+  "without_keys": 11544,
+  "domains": 8721,
+  "first_ts": "2024-10-01T00:00:00Z",
+  "last_ts": "2024-10-01T23:45:00Z"
+ },
+ "slots": {
+  "expected": 96,
+  "read": 96,
+  "missing_on_server": 0,
+  "not_downloaded": 0
+ },
+ "keys": {
+  "distinct": {
+   "persons": 156004,
+   "orgs": 99432,
+   "places": 25988,
+   "countries": 237
+  },
+  "mentions": {
+   "persons": 531743,
+   "orgs": 374253,
+   "places": 316561
+  },
+  "per_article": {
+   "persons": 3.255,
+   "orgs": 2.291,
+   "places": 1.938
+  },
+  "distinct_def": "distinct keys counted by 64-bit SHA-1 prefix"
+ },
+ "log_mismatch": [],
+ "per_day": [
+  {
+   "day": "2024-10-01",
+   "articles": 163360,
+   "files_read": 96,
+   "missing_on_server": [],
+   "not_downloaded": [],
+   "log_error_slots": []
+  }
+ ],
+ "run": {
+  "seconds": 11.1,
+  "peak_rss_mb": 50.2,
+  "url_table_mb": 2.1
+ }
+}

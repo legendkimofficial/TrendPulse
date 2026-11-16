@@ -1,0 +1,5027 @@
+{
+ "E1": {
+  "thetas": [
+   0.1,
+   0.3,
+   0.5,
+   1.0
+  ],
+  "k": 20,
+  "rows": [
+   {
+    "window": "72h",
+    "variant": "exact",
+    "theta": null,
+    "eval_times": 180,
+    "keys_mean": 3803189,
+    "keys_final": 5401358,
+    "mb_mean": 202.01,
+    "mb_final": 252.67,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=0.1",
+    "theta": 0.1,
+    "eval_times": 180,
+    "keys_mean": 1539145,
+    "keys_final": 1567900,
+    "mb_mean": 98.46,
+    "mb_final": 99.15,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=0.3",
+    "theta": 0.3,
+    "eval_times": 180,
+    "keys_mean": 1023940,
+    "keys_final": 1021286,
+    "mb_mean": 55.33,
+    "mb_final": 55.27,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=0.5",
+    "theta": 0.5,
+    "eval_times": 180,
+    "keys_mean": 751256,
+    "keys_final": 801140,
+    "mb_mean": 44.69,
+    "mb_final": 49.99,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=1",
+    "theta": 1.0,
+    "eval_times": 180,
+    "keys_mean": 245003,
+    "keys_final": 255147,
+    "mb_mean": 13.57,
+    "mb_final": 13.81,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "exact",
+    "theta": null,
+    "eval_times": 180,
+    "keys_mean": 3803189,
+    "keys_final": 5401358,
+    "mb_mean": 202.01,
+    "mb_final": 252.67,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=0.1",
+    "theta": 0.1,
+    "eval_times": 180,
+    "keys_mean": 2769263,
+    "keys_final": 2938306,
+    "mb_mean": 168.65,
+    "mb_final": 193.55,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=0.3",
+    "theta": 0.3,
+    "eval_times": 180,
+    "keys_mean": 1917303,
+    "keys_final": 1944501,
+    "mb_mean": 107.53,
+    "mb_final": 108.18,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=0.5",
+    "theta": 0.5,
+    "eval_times": 180,
+    "keys_mean": 1430905,
+    "keys_final": 1453475,
+    "mb_mean": 91.76,
+    "mb_final": 96.4,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=1",
+    "theta": 1.0,
+    "eval_times": 180,
+    "keys_mean": 447266,
+    "keys_final": 477628,
+    "mb_mean": 26.11,
+    "mb_final": 26.84,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "exact",
+    "theta": null,
+    "eval_times": 180,
+    "keys_mean": 3803189,
+    "keys_final": 5401358,
+    "mb_mean": 202.01,
+    "mb_final": 252.67,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=0.1",
+    "theta": 0.1,
+    "eval_times": 180,
+    "keys_mean": 3803189,
+    "keys_final": 5401358,
+    "mb_mean": 202.01,
+    "mb_final": 252.67,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=0.3",
+    "theta": 0.3,
+    "eval_times": 180,
+    "keys_mean": 3759025,
+    "keys_final": 4977680,
+    "mb_mean": 200.95,
+    "mb_final": 242.5,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=0.5",
+    "theta": 0.5,
+    "eval_times": 180,
+    "keys_mean": 3236340,
+    "keys_final": 3865797,
+    "mb_mean": 188.4,
+    "mb_final": 215.81,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=1",
+    "theta": 1.0,
+    "eval_times": 180,
+    "keys_mean": 788991,
+    "keys_final": 1035739,
+    "mb_mean": 44.82,
+    "mb_final": 55.62,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   }
+  ]
+ },
+ "E2": {
+  "events": [
+   {
+    "id": "milton",
+    "name": "허리케인 밀턴 플로리다 상륙",
+    "first_report_utc": "2024-10-10T00:30:00Z",
+    "verified": true,
+    "exact": {
+     "t": 1727168400,
+     "key": "L:bletchley, milton keynes, united kingdom",
+     "rank": 19,
+     "lift": 1.332,
+     "time": "2024-09-24 09:00",
+     "delay_h": -375.5
+    },
+    "theta=0.5": {
+     "t": 1727168400,
+     "key": "L:bletchley, milton keynes, united kingdom",
+     "rank": 19,
+     "lift": 1.332,
+     "time": "2024-09-24 09:00",
+     "delay_h": -375.5
+    }
+   },
+   {
+    "id": "han_kang",
+    "name": "한강 노벨문학상 발표",
+    "first_report_utc": "2024-10-10T11:00:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "liam_payne",
+    "name": "리암 페인 사망",
+    "first_report_utc": "2024-10-16T22:30:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "sinwar",
+    "name": "야히야 신와르 사망 발표",
+    "first_report_utc": "2024-10-17T16:55:00Z",
+    "verified": true,
+    "exact": {
+     "t": 1729206000,
+     "key": "P:yahya sinwar",
+     "rank": 20,
+     "lift": 1.82,
+     "time": "2024-10-17 23:00",
+     "delay_h": 6.08
+    },
+    "theta=0.5": {
+     "t": 1729206000,
+     "key": "P:yahya sinwar",
+     "rank": 20,
+     "lift": 1.82,
+     "time": "2024-10-17 23:00",
+     "delay_h": 6.08
+    }
+   },
+   {
+    "id": "valencia",
+    "name": "스페인 발렌시아 홍수",
+    "first_report_utc": "2024-10-29T19:11:00Z",
+    "verified": true,
+    "exact": {
+     "t": 1730296800,
+     "key": "L:utiel, valenciana, spain",
+     "rank": 14,
+     "lift": 1.773,
+     "time": "2024-10-30 14:00",
+     "delay_h": 18.82
+    },
+    "theta=0.5": {
+     "t": 1730296800,
+     "key": "L:utiel, valenciana, spain",
+     "rank": 14,
+     "lift": 1.774,
+     "time": "2024-10-30 14:00",
+     "delay_h": 18.82
+    }
+   },
+   {
+    "id": "quincy_jones",
+    "name": "퀸시 존스 사망 보도",
+    "first_report_utc": "2024-11-04T09:00:00Z",
+    "verified": true,
+    "exact": {
+     "t": 1730718000,
+     "key": "P:quincy jones",
+     "rank": 15,
+     "lift": 1.692,
+     "time": "2024-11-04 11:00",
+     "delay_h": 2.0
+    },
+    "theta=0.5": {
+     "t": 1730718000,
+     "key": "P:quincy jones",
+     "rank": 15,
+     "lift": 1.692,
+     "time": "2024-11-04 11:00",
+     "delay_h": 2.0
+    }
+   }
+  ],
+  "warmup_reference_only": [
+   {
+    "id": "helene",
+    "name": "허리케인 헬렌 상륙",
+    "first_report_utc": "2024-09-27T03:10:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "nasrallah",
+    "name": "하산 나스랄라 사망 발표 (이스라엘군)",
+    "first_report_utc": "2024-09-28T08:00:00Z",
+    "verified": true,
+    "exact": {
+     "t": 1727604000,
+     "key": "P:sayyed hassan nasrallah",
+     "rank": 19,
+     "lift": 1.488,
+     "time": "2024-09-29 10:00",
+     "delay_h": 26.0
+    },
+    "theta=0.5": {
+     "t": 1727604000,
+     "key": "P:sayyed hassan nasrallah",
+     "rank": 18,
+     "lift": 1.488,
+     "time": "2024-09-29 10:00",
+     "delay_h": 26.0
+    }
+   }
+  ]
+ },
+ "E3": {
+  "dates": {
+   "2024-10-15": {
+    "t": 1728950400,
+    "status": "ok",
+    "candidates": 2000,
+    "counts": {
+     "steady": 1956,
+     "rising": 29,
+     "cooling": 15
+    },
+    "groups": {
+     "rising": [
+      {
+       "key": "L:binyamina, h_efa, israel",
+       "ratio": 1.794,
+       "score": 1175.4
+      },
+      {
+       "key": "P:baba siddique",
+       "ratio": 1.739,
+       "score": 1128.7
+      },
+      {
+       "key": "P:alex salmond",
+       "ratio": 1.697,
+       "score": 1890.5
+      },
+      {
+       "key": "P:vem miller",
+       "ratio": 1.695,
+       "score": 763.1
+      },
+      {
+       "key": "L:coachella, california, united states",
+       "ratio": 1.676,
+       "score": 1479.8
+      },
+      {
+       "key": "P:abu hamza",
+       "ratio": 1.657,
+       "score": 797.9
+      },
+      {
+       "key": "O:alba party",
+       "ratio": 1.622,
+       "score": 878.1
+      },
+      {
+       "key": "P:kenny macaskill",
+       "ratio": 1.617,
+       "score": 721.4
+      },
+      {
+       "key": "P:simon johnson",
+       "ratio": 1.612,
+       "score": 563.3
+      },
+      {
+       "key": "P:joshua simmons",
+       "ratio": 1.607,
+       "score": 764.5
+      }
+     ],
+     "cooling": [
+      {
+       "key": "P:ryan wesley routh",
+       "ratio": 0.447,
+       "score": 940.7
+      },
+      {
+       "key": "O:trump international golf club",
+       "ratio": 0.503,
+       "score": 409.4
+      },
+      {
+       "key": "P:david lochridge",
+       "ratio": 0.523,
+       "score": 384.5
+      },
+      {
+       "key": "P:jean smart",
+       "ratio": 0.57,
+       "score": 375.0
+      },
+      {
+       "key": "L:west palm beach, florida, united states",
+       "ratio": 0.572,
+       "score": 1762.5
+      },
+      {
+       "key": "P:firass abiad",
+       "ratio": 0.6,
+       "score": 470.3
+      },
+      {
+       "key": "O:australian community media",
+       "ratio": 0.611,
+       "score": 588.0
+      },
+      {
+       "key": "P:ryan routh",
+       "ratio": 0.612,
+       "score": 938.5
+      },
+      {
+       "key": "O:a red ventures company",
+       "ratio": 0.623,
+       "score": 927.6
+      },
+      {
+       "key": "P:ranil wickremesinghe",
+       "ratio": 0.629,
+       "score": 418.6
+      }
+     ],
+     "steady": [
+      {
+       "key": "L:new york, united states",
+       "ratio": 0.925,
+       "score": 75644.9
+      },
+      {
+       "key": "L:florida, united states",
+       "ratio": 1.1,
+       "score": 62251.5
+      },
+      {
+       "key": "L:washington, washington, united states",
+       "ratio": 0.962,
+       "score": 52350.1
+      },
+      {
+       "key": "P:donald trump",
+       "ratio": 0.96,
+       "score": 51319.3
+      },
+      {
+       "key": "L:california, united states",
+       "ratio": 0.992,
+       "score": 44045.2
+      },
+      {
+       "key": "L:london, london, city of, united kingdom",
+       "ratio": 0.985,
+       "score": 42147.2
+      },
+      {
+       "key": "P:kamala harris",
+       "ratio": 0.98,
+       "score": 38393.4
+      },
+      {
+       "key": "O:instagram",
+       "ratio": 0.978,
+       "score": 38115.9
+      },
+      {
+       "key": "L:texas, united states",
+       "ratio": 0.981,
+       "score": 37804.4
+      },
+      {
+       "key": "P:joe biden",
+       "ratio": 0.97,
+       "score": 36894.0
+      }
+     ]
+    }
+   },
+   "2024-11-01": {
+    "t": 1730419200,
+    "status": "ok",
+    "candidates": 2000,
+    "counts": {
+     "steady": 1814,
+     "rising": 155,
+     "cooling": 31
+    },
+    "groups": {
+     "rising": [
+      {
+       "key": "P:tony hinchcliffe",
+       "ratio": 2.256,
+       "score": 4955.5
+      },
+      {
+       "key": "L:utiel, valenciana, spain",
+       "ratio": 2.053,
+       "score": 1129.3
+      },
+      {
+       "key": "L:castilla la mancha, castilla-la manacha, spain",
+       "ratio": 2.042,
+       "score": 1125.7
+      },
+      {
+       "key": "P:teri garr",
+       "ratio": 2.042,
+       "score": 1530.7
+      },
+      {
+       "key": "P:young frankenstein",
+       "ratio": 1.983,
+       "score": 1578.0
+      },
+      {
+       "key": "L:madison square, florida, united states",
+       "ratio": 1.972,
+       "score": 1656.4
+      },
+      {
+       "key": "P:greg kimsey",
+       "ratio": 1.957,
+       "score": 1173.4
+      },
+      {
+       "key": "L:allentown, pennsylvania, united states",
+       "ratio": 1.953,
+       "score": 2372.2
+      },
+      {
+       "key": "P:voto latino",
+       "ratio": 1.942,
+       "score": 1016.0
+      },
+      {
+       "key": "P:ricky martin",
+       "ratio": 1.926,
+       "score": 1273.0
+      }
+     ],
+     "cooling": [
+      {
+       "key": "L:valdosta, georgia, united states",
+       "ratio": 0.464,
+       "score": 435.5
+      },
+      {
+       "key": "O:international longshoremen association",
+       "ratio": 0.464,
+       "score": 438.1
+      },
+      {
+       "key": "L:national hurricane center, florida, united states",
+       "ratio": 0.48,
+       "score": 1972.4
+      },
+      {
+       "key": "O:national hurricane center",
+       "ratio": 0.524,
+       "score": 2185.2
+      },
+      {
+       "key": "P:brian kemp",
+       "ratio": 0.525,
+       "score": 1133.4
+      },
+      {
+       "key": "P:ryan routh",
+       "ratio": 0.531,
+       "score": 428.8
+      },
+      {
+       "key": "L:west palm beach, florida, united states",
+       "ratio": 0.532,
+       "score": 1044.7
+      },
+      {
+       "key": "P:jerome powell",
+       "ratio": 0.546,
+       "score": 556.0
+      },
+      {
+       "key": "L:gulf of mexico, mexico (general), mexico",
+       "ratio": 0.571,
+       "score": 592.3
+      },
+      {
+       "key": "P:deanne criswell",
+       "ratio": 0.577,
+       "score": 641.0
+      }
+     ],
+     "steady": [
+      {
+       "key": "L:new york, united states",
+       "ratio": 1.036,
+       "score": 90003.8
+      },
+      {
+       "key": "P:donald trump",
+       "ratio": 1.144,
+       "score": 75317.8
+      },
+      {
+       "key": "L:washington, washington, united states",
+       "ratio": 1.088,
+       "score": 66942.1
+      },
+      {
+       "key": "P:kamala harris",
+       "ratio": 1.172,
+       "score": 58486.1
+      },
+      {
+       "key": "L:california, united states",
+       "ratio": 1.036,
+       "score": 49080.0
+      },
+      {
+       "key": "O:instagram",
+       "ratio": 1.064,
+       "score": 46794.0
+      },
+      {
+       "key": "L:london, london, city of, united kingdom",
+       "ratio": 1.005,
+       "score": 45310.7
+      },
+      {
+       "key": "L:texas, united states",
+       "ratio": 1.034,
+       "score": 43409.6
+      },
+      {
+       "key": "L:florida, united states",
+       "ratio": 0.858,
+       "score": 40748.8
+      },
+      {
+       "key": "O:associated press",
+       "ratio": 1.028,
+       "score": 36609.2
+      }
+     ]
+    }
+   },
+   "2024-11-08": {
+    "t": 1731024000,
+    "status": "ok",
+    "candidates": 2000,
+    "counts": {
+     "steady": 1771,
+     "rising": 202,
+     "cooling": 27
+    },
+    "groups": {
+     "rising": [
+      {
+       "key": "P:grover cleveland",
+       "ratio": 2.293,
+       "score": 3074.9
+      },
+      {
+       "key": "O:howard university",
+       "ratio": 2.217,
+       "score": 6724.4
+      },
+      {
+       "key": "O:palm beach convention center",
+       "ratio": 2.198,
+       "score": 1521.8
+      },
+      {
+       "key": "P:bernie moreno",
+       "ratio": 2.135,
+       "score": 3616.1
+      },
+      {
+       "key": "P:cedric richmond",
+       "ratio": 2.13,
+       "score": 1723.0
+      },
+      {
+       "key": "P:quincy jones",
+       "ratio": 2.128,
+       "score": 2642.0
+      },
+      {
+       "key": "P:sarah mcbride",
+       "ratio": 2.086,
+       "score": 1486.0
+      },
+      {
+       "key": "P:sherrod brown",
+       "ratio": 2.073,
+       "score": 3802.9
+      },
+      {
+       "key": "P:quincy jone",
+       "ratio": 2.073,
+       "score": 1976.8
+      },
+      {
+       "key": "P:angela alsobrooks",
+       "ratio": 2.017,
+       "score": 2252.7
+      }
+     ],
+     "cooling": [
+      {
+       "key": "P:brian kemp",
+       "ratio": 0.474,
+       "score": 817.1
+      },
+      {
+       "key": "L:siesta key, florida, united states",
+       "ratio": 0.48,
+       "score": 462.2
+      },
+      {
+       "key": "L:tampa bay, florida, united states",
+       "ratio": 0.486,
+       "score": 1983.4
+      },
+      {
+       "key": "L:tampa, florida, united states",
+       "ratio": 0.488,
+       "score": 2871.6
+      },
+      {
+       "key": "L:pinellas county, florida, united states",
+       "ratio": 0.502,
+       "score": 523.5
+      },
+      {
+       "key": "L:fort myers, florida, united states",
+       "ratio": 0.542,
+       "score": 616.8
+      },
+      {
+       "key": "P:hassan nasrallah",
+       "ratio": 0.551,
+       "score": 3503.6
+      },
+      {
+       "key": "P:ismail haniyeh",
+       "ratio": 0.558,
+       "score": 949.2
+      },
+      {
+       "key": "O:u s secret service",
+       "ratio": 0.559,
+       "score": 409.0
+      },
+      {
+       "key": "L:beirut, beyrouth, lebanon",
+       "ratio": 0.571,
+       "score": 7016.9
+      }
+     ],
+     "steady": [
+      {
+       "key": "P:donald trump",
+       "ratio": 1.42,
+       "score": 119945.5
+      },
+      {
+       "key": "L:new york, united states",
+       "ratio": 1.046,
+       "score": 92290.6
+      },
+      {
+       "key": "P:kamala harris",
+       "ratio": 1.411,
+       "score": 89845.5
+      },
+      {
+       "key": "L:washington, washington, united states",
+       "ratio": 1.188,
+       "score": 79872.1
+      },
+      {
+       "key": "L:white house, district of columbia, united states",
+       "ratio": 1.454,
+       "score": 55271.1
+      },
+      {
+       "key": "O:white house",
+       "ratio": 1.45,
+       "score": 54186.5
+      },
+      {
+       "key": "L:pennsylvania, united states",
+       "ratio": 1.415,
+       "score": 53020.6
+      },
+      {
+       "key": "P:joe biden",
+       "ratio": 1.228,
+       "score": 52750.9
+      },
+      {
+       "key": "L:florida, united states",
+       "ratio": 1.039,
+       "score": 52079.8
+      },
+      {
+       "key": "L:california, united states",
+       "ratio": 1.067,
+       "score": 51610.8
+      }
+     ]
+    }
+   },
+   "2024-11-14": {
+    "t": 1731542400,
+    "status": "ok",
+    "candidates": 2000,
+    "counts": {
+     "steady": 1777,
+     "rising": 195,
+     "cooling": 28
+    },
+    "groups": {
+     "rising": [
+      {
+       "key": "P:pete hegseth",
+       "ratio": 2.55,
+       "score": 2157.5
+      },
+      {
+       "key": "P:tom homan",
+       "ratio": 2.472,
+       "score": 3238.5
+      },
+      {
+       "key": "O:department of government efficiency",
+       "ratio": 2.465,
+       "score": 2765.6
+      },
+      {
+       "key": "P:john thune",
+       "ratio": 2.299,
+       "score": 2868.8
+      },
+      {
+       "key": "P:john smyth",
+       "ratio": 2.286,
+       "score": 1545.5
+      },
+      {
+       "key": "P:vivek ramaswamy",
+       "ratio": 2.282,
+       "score": 3331.1
+      },
+      {
+       "key": "P:john cornyn",
+       "ratio": 2.281,
+       "score": 2658.4
+      },
+      {
+       "key": "P:mike huckabee",
+       "ratio": 2.231,
+       "score": 1512.5
+      },
+      {
+       "key": "P:john ratcliffe",
+       "ratio": 2.174,
+       "score": 1058.9
+      },
+      {
+       "key": "P:stephen miller",
+       "ratio": 2.155,
+       "score": 3360.0
+      }
+     ],
+     "cooling": [
+      {
+       "key": "P:brian kemp",
+       "ratio": 0.411,
+       "score": 551.5
+      },
+      {
+       "key": "O:p solutions",
+       "ratio": 0.433,
+       "score": 857.7
+      },
+      {
+       "key": "L:tampa, florida, united states",
+       "ratio": 0.446,
+       "score": 2237.6
+      },
+      {
+       "key": "P:daniel hagari",
+       "ratio": 0.449,
+       "score": 450.7
+      },
+      {
+       "key": "P:hassan nasrallah",
+       "ratio": 0.461,
+       "score": 2465.5
+      },
+      {
+       "key": "P:ismail haniyeh",
+       "ratio": 0.471,
+       "score": 629.8
+      },
+      {
+       "key": "L:tampa bay, florida, united states",
+       "ratio": 0.48,
+       "score": 1709.1
+      },
+      {
+       "key": "L:asheville, north carolina, united states",
+       "ratio": 0.485,
+       "score": 1593.5
+      },
+      {
+       "key": "L:fort myers, florida, united states",
+       "ratio": 0.497,
+       "score": 452.2
+      },
+      {
+       "key": "L:national hurricane center, florida, united states",
+       "ratio": 0.498,
+       "score": 1575.7
+      }
+     ],
+     "steady": [
+      {
+       "key": "P:donald trump",
+       "ratio": 1.231,
+       "score": 104136.7
+      },
+      {
+       "key": "L:new york, united states",
+       "ratio": 1.022,
+       "score": 89382.4
+      },
+      {
+       "key": "L:washington, washington, united states",
+       "ratio": 1.144,
+       "score": 78522.4
+      },
+      {
+       "key": "P:kamala harris",
+       "ratio": 1.104,
+       "score": 64904.4
+      },
+      {
+       "key": "L:white house, district of columbia, united states",
+       "ratio": 1.363,
+       "score": 55990.6
+      },
+      {
+       "key": "O:white house",
+       "ratio": 1.356,
+       "score": 54553.5
+      },
+      {
+       "key": "L:florida, united states",
+       "ratio": 1.016,
+       "score": 50358.1
+      },
+      {
+       "key": "L:california, united states",
+       "ratio": 1.02,
+       "score": 48732.6
+      },
+      {
+       "key": "L:texas, united states",
+       "ratio": 1.068,
+       "score": 46737.1
+      },
+      {
+       "key": "P:joe biden",
+       "ratio": 1.105,
+       "score": 46655.2
+      }
+     ]
+    }
+   }
+  },
+  "daily": [
+   {
+    "date": "2024-10-01",
+    "status": "warming_up",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.946,
+      "label": "warming_up",
+      "rate_168h": 231.12
+     },
+     "P:kamala harris": {
+      "ratio": 0.972,
+      "label": "warming_up",
+      "rate_168h": 162.77
+     }
+    }
+   },
+   {
+    "date": "2024-10-02",
+    "status": "warming_up",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.948,
+      "label": "warming_up",
+      "rate_168h": 229.92
+     },
+     "P:kamala harris": {
+      "ratio": 0.99,
+      "label": "warming_up",
+      "rate_168h": 169.46
+     }
+    }
+   },
+   {
+    "date": "2024-10-03",
+    "status": "warming_up",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.974,
+      "label": "warming_up",
+      "rate_168h": 243.06
+     },
+     "P:kamala harris": {
+      "ratio": 1.022,
+      "label": "warming_up",
+      "rate_168h": 183.07
+     }
+    }
+   },
+   {
+    "date": "2024-10-04",
+    "status": "warming_up",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.977,
+      "label": "warming_up",
+      "rate_168h": 243.41
+     },
+     "P:kamala harris": {
+      "ratio": 1.023,
+      "label": "warming_up",
+      "rate_168h": 183.9
+     }
+    }
+   },
+   {
+    "date": "2024-10-05",
+    "status": "warming_up",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.978,
+      "label": "warming_up",
+      "rate_168h": 242.91
+     },
+     "P:kamala harris": {
+      "ratio": 1.024,
+      "label": "warming_up",
+      "rate_168h": 184.86
+     }
+    }
+   },
+   {
+    "date": "2024-10-06",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.961,
+      "label": "steady",
+      "rate_168h": 233.15
+     },
+     "P:kamala harris": {
+      "ratio": 1.005,
+      "label": "steady",
+      "rate_168h": 177.8
+     }
+    }
+   },
+   {
+    "date": "2024-10-07",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.943,
+      "label": "steady",
+      "rate_168h": 223.19
+     },
+     "P:kamala harris": {
+      "ratio": 0.983,
+      "label": "steady",
+      "rate_168h": 169.57
+     }
+    }
+   },
+   {
+    "date": "2024-10-08",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.949,
+      "label": "steady",
+      "rate_168h": 224.43
+     },
+     "P:kamala harris": {
+      "ratio": 0.978,
+      "label": "steady",
+      "rate_168h": 167.09
+     }
+    }
+   },
+   {
+    "date": "2024-10-09",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.956,
+      "label": "steady",
+      "rate_168h": 226.53
+     },
+     "P:kamala harris": {
+      "ratio": 0.991,
+      "label": "steady",
+      "rate_168h": 171.21
+     }
+    }
+   },
+   {
+    "date": "2024-10-10",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.96,
+      "label": "steady",
+      "rate_168h": 227.43
+     },
+     "P:kamala harris": {
+      "ratio": 0.998,
+      "label": "steady",
+      "rate_168h": 173.29
+     }
+    }
+   },
+   {
+    "date": "2024-10-11",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.966,
+      "label": "steady",
+      "rate_168h": 229.0
+     },
+     "P:kamala harris": {
+      "ratio": 1.0,
+      "label": "steady",
+      "rate_168h": 174.11
+     }
+    }
+   },
+   {
+    "date": "2024-10-12",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.975,
+      "label": "steady",
+      "rate_168h": 232.32
+     },
+     "P:kamala harris": {
+      "ratio": 1.009,
+      "label": "steady",
+      "rate_168h": 177.09
+     }
+    }
+   },
+   {
+    "date": "2024-10-13",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.959,
+      "label": "steady",
+      "rate_168h": 224.71
+     },
+     "P:kamala harris": {
+      "ratio": 0.992,
+      "label": "steady",
+      "rate_168h": 171.47
+     }
+    }
+   },
+   {
+    "date": "2024-10-14",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.953,
+      "label": "steady",
+      "rate_168h": 221.06
+     },
+     "P:kamala harris": {
+      "ratio": 0.978,
+      "label": "steady",
+      "rate_168h": 166.7
+     }
+    }
+   },
+   {
+    "date": "2024-10-15",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.96,
+      "label": "steady",
+      "rate_168h": 223.18
+     },
+     "P:kamala harris": {
+      "ratio": 0.98,
+      "label": "steady",
+      "rate_168h": 166.97
+     }
+    }
+   },
+   {
+    "date": "2024-10-16",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.976,
+      "label": "steady",
+      "rate_168h": 229.07
+     },
+     "P:kamala harris": {
+      "ratio": 0.992,
+      "label": "steady",
+      "rate_168h": 170.2
+     }
+    }
+   },
+   {
+    "date": "2024-10-17",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.002,
+      "label": "steady",
+      "rate_168h": 239.52
+     },
+     "P:kamala harris": {
+      "ratio": 1.029,
+      "label": "steady",
+      "rate_168h": 181.62
+     }
+    }
+   },
+   {
+    "date": "2024-10-18",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.017,
+      "label": "steady",
+      "rate_168h": 245.8
+     },
+     "P:kamala harris": {
+      "ratio": 1.042,
+      "label": "steady",
+      "rate_168h": 186.48
+     }
+    }
+   },
+   {
+    "date": "2024-10-19",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.022,
+      "label": "steady",
+      "rate_168h": 248.17
+     },
+     "P:kamala harris": {
+      "ratio": 1.05,
+      "label": "steady",
+      "rate_168h": 189.46
+     }
+    }
+   },
+   {
+    "date": "2024-10-20",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.003,
+      "label": "steady",
+      "rate_168h": 240.44
+     },
+     "P:kamala harris": {
+      "ratio": 1.027,
+      "label": "steady",
+      "rate_168h": 182.81
+     }
+    }
+   },
+   {
+    "date": "2024-10-21",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.983,
+      "label": "steady",
+      "rate_168h": 232.41
+     },
+     "P:kamala harris": {
+      "ratio": 1.005,
+      "label": "steady",
+      "rate_168h": 176.35
+     }
+    }
+   },
+   {
+    "date": "2024-10-22",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 0.998,
+      "label": "steady",
+      "rate_168h": 238.01
+     },
+     "P:kamala harris": {
+      "ratio": 1.023,
+      "label": "steady",
+      "rate_168h": 181.69
+     }
+    }
+   },
+   {
+    "date": "2024-10-23",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.022,
+      "label": "steady",
+      "rate_168h": 247.56
+     },
+     "P:kamala harris": {
+      "ratio": 1.05,
+      "label": "steady",
+      "rate_168h": 190.17
+     }
+    }
+   },
+   {
+    "date": "2024-10-24",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.057,
+      "label": "steady",
+      "rate_168h": 262.33
+     },
+     "P:kamala harris": {
+      "ratio": 1.075,
+      "label": "steady",
+      "rate_168h": 198.8
+     }
+    }
+   },
+   {
+    "date": "2024-10-25",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.076,
+      "label": "steady",
+      "rate_168h": 271.88
+     },
+     "P:kamala harris": {
+      "ratio": 1.097,
+      "label": "steady",
+      "rate_168h": 206.77
+     }
+    }
+   },
+   {
+    "date": "2024-10-26",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.102,
+      "label": "steady",
+      "rate_168h": 284.58
+     },
+     "P:kamala harris": {
+      "ratio": 1.117,
+      "label": "steady",
+      "rate_168h": 214.69
+     }
+    }
+   },
+   {
+    "date": "2024-10-27",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.093,
+      "label": "steady",
+      "rate_168h": 282.33
+     },
+     "P:kamala harris": {
+      "ratio": 1.103,
+      "label": "steady",
+      "rate_168h": 211.67
+     }
+    }
+   },
+   {
+    "date": "2024-10-28",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.077,
+      "label": "steady",
+      "rate_168h": 276.84
+     },
+     "P:kamala harris": {
+      "ratio": 1.092,
+      "label": "steady",
+      "rate_168h": 209.41
+     }
+    }
+   },
+   {
+    "date": "2024-10-29",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.099,
+      "label": "steady",
+      "rate_168h": 287.43
+     },
+     "P:kamala harris": {
+      "ratio": 1.117,
+      "label": "steady",
+      "rate_168h": 218.62
+     }
+    }
+   },
+   {
+    "date": "2024-10-30",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.113,
+      "label": "steady",
+      "rate_168h": 295.38
+     },
+     "P:kamala harris": {
+      "ratio": 1.141,
+      "label": "steady",
+      "rate_168h": 228.3
+     }
+    }
+   },
+   {
+    "date": "2024-10-31",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.134,
+      "label": "steady",
+      "rate_168h": 307.06
+     },
+     "P:kamala harris": {
+      "ratio": 1.161,
+      "label": "steady",
+      "rate_168h": 237.21
+     }
+    }
+   },
+   {
+    "date": "2024-11-01",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.144,
+      "label": "steady",
+      "rate_168h": 313.74
+     },
+     "P:kamala harris": {
+      "ratio": 1.172,
+      "label": "steady",
+      "rate_168h": 243.63
+     }
+    }
+   },
+   {
+    "date": "2024-11-02",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.163,
+      "label": "steady",
+      "rate_168h": 325.19
+     },
+     "P:kamala harris": {
+      "ratio": 1.19,
+      "label": "steady",
+      "rate_168h": 252.55
+     }
+    }
+   },
+   {
+    "date": "2024-11-03",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.143,
+      "label": "steady",
+      "rate_168h": 318.94
+     },
+     "P:kamala harris": {
+      "ratio": 1.174,
+      "label": "steady",
+      "rate_168h": 249.4
+     }
+    }
+   },
+   {
+    "date": "2024-11-04",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.128,
+      "label": "steady",
+      "rate_168h": 314.21
+     },
+     "P:kamala harris": {
+      "ratio": 1.166,
+      "label": "steady",
+      "rate_168h": 248.77
+     }
+    }
+   },
+   {
+    "date": "2024-11-05",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.155,
+      "label": "steady",
+      "rate_168h": 329.12
+     },
+     "P:kamala harris": {
+      "ratio": 1.198,
+      "label": "steady",
+      "rate_168h": 262.76
+     }
+    }
+   },
+   {
+    "date": "2024-11-06",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.227,
+      "label": "steady",
+      "rate_168h": 367.47
+     },
+     "P:kamala harris": {
+      "ratio": 1.28,
+      "label": "steady",
+      "rate_168h": 298.16
+     }
+    }
+   },
+   {
+    "date": "2024-11-07",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.392,
+      "label": "steady",
+      "rate_168h": 467.66
+     },
+     "P:kamala harris": {
+      "ratio": 1.416,
+      "label": "steady",
+      "rate_168h": 365.6
+     }
+    }
+   },
+   {
+    "date": "2024-11-08",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.42,
+      "label": "steady",
+      "rate_168h": 497.25
+     },
+     "P:kamala harris": {
+      "ratio": 1.411,
+      "label": "steady",
+      "rate_168h": 372.46
+     }
+    }
+   },
+   {
+    "date": "2024-11-09",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.405,
+      "label": "steady",
+      "rate_168h": 499.43
+     },
+     "P:kamala harris": {
+      "ratio": 1.369,
+      "label": "steady",
+      "rate_168h": 360.65
+     }
+    }
+   },
+   {
+    "date": "2024-11-10",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.353,
+      "label": "steady",
+      "rate_168h": 477.26
+     },
+     "P:kamala harris": {
+      "ratio": 1.313,
+      "label": "steady",
+      "rate_168h": 341.29
+     }
+    }
+   },
+   {
+    "date": "2024-11-11",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.298,
+      "label": "steady",
+      "rate_168h": 452.05
+     },
+     "P:kamala harris": {
+      "ratio": 1.253,
+      "label": "steady",
+      "rate_168h": 320.23
+     }
+    }
+   },
+   {
+    "date": "2024-11-12",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.272,
+      "label": "steady",
+      "rate_168h": 443.46
+     },
+     "P:kamala harris": {
+      "ratio": 1.199,
+      "label": "steady",
+      "rate_168h": 301.41
+     }
+    }
+   },
+   {
+    "date": "2024-11-13",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.247,
+      "label": "steady",
+      "rate_168h": 434.64
+     },
+     "P:kamala harris": {
+      "ratio": 1.147,
+      "label": "steady",
+      "rate_168h": 283.33
+     }
+    }
+   },
+   {
+    "date": "2024-11-14",
+    "status": "ok",
+    "keys": {
+     "P:donald trump": {
+      "ratio": 1.231,
+      "label": "steady",
+      "rate_168h": 430.79
+     },
+     "P:kamala harris": {
+      "ratio": 1.104,
+      "label": "steady",
+      "rate_168h": 268.49
+     }
+    }
+   }
+  ]
+ },
+ "E4": {
+  "keys": {
+   "L:new york, united states": "top10",
+   "L:washington, washington, united states": "top10",
+   "P:donald trump": "top10",
+   "L:florida, united states": "top10",
+   "L:california, united states": "top10",
+   "L:london, london, city of, united kingdom": "top10",
+   "L:texas, united states": "top10",
+   "O:instagram": "top10",
+   "P:joe biden": "top10",
+   "P:kamala harris": "top10",
+   "L:ottawa, ontario, canada": "high (rank 100)",
+   "P:jonathan brady": "mid (rank 1000)",
+   "O:kent police": "low (rank 10000)"
+  },
+  "selected_at": "2024-10-01 00:00",
+  "configs": [
+   {
+    "N": 10000,
+    "r": 2,
+    "samples": 2327,
+    "bound": 0.5,
+    "rel_err_mean": 0.10389883074838421,
+    "rel_err_max": 0.37191358024691357,
+    "abs_err_mean": 33.98173614095402,
+    "dgim_bits_mean": 183.85217017619252,
+    "exact_bits_mean": 4296.343790287924,
+    "by_group": {
+     "high (rank 100)": {
+      "keys": 1,
+      "exact_mean": 51.391061452513966,
+      "rel_err_mean": 0.10736719468021257,
+      "dgim_bits_mean": 141.2849162011173,
+      "exact_bits_mean": 719.4748603351956
+     },
+     "low (rank 10000)": {
+      "keys": 1,
+      "exact_mean": 1.553072625698324,
+      "rel_err_mean": 0.03064939986122252,
+      "dgim_bits_mean": 12.569832402234637,
+      "exact_bits_mean": 21.743016759776538
+     },
+     "mid (rank 1000)": {
+      "keys": 1,
+      "exact_mean": 6.4525139664804465,
+      "rel_err_mean": 0.08649764807301945,
+      "dgim_bits_mean": 25.139664804469273,
+      "exact_bits_mean": 90.33519553072625
+     },
+     "top10": {
+      "keys": 10,
+      "exact_mean": 408.42067039106144,
+      "rel_err_mean": 0.1067951697564234,
+      "dgim_bits_mean": 221.10837988826816,
+      "exact_bits_mean": 5502.091620111732
+     }
+    }
+   },
+   {
+    "N": 50000,
+    "r": 2,
+    "samples": 2314,
+    "bound": 0.5,
+    "rel_err_mean": 0.10703059137412181,
+    "rel_err_max": 0.375,
+    "abs_err_mean": 177.43496110630943,
+    "dgim_bits_mean": 282.9464131374244,
+    "exact_bits_mean": 24436.210890233364,
+    "by_group": {
+     "high (rank 100)": {
+      "keys": 1,
+      "exact_mean": 255.23033707865167,
+      "rel_err_mean": 0.11138747249998829,
+      "dgim_bits_mean": 237.8426966292135,
+      "exact_bits_mean": 4083.6853932584268
+     },
+     "low (rank 10000)": {
+      "keys": 1,
+      "exact_mean": 8.044943820224718,
+      "rel_err_mean": 0.08746377567746827,
+      "dgim_bits_mean": 46.48314606741573,
+      "exact_bits_mean": 128.7191011235955
+     },
+     "mid (rank 1000)": {
+      "keys": 1,
+      "exact_mean": 32.842696629213485,
+      "rel_err_mean": 0.08690835292269093,
+      "dgim_bits_mean": 73.14606741573034,
+      "exact_bits_mean": 525.4831460674158
+     },
+     "top10": {
+      "keys": 10,
+      "exact_mean": 2057.984269662921,
+      "rel_err_mean": 0.10953314392640634,
+      "dgim_bits_mean": 332.0831460674157,
+      "exact_bits_mean": 31293.285393258426
+     }
+    }
+   },
+   {
+    "N": 50000,
+    "r": 4,
+    "samples": 2314,
+    "bound": 0.16666666666666666,
+    "rel_err_mean": 0.044986575868052193,
+    "rel_err_max": 0.14179970972423803,
+    "abs_err_mean": 74.69727744165947,
+    "dgim_bits_mean": 567.4628349178911,
+    "exact_bits_mean": 24436.210890233364,
+    "by_group": {
+     "high (rank 100)": {
+      "keys": 1,
+      "exact_mean": 255.23033707865167,
+      "rel_err_mean": 0.04568476687712866,
+      "dgim_bits_mean": 453.85955056179773,
+      "exact_bits_mean": 4083.6853932584268
+     },
+     "low (rank 10000)": {
+      "keys": 1,
+      "exact_mean": 8.044943820224718,
+      "rel_err_mean": 0.021020825454669472,
+      "dgim_bits_mean": 63.58988764044944,
+      "exact_bits_mean": 128.7191011235955
+     },
+     "mid (rank 1000)": {
+      "keys": 1,
+      "exact_mean": 32.842696629213485,
+      "rel_err_mean": 0.03943431021046077,
+      "dgim_bits_mean": 126.82584269662921,
+      "exact_bits_mean": 525.4831460674158
+     },
+     "top10": {
+      "keys": 10,
+      "exact_mean": 2057.984269662921,
+      "rel_err_mean": 0.0472712477095385,
+      "dgim_bits_mean": 673.2741573033708,
+      "exact_bits_mean": 31293.285393258426
+     }
+    }
+   }
+  ],
+  "skipped": [],
+  "note": "samples only after the key has been tracked for N articles (full window)"
+ },
+ "E5": {
+  "seed": 20241001,
+  "runs": [
+   {
+    "drop_fraction": 0.02,
+    "seed": "20241001-0.02",
+    "slots_total": 5856,
+    "slots_dropped": 117,
+    "dropped_sha256": "64bdbf64da5aa16d840e42fbbcba289418911ebd0c2846e3c7deb6d36f59b6e2",
+    "articles": 8149919,
+    "eval_times": 180,
+    "overlap_mean": 0.9983333333333333,
+    "overlap_min": 0.95,
+    "same_order_share": 0.7555555555555555,
+    "gap_168h_mean": 0.01974206349206349,
+    "held_share": 0.0,
+    "seconds": 626.1,
+    "rows": [
+     {
+      "t": 1727742600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1727764200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1727786700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1727808300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1727829900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1727851500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1727873100,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1727894700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1727916300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1727937900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1727959500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1727981100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.010416666666666666,
+      "held": false
+     },
+     {
+      "t": 1728002700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.010416666666666666,
+      "held": false
+     },
+     {
+      "t": 1728024300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.011904761904761904,
+      "held": false
+     },
+     {
+      "t": 1728045900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.011904761904761904,
+      "held": false
+     },
+     {
+      "t": 1728067500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.011904761904761904,
+      "held": false
+     },
+     {
+      "t": 1728089100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1728110700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1728132300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1728153900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1728175500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1728194400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1728216000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1728237600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1728259200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1728280800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1728302400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1728324000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1728345600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1728367200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1728388800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1728410400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1728432000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1728453600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1728475200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1728496800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1728518400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1728540000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1728561600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1728584100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1728605700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1728627300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1728648900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1728670500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1728692100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1728713700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1728735300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1728756900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1728778500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1728800100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1728821700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1728845100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1728864000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1728885600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1728907200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1728928800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1728950400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1728972000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1728993600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1729015200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1729036800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1729058400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1729080000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1729101600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729123200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.03125,
+      "held": false
+     },
+     {
+      "t": 1729144800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729166400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729188000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.028273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729209600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1729231200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.028273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729252800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729274400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729296000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729318500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729340100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.028273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729361700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1729383300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1729404900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.028273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729427400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.03125,
+      "held": false
+     },
+     {
+      "t": 1729449000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.028273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729471500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.028273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729493100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.028273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729514700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1729536300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1729557900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729576800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729598400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729620000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729641600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.02976190476190476,
+      "held": false
+     },
+     {
+      "t": 1729663200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1729684800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1729706400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1729728000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1729749600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1729771200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1729792800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1729814400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1729836000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1729857600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1729880100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1729901700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1729923300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1729945800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1729967400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1729989000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730010600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1730032200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.023809523809523808,
+      "held": false
+     },
+     {
+      "t": 1730053800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1730075400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1730097000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.026785714285714284,
+      "held": false
+     },
+     {
+      "t": 1730118600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1730140200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.025297619047619048,
+      "held": false
+     },
+     {
+      "t": 1730161800,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730183400,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1730205000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1730226600,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.020833333333333332,
+      "held": false
+     },
+     {
+      "t": 1730248200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730269800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730291400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730313000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730334600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730356200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730377800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730399400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730421000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.022321428571428572,
+      "held": false
+     },
+     {
+      "t": 1730442600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1730464200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1730485800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1730507400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1730529000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1730550600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1730572200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1730593800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1730615400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1730637000,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.010416666666666666,
+      "held": false
+     },
+     {
+      "t": 1730658600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.010416666666666666,
+      "held": false
+     },
+     {
+      "t": 1730680200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.00744047619047619,
+      "held": false
+     },
+     {
+      "t": 1730701800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.00744047619047619,
+      "held": false
+     },
+     {
+      "t": 1730723400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.00744047619047619,
+      "held": false
+     },
+     {
+      "t": 1730745000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.008928571428571428,
+      "held": false
+     },
+     {
+      "t": 1730766600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.008928571428571428,
+      "held": false
+     },
+     {
+      "t": 1730788200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.008928571428571428,
+      "held": false
+     },
+     {
+      "t": 1730809800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.008928571428571428,
+      "held": false
+     },
+     {
+      "t": 1730832300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.010416666666666666,
+      "held": false
+     },
+     {
+      "t": 1730853900,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.00744047619047619,
+      "held": false
+     },
+     {
+      "t": 1730875500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.00744047619047619,
+      "held": false
+     },
+     {
+      "t": 1730897100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.010416666666666666,
+      "held": false
+     },
+     {
+      "t": 1730918700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1730940300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1730961900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1730983500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1731005100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1731026700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731048300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731069900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731091500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731113100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1731134700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1731156300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1731177900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1731199500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731221100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731242700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731264300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1731285900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1731307500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731329100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731348000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731369600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731391200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731412800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1731435300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1731456900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1731478500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.019345238095238096,
+      "held": false
+     },
+     {
+      "t": 1731500100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.017857142857142856,
+      "held": false
+     },
+     {
+      "t": 1731521700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.01636904761904762,
+      "held": false
+     },
+     {
+      "t": 1731543300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.01488095238095238,
+      "held": false
+     },
+     {
+      "t": 1731564900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1731586500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     },
+     {
+      "t": 1731608100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.013392857142857142,
+      "held": false
+     }
+    ]
+   },
+   {
+    "drop_fraction": 0.05,
+    "seed": "20241001-0.05",
+    "slots_total": 5856,
+    "slots_dropped": 293,
+    "dropped_sha256": "72f7883ca8b64e86f210d958a9c3c9a0444626a669c74e9460cfded931fa34e4",
+    "articles": 7906744,
+    "eval_times": 180,
+    "overlap_mean": 0.9986111111111111,
+    "overlap_min": 0.95,
+    "same_order_share": 0.6444444444444445,
+    "gap_168h_mean": 0.05128141534391534,
+    "held_share": 0.5777777777777777,
+    "seconds": 618.9,
+    "rows": [
+     {
+      "t": 1727740800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1727762400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1727784000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1727805600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1727828100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1727850600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.043154761904761904,
+      "held": false
+     },
+     {
+      "t": 1727872200,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1727893800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1727915400,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1727937900,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1727959500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1727981100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.043154761904761904,
+      "held": false
+     },
+     {
+      "t": 1728000000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1728023400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1728045000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1728066600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1728088200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1728109800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1728131400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728153000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05803571428571429,
+      "held": true
+     },
+     {
+      "t": 1728174600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.06101190476190476,
+      "held": true
+     },
+     {
+      "t": 1728196200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05952380952380952,
+      "held": true
+     },
+     {
+      "t": 1728217800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05803571428571429,
+      "held": true
+     },
+     {
+      "t": 1728240300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05803571428571429,
+      "held": true
+     },
+     {
+      "t": 1728261900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05654761904761905,
+      "held": true
+     },
+     {
+      "t": 1728283500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1728302400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728324000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05654761904761905,
+      "held": true
+     },
+     {
+      "t": 1728345600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728367200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05654761904761905,
+      "held": true
+     },
+     {
+      "t": 1728388800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728410400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05654761904761905,
+      "held": true
+     },
+     {
+      "t": 1728432000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728454500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728476100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05803571428571429,
+      "held": true
+     },
+     {
+      "t": 1728497700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05952380952380952,
+      "held": true
+     },
+     {
+      "t": 1728519300,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.05803571428571429,
+      "held": true
+     },
+     {
+      "t": 1728540900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05952380952380952,
+      "held": true
+     },
+     {
+      "t": 1728562500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728584100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05952380952380952,
+      "held": true
+     },
+     {
+      "t": 1728606600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728628200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1728650700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1728669600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1728692100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1728713700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1728735300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1728756900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1728778500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1728801900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1728820800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1728842400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1728864000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1728886500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1728909000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1728931500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1728953100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1728974700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1728997200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1729015200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1729036800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1729060200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1729082700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1729104300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1729125900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1729147500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1729169100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1729190700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1729212300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1729233900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1729255500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1729277100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1729296000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1729318500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.043154761904761904,
+      "held": false
+     },
+     {
+      "t": 1729340100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.043154761904761904,
+      "held": false
+     },
+     {
+      "t": 1729361700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1729383300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1729404900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729426500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729448100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.03869047619047619,
+      "held": false
+     },
+     {
+      "t": 1729469700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1729491300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729513800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729535400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729557000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.03571428571428571,
+      "held": false
+     },
+     {
+      "t": 1729578600,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.03273809523809524,
+      "held": false
+     },
+     {
+      "t": 1729600200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.03571428571428571,
+      "held": false
+     },
+     {
+      "t": 1729621800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.03571428571428571,
+      "held": false
+     },
+     {
+      "t": 1729643400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729665000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729687500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.03720238095238095,
+      "held": false
+     },
+     {
+      "t": 1729709100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.03869047619047619,
+      "held": false
+     },
+     {
+      "t": 1729730700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.03869047619047619,
+      "held": false
+     },
+     {
+      "t": 1729752300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729773900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.04017857142857143,
+      "held": false
+     },
+     {
+      "t": 1729792800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1729814400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1729837800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1729859400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1729881000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1729903500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1729922400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1729944900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1729966500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1729989000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1730011500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05952380952380952,
+      "held": true
+     },
+     {
+      "t": 1730033100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05952380952380952,
+      "held": true
+     },
+     {
+      "t": 1730052000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0625,
+      "held": true
+     },
+     {
+      "t": 1730073600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0625,
+      "held": true
+     },
+     {
+      "t": 1730095200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.06398809523809523,
+      "held": true
+     },
+     {
+      "t": 1730116800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06101190476190476,
+      "held": true
+     },
+     {
+      "t": 1730139300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0625,
+      "held": true
+     },
+     {
+      "t": 1730161800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.06547619047619048,
+      "held": true
+     },
+     {
+      "t": 1730183400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.06547619047619048,
+      "held": true
+     },
+     {
+      "t": 1730203200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06547619047619048,
+      "held": true
+     },
+     {
+      "t": 1730224800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06547619047619048,
+      "held": true
+     },
+     {
+      "t": 1730246400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06101190476190476,
+      "held": true
+     },
+     {
+      "t": 1730268000,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.0625,
+      "held": true
+     },
+     {
+      "t": 1730289600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06398809523809523,
+      "held": true
+     },
+     {
+      "t": 1730312100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06398809523809523,
+      "held": true
+     },
+     {
+      "t": 1730333700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06398809523809523,
+      "held": true
+     },
+     {
+      "t": 1730355300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.06547619047619048,
+      "held": true
+     },
+     {
+      "t": 1730377800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06845238095238096,
+      "held": true
+     },
+     {
+      "t": 1730399400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06696428571428571,
+      "held": true
+     },
+     {
+      "t": 1730421900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06845238095238096,
+      "held": true
+     },
+     {
+      "t": 1730443500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0625,
+      "held": true
+     },
+     {
+      "t": 1730465100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0625,
+      "held": true
+     },
+     {
+      "t": 1730486700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0625,
+      "held": true
+     },
+     {
+      "t": 1730508300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.06101190476190476,
+      "held": true
+     },
+     {
+      "t": 1730529900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.06101190476190476,
+      "held": true
+     },
+     {
+      "t": 1730551500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05654761904761905,
+      "held": true
+     },
+     {
+      "t": 1730573100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05803571428571429,
+      "held": true
+     },
+     {
+      "t": 1730594700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1730613600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1730635200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1730656800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1730679300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1730700900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1730722500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1730744100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1730765700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1730787300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1730808900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1730830500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1730852100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1730873700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1730895300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1730916900,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1730938500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1730960100,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.046130952380952384,
+      "held": false
+     },
+     {
+      "t": 1730981700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.041666666666666664,
+      "held": false
+     },
+     {
+      "t": 1731004200,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.043154761904761904,
+      "held": false
+     },
+     {
+      "t": 1731025800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1731047400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.044642857142857144,
+      "held": false
+     },
+     {
+      "t": 1731070800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1731088800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1731110400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1731132000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.047619047619047616,
+      "held": false
+     },
+     {
+      "t": 1731153600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.049107142857142856,
+      "held": false
+     },
+     {
+      "t": 1731176100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731197700,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731219300,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731241800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731263400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.050595238095238096,
+      "held": true
+     },
+     {
+      "t": 1731286800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731304800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1731327300,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731348900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1731370500,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1731393000,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731414600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731436200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1731457800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1731479400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05357142857142857,
+      "held": true
+     },
+     {
+      "t": 1731501000,
+      "overlap": 0.95,
+      "same_order": false,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1731522600,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.052083333333333336,
+      "held": true
+     },
+     {
+      "t": 1731544200,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05505952380952381,
+      "held": true
+     },
+     {
+      "t": 1731566700,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05654761904761905,
+      "held": true
+     },
+     {
+      "t": 1731586500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.05952380952380952,
+      "held": true
+     },
+     {
+      "t": 1731608100,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.05803571428571429,
+      "held": true
+     }
+    ]
+   }
+  ]
+ },
+ "meta": {
+  "command": "python experiments/run_gkg_experiments.py --only E2",
+  "created_utc": "2026-11-16T19:37:58Z",
+  "experiments_run": [
+   "E2"
+  ],
+  "range": {
+   "start": "2024-09-15",
+   "end": "2024-11-14"
+  },
+  "eval_from": "2024-10-01",
+  "input": {
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "duplicate_urls_removed": 0,
+   "stream_sha256_def": "sha256 over canonical_line(a) (same as input_manifest.json)"
+  },
+  "git": {
+   "commit": "f19ff63a9179f2ac8c4f705a8618b691f8b7a538",
+   "dirty": false
+  },
+  "git_end": {
+   "commit": "f19ff63a9179f2ac8c4f705a8618b691f8b7a538",
+   "dirty": false
+  },
+  "python": "3.14.5",
+  "seed": 20241001,
+  "code": {
+   "gkg.py": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
+   "gkg_engine.py": "38d954f8f46156743f2c8908d6faab3f84a6469bd3b29de71ddc15769a65f3b2",
+   "gkg_cache.py": "1c7eb5a23d9f03f58796441d7668014f0ea83b63f8e4969eb52baa971a55589c",
+   "dgim.py": "f67ca7da44bf15a50d4ec1d6e1ccac5c031b07c0dd57e78e1654adaa1ff612d9",
+   "sliding.py": "53452852dd79251fe51b98d085c09f0f2e9d2dfb0a057cf233ddc45d09afd9b0",
+   "run_gkg_experiments.py": "19c62a2b9e7b42c9953fcef597b186baa83c8f7d91777d8e3506c5790f7ba28e"
+  },
+  "settings": {
+   "thetas": [
+    0.1,
+    0.3,
+    0.5,
+    1.0
+   ],
+   "k": 20,
+   "block_hours": 6,
+   "engine": {
+    "windows": [
+     [
+      "72h",
+      72.0
+     ],
+     [
+      "168h",
+      168.0
+     ],
+     [
+      "720h",
+      720.0
+     ]
+    ],
+    "thresholds": [
+     null
+    ],
+    "top_m": 2000,
+    "snapshot_every_minutes": 60.0,
+    "prune_every_hours": 6.0,
+    "evidence_top": 200,
+    "evidence_per_day_cap": 30,
+    "detect": true,
+    "detect_variant": "exact",
+    "alpha": 1.0,
+    "new_k": 10,
+    "new_warmup_days": 7.0,
+    "new_candidates": 2000,
+    "new_min_articles": 20,
+    "new_min_outlets": 5,
+    "activate_score": 3.0,
+    "max_outlets": 8,
+    "trend_k": 10,
+    "trend_factor": 1.5,
+    "trend_warmup_days": 21.0,
+    "gap_limit": 0.05
+   },
+   "e3_dates": [
+    "2024-10-15",
+    "2024-11-01",
+    "2024-11-08",
+    "2024-11-14"
+   ],
+   "e4_configs": [
+    [
+     10000,
+     2
+    ],
+    [
+     50000,
+     2
+    ],
+    [
+     50000,
+     4
+    ]
+   ],
+   "e4_ranks": {
+    "high": 100,
+    "mid": 1000,
+    "low": 10000
+   },
+   "e5_drops": [
+    0.02,
+    0.05
+   ]
+  },
+  "seconds": {
+   "main": 3331.3
+  },
+  "peak_rss_gb": 2.54,
+  "warnings": [
+   "gkg_events.json 의 flash_vs_steady_reference/us_election 는 verified=false (출처 미확인)."
+  ]
+ },
+ "E2_revised": {
+  "rule": {
+   "match": "match phrase = last word(s) of a comma-separated part of the key name (word units)",
+   "cutoff_hours_before_first_report": 24,
+   "top": 20,
+   "types": "event types unchanged; name matches of other kinds reported as types 불일치",
+   "candidates": "up to 5 matching keys among all qualified rows after the cut-off, ordered by best rank then first entry"
+  },
+  "events": [
+   {
+    "id": "milton",
+    "name": "허리케인 밀턴 플로리다 상륙",
+    "first_report_utc": "2024-10-10T00:30:00Z",
+    "types": [
+     "P",
+     "O",
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "han_kang",
+    "name": "한강 노벨문학상 발표",
+    "first_report_utc": "2024-10-10T11:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "types_mismatch",
+     "key": "L:han kang, south korea (general), south korea",
+     "rank": 19,
+     "lift": 1.743,
+     "t": 1728579600,
+     "time": "2024-10-10 17:00",
+     "delay_h": 6.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:han kang, south korea (general), south korea",
+       "type_ok": false,
+       "best_rank": 9,
+       "best_time": "2024-10-11 11:00",
+       "first_time": "2024-10-10 14:00",
+       "first_delay_h": 3.0,
+       "top20_time": "2024-10-10 17:00",
+       "top20_delay_h": 6.0
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "types_mismatch",
+     "key": "L:han kang, south korea (general), south korea",
+     "rank": 19,
+     "lift": 1.742,
+     "t": 1728579600,
+     "time": "2024-10-10 17:00",
+     "delay_h": 6.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:han kang, south korea (general), south korea",
+       "type_ok": false,
+       "best_rank": 9,
+       "best_time": "2024-10-11 11:00",
+       "first_time": "2024-10-10 14:00",
+       "first_delay_h": 3.0,
+       "top20_time": "2024-10-10 17:00",
+       "top20_delay_h": 6.0
+      }
+     ]
+    }
+   },
+   {
+    "id": "liam_payne",
+    "name": "리암 페인 사망",
+    "first_report_utc": "2024-10-16T22:30:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "sinwar",
+    "name": "야히야 신와르 사망 발표",
+    "first_report_utc": "2024-10-17T16:55:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "P:yahya sinwar",
+     "rank": 20,
+     "lift": 1.82,
+     "t": 1729206000,
+     "time": "2024-10-17 23:00",
+     "delay_h": 6.08,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:yahya sinwar",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-10-19 13:00",
+       "first_time": "2024-10-16 17:00",
+       "first_delay_h": -23.92,
+       "top20_time": "2024-10-17 23:00",
+       "top20_delay_h": 6.08
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "P:yahya sinwar",
+     "rank": 20,
+     "lift": 1.82,
+     "t": 1729206000,
+     "time": "2024-10-17 23:00",
+     "delay_h": 6.08,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:yahya sinwar",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-10-19 13:00",
+       "first_time": "2024-10-16 17:00",
+       "first_delay_h": -23.92,
+       "top20_time": "2024-10-17 23:00",
+       "top20_delay_h": 6.08
+      }
+     ]
+    }
+   },
+   {
+    "id": "valencia",
+    "name": "스페인 발렌시아 홍수",
+    "first_report_utc": "2024-10-29T19:11:00Z",
+    "types": [
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "L:valencia, carabobo, venezuela",
+     "rank": 14,
+     "lift": 1.71,
+     "t": 1730376000,
+     "time": "2024-10-31 12:00",
+     "delay_h": 40.82,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:valencia, carabobo, venezuela",
+       "type_ok": true,
+       "best_rank": 6,
+       "best_time": "2024-11-01 01:00",
+       "first_time": "2024-10-28 20:00",
+       "first_delay_h": -23.18,
+       "top20_time": "2024-10-31 12:00",
+       "top20_delay_h": 40.82
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "L:valencia, carabobo, venezuela",
+     "rank": 14,
+     "lift": 1.71,
+     "t": 1730376000,
+     "time": "2024-10-31 12:00",
+     "delay_h": 40.82,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:valencia, carabobo, venezuela",
+       "type_ok": true,
+       "best_rank": 6,
+       "best_time": "2024-11-01 01:00",
+       "first_time": "2024-10-28 20:00",
+       "first_delay_h": -23.18,
+       "top20_time": "2024-10-31 12:00",
+       "top20_delay_h": 40.82
+      }
+     ]
+    }
+   },
+   {
+    "id": "quincy_jones",
+    "name": "퀸시 존스 사망 보도",
+    "first_report_utc": "2024-11-04T09:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "P:quincy jones",
+     "rank": 15,
+     "lift": 1.692,
+     "t": 1730718000,
+     "time": "2024-11-04 11:00",
+     "delay_h": 2.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:quincy jones",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-11-05 01:00",
+       "first_time": "2024-11-04 10:00",
+       "first_delay_h": 1.0,
+       "top20_time": "2024-11-04 11:00",
+       "top20_delay_h": 2.0
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "P:quincy jones",
+     "rank": 15,
+     "lift": 1.692,
+     "t": 1730718000,
+     "time": "2024-11-04 11:00",
+     "delay_h": 2.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:quincy jones",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-11-05 01:00",
+       "first_time": "2024-11-04 10:00",
+       "first_delay_h": 1.0,
+       "top20_time": "2024-11-04 11:00",
+       "top20_delay_h": 2.0
+      }
+     ]
+    }
+   }
+  ],
+  "warmup_reference_only": [
+   {
+    "id": "helene",
+    "name": "허리케인 헬렌 상륙",
+    "first_report_utc": "2024-09-27T03:10:00Z",
+    "types": [
+     "P",
+     "O",
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "nasrallah",
+    "name": "하산 나스랄라 사망 발표 (이스라엘군)",
+    "first_report_utc": "2024-09-28T08:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "P:sayyed hassan nasrallah",
+     "rank": 19,
+     "lift": 1.488,
+     "t": 1727604000,
+     "time": "2024-09-29 10:00",
+     "delay_h": 26.0,
+     "candidates_total": 2,
+     "candidates": [
+      {
+       "key": "P:sayyed hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 8,
+       "best_time": "2024-09-29 13:00",
+       "first_time": "2024-09-28 12:00",
+       "first_delay_h": 4.0,
+       "top20_time": "2024-09-29 10:00",
+       "top20_delay_h": 26.0
+      },
+      {
+       "key": "P:hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 105,
+       "best_time": "2024-09-29 19:00",
+       "first_time": "2024-09-27 08:00",
+       "first_delay_h": -24.0,
+       "top20_time": null,
+       "top20_delay_h": null
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "P:sayyed hassan nasrallah",
+     "rank": 18,
+     "lift": 1.488,
+     "t": 1727604000,
+     "time": "2024-09-29 10:00",
+     "delay_h": 26.0,
+     "candidates_total": 2,
+     "candidates": [
+      {
+       "key": "P:sayyed hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 8,
+       "best_time": "2024-09-29 13:00",
+       "first_time": "2024-09-28 12:00",
+       "first_delay_h": 4.0,
+       "top20_time": "2024-09-29 10:00",
+       "top20_delay_h": 26.0
+      },
+      {
+       "key": "P:hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 105,
+       "best_time": "2024-09-29 19:00",
+       "first_time": "2024-09-27 08:00",
+       "first_delay_h": -24.0,
+       "top20_time": null,
+       "top20_delay_h": null
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "provenance": {
+  "E1": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E2": {
+   "command": "python experiments/run_gkg_experiments.py --only E2",
+   "created_utc": "2026-11-16T19:37:58Z",
+   "git": {
+    "commit": "f19ff63a9179f2ac8c4f705a8618b691f8b7a538",
+    "dirty": false
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313
+  },
+  "E3": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E4": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E5": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  }
+ }
+}

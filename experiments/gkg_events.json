@@ -1,0 +1,19 @@
+{
+  "_note": "실험 E2용 사건 목록. 결과를 보기 전에 확정해 커밋한다. first_report_utc 는 출처에 나온 시각을 UTC로 바꾼 값(첫 보도 기준). 2026-11-16 웹 검색으로 확인(source 참고). match 는 키 이름(소문자)에 들어 있는 문자열, types 는 대상 키 종류(P 인물, O 기관, L 장소).",
+  "period": {"start": "2024-09-15", "end": "2024-11-14", "evaluation_from": "2024-10-01"},
+  "events": [
+    {"id": "milton", "name": "허리케인 밀턴 플로리다 상륙", "first_report_utc": "2024-10-10T00:30:00Z", "basis": "상륙 8:30 p.m. EDT 10/9", "source": "https://m.washingtontimes.com/news/2024/oct/10/heres-what-to-know-about-hurricane-milton-after-it/", "match": ["milton"], "types": ["P", "O", "L"], "verified": true},
+    {"id": "han_kang", "name": "한강 노벨문학상 발표", "first_report_utc": "2024-10-10T11:00:00Z", "basis": "발표 생중계 13:00 CEST", "source": "https://www.powergame.gr/diethni/735606/me-to-nobel-logotechnias-timithike-i-chan-kangk/", "match": ["han kang"], "types": ["P"], "verified": true},
+    {"id": "liam_payne", "name": "리암 페인 사망", "first_report_utc": "2024-10-16T22:30:00Z", "basis": "AP 첫 기사 5:39 PM (UTC-5) 무렵", "source": "https://jamaica-gleaner.com/article/entertainment/20241016/former-one-direction-star-liam-payne-dies-31", "match": ["liam payne"], "types": ["P"], "verified": true},
+    {"id": "sinwar", "name": "야히야 신와르 사망 발표", "first_report_utc": "2024-10-17T16:55:00Z", "basis": "AP 기사 게시 12:55 PM EDT (그 전 '확인 중' 보도가 있었을 수 있음)", "source": "https://www.pbs.org/newshour/world/hamas-leader-yahya-sinwar-killed-in-gaza-israeli-official-confirms", "match": ["sinwar"], "types": ["P"], "verified": true},
+    {"id": "valencia", "name": "스페인 발렌시아 홍수", "first_report_utc": "2024-10-29T19:11:00Z", "basis": "긴급 경보 발송 20:11 현지(CET, UTC+1). 사망 대부분 19~20시 현지", "source": "https://theleader.info/2025/02/28/blood-on-their-hands-the-tragic-cost-of-a-delayed-valencia-dana-alert", "match": ["valencia"], "types": ["L"], "verified": true},
+    {"id": "quincy_jones", "name": "퀸시 존스 사망 보도", "first_report_utc": "2024-11-04T09:00:00Z", "basis": "기사 게시 4:00 AM EST 11/4", "source": "https://rockthebells.com/articles/musical-icon-quincy-jones-dead-at-91", "match": ["quincy jones"], "types": ["P"], "verified": true}
+  ],
+  "warmup_reference_only": [
+    {"id": "helene", "name": "허리케인 헬렌 상륙", "first_report_utc": "2024-09-27T03:10:00Z", "basis": "상륙 11:10 p.m. EDT 9/26", "source": "https://www.nesdis.noaa.gov/news/hurricane-helene-makes-landfall-florida", "match": ["helene"], "types": ["P", "O", "L"], "verified": true},
+    {"id": "nasrallah", "name": "하산 나스랄라 사망 발표 (이스라엘군)", "first_report_utc": "2024-09-28T08:00:00Z", "basis": "IDF 발표 약 09:00 BST", "source": "https://www.the-star.co.ke/news/world/2024-09-28-hezbollah-confirms-death-of-leader-hassan-nasrallah-after-israeli-strikes-on-beirut/", "match": ["nasrallah"], "types": ["P"], "verified": true}
+  ],
+  "flash_vs_steady_reference": [
+    {"id": "us_election", "name": "미국 대선 (11/5 투표, 11/6 결과)", "match": ["donald trump", "kamala harris"], "types": ["P"], "expected": "11월 6일 전후 '최근 급증', 이후 감소 여부 확인", "verified": false}
+  ]
+}
