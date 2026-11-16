@@ -141,8 +141,17 @@ class KeyRuleTest(unittest.TestCase):
         self.assertTrue(is_self_org("energy central", "energycentral"))
         self.assertTrue(is_self_org("energy central power industry network", "energycentral"))
         self.assertFalse(is_self_org("nato", "energycentral"))
-        self.assertTrue(is_self_org("abc news", "abc"))       # short outlet: word boundary
+        self.assertTrue(is_self_org("abc news", "abc"))
+        self.assertTrue(is_self_org("menafn- trend news agency", "menafn"))
+        self.assertTrue(is_self_org("cnn", "cnn"))
+        # every match must end at a word boundary
         self.assertFalse(is_self_org("abcam", "abc"))
+        self.assertFalse(is_self_org("national treasury", "nation"))
+        self.assertFalse(is_self_org("energycentralpower", "energycentral"))
+        self.assertFalse(is_self_org("energy centralia", "energycentral"))
+        self.assertFalse(is_self_org("the cnn", "cnn"))
+        # known limitation, kept on purpose: place-named outlets drop that place's orgs
+        self.assertTrue(is_self_org("syracuse university", "syracuse"))
         self.assertFalse(is_self_org("anything", ""))
 
     def test_make_keys_ignores_bad_places(self):

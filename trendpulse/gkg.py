@@ -17,11 +17,13 @@ Keys used for ranking
 Outlet self-name removal
 ------------------------
   The outlet name is the registered-domain label of ``domain`` (energycentral.com ->
-  "energycentral", bbc.co.uk -> "bbc", news.yahoo.com -> "yahoo"). An organization whose
-  name, with every non-alphanumeric character removed, equals the outlet name or starts
-  with it is dropped (e.g. "energy central power industry network" on energycentral.com).
-  For outlet names shorter than ``self_prefix_min_len`` the prefix must end at a word
-  boundary ("abc news" on abc.net.au is dropped, "abcam" is not).
+  "energycentral", bbc.co.uk -> "bbc", news.yahoo.com -> "yahoo"). An organization is
+  dropped when its first one or more words, with every non-alphanumeric character removed
+  and joined, equal the outlet name, i.e. the match must end at a word boundary:
+  "energy central" and "energy central power industry network" on energycentral.com are
+  dropped; "national treasury" on nation.africa and "abcam" on abc.net.au are kept.
+  Known limitation: outlets named after a place still drop that place's organizations
+  ("syracuse university" on syracuse.com).
 
 Duplicate URLs
 --------------
@@ -76,7 +78,6 @@ class GkgConfig:
     include_countries: bool = False
     place_types: tuple[int, ...] = (2, 3, 4, 5)
     drop_self_orgs: bool = True
-    self_prefix_min_len: int = 4
     dedup_urls: bool = True
 
 
@@ -195,18 +196,22 @@ def outlet_name(domain: str) -> str:
     return name
 
 
-def is_self_org(org_norm: str, outlet: str, min_len: int = 4) -> bool:
-    """True if the (normalized) organization name is the outlet's own name."""
+def is_self_org(org_norm: str, outlet: str) -> bool:
+    """True if the first word(s) of the (normalized) organization name spell the outlet name.
+
+    Words are compared with non-alphanumerics removed, so the match always ends at a word
+    boundary: ("energy central power", "energycentral") -> True, ("national treasury",
+    "nation") -> False."""
     if not outlet:
         return False
-    compact = NON_ALNUM.sub("", org_norm)
-    if compact == outlet:
-        return True
-    if not compact.startswith(outlet):
-        return False
-    if len(outlet) >= min_len:
-        return True
-    return org_norm.startswith(outlet + " ")
+    acc = ""
+    for word in org_norm.split():
+        acc += NON_ALNUM.sub("", word)
+        if acc == outlet:
+            return True
+        if len(acc) >= len(outlet) or not outlet.startswith(acc):
+            return False
+    return False
 
 
 def make_keys(rec: dict, cfg: GkgConfig) -> tuple[tuple[str, ...], tuple[str, ...], int]:
@@ -230,7 +235,7 @@ def make_keys(rec: dict, cfg: GkgConfig) -> tuple[tuple[str, ...], tuple[str, ..
         n = norm_name(o)
         if not n:
             continue
-        if outlet and is_self_org(n, outlet, cfg.self_prefix_min_len):
+        if outlet and is_self_org(n, outlet):
             if n not in dropped_names:
                 dropped_names.add(n)
                 dropped += 1

@@ -1,14 +1,14 @@
 {
  "kind": "gkg_input_manifest",
  "version": 1,
- "created_utc": "2026-11-16T14:10:24Z",
+ "created_utc": "2026-11-16T14:12:01Z",
  "command": "python scripts/gkg_build.py --start 2024-10-01 --end 2024-10-01",
  "code": {
   "git": {
-   "commit": "b1b8b9cac12b6cce6d3c6ee036dfe9ee6e44ba5e",
-   "dirty": false
+   "commit": "d5a01baf130c9ea84cd3e8ee97f6068ac9b5f548",
+   "dirty": true
   },
-  "gkg_py_sha256": "fbd7f06b4d6dc14afde74391f9a8f2ff5eb882773a69edda9d8549c45d362cb0"
+  "gkg_py_sha256": "a2a6ee04429b83f2c8f104fec8f0bf9a1faa304e8fc3b5715f0a7e3250b152e0"
  },
  "python": "3.14.5",
  "seed": null,
@@ -27,11 +27,10 @@
    5
   ],
   "drop_self_orgs": true,
-  "self_prefix_min_len": 4,
   "dedup_urls": true
  },
  "hashes": {
-  "stream_sha256": "d12df612a886247222abde99e7366707bf852c63b7047cc3d984463682ff7d2a",
+  "stream_sha256": "f0c31c8cd77002118e69811f6baa01c89c210adec917ba3b6ebb569dee2c7a34",
   "stream_sha256_def": "sha256 over canonical_line(a) for every yielded article: JSON [idx,ts,domain,url,title,keys,countries,tone] + '\\n', UTF-8",
   "raw_files_sha256": "a94b0083515b83d1696e50f7270330db4e4a89db82c6a22d0ed029404b72fe1c",
   "raw_files_sha256_def": "sha256 over '<day>/<HHMM>.jsonl.gz\\n<bytes>\\n' + file bytes, in read order"
@@ -42,7 +41,7 @@
   "bad_lines": 0,
   "duplicate_urls_removed": 0,
   "empty_urls": 0,
-  "self_orgs_dropped": 1687,
+  "self_orgs_dropped": 1641,
   "ts_out_of_order": 0,
   "with_title": 163063,
   "without_keys": 11415,
@@ -59,13 +58,13 @@
  "keys": {
   "distinct": {
    "persons": 156004,
-   "orgs": 99420,
+   "orgs": 99433,
    "places": 25988,
    "countries": 237
   },
   "mentions": {
    "persons": 531743,
-   "orgs": 387356,
+   "orgs": 387402,
    "places": 316561
   },
   "per_article": {
@@ -87,8 +86,8 @@
   }
  ],
  "run": {
-  "seconds": 10.3,
-  "peak_rss_mb": 50.2,
+  "seconds": 11.8,
+  "peak_rss_mb": 49.8,
   "url_table_mb": 2.1
  }
 }
