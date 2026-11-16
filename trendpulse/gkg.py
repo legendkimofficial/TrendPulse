@@ -611,3 +611,21 @@ def manifest_summary(m: dict) -> str:
     if m["log_mismatch"]:
         lines.append(f"WARNING      : {len(m['log_mismatch'])} slot(s) disagree with download_log.csv")
     return "\n".join(lines)
+
+
+def write_summary_section(path: str, tag: str, block: str) -> None:
+    """Replace (or append) the text between <!-- tag:begin --> and <!-- tag:end --> in summary.md."""
+    begin, end = f"<!-- {tag}:begin -->", f"<!-- {tag}:end -->"
+    block = f"{begin}\n{block.strip()}\n{end}"
+    text = ""
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            text = f.read()
+    if begin in text and end in text:
+        head, rest = text.split(begin, 1)
+        text = head + block + rest.split(end, 1)[1]
+    else:
+        text = (text or "# GKG experiments summary\n").rstrip("\n") + "\n\n" + block + "\n"
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)

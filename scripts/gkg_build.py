@@ -15,15 +15,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from trendpulse.gkg import (DEFAULT_MANIFEST, DEFAULT_ROOT, GkgConfig,  # noqa: E402
-                            build_manifest, manifest_summary)
-
-BEGIN = "<!-- input_manifest:begin -->"
-END = "<!-- input_manifest:end -->"
+                            build_manifest, manifest_summary, write_summary_section)
 
 
 def update_summary_md(path: str, m: dict, manifest_path: str) -> None:
     block = "\n".join([
-        BEGIN,
         "## Input manifest",
         "",
         f"- command: `{m['command']}`",
@@ -35,22 +31,8 @@ def update_summary_md(path: str, m: dict, manifest_path: str) -> None:
         "```",
         manifest_summary(m),
         "```",
-        END,
     ])
-    text = ""
-    if os.path.exists(path):
-        with open(path, encoding="utf-8") as f:
-            text = f.read()
-    if BEGIN in text and END in text:
-        head, rest = text.split(BEGIN, 1)
-        tail = rest.split(END, 1)[1]
-        text = head + block + tail
-    else:
-        if not text:
-            text = "# GKG experiments summary\n\n"
-        text = text.rstrip("\n") + "\n\n" + block + "\n"
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(text)
+    write_summary_section(path, "input_manifest", block)
 
 
 def main() -> int:
