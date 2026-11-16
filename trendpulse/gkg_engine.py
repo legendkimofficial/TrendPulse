@@ -38,6 +38,26 @@ GkgEngine
   ("variants"). Articles with the same ts form a batch; after a batch is complete, a
   snapshot is taken if ``snapshot_every_minutes`` of stream time have passed since the
   previous one. Run one (window, θ) combination per engine to bound memory in experiments.
+
+Detection (at every snapshot; rates are bias_corrected_rate of ``detect_variant``)
+---------
+  New issues (72 h):  lift = (rate_72h + α) / (rate_168h + α), α = 1.
+    * Candidates: only the 72 h window's Top ``new_candidates`` (2,000). Approximation: a key
+      with a high lift but a 72 h score below the 2,000th is never considered.
+    * Conditions: >= 20 articles and >= 5 distinct outlets in the last 72 h, counted by
+      ``ActivityTracker`` (see there): tracking starts when the key's 72 h score reaches 3,
+      so both counts are under-estimated by at most 5; the outlet count is capped at 8.
+      The article count uses whole UTC hours (71-72 h of history).
+    * Top K by lift (ties by key) = new issues. A key in this Top K that was not in the
+      previous judged Top K gives an entry event: "first" or "re-entry".
+  Burst / steady (30 days): ratio = (rate_168h + α) / (rate_720h + α), F = 2, for the 168 h
+    Top ``trend_k`` keys: ratio >= 2 rising (최근 급증), 0.5 <= ratio < 2 steady (꾸준),
+    ratio < 0.5 cooling (식는 중). Before 14 days of stream: warming_up (판별 준비 중).
+  Gaps: for each window, the share of missing 15-minute slots in its recent span (72 h,
+    168 h, 720 h, clipped at the stream start; a slot counts as present if it had an
+    article). Shown always; a judgement is held as insufficient (근거 부족) only when a
+    window it uses exceeds 5 %. A held new-issue snapshot records no events and does not
+    replace the "previous Top K" used for entry events.
 """
 from __future__ import annotations
 
@@ -193,6 +213,152 @@ class TimeDecayWindow:
                 "estimate_bytes": dict_b + n * FLOAT_BYTES}
 
 
+# --------------------------------------------------------------------------- detection parts
+LABELS_KO = {"rising": "최근 급증", "steady": "꾸준", "cooling": "식는 중",
+             "warming_up": "판별 준비 중", "insufficient": "근거 부족"}
+
+
+def smoothed_ratio(num_rate: float, den_rate: float, alpha: float = 1.0) -> float:
+    """(num + α) / (den + α). lift = smoothed_ratio(rate_72h, rate_168h);
+    trend ratio = smoothed_ratio(rate_168h, rate_720h)."""
+    return (num_rate + alpha) / (den_rate + alpha)
+
+
+def trend_label(ratio: float, factor: float = 2.0) -> str:
+    """ratio >= F -> rising; 1/F <= ratio < F -> steady; ratio < 1/F -> cooling."""
+    if ratio >= factor:
+        return "rising"
+    if ratio >= 1.0 / factor:
+        return "steady"
+    return "cooling"
+
+
+class KeyActivity:
+    __slots__ = ("hours", "outlets")
+
+    def __init__(self) -> None:
+        self.hours: list[list[int]] = []        # [[UTC hour number, articles], ...] ascending
+        self.outlets: dict[str, int] = {}       # domain -> last ts (at most max_outlets)
+
+
+class ActivityTracker:
+    """Recent article and outlet counts for keys that are "hot" in the 72 h window.
+
+    A key is tracked from the article at which its 72 h score (after adding that article)
+    reaches ``activate_score``. Mentions in the last 72 h each weigh >= 2^-1 in a 72 h
+    half-life score, so before activation there were fewer than 2*activate_score of them:
+    counts are under-estimated by at most 2*activate_score - 1 (5 for the default 3).
+
+    * articles: hourly buckets (UTC clock hours); ``articles(key, t)`` counts the buckets
+      H-71 .. H where H is the hour of t, i.e. between 71 and 72 hours of history.
+    * outlets: at most ``max_outlets`` (8) domains with their last-seen ts; when full, the
+      domain seen longest ago is evicted. ``outlets(key, t)`` counts domains seen in
+      (t - 72 h, t]. Because the most recent domains are kept, the count is exact up to 8
+      for the tracked period; it never exceeds 8, which is enough for a ">= 5" test.
+    * ``sweep(t)`` drops keys with no article in the window (they re-activate later from 0).
+    """
+
+    def __init__(self, window_hours: int = 72, activate_score: float = 3.0, max_outlets: int = 8) -> None:
+        self.window_hours = int(window_hours)
+        self.activate_score = activate_score
+        self.max_outlets = max_outlets
+        self.items: dict[str, KeyActivity] = {}
+        self.activations = 0
+        self.swept = 0
+
+    def observe(self, key: str, ts: int, domain: str, score_now: float) -> None:
+        act = self.items.get(key)
+        if act is None:
+            if score_now < self.activate_score:
+                return
+            act = self.items[key] = KeyActivity()
+            self.activations += 1
+        hour = ts // 3600
+        hours = act.hours
+        if hours and hours[-1][0] == hour:
+            hours[-1][1] += 1
+        else:
+            hours.append([hour, 1])
+            lo = hour - self.window_hours + 1
+            while hours[0][0] < lo:
+                hours.pop(0)
+        out = act.outlets
+        if domain in out or len(out) < self.max_outlets:
+            out[domain] = ts
+        else:
+            del out[min(out, key=out.__getitem__)]
+            out[domain] = ts
+
+    def __contains__(self, key: str) -> bool:
+        return key in self.items
+
+    def articles(self, key: str, t: int) -> int:
+        act = self.items.get(key)
+        if act is None:
+            return 0
+        lo = t // 3600 - self.window_hours + 1
+        return sum(c for h, c in act.hours if h >= lo)
+
+    def outlets(self, key: str, t: int) -> int:
+        act = self.items.get(key)
+        if act is None:
+            return 0
+        lo = t - self.window_hours * 3600
+        return sum(1 for last in act.outlets.values() if last > lo)
+
+    def sweep(self, t: int) -> int:
+        lo = t // 3600 - self.window_hours + 1
+        dead = [k for k, act in self.items.items() if not act.hours or act.hours[-1][0] < lo]
+        for k in dead:
+            del self.items[k]
+        self.swept += len(dead)
+        return len(dead)
+
+    def memory_bytes(self) -> dict:
+        b = sys.getsizeof(self.items)
+        buckets = outlets = 0
+        for k, act in self.items.items():
+            b += sys.getsizeof(act) + sys.getsizeof(act.hours) + sys.getsizeof(act.outlets)
+            b += sum(sys.getsizeof(x) + sys.getsizeof(x[0]) for x in act.hours)
+            buckets += len(act.hours)
+            outlets += len(act.outlets)
+        return {"tracked_keys": len(self.items), "hour_buckets": buckets, "outlet_entries": outlets,
+                "activations": self.activations, "swept": self.swept, "estimate_bytes": b,
+                "note": "key and domain strings are shared with the stream; not counted"}
+
+
+class SlotCoverage:
+    """Which 15-minute slots since the stream start had articles (one byte per slot)."""
+
+    def __init__(self, slot_seconds: int = 900) -> None:
+        self.slot = slot_seconds
+        self.start: int | None = None
+        self.present = bytearray()
+
+    def mark(self, ts: int) -> None:
+        if self.start is None:
+            self.start = ts - ts % self.slot
+        i = (ts - self.start) // self.slot
+        if i < 0:
+            return
+        if i >= len(self.present):
+            self.present.extend(b"\0" * (i + 1 - len(self.present)))
+        self.present[i] = 1
+
+    def missing_ratio(self, t: int, window_hours: float) -> tuple[float, int]:
+        """(share of missing slots, expected slots) in the window ending at the slot of t.
+
+        The window is clipped at the stream start: time before the first article is not
+        counted as missing (the bias-corrected rate already accounts for it)."""
+        if self.start is None or t < self.start:
+            return 0.0, 0
+        end = (t - self.start) // self.slot
+        lo = max(0, end - int(window_hours * 3600 // self.slot) + 1)
+        expected = end - lo + 1
+        have = sum(self.present[lo:end + 1])
+        return (expected - have) / expected, expected
+
+
 # --------------------------------------------------------------------------- engine
 @dataclass(frozen=True)
 class GkgEngineConfig:
@@ -204,6 +370,20 @@ class GkgEngineConfig:
     evidence_path: str | None = None                         # sqlite file; None = no evidence
     evidence_top: int = 200
     evidence_per_day_cap: int | None = 30                    # postings per tracked key per UTC day
+    # detection (runs when the 72h/168h and/or 168h/720h windows exist for detect_variant)
+    detect: bool = True
+    detect_variant: str = "exact"
+    alpha: float = 1.0
+    new_k: int = 10
+    new_candidates: int = 2000                               # from the 72h Top M (capped at top_m)
+    new_min_articles: int = 20
+    new_min_outlets: int = 5
+    activate_score: float = 3.0
+    max_outlets: int = 8
+    trend_k: int = 10                                        # labelled keys: 168h Top K
+    trend_factor: float = 2.0
+    trend_warmup_days: float = 14.0
+    gap_limit: float = 0.05
 
 
 def variant_name(threshold: float | None) -> str:
@@ -231,6 +411,20 @@ class GkgEngine:
         self._batch_ts: int | None = None
         self._last_snap: float | None = None
         self.interval = cfg.snapshot_every_minutes * 60.0
+        # detection
+        v = cfg.detect_variant
+        self.half_lives = dict(cfg.windows)
+        self._w72 = self.windows.get(("72h", v))
+        self._w168 = self.windows.get(("168h", v))
+        self._w720 = self.windows.get(("720h", v))
+        self.coverage = SlotCoverage()
+        self.activity: ActivityTracker | None = None
+        if cfg.detect and self._w72 is not None and self._w168 is not None:
+            self.activity = ActivityTracker(int(self.half_lives["72h"]), cfg.activate_score, cfg.max_outlets)
+        self.detection: dict | None = None         # result of the latest snapshot
+        self.new_events: list[dict] = []           # entry events into the new-issue Top K
+        self._prev_new: list[str] = []             # new-issue Top K of the last judged snapshot
+        self._ever_new: set[str] = set()
 
     # ------------------------------------------------------------------ stream
     def process(self, a) -> None:
@@ -240,6 +434,15 @@ class GkgEngine:
         keys, ts = a.keys, a.ts
         for w in self.windows.values():
             w.add(keys, ts)
+        self.coverage.mark(ts)
+        if self.activity is not None:
+            w72 = self._w72
+            d, inv = w72._v, 1.0 / w72._w          # score at ts = stored value / weight(ts)
+            observe, dom = self.activity.observe, a.domain
+            for k in keys:
+                v = d.get(k)
+                if v is not None:
+                    observe(k, ts, dom, v * inv)
         if self.evidence is not None:
             self.evidence.add_article(a)
         self.articles += 1
@@ -270,10 +473,98 @@ class GkgEngine:
             for (name, variant), w in self.windows.items():
                 self.evidence.track([k for k, _ in w.top(n)], t, f"{name}/{variant}")
             self.evidence.flush()
+        if self.config.detect:
+            self.detection = self._detect(t)
         self._last_snap = t
         self.snapshots += 1
         if self.on_snapshot is not None:
             self.on_snapshot(self, t)
+
+    # ------------------------------------------------------------------ detection
+    def gaps(self, t: float) -> dict:
+        out = {}
+        for name, hl in self.half_lives.items():
+            ratio, expected = self.coverage.missing_ratio(int(t), hl)
+            out[name] = {"missing_ratio": ratio, "expected_slots": expected,
+                         "insufficient": ratio > self.config.gap_limit}
+        return out
+
+    def _detect(self, t: float) -> dict:
+        cfg = self.config
+        gaps = self.gaps(t)
+        res = {"t": t, "gaps": gaps, "new": None, "trend": None}
+        if self.activity is not None:
+            self.activity.sweep(int(t))
+            res["new"] = self._detect_new(t, gaps)
+        if self._w168 is not None and self._w720 is not None:
+            res["trend"] = self._detect_trend(t, gaps)
+        return res
+
+    def _detect_new(self, t: float, gaps: dict) -> dict:
+        cfg = self.config
+        if gaps["72h"]["insufficient"] or gaps["168h"]["insufficient"]:
+            return {"status": "insufficient", "label": LABELS_KO["insufficient"], "top": [], "events": []}
+        w72, w168, act = self._w72, self._w168, self.activity
+        rows = []
+        for key, s72 in w72.top(min(cfg.new_candidates, w72.top_m)):
+            if key not in act:
+                continue
+            n = act.articles(key, int(t))
+            if n < cfg.new_min_articles:
+                continue
+            o = act.outlets(key, int(t))
+            if o < cfg.new_min_outlets:
+                continue
+            r72 = w72.rate_from_score(s72, t)
+            r168 = w168.bias_corrected_rate(key, t)
+            if r72 is None or r168 is None:
+                continue
+            rows.append({"key": key, "lift": smoothed_ratio(r72, r168, cfg.alpha), "rate_72h": r72,
+                         "rate_168h": r168, "articles_72h": n, "outlets_72h": o})
+        rows.sort(key=lambda r: (-r["lift"], r["key"]))
+        top = rows[:cfg.new_k]
+        for i, r in enumerate(top, 1):
+            r["rank"] = i
+        events = self.record_entries(t, [r["key"] for r in top], {r["key"]: r for r in top})
+        return {"status": "ok", "top": top, "events": events, "qualified": len(rows)}
+
+    def record_entries(self, t: float, keys: list[str], info: dict | None = None) -> list[dict]:
+        """Entry events for keys in this new-issue Top K that were not in the previous judged one."""
+        prev = set(self._prev_new)
+        events = []
+        for rank, k in enumerate(keys, 1):
+            if k in prev:
+                continue
+            ev = {"t": t, "key": k, "kind": "re-entry" if k in self._ever_new else "first", "rank": rank}
+            if info and k in info:
+                ev["lift"] = info[k]["lift"]
+            events.append(ev)
+            self._ever_new.add(k)
+        self.new_events.extend(events)
+        self._prev_new = list(keys)
+        return events
+
+    def _detect_trend(self, t: float, gaps: dict) -> dict:
+        cfg = self.config
+        w168, w720 = self._w168, self._w720
+        start = w168.start
+        elapsed_days = (t - start) / 86400.0 if start is not None else 0.0
+        if elapsed_days < cfg.trend_warmup_days:
+            status = "warming_up"
+        elif gaps["168h"]["insufficient"] or gaps["720h"]["insufficient"]:
+            status = "insufficient"
+        else:
+            status = "ok"
+        rows = []
+        for key, s168 in w168.top(cfg.trend_k):
+            r168 = w168.rate_from_score(s168, t)
+            r720 = w720.bias_corrected_rate(key, t)
+            ratio = smoothed_ratio(r168, r720, cfg.alpha) if r168 is not None and r720 is not None else None
+            label = trend_label(ratio, cfg.trend_factor) if status == "ok" and ratio is not None else (
+                status if status != "ok" else "warming_up")
+            rows.append({"key": key, "score_168h": s168, "rate_168h": r168, "rate_720h": r720,
+                         "ratio": ratio, "label": label, "label_ko": LABELS_KO[label]})
+        return {"status": status, "elapsed_days": elapsed_days, "top": rows}
 
     # ------------------------------------------------------------------ queries
     def window(self, name: str, variant: str = "exact") -> TimeDecayWindow:
@@ -301,6 +592,9 @@ class GkgEngine:
                             "note": "key strings are shared by all windows; counted once"},
         }
         rep["decay_total_bytes"] = sum(r["estimate_bytes"] for r in rows) + rep["key_strings"]["bytes"]
+        if self.activity is not None:
+            rep["activity_tracker"] = self.activity.memory_bytes()
+        rep["slot_coverage_bytes"] = sys.getsizeof(self.coverage.present)
         if self.evidence is not None:
             rep["evidence"] = self.evidence.report()
         return rep

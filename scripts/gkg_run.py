@@ -118,6 +118,8 @@ def main() -> int:
         "peak_rss_mb": round(rss / 1e6, 1) if rss else None,
         "memory": mem,
         "top": tops,
+        "detection": eng.detection,
+        "new_events": eng.new_events,
     }
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     import json
@@ -134,6 +136,34 @@ def main() -> int:
                           f"```\n{text}\n```")
     print(f"\nwrote {_rel(out)}")
     return 0
+
+
+def _f(x, fmt=".2f"):
+    return "n/a" if x is None else format(x, fmt)
+
+
+def detection_lines(r: dict) -> list[str]:
+    d = r.get("detection")
+    if not d:
+        return []
+    lines = ["--- gaps (missing 15-min slots in each window's recent span)"]
+    lines.append("  " + ", ".join(f"{w} {g['missing_ratio']:.1%} of {g['expected_slots']}"
+                                  + (" [근거 부족]" if g["insufficient"] else "") for w, g in d["gaps"].items()))
+    new = d.get("new")
+    if new:
+        lines.append(f"--- new issues 72h (lift = (r72+1)/(r168+1)), status {new['status']}, "
+                     f"{new.get('qualified', 0)} keys passed >=20 articles & >=5 outlets; "
+                     f"entry events in run: {len(r.get('new_events', []))}")
+        for x in new["top"]:
+            lines.append(f"  {x['rank']:>2}. {x['key']:<40} lift {x['lift']:.2f}  r72 {x['rate_72h']:.1f}/h  "
+                         f"r168 {x['rate_168h']:.1f}/h  articles {x['articles_72h']}  outlets {x['outlets_72h']}")
+    tr = d.get("trend")
+    if tr:
+        lines.append(f"--- 168h Top {len(tr['top'])} burst/steady (ratio = (r168+1)/(r720+1)), status {tr['status']}, "
+                     f"elapsed {tr['elapsed_days']:.2f} days")
+        for i, x in enumerate(tr["top"], 1):
+            lines.append(f"  {i:>2}. {x['key']:<40} ratio {_f(x['ratio'])}  {x['label']} ({x['label_ko']})")
+    return lines
 
 
 def report(r: dict) -> str:
@@ -158,6 +188,7 @@ def report(r: dict) -> str:
         for i, x in enumerate(rows, 1):
             rate = f"{x['rate_per_hour']:.1f}/h" if x["rate_per_hour"] is not None else "n/a"
             lines.append(f"  {i:>2}. {x['key']:<40} {x['score']:>9.1f}  {rate}")
+    lines += detection_lines(r)
     return "\n".join(lines)
 
 
