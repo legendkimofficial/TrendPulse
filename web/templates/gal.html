@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trend Pulse · GDELT GAL</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { max-width: 1180px; }
+    .grid { display: grid; grid-template-columns: minmax(430px, 1.25fr) minmax(320px, 1fr); gap: 14px; }
+    .card table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .card th, .card td { padding: 4px 6px; text-align: left; border-bottom: 1px solid var(--grid); }
+    .rank { color: var(--ink2); width: 26px; }
+    .score { text-align: right; white-space: nowrap; }
+    .badge { font-size: 11px; padding: 1px 6px; border-radius: 8px; background: var(--surface); border: 1px solid var(--grid); margin-left: 4px; }
+    .badge.new { border-color: var(--blue); color: var(--blue); font-weight: 600; }
+    .badge.re { border-color: var(--aqua); color: var(--aqua); }
+    .surge { color: var(--orange); font-weight: 600; text-align: right; }
+    .surge .deferred { color: var(--ink2); font-weight: 400; font-size: 11px; }
+    .meta { color: var(--ink2); font-size: 12px; }
+    .clockbar { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin: 8px 0; }
+    button { cursor: pointer; }
+    .detail dt { font-weight: 600; margin-top: 8px; }
+    .detail dd { margin: 2px 0 0 0; font-size: 13px; }
+    .art { font-size: 12.5px; padding: 5px 6px; border-bottom: 1px solid var(--grid); }
+    .art a { color: var(--blue); text-decoration: none; }
+    .art .m { color: var(--ink2); }
+    .agent .answer { white-space: pre-wrap; font-size: 13.5px; line-height: 1.55; }
+    .trace { font-size: 11.5px; color: var(--ink2); }
+    .modechip { font-size: 11px; padding: 1px 7px; border-radius: 9px; border: 1px solid var(--grid); }
+    .modechip.solar { border-color: var(--aqua); color: var(--aqua); font-weight: 600; }
+    .modechip.offline { border-color: var(--orange); color: var(--orange); }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Trend Pulse <span class="meta">GDELT GAL 제출 버전 · 관측 시각 재생</span></h1>
+  <div class="clockbar">
+    <button id="step">+1 배치 (15분)</button>
+    <button id="step6">+6 배치</button>
+    <button id="step24">+24 배치 (6시간)</button>
+    <span id="clock" class="meta"></span>
+    <span id="progress" class="meta"></span>
+    <label class="meta">키워드 <input id="kw" size="12" placeholder="예: trump"></label>
+    <button id="ask">Solar에게 물어보기</button>
+    <span id="solarchip" class="modechip"></span>
+  </div>
+</header>
+<main class="grid">
+  <section>
+    <div class="card">
+      <h2>7일 화제 순위 <span class="meta">(반감기 48h · 창 (t−7일, t])</span></h2>
+      <table id="ranking"><thead>
+        <tr><th>#</th><th>키워드</th><th class="score">점수</th><th class="score">매체</th>
+        <th class="score">발행국</th><th class="score">72h 급상승</th></tr>
+      </thead><tbody></tbody></table>
+      <div class="meta" id="rankmeta"></div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <h2>72시간 급상승 <span class="meta">(최근 비중 − 직전 비중, pp)</span></h2>
+      <table id="surge"><thead>
+        <tr><th>키워드</th><th class="score">최근</th><th class="score">직전</th>
+        <th class="score">Δpp</th><th class="score">매체</th></tr>
+      </thead><tbody></tbody></table>
+      <div class="meta" id="surgemeta"></div>
+    </div>
+  </section>
+  <section>
+    <div class="card detail" id="detailcard">
+      <h2>키워드 상세</h2>
+      <div class="meta">표에서 키워드를 클릭하면 같은 기준 시각의 점수·급상승 분자/분모·매체·발행국·근거 기사가 표시됩니다.</div>
+    </div>
+    <div class="card agent" style="margin-top:14px">
+      <h2>Solar 에이전트</h2>
+      <div class="answer" id="answer">질문을 입력하면 도구 호출 기반으로 답합니다(오프라인 모드는 템플릿 요약).</div>
+      <div class="trace" id="trace"></div>
+    </div>
+  </section>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const ENTRY_KO = {first: "신규 진입", "re-entry": "재진입", initial: "초기"};
+
+async function post(url, body) {
+  const r = await fetch(url, {method: "POST", headers: {"Content-Type": "application/json"},
+                              body: JSON.stringify(body || {})});
+  return r.json();
+}
+
+function fmtSurge(b) {
+  if (!b) return "";
+  return `<span class="surge">${b.diff_pp >= 0 ? "+" : ""}${b.diff_pp.toFixed(1)}pp</span>`;
+}
+
+function render(st) {
+  $("#clock").textContent = `기준 시각(관측) ${st.clock.t_iso} · 스냅샷 #${st.clock.snapshot_i + 1}`;
+  $("#progress").textContent = `${st.clock.pos.toLocaleString()} / ${st.clock.total.toLocaleString()}건`;
+  const tb = $("#ranking tbody");
+  tb.innerHTML = st.ranking.map(r => `
+    <tr data-kw="${r.keyword}">
+      <td class="rank">${r.rank}</td>
+      <td>${r.keyword}${r.entry && r.entry !== "initial" ?
+          `<span class="badge ${r.entry === "first" ? "new" : "re"}">${ENTRY_KO[r.entry]}</span>` : ""}</td>
+      <td class="score">${r.score.toFixed(1)}</td>
+      <td class="score">${r.outlets}</td>
+      <td class="score">${r.countries}</td>
+      <td>${fmtSurge(r.burst)}</td>
+    </tr>`).join("");
+  [...tb.querySelectorAll("tr")].forEach(tr =>
+    tr.onclick = () => detail(tr.dataset.kw));
+  $("#rankmeta").textContent =
+    `θ=${st.config.threshold} · 저장 키워드 ${st.metrics.keywords.toLocaleString()} (최대 ${st.metrics.peak_keywords.toLocaleString()})`;
+  const sb = $("#surge tbody");
+  const rows = st.burst.rows || [];
+  sb.innerHTML = rows.map(r => `
+    <tr data-kw="${r.kw}">
+      <td>${r.kw}</td>
+      <td class="score">${r.num_recent}/${r.den_recent}</td>
+      <td class="score">${r.num_prev}/${r.den_prev}</td>
+      <td class="surge">${r.diff_pp >= 0 ? "+" : ""}${r.diff_pp.toFixed(2)}pp</td>
+      <td class="score">${r.outlets}</td>
+    </tr>`).join("");
+  [...sb.querySelectorAll("tr")].forEach(tr => tr.onclick = () => detail(tr.dataset.kw));
+  $("#surgemeta").textContent = st.burst.status === "ok"
+    ? `최소 분모 ${st.config.min_articles_per_interval}건 · 키워드 ${st.config.min_keyword_articles}건 · 매체 ${st.config.min_keyword_outlets}곳 이상만 표시`
+    : `보류 중 — 사유: ${st.burst.reason} (관측 범위/분모 기준 미충족)`;
+}
+
+async function detail(kw) {
+  const d = await (await fetch(`/api/keyword/${kw}`)).json();
+  const b = d.burst || {};
+  const surge = b.status === "ok"
+    ? `<dd>${b.diff_pp >= 0 ? "+" : ""}${b.diff_pp}pp — 최근 ${b.num_recent}/${b.den_recent} ` +
+      `(${b.share_recent_pp}%), 직전 ${b.num_prev}/${b.den_prev} (${b.share_prev_pp}%), 최근 매체 ${b.outlets_recent}곳</dd>`
+    : `<dd>보류(${b.reason}) — 최근 ${b.num_recent}/${b.den_recent}, 직전 ${b.num_prev}/${b.den_prev}</dd>`;
+  const dg = d.dgim ? `<dt>DGIM (최근 ${d.dgim.window.toLocaleString()}건)</dt>
+    <dd>근사 ${d.dgim.estimate} / 정확 ${d.dgim.exact} · 관측 ${d.dgim.observed.toLocaleString()}건
+    ${d.dgim.partial ? "(창 미충족)" : ""} · 추적 시작 #${d.dgim.since_i} (${d.dgim.since_obs})</dd>` : "";
+  $("#detailcard").innerHTML = `
+    <h2>${kw} <span class="meta">${d.as_of} 기준 · 순위 ${d.rank ?? "-"}</span></h2>
+    <dl>
+      <dt>7일 감쇠 점수</dt><dd>${d.score.toFixed(2)} (제목 언급 ${d.mentions_7d}건, 매체 ${d.outlets_7d}곳)</dd>
+      <dt>72시간 급상승</dt>${surge}
+      <dt>발행국 (매체 도메인 기준, 7일)</dt><dd>${d.countries_7d.join(", ") || "-"}</dd>
+      <dt>첫 관측</dt><dd>${d.first_seen ?? "-"}</dd>
+      ${dg}
+      <dt>근거 기사 (최근 12건, 관측 범위 내)</dt>
+    </dl>
+    ${d.related.map(a => `
+      <div class="art">[#${a.id}] ${a.obs.slice(0, 16)} ·
+        <a href="${a.url}" target="_blank" rel="noopener">${a.title}</a>
+        <span class="m">${a.outlet} · ${a.country}</span></div>`).join("")}`;
+}
+
+async function step(n) { render(await post("/api/step", {batches: n})); }
+
+async function ask() {
+  const q = $("#kw").value.trim();
+  $("#answer").textContent = "…";
+  const r = await post("/api/ask", {question: q ? `${q} 에 대해 설명해줘` : "지금 어떤 화제가 급상승하고 있어?",
+                                   keyword: q || null});
+  $("#answer").textContent = r.answer;
+  $("#trace").innerHTML = (r.trace || []).map(t =>
+    `→ ${t.tool}(${JSON.stringify(t.args)}) : ${t.summary}`).join("<br>") +
+    `<br>근거 인용: ${(r.citations || []).length}건 · 모드: ${r.mode}`;
+  const chip = $("#solarchip");
+  chip.textContent = r.mode.startsWith("solar") ? "Solar 실호출" :
+                     (r.mode === "offline" ? "오프라인 요약" : "오프라인 대체");
+  chip.className = "modechip " + (r.mode.startsWith("solar") ? "solar" : "offline");
+}
+
+$("#step").onclick = () => step(1);
+$("#step6").onclick = () => step(6);
+$("#step24").onclick = () => step(24);
+$("#ask").onclick = ask;
+(async () => {
+  const info = await (await fetch("/api/info")).json();
+  $("#solarchip").textContent = info.solar_enabled ? "Solar 키 설정됨" : "오프라인 모드";
+  $("#solarchip").className = "modechip " + (info.solar_enabled ? "solar" : "offline");
+  render(await (await fetch("/api/state")).json());
+})();
+</script>
+</body>
+</html>
