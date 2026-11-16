@@ -4490,14 +4490,10 @@
   ]
  },
  "meta": {
-  "command": "python experiments/run_gkg_experiments.py",
-  "created_utc": "2026-11-16T18:08:36Z",
+  "command": "python experiments/run_gkg_experiments.py --only E2",
+  "created_utc": "2026-11-16T19:37:58Z",
   "experiments_run": [
-   "E1",
-   "E2",
-   "E3",
-   "E4",
-   "E5"
+   "E2"
   ],
   "range": {
    "start": "2024-09-15",
@@ -4511,8 +4507,12 @@
    "stream_sha256_def": "sha256 over canonical_line(a) (same as input_manifest.json)"
   },
   "git": {
-   "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
-   "dirty": true
+   "commit": "f19ff63a9179f2ac8c4f705a8618b691f8b7a538",
+   "dirty": false
+  },
+  "git_end": {
+   "commit": "f19ff63a9179f2ac8c4f705a8618b691f8b7a538",
+   "dirty": false
   },
   "python": "3.14.5",
   "seed": 20241001,
@@ -4522,7 +4522,7 @@
    "gkg_cache.py": "1c7eb5a23d9f03f58796441d7668014f0ea83b63f8e4969eb52baa971a55589c",
    "dgim.py": "f67ca7da44bf15a50d4ec1d6e1ccac5c031b07c0dd57e78e1654adaa1ff612d9",
    "sliding.py": "53452852dd79251fe51b98d085c09f0f2e9d2dfb0a057cf233ddc45d09afd9b0",
-   "run_gkg_experiments.py": "2058811a9966258fdc6f509569e3d19cefc9581d79212d84cc3b7c1586120680"
+   "run_gkg_experiments.py": "19c62a2b9e7b42c9953fcef597b186baa83c8f7d91777d8e3506c5790f7ba28e"
   },
   "settings": {
    "thetas": [
@@ -4602,13 +4602,426 @@
    ]
   },
   "seconds": {
-   "main": 6472.6,
-   "E5 2%": 626.1,
-   "E5 5%": 618.9
+   "main": 3331.3
   },
-  "peak_rss_gb": 4.42,
+  "peak_rss_gb": 2.54,
   "warnings": [
    "gkg_events.json 의 flash_vs_steady_reference/us_election 는 verified=false (출처 미확인)."
   ]
+ },
+ "E2_revised": {
+  "rule": {
+   "match": "match phrase = last word(s) of a comma-separated part of the key name (word units)",
+   "cutoff_hours_before_first_report": 24,
+   "top": 20,
+   "types": "event types unchanged; name matches of other kinds reported as types 불일치",
+   "candidates": "up to 5 matching keys among all qualified rows after the cut-off, ordered by best rank then first entry"
+  },
+  "events": [
+   {
+    "id": "milton",
+    "name": "허리케인 밀턴 플로리다 상륙",
+    "first_report_utc": "2024-10-10T00:30:00Z",
+    "types": [
+     "P",
+     "O",
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "han_kang",
+    "name": "한강 노벨문학상 발표",
+    "first_report_utc": "2024-10-10T11:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "types_mismatch",
+     "key": "L:han kang, south korea (general), south korea",
+     "rank": 19,
+     "lift": 1.743,
+     "t": 1728579600,
+     "time": "2024-10-10 17:00",
+     "delay_h": 6.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:han kang, south korea (general), south korea",
+       "type_ok": false,
+       "best_rank": 9,
+       "best_time": "2024-10-11 11:00",
+       "first_time": "2024-10-10 14:00",
+       "first_delay_h": 3.0,
+       "top20_time": "2024-10-10 17:00",
+       "top20_delay_h": 6.0
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "types_mismatch",
+     "key": "L:han kang, south korea (general), south korea",
+     "rank": 19,
+     "lift": 1.742,
+     "t": 1728579600,
+     "time": "2024-10-10 17:00",
+     "delay_h": 6.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:han kang, south korea (general), south korea",
+       "type_ok": false,
+       "best_rank": 9,
+       "best_time": "2024-10-11 11:00",
+       "first_time": "2024-10-10 14:00",
+       "first_delay_h": 3.0,
+       "top20_time": "2024-10-10 17:00",
+       "top20_delay_h": 6.0
+      }
+     ]
+    }
+   },
+   {
+    "id": "liam_payne",
+    "name": "리암 페인 사망",
+    "first_report_utc": "2024-10-16T22:30:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "sinwar",
+    "name": "야히야 신와르 사망 발표",
+    "first_report_utc": "2024-10-17T16:55:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "P:yahya sinwar",
+     "rank": 20,
+     "lift": 1.82,
+     "t": 1729206000,
+     "time": "2024-10-17 23:00",
+     "delay_h": 6.08,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:yahya sinwar",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-10-19 13:00",
+       "first_time": "2024-10-16 17:00",
+       "first_delay_h": -23.92,
+       "top20_time": "2024-10-17 23:00",
+       "top20_delay_h": 6.08
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "P:yahya sinwar",
+     "rank": 20,
+     "lift": 1.82,
+     "t": 1729206000,
+     "time": "2024-10-17 23:00",
+     "delay_h": 6.08,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:yahya sinwar",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-10-19 13:00",
+       "first_time": "2024-10-16 17:00",
+       "first_delay_h": -23.92,
+       "top20_time": "2024-10-17 23:00",
+       "top20_delay_h": 6.08
+      }
+     ]
+    }
+   },
+   {
+    "id": "valencia",
+    "name": "스페인 발렌시아 홍수",
+    "first_report_utc": "2024-10-29T19:11:00Z",
+    "types": [
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "L:valencia, carabobo, venezuela",
+     "rank": 14,
+     "lift": 1.71,
+     "t": 1730376000,
+     "time": "2024-10-31 12:00",
+     "delay_h": 40.82,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:valencia, carabobo, venezuela",
+       "type_ok": true,
+       "best_rank": 6,
+       "best_time": "2024-11-01 01:00",
+       "first_time": "2024-10-28 20:00",
+       "first_delay_h": -23.18,
+       "top20_time": "2024-10-31 12:00",
+       "top20_delay_h": 40.82
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "L:valencia, carabobo, venezuela",
+     "rank": 14,
+     "lift": 1.71,
+     "t": 1730376000,
+     "time": "2024-10-31 12:00",
+     "delay_h": 40.82,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "L:valencia, carabobo, venezuela",
+       "type_ok": true,
+       "best_rank": 6,
+       "best_time": "2024-11-01 01:00",
+       "first_time": "2024-10-28 20:00",
+       "first_delay_h": -23.18,
+       "top20_time": "2024-10-31 12:00",
+       "top20_delay_h": 40.82
+      }
+     ]
+    }
+   },
+   {
+    "id": "quincy_jones",
+    "name": "퀸시 존스 사망 보도",
+    "first_report_utc": "2024-11-04T09:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "P:quincy jones",
+     "rank": 15,
+     "lift": 1.692,
+     "t": 1730718000,
+     "time": "2024-11-04 11:00",
+     "delay_h": 2.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:quincy jones",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-11-05 01:00",
+       "first_time": "2024-11-04 10:00",
+       "first_delay_h": 1.0,
+       "top20_time": "2024-11-04 11:00",
+       "top20_delay_h": 2.0
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "P:quincy jones",
+     "rank": 15,
+     "lift": 1.692,
+     "t": 1730718000,
+     "time": "2024-11-04 11:00",
+     "delay_h": 2.0,
+     "candidates_total": 1,
+     "candidates": [
+      {
+       "key": "P:quincy jones",
+       "type_ok": true,
+       "best_rank": 1,
+       "best_time": "2024-11-05 01:00",
+       "first_time": "2024-11-04 10:00",
+       "first_delay_h": 1.0,
+       "top20_time": "2024-11-04 11:00",
+       "top20_delay_h": 2.0
+      }
+     ]
+    }
+   }
+  ],
+  "warmup_reference_only": [
+   {
+    "id": "helene",
+    "name": "허리케인 헬렌 상륙",
+    "first_report_utc": "2024-09-27T03:10:00Z",
+    "types": [
+     "P",
+     "O",
+     "L"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    },
+    "theta=0.5": {
+     "status": "missed",
+     "candidates_total": 0,
+     "candidates": []
+    }
+   },
+   {
+    "id": "nasrallah",
+    "name": "하산 나스랄라 사망 발표 (이스라엘군)",
+    "first_report_utc": "2024-09-28T08:00:00Z",
+    "types": [
+     "P"
+    ],
+    "verified": true,
+    "exact": {
+     "status": "captured",
+     "key": "P:sayyed hassan nasrallah",
+     "rank": 19,
+     "lift": 1.488,
+     "t": 1727604000,
+     "time": "2024-09-29 10:00",
+     "delay_h": 26.0,
+     "candidates_total": 2,
+     "candidates": [
+      {
+       "key": "P:sayyed hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 8,
+       "best_time": "2024-09-29 13:00",
+       "first_time": "2024-09-28 12:00",
+       "first_delay_h": 4.0,
+       "top20_time": "2024-09-29 10:00",
+       "top20_delay_h": 26.0
+      },
+      {
+       "key": "P:hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 105,
+       "best_time": "2024-09-29 19:00",
+       "first_time": "2024-09-27 08:00",
+       "first_delay_h": -24.0,
+       "top20_time": null,
+       "top20_delay_h": null
+      }
+     ]
+    },
+    "theta=0.5": {
+     "status": "captured",
+     "key": "P:sayyed hassan nasrallah",
+     "rank": 18,
+     "lift": 1.488,
+     "t": 1727604000,
+     "time": "2024-09-29 10:00",
+     "delay_h": 26.0,
+     "candidates_total": 2,
+     "candidates": [
+      {
+       "key": "P:sayyed hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 8,
+       "best_time": "2024-09-29 13:00",
+       "first_time": "2024-09-28 12:00",
+       "first_delay_h": 4.0,
+       "top20_time": "2024-09-29 10:00",
+       "top20_delay_h": 26.0
+      },
+      {
+       "key": "P:hassan nasrallah",
+       "type_ok": true,
+       "best_rank": 105,
+       "best_time": "2024-09-29 19:00",
+       "first_time": "2024-09-27 08:00",
+       "first_delay_h": -24.0,
+       "top20_time": null,
+       "top20_delay_h": null
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "provenance": {
+  "E1": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E2": {
+   "command": "python experiments/run_gkg_experiments.py --only E2",
+   "created_utc": "2026-11-16T19:37:58Z",
+   "git": {
+    "commit": "f19ff63a9179f2ac8c4f705a8618b691f8b7a538",
+    "dirty": false
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313
+  },
+  "E3": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E4": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  },
+  "E5": {
+   "command": "python experiments/run_gkg_experiments.py",
+   "created_utc": "2026-11-16T18:08:36Z",
+   "git": {
+    "commit": "0340e4805929bfb653333ca018c19280b45e8e1f",
+    "dirty": true
+   },
+   "stream_sha256": "fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b",
+   "articles": 8313313,
+   "note": "git/code recorded at the end of that run"
+  }
  }
 }

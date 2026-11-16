@@ -5,15 +5,25 @@
 
 > **경고:** gkg_events.json 의 flash_vs_steady_reference/us_election 는 verified=false (출처 미확인).
 
-- 실행 명령: `python experiments/run_gkg_experiments.py`
+- 실행 명령: `python experiments/run_gkg_experiments.py --only E2`
 - 기간: 2024-09-15 .. 2024-11-14 (UTC), 평가 시작 2024-10-01, 6시간 간격
 - 입력 해시: stream SHA-256 `fb77326c554e5eae595c2e38545f8eed5db0d2ae483826db7fb850ebd359fa5b` (8,313,313 articles; 정의는 input_manifest.json 과 같음)
-- git 0340e4805929bfb653333ca018c19280b45e8e1f (dirty=True), 시드 20241001, 결과 `results.json`, 그림 `figures/`
-- 실행 시간: main 107.9 min, E5 2% 10.4 min, E5 5% 10.3 min, peak RSS 4.42 GB
+- git f19ff63a9179f2ac8c4f705a8618b691f8b7a538 (dirty=False), 시드 20241001, 결과 `results.json`, 그림 `figures/`
+- 실행 시간: main 55.5 min, peak RSS 2.54 GB
+
+실험별 실행 기록 (`--only` 로 일부만 다시 돌린 경우 실험마다 다름):
+
+| 실험 | 명령 | 실행 시각 (UTC) | git (시작 시) | 입력 해시 / 기사 수 |
+|---|---|---|---|---|
+| E1 | `python experiments/run_gkg_experiments.py` | 2026-11-16T18:08:36Z | 0340e48 (dirty=True) | fb77326c554e… / 8,313,313 |
+| E2 | `python experiments/run_gkg_experiments.py --only E2` | 2026-11-16T19:37:58Z | f19ff63 (dirty=False) | fb77326c554e… / 8,313,313 |
+| E3 | `python experiments/run_gkg_experiments.py` | 2026-11-16T18:08:36Z | 0340e48 (dirty=True) | fb77326c554e… / 8,313,313 |
+| E4 | `python experiments/run_gkg_experiments.py` | 2026-11-16T18:08:36Z | 0340e48 (dirty=True) | fb77326c554e… / 8,313,313 |
+| E5 | `python experiments/run_gkg_experiments.py` | 2026-11-16T18:08:36Z | 0340e48 (dirty=True) | fb77326c554e… / 8,313,313 |
 
 ### E1 메모리와 순위 (정확 기준 대비)
 
-| 창 | θ | 키 수(평균) | 메모리 MB(평균) | Top-20 겹침 평균 / 최소 | 순서 동일 | 점수 상대오차 평균 / 최대 |
+| 창 | θ | 키 수(평균) | 메모리 MB(평균, 키 문자열 제외 추정) | Top-20 겹침 평균 / 최소 | 순서 동일 | 점수 상대오차 평균 / 최대 |
 |---|---|---:|---:|---:|---:|---:|
 | 72h | 정확 | 3,803,189 | 202.01 | 1.000 / 1.00 | 100.0% | 0.0% / 0.0% |
 | 72h | 0.1 | 1,539,145 | 98.46 | 1.000 / 1.00 | 100.0% | 0.0% / 0.0% |
@@ -31,7 +41,9 @@
 | 720h | 0.5 | 3,236,340 | 188.4 | 1.000 / 1.00 | 100.0% | 0.0% / 0.0% |
 | 720h | 1.0 | 788,991 | 44.82 | 1.000 / 1.00 | 100.0% | 0.0% / 0.0% |
 
-[해석] 점수 상대오차는 각 평가 시점의 정확 기준 Top-20 키에서 |정확−근사|/정확 을 모두 모아 평균·최대를 낸 값. 메모리는 dict + float 추정(키 문자열 제외).
+[해석] 점수 상대오차는 각 평가 시점의 정확 기준 Top-20 키에서 |정확−근사|/정확 을 모두 모아 평균·최대를 낸 값. 메모리는 dict + float 추정(키 문자열 제외): 키 문자열은 모든 창이 공유하므로 따로 세며, 실제 프로세스 메모리는 더 크다.
+
+[해석] Top-20 겹침이 θ와 상관없이 1.000인 것은 정상이다. 상위 20개 키의 점수는 수천~수만이라 θ(≤ 1)보다 훨씬 커서 삭제 대상이 되지 않고, 삭제는 점수가 θ 밑으로 떨어진 꼬리 키에서만 일어난다. 그러므로 E1은 "메모리를 줄여도 상위 순위는 그대로"를 보여 줄 뿐이고, θ가 순위 판단에 주는 영향(막 떠오르는 키를 일찍 지워 늦게 잡는지)은 E2(정확 vs θ=0.5 신규 포착)에서 본다.
 
 ### E2 신규 이슈 포착 (72시간 신규 Top 20, 첫 진입)
 
@@ -48,6 +60,40 @@
 
 - helene 허리케인 헬렌 상륙: 정확 놓침; θ=0.5 놓침
 - nasrallah 하산 나스랄라 사망 발표 (이스라엘군): 정확 2024-09-29 10:00 / +26.0 / P:sayyed hassan nasrallah (#19); θ=0.5 2024-09-29 10:00 / +26.0 / P:sayyed hassan nasrallah (#18)
+
+### E2 사후 수정 규칙 (2026-11-17, 원래 결과를 본 뒤 추가; 위 원래 표는 그대로 둠)
+
+- 이름 매칭: 사건 match 문자열이 키 이름의 쉼표로 나뉜 한 부분의 끝 단어(들)과 단어 단위로 같아야 함 ("milton" → "hurricane milton", "milton, florida" 는 맞고 "milton keynes" 는 아님). 예외 목록 없음.
+- 진입 시각이 first_report_utc − 24h 이후인 것만 인정. types 는 고치지 않음: 이름은 맞지만 종류가 types 밖이면 "types 불일치".
+- 후보: 수정 규칙에 맞는 키를 컷오프 이후 신규 조건 통과 행 전체(순위 20 밖 포함)에서 모아 최고 순위 순 상위 5개.
+
+| 사건 | 첫 보도 (UTC) | types | 정확: 결과 / 진입 시각 / 지연 h / 키 | θ=0.5: 결과 / 진입 시각 / 지연 h / 키 |
+|---|---|---|---|---|
+| milton 허리케인 밀턴 플로리다 상륙 | 2024-10-10 00:30 | P,O,L | 놓침 | 놓침 |
+| han_kang 한강 노벨문학상 발표 | 2024-10-10 11:00 | P | types 불일치 / 2024-10-10 17:00 / +6.0 / L:han kang, south korea (general), south korea (#19) | types 불일치 / 2024-10-10 17:00 / +6.0 / L:han kang, south korea (general), south korea (#19) |
+| liam_payne 리암 페인 사망 | 2024-10-16 22:30 | P | 놓침 | 놓침 |
+| sinwar 야히야 신와르 사망 발표 | 2024-10-17 16:55 | P | 포착 / 2024-10-17 23:00 / +6.1 / P:yahya sinwar (#20) | 포착 / 2024-10-17 23:00 / +6.1 / P:yahya sinwar (#20) |
+| valencia 스페인 발렌시아 홍수 | 2024-10-29 19:11 | L | 포착 / 2024-10-31 12:00 / +40.8 / L:valencia, carabobo, venezuela (#14) | 포착 / 2024-10-31 12:00 / +40.8 / L:valencia, carabobo, venezuela (#14) |
+| quincy_jones 퀸시 존스 사망 보도 | 2024-11-04 09:00 | P | 포착 / 2024-11-04 11:00 / +2.0 / P:quincy jones (#15) | 포착 / 2024-11-04 11:00 / +2.0 / P:quincy jones (#15) |
+
+참고(준비 기간 사건):
+
+- helene 허리케인 헬렌 상륙: 정확 놓침; θ=0.5 놓침
+- nasrallah 하산 나스랄라 사망 발표 (이스라엘군): 정확 포착 / 2024-09-29 10:00 / +26.0 / P:sayyed hassan nasrallah (#19); θ=0.5 포착 / 2024-09-29 10:00 / +26.0 / P:sayyed hassan nasrallah (#18)
+
+사건별 후보 키 (정확, 최고 순위 순 상위 5개; 첫 등장 = 컷오프 이후 처음 신규 조건 통과, Top 20 = 처음 20위 안에 든 시각):
+
+| 사건 | 키 | types 맞음 | 최고 순위 (시각) | 첫 등장 (지연 h) | Top 20 진입 (지연 h) |
+|---|---|---|---|---|---|
+| milton | (후보 없음) | | | | |
+| han_kang | L:han kang, south korea (general), south korea | 아니오 | 9 (2024-10-11 11:00) | 2024-10-10 14:00 (+3.0) | 2024-10-10 17:00 (+6.0) |
+| liam_payne | (후보 없음) | | | | |
+| sinwar | P:yahya sinwar | 예 | 1 (2024-10-19 13:00) | 2024-10-16 17:00 (-23.9) | 2024-10-17 23:00 (+6.1) |
+| valencia | L:valencia, carabobo, venezuela | 예 | 6 (2024-11-01 01:00) | 2024-10-28 20:00 (-23.2) | 2024-10-31 12:00 (+40.8) |
+| quincy_jones | P:quincy jones | 예 | 1 (2024-11-05 01:00) | 2024-11-04 10:00 (+1.0) | 2024-11-04 11:00 (+2.0) |
+| helene | (후보 없음) | | | | |
+| nasrallah | P:sayyed hassan nasrallah | 예 | 8 (2024-09-29 13:00) | 2024-09-28 12:00 (+4.0) | 2024-09-29 10:00 (+26.0) |
+| nasrallah | P:hassan nasrallah | 예 | 105 (2024-09-29 19:00) | 2024-09-27 08:00 (-24.0) | – |
 
 ### E3 반짝/꾸준 (00:00 UTC, 168h Top 2,000 후보)
 
