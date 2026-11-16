@@ -1,0 +1,279 @@
+{
+ "kind": "gkg_engine_run",
+ "version": 1,
+ "created_utc": "2026-11-16T14:26:25Z",
+ "command": "python scripts/gkg_run.py --start 2024-10-01 --end 2024-10-01",
+ "code": {
+  "git": {
+   "commit": "5ed6b463aefae93e26a7c3327dd3df79f2c66d50",
+   "dirty": true
+  },
+  "gkg_py_sha256": "70b8c92918b2d3d169e250a937faca0f9c898f245978ae1486434e4555bec89e",
+  "gkg_engine_py_sha256": "f3bd18de8e2bd4c9c5e1d34781464b21fe25f02600aa37203f2a8043f6e326ac",
+  "gkg_evidence_py_sha256": "f300da6d751a006fcdca6c3a9954cc4a1b1d6bdf0790db1f56b822c176109399"
+ },
+ "python": "3.14.5",
+ "seed": null,
+ "input": {
+  "root": "data/gdelt",
+  "start": "2024-10-01",
+  "end": "2024-10-01",
+  "articles": 163360,
+  "stream_sha256": "f0c31c8cd77002118e69811f6baa01c89c210adec917ba3b6ebb569dee2c7a34",
+  "stream_sha256_def": "same as input_manifest.json hashes.stream_sha256 (default GkgConfig)",
+  "duplicate_urls_removed": 0
+ },
+ "config": {
+  "windows": [
+   [
+    "72h",
+    72.0
+   ],
+   [
+    "168h",
+    168.0
+   ],
+   [
+    "720h",
+    720.0
+   ]
+  ],
+  "thresholds": [
+   null
+  ],
+  "top_m": 2000,
+  "snapshot_every_minutes": 60.0,
+  "prune_every_hours": 6.0,
+  "evidence_path": "data/gdelt/processed/evidence.sqlite",
+  "evidence_top": 200
+ },
+ "snapshots": 25,
+ "last_snapshot_utc": "2024-10-01T23:45:00Z",
+ "timing": {
+  "wall_s": 14.09,
+  "read_s": 6.16,
+  "engine_s": 5.94,
+  "hash_s": 1.98,
+  "articles_per_s_engine": 27482,
+  "articles_per_s_end_to_end": 13497,
+  "note": "engine_s = decay updates + snapshots + evidence writes; end-to-end excludes the hash"
+ },
+ "peak_rss_mb": 128.6,
+ "memory": {
+  "decay_windows": [
+   {
+    "window": "72h",
+    "variant": "exact",
+    "half_life_hours": 72.0,
+    "threshold": null,
+    "peak_keys": 281425,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 281425,
+    "dict_bytes": 7689648,
+    "float_bytes": 6754200,
+    "estimate_bytes": 14443848
+   },
+   {
+    "window": "168h",
+    "variant": "exact",
+    "half_life_hours": 168.0,
+    "threshold": null,
+    "peak_keys": 281425,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 281425,
+    "dict_bytes": 7689648,
+    "float_bytes": 6754200,
+    "estimate_bytes": 14443848
+   },
+   {
+    "window": "720h",
+    "variant": "exact",
+    "half_life_hours": 720.0,
+    "threshold": null,
+    "peak_keys": 281425,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 281425,
+    "dict_bytes": 7689648,
+    "float_bytes": 6754200,
+    "estimate_bytes": 14443848
+   }
+  ],
+  "key_strings": {
+   "unique": 281425,
+   "bytes": 17826997,
+   "note": "key strings are shared by all windows; counted once"
+  },
+  "decay_total_bytes": 61158541,
+  "evidence": {
+   "path": "data/gdelt/processed/evidence.sqlite",
+   "tracked_keys": 382,
+   "articles": 95586,
+   "postings": 308728,
+   "file_bytes": 24428544
+  }
+ },
+ "top": {
+  "72h/exact": [
+   {
+    "key": "O:united states",
+    "score": 11926.44654357449,
+    "rate_per_hour": 561.7601380718515
+   },
+   {
+    "key": "L:new york, united states",
+    "score": 10327.719499655761,
+    "rate_per_hour": 486.4568093184224
+   },
+   {
+    "key": "L:washington, washington, united states",
+    "score": 7138.180529546327,
+    "rate_per_hour": 336.22297012014457
+   },
+   {
+    "key": "P:joe biden",
+    "score": 5374.680929227553,
+    "rate_per_hour": 253.1585153938153
+   },
+   {
+    "key": "L:georgia, united states",
+    "score": 5218.026932749419,
+    "rate_per_hour": 245.77979027485046
+   },
+   {
+    "key": "L:texas, united states",
+    "score": 5103.635642077187,
+    "rate_per_hour": 240.39172543865072
+   },
+   {
+    "key": "L:florida, united states",
+    "score": 4914.632104917534,
+    "rate_per_hour": 231.48927048335824
+   },
+   {
+    "key": "O:instagram",
+    "score": 4821.6124122461915,
+    "rate_per_hour": 227.10785182629755
+   },
+   {
+    "key": "P:kamala harris",
+    "score": 4776.931768646966,
+    "rate_per_hour": 225.0033017052086
+   },
+   {
+    "key": "P:donald trump",
+    "score": 4768.703054919626,
+    "rate_per_hour": 224.615712380699
+   }
+  ],
+  "168h/exact": [
+   {
+    "key": "O:united states",
+    "score": 12604.026451270967,
+    "rate_per_hour": 557.1217512908272
+   },
+   {
+    "key": "L:new york, united states",
+    "score": 10863.308271027727,
+    "rate_per_hour": 480.1787232171989
+   },
+   {
+    "key": "L:washington, washington, united states",
+    "score": 7533.555632935641,
+    "rate_per_hour": 332.99737380706244
+   },
+   {
+    "key": "P:joe biden",
+    "score": 5681.411066326277,
+    "rate_per_hour": 251.1290892090761
+   },
+   {
+    "key": "L:georgia, united states",
+    "score": 5513.5307068038055,
+    "rate_per_hour": 243.70846054996522
+   },
+   {
+    "key": "L:texas, united states",
+    "score": 5385.568073141105,
+    "rate_per_hour": 238.0522706933689
+   },
+   {
+    "key": "L:florida, united states",
+    "score": 5173.596092413651,
+    "rate_per_hour": 228.68270918189205
+   },
+   {
+    "key": "O:instagram",
+    "score": 5088.720711127343,
+    "rate_per_hour": 224.9310571803258
+   },
+   {
+    "key": "P:donald trump",
+    "score": 5040.13087007006,
+    "rate_per_hour": 222.78329452293735
+   },
+   {
+    "key": "P:kamala harris",
+    "score": 5032.566789826332,
+    "rate_per_hour": 222.4489479037373
+   }
+  ],
+  "720h/exact": [
+   {
+    "key": "O:united states",
+    "score": 13018.87811460765,
+    "rate_per_hour": 554.4538349779609
+   },
+   {
+    "key": "L:new york, united states",
+    "score": 11191.168232449454,
+    "rate_per_hour": 476.6145047016693
+   },
+   {
+    "key": "L:washington, washington, united states",
+    "score": 7775.929003673184,
+    "rate_per_hour": 331.1647607919005
+   },
+   {
+    "key": "P:joe biden",
+    "score": 5869.813116138749,
+    "rate_per_hour": 249.98624030402075
+   },
+   {
+    "key": "L:georgia, united states",
+    "score": 5694.996973682878,
+    "rate_per_hour": 242.54109182444822
+   },
+   {
+    "key": "L:texas, united states",
+    "score": 5558.642418012682,
+    "rate_per_hour": 236.73396269684486
+   },
+   {
+    "key": "L:florida, united states",
+    "score": 5332.910909238591,
+    "rate_per_hour": 227.12040770283008
+   },
+   {
+    "key": "O:instagram",
+    "score": 5251.879940191833,
+    "rate_per_hour": 223.66942435814812
+   },
+   {
+    "key": "P:donald trump",
+    "score": 5206.6965199344295,
+    "rate_per_hour": 221.74513253986706
+   },
+   {
+    "key": "P:kamala harris",
+    "score": 5188.961302922943,
+    "rate_per_hour": 220.98981714328522
+   }
+  ]
+ }
+}
