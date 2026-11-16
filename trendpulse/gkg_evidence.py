@@ -9,6 +9,10 @@ first tracked. Articles that pushed a key into the Top N before that snapshot (a
 one snapshot interval, but possibly the whole early build-up of a slow riser) have no
 postings. ``first_tracked_ts`` in the keys table records where coverage starts.
 
+Daily cap: each tracked key keeps at most ``per_day_cap`` (default 30) postings per UTC
+day, the first ones to arrive that day. Later ones are counted in ``truncated_postings``
+but not stored. An article row is stored only if at least one of its postings is kept.
+
 The store is reset on open (a replay always restarts at idx 0).
 """
 from __future__ import annotations
@@ -30,8 +34,14 @@ CREATE TABLE postings (key_id INTEGER NOT NULL, idx INTEGER NOT NULL,
 
 
 class EvidenceStore:
-    def __init__(self, path: str = DEFAULT_PATH) -> None:
+    def __init__(self, path: str = DEFAULT_PATH, per_day_cap: int | None = 30) -> None:
+        if per_day_cap is not None and per_day_cap < 1:
+            raise ValueError("per_day_cap must be >= 1 or None")
         self.path = path
+        self.per_day_cap = per_day_cap
+        self._day: int | None = None                # UTC day number (ts // 86400)
+        self._day_counts: dict[int, int] = {}       # key_id -> postings kept today
+        self.truncated_postings = 0
         os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
         for suffix in ("", "-journal", "-wal", "-shm"):
             if os.path.exists(path + suffix):
@@ -62,6 +72,23 @@ class EvidenceStore:
         ids = [tr[k] for k in a.keys if k in tr]
         if not ids:
             return
+        cap = self.per_day_cap
+        if cap is not None:
+            day = a.ts // 86400
+            if day != self._day:
+                self._day, self._day_counts = day, {}
+            counts = self._day_counts
+            kept = []
+            for i in ids:
+                c = counts.get(i, 0)
+                if c < cap:
+                    counts[i] = c + 1
+                    kept.append(i)
+                else:
+                    self.truncated_postings += 1
+            ids = kept
+            if not ids:
+                return
         self._articles.append((a.idx, a.ts, a.domain, a.url, a.title))
         self._postings.extend((i, a.idx) for i in ids)
 
@@ -88,6 +115,7 @@ class EvidenceStore:
         self.flush()
         return {"path": self.path.replace("\\", "/"), "tracked_keys": len(self.tracked),
                 "articles": self.n_articles, "postings": self.n_postings,
+                "per_day_cap": self.per_day_cap, "truncated_postings": self.truncated_postings,
                 "file_bytes": os.path.getsize(self.path) if os.path.exists(self.path) else 0}
 
     def close(self) -> None:

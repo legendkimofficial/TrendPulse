@@ -203,6 +203,7 @@ class GkgEngineConfig:
     prune_every_hours: float = 6.0
     evidence_path: str | None = None                         # sqlite file; None = no evidence
     evidence_top: int = 200
+    evidence_per_day_cap: int | None = 30                    # postings per tracked key per UTC day
 
 
 def variant_name(threshold: float | None) -> str:
@@ -223,7 +224,7 @@ class GkgEngine:
         self.evidence = None
         if cfg.evidence_path:
             from trendpulse.gkg_evidence import EvidenceStore
-            self.evidence = EvidenceStore(cfg.evidence_path)
+            self.evidence = EvidenceStore(cfg.evidence_path, per_day_cap=cfg.evidence_per_day_cap)
         self.on_snapshot = on_snapshot
         self.articles = 0
         self.snapshots = 0

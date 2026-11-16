@@ -25,6 +25,13 @@ Outlet self-name removal
   Known limitation: outlets named after a place still drop that place's organizations
   ("syracuse university" on syracuse.com).
 
+Country-name organizations
+--------------------------
+  GKG often tags a country as an organization too ("united states"). An organization whose
+  normalized name equals a country name in gkg_country_names.txt (a fixed list of the 250
+  type-1 names seen in the data) is dropped (``drop_country_orgs=True``). This check runs
+  before the self-name check.
+
 Duplicate URLs
 --------------
   Only the first article with a given URL is kept. URLs are stored as the first 8 bytes
@@ -58,6 +65,16 @@ SECOND_LEVEL = frozenset({"co", "com", "net", "org", "gov", "ac", "edu", "or", "
                           "gob", "nic", "mil", "info", "biz"})
 SLOTS_PER_DAY = 96
 KEY_KINDS = {"P": "persons", "O": "orgs", "L": "places"}
+COUNTRY_NAMES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gkg_country_names.txt")
+
+
+def _load_country_names(path: str = COUNTRY_NAMES_PATH) -> frozenset[str]:
+    with open(path, encoding="utf-8") as f:
+        return frozenset(line.strip() for line in f if line.strip() and not line.startswith("#"))
+
+
+# Fixed list (not grown from the stream) so the rule does not depend on what was read.
+COUNTRY_NAMES = _load_country_names()
 
 
 # --------------------------------------------------------------------------- data types
@@ -78,6 +95,7 @@ class GkgConfig:
     include_countries: bool = False
     place_types: tuple[int, ...] = (2, 3, 4, 5)
     drop_self_orgs: bool = True
+    drop_country_orgs: bool = True
     dedup_urls: bool = True
 
 
@@ -91,6 +109,7 @@ class StreamStats:
     duplicate_urls: int = 0
     empty_urls: int = 0          # kept, never treated as duplicates
     self_orgs_dropped: int = 0
+    country_orgs_dropped: int = 0  # organization names equal to a country name
     ts_out_of_order: int = 0     # article ts smaller than the previous one
     per_day: dict = field(default_factory=dict)        # day -> articles yielded
     files_per_day: dict = field(default_factory=dict)  # day -> [HHMM, ...] read
@@ -214,8 +233,12 @@ def is_self_org(org_norm: str, outlet: str) -> bool:
     return False
 
 
-def make_keys(rec: dict, cfg: GkgConfig) -> tuple[tuple[str, ...], tuple[str, ...], int]:
-    """Return (keys, countries, number of self-name organizations dropped)."""
+def make_keys(rec: dict, cfg: GkgConfig) -> tuple[tuple[str, ...], tuple[str, ...], int, int]:
+    """Return (keys, countries, self-name orgs dropped, country-name orgs dropped).
+
+    Organization rules, in this order: a name equal to a country name (COUNTRY_NAMES) is
+    dropped and counted as a country-name drop; otherwise a name matching the outlet is
+    dropped and counted as a self-name drop. Each distinct name counts once per article."""
     keys: list[str] = []
     seen: set[str] = set()
 
@@ -228,12 +251,17 @@ def make_keys(rec: dict, cfg: GkgConfig) -> tuple[tuple[str, ...], tuple[str, ..
         n = norm_name(p)
         if n:
             add("P:" + n)
-    dropped = 0
+    dropped = country_dropped = 0
     outlet = outlet_name(rec.get("domain") or "") if cfg.drop_self_orgs else ""
     dropped_names: set[str] = set()
     for o in rec.get("orgs") or ():
         n = norm_name(o)
         if not n:
+            continue
+        if cfg.drop_country_orgs and n in COUNTRY_NAMES:
+            if n not in dropped_names:
+                dropped_names.add(n)
+                country_dropped += 1
             continue
         if outlet and is_self_org(n, outlet):
             if n not in dropped_names:
@@ -259,7 +287,7 @@ def make_keys(rec: dict, cfg: GkgConfig) -> tuple[tuple[str, ...], tuple[str, ..
                 add("L:" + n)
         elif kind in cfg.place_types:
             add("L:" + n)
-    return tuple(keys), tuple(countries), dropped
+    return tuple(keys), tuple(countries), dropped, country_dropped
 
 
 _ts_cache: dict[str, int] = {}
@@ -345,8 +373,9 @@ def iter_articles(start=None, end=None, *, root: str = DEFAULT_ROOT,
                     elif not seen_urls.add(h64(url)):
                         st.duplicate_urls += 1
                         continue
-                keys, countries, dropped = make_keys(rec, cfg)
+                keys, countries, dropped, cdropped = make_keys(rec, cfg)
                 st.self_orgs_dropped += dropped
+                st.country_orgs_dropped += cdropped
                 if ts < last_ts:
                     st.ts_out_of_order += 1
                 last_ts = ts
@@ -537,7 +566,9 @@ def build_manifest(start, end, *, root: str = DEFAULT_ROOT, config: GkgConfig | 
         "version": 1,
         "created_utc": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "command": command,
-        "code": {"git": _git_state(), "gkg_py_sha256": _file_sha256(os.path.abspath(__file__))},
+        "code": {"git": _git_state(), "gkg_py_sha256": _file_sha256(os.path.abspath(__file__)),
+                 "country_names_sha256": _file_sha256(COUNTRY_NAMES_PATH),
+                 "country_names": len(COUNTRY_NAMES)},
         "python": sys.version.split()[0],
         "seed": None,  # no randomness in this step
         "root": _rel(root),
@@ -557,6 +588,7 @@ def build_manifest(start, end, *, root: str = DEFAULT_ROOT, config: GkgConfig | 
             "duplicate_urls_removed": st.duplicate_urls,
             "empty_urls": st.empty_urls,
             "self_orgs_dropped": st.self_orgs_dropped,
+            "country_orgs_dropped": st.country_orgs_dropped,
             "ts_out_of_order": st.ts_out_of_order,
             "with_title": n_with_title,
             "without_keys": n_no_keys,
@@ -600,6 +632,7 @@ def manifest_summary(m: dict) -> str:
         f"with title   : {t['with_title'] / max(t['articles'], 1):.1%}   no keys: "
         f"{t['without_keys'] / max(t['articles'], 1):.1%}   domains: {t['domains']:,}",
         f"self-name    : {t['self_orgs_dropped']:,} organization keys dropped",
+        f"country org  : {t.get('country_orgs_dropped', 0):,} organization keys equal to a country name dropped",
         "distinct     : " + ", ".join(f"{a} {b:,}" for a, b in k["distinct"].items()),
         "per article  : " + ", ".join(f"{a} {b:.2f}" for a, b in k["per_article"].items()),
         f"time order   : {t['first_ts']} .. {t['last_ts']}, out of order {t['ts_out_of_order']}",

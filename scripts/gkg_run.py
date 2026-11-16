@@ -151,6 +151,8 @@ def report(r: dict) -> str:
         ev = mem["evidence"]
         lines.append(f"evidence: {ev['tracked_keys']:,} tracked keys, {ev['articles']:,} articles, "
                      f"{ev['postings']:,} postings, file {ev['file_bytes'] / 1e6:.1f} MB ({ev['path']})")
+        lines.append(f"          cap {ev['per_day_cap']} postings per key per UTC day, "
+                     f"{ev['truncated_postings']:,} postings truncated")
     for name, rows in r["top"].items():
         lines.append(f"--- Top {len(rows)} {name} (score, bias-corrected rate per hour) at {r['last_snapshot_utc']}")
         for i, x in enumerate(rows, 1):

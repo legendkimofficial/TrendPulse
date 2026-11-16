@@ -8,7 +8,7 @@ import tempfile
 import types
 import unittest
 
-from trendpulse.gkg import (GkgConfig, StreamStats, U64Set, build_manifest, is_self_org,
+from trendpulse.gkg import (COUNTRY_NAMES, GkgConfig, StreamStats, U64Set, build_manifest, is_self_org,
                             iter_articles, make_keys, outlet_name)
 
 
@@ -47,7 +47,7 @@ class FakeSlim(unittest.TestCase):
         write_slot(self.root, "2024-10-01", "0000", [
             rec(1, "20241001000000", "https://a.com/1", domain="energycentral.com",
                 persons=["Joe Biden", "joe  biden"],
-                orgs=["Energy Central", "energy central power industry network", "NATO"],
+                orgs=["Energy Central", "energy central power industry network", "NATO", "United  States"],
                 places=[["Ukraine", 1, "UP"], ["Kyiv, Kyyiv, Ukraine", 4, "UP"], ["Texas, United States", 2, "US"],
                         ["Ukraine", 1, "UP"]]),
             rec(2, "20241001000000", "https://a.com/2", tone=None),
@@ -100,6 +100,7 @@ class StreamTest(FakeSlim):
         self.assertEqual(a.keys, ("P:joe biden", "O:nato", "L:kyiv, kyyiv, ukraine", "L:texas, united states"))
         self.assertEqual(a.countries, ("ukraine",))
         self.assertEqual(st.self_orgs_dropped, 2)
+        self.assertEqual(st.country_orgs_dropped, 1)          # "United  States" as an organization
         self.assertEqual(arts[4].keys, ("P:kamala harris",))
         self.assertIsNone(arts[1].tone)
         self.assertEqual(arts[0].tone, 1.5)
@@ -155,10 +156,24 @@ class KeyRuleTest(unittest.TestCase):
         self.assertFalse(is_self_org("anything", ""))
 
     def test_make_keys_ignores_bad_places(self):
-        keys, countries, dropped = make_keys(
+        got = make_keys(
             {"domain": "x.com", "persons": [" "], "orgs": [], "places": [["", 4, "US"], ["Paris", "bad", "FR"], ["Lyon"]]},
             GkgConfig())
-        self.assertEqual((keys, countries, dropped), ((), (), 0))
+        self.assertEqual(got, ((), (), 0, 0))
+
+    def test_country_name_orgs_dropped(self):
+        self.assertIn("united states", COUNTRY_NAMES)
+        self.assertEqual(len(COUNTRY_NAMES), 250)
+        rec_ = {"domain": "china.org.cn", "persons": [],
+                "orgs": ["Georgia", "georgia tech", "China", "United States", "united  states", "NATO"],
+                "places": []}
+        keys, countries, self_d, country_d = make_keys(rec_, GkgConfig())
+        # exact match only; the country check runs before the self-name check ("china" on china.org.cn)
+        self.assertEqual(keys, ("O:georgia tech", "O:nato"))
+        self.assertEqual((self_d, country_d), (0, 3))
+        keys, _, _, country_d = make_keys(rec_, GkgConfig(drop_country_orgs=False, drop_self_orgs=False))
+        self.assertEqual(keys, ("O:georgia", "O:georgia tech", "O:china", "O:united states", "O:nato"))
+        self.assertEqual(country_d, 0)
 
     def test_u64set(self):
         s = U64Set(4)
@@ -180,6 +195,8 @@ class ManifestTest(FakeSlim):
         self.assertEqual(m["totals"]["articles"], 5)
         self.assertEqual(m["totals"]["duplicate_urls_removed"], 1)
         self.assertEqual(m["totals"]["self_orgs_dropped"], 2)
+        self.assertEqual(m["totals"]["country_orgs_dropped"], 1)
+        self.assertEqual(m["code"]["country_names"], 250)
         self.assertEqual(m["keys"]["distinct"], {"persons": 2, "orgs": 1, "places": 2, "countries": 1})
         days = {d["day"]: d for d in m["per_day"]}
         self.assertEqual(set(days), {"2024-10-01", "2024-10-02", "2024-10-03"})

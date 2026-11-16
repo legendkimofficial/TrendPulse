@@ -215,6 +215,27 @@ class GkgEngineTest(unittest.TestCase):
                          [("P:a", T0), ("P:b", T0), ("P:c", T0 + SLOT)])
         db.close()
 
+    def test_evidence_daily_cap(self):
+        path = os.path.join(self.tmp, "ev.sqlite")
+        s = EvidenceStore(path, per_day_cap=2)
+        s.track(["P:a", "P:b"], T0, "72h/exact")
+        day2 = T0 + 86400
+        arts = [art(0, T0, ["P:a", "P:b"]), art(1, T0, ["P:a"]), art(2, T0 + SLOT, ["P:a", "P:b"]),
+                art(3, T0 + 2 * SLOT, ["P:a"]),                 # a is full today -> article not stored
+                art(4, day2, ["P:a"]), art(5, day2, ["P:a"]), art(6, day2, ["P:a"])]
+        for a in arts:
+            s.add_article(a)
+        rep = s.report()
+        self.assertEqual(rep["per_day_cap"], 2)
+        self.assertEqual(rep["truncated_postings"], 3)        # (a,2), (a,3), (a,6)
+        self.assertEqual(rep["postings"], 6)                  # a:0,1  b:0,2  a:4,5
+        self.assertEqual(rep["articles"], 5)                  # 0,1,2,4,5 (first come each day)
+        self.assertEqual([x["idx"] for x in s.articles_for("P:a")], [5, 4, 1, 0])
+        self.assertEqual([x["idx"] for x in s.articles_for("P:b")], [2, 0])
+        s.close()
+        with self.assertRaises(ValueError):
+            EvidenceStore(path, per_day_cap=0)
+
     def test_evidence_store_resets(self):
         path = os.path.join(self.tmp, "ev.sqlite")
         s = EvidenceStore(path)
