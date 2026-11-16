@@ -74,6 +74,39 @@ class RunnerTest(unittest.TestCase):
         self.assertEqual(out["exact"]["delay_h"], 3.0)
         self.assertTrue(out["theta=0.5"]["missed"])
 
+    def test_e2_revised_word_match_cutoff_and_types(self):
+        first = T0 + timedelta(days=2)
+        m = rx.MainRun(self.args, {"E2"}, {"events": [
+            {"id": "milton", "name": "m", "first_report_utc": "2024-09-17T00:00:00Z", "match": ["milton"],
+             "types": ["O", "L"], "verified": True},
+            {"id": "han_kang", "name": "h", "first_report_utc": "2024-09-17T00:00:00Z", "match": ["han kang"],
+             "types": ["P"], "verified": True}]})
+        filler = [{"key": f"P:filler {i}", "lift": 1.1} for i in range(30)]
+
+        def at(hours, rows):
+            m.e2_revised("exact", rows, int((first + timedelta(hours=hours)).timestamp()))
+        at(-30, [{"key": "O:hurricane milton", "lift": 3.0}])                 # before first report - 24 h
+        at(-2, [{"key": "L:bletchley, milton keynes, united kingdom", "lift": 3.0},   # "milton keynes": no
+                {"key": "P:milton rebecca blackwell", "lift": 2.9},                   # first word only: no
+                {"key": "L:han kang, south korea (general), south korea", "lift": 2.8}]
+           + filler + [{"key": "O:hurricane milton", "lift": 1.0}])                   # rank 34: candidate only
+        at(3, [{"key": "O:hurricane milton", "lift": 2.0}, {"key": "L:milton, florida, united states", "lift": 1.9}])
+        out = rx.summarize_e2_revised(m, m.events)["events"]
+        mil, han = out[0]["exact"], out[1]["exact"]
+        self.assertEqual((mil["status"], mil["key"], mil["rank"], mil["delay_h"]), ("captured", "O:hurricane milton", 1, 3.0))
+        cands = {c["key"]: c for c in mil["candidates"]}
+        self.assertEqual(set(cands), {"O:hurricane milton", "L:milton, florida, united states"})
+        self.assertEqual(cands["O:hurricane milton"]["first_delay_h"], -2.0)      # seen at rank 34 first
+        self.assertEqual(cands["O:hurricane milton"]["top20_delay_h"], 3.0)
+        self.assertEqual((han["status"], han["key"], han["delay_h"]),
+                         ("types_mismatch", "L:han kang, south korea (general), south korea", -2.0))
+        self.assertFalse(han["candidates"][0]["type_ok"])
+        self.assertEqual(out[0]["theta=0.5"]["status"], "missed")
+
+    def test_words_and_utc(self):
+        self.assertEqual(rx.words("Han Kang, South-Korea"), ["han", "kang", "south", "korea"])
+        self.assertEqual(rx.utc_ts("2024-10-10T00:30:00Z"), int(datetime(2024, 10, 10, 0, 30, tzinfo=timezone.utc).timestamp()))
+
     def test_e5_drop_is_seeded(self):
         ref_run = rx.MainRun(self.args, {"E5"}, {})
         ref_run.run(3 * 96 * 5)

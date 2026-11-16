@@ -19,6 +19,12 @@ E1 memory and ranking per (window, θ) against exact: stored keys, memory estima
    score error over the exact Top-20 keys at each evaluation time (pooled).
 E2 new-issue capture: first time a key matching an event (substring of the key name, allowed types)
    is in the 72-hour new-issue Top 20 (qualified keys by lift), delay to first_report_utc; exact and θ 0.5.
+   E2 revised rule (post-hoc, added 2026-11-17 after seeing the original results; the original rule and
+   its results are kept unchanged): the event's match phrase must equal the last word(s) of one
+   comma-separated part of the key name (word units: "milton" matches "hurricane milton" and
+   "milton, florida" but not "milton keynes"), and only entries at or after first_report_utc - 24 h
+   count. Keys that match by name but not by the event's types are reported as "types 불일치".
+   Candidates: matching keys among all qualified new-issue rows after the cut-off (rank may exceed 20).
 E3 burst/steady at 00:00 UTC of 2024-10-15, 11-01, 11-08, 11-14: 30-day tab groups (168h Top 2,000
    candidates, F = 1.5), label counts among candidates, reference keys' labels (also daily).
 E4 DGIM vs exact sliding count (trendpulse/dgim.py, sliding.py) for the exact 168h Top 10 and keys at
@@ -33,6 +39,7 @@ import hashlib
 import json
 import os
 import random
+import re
 import shlex
 import sys
 import time
@@ -59,10 +66,21 @@ E3_DATES = ("2024-10-15", "2024-11-01", "2024-11-08", "2024-11-14")
 E4_CONFIGS = ((10000, 2), (50000, 2), (50000, 4))
 E4_RANKS = {"high": 100, "mid": 1000, "low": 10000}
 E5_DROPS = (0.02, 0.05)
+E2_PRE_HOURS = 24              # revised E2 rule: entries before first report - 24 h do not count
+E2_CANDIDATES = 5
 SEED = 20241001
 # measured on this machine (articles per second, including reading); used only for the first estimate
 RATE_MAIN, RATE_E5 = 3400.0, 12000.0       # --quick on 2024-10-01: 3,400/s and 13,000/s
 ALL = ("E1", "E2", "E3", "E4", "E5")
+
+
+def words(s: str) -> list[str]:
+    return re.findall(r"[a-z0-9]+", s.lower())
+
+
+def utc_ts(s: str) -> int:
+    """'2024-10-10T00:30:00Z' -> epoch seconds."""
+    return int(datetime.strptime(s[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc).timestamp())
 
 
 def iso(ts) -> str:
@@ -128,6 +146,19 @@ class MainRun:
         self.ref_top20: dict[int, dict] = {}     # block -> {window: [keys]} exact (E5 reference)
         self.e1: dict = {}                       # (window, variant) -> list of per-time dicts
         self.e2 = {"exact": {}, "theta=0.5": {}}
+        self.e2r = {"exact": {}, "theta=0.5": {}}       # revised rule: event id -> key -> candidate
+        self._tails: dict[str, tuple] = {}
+        self._e2_events = []
+        for group in ("events", "warmup_reference_only"):
+            for ev in events.get(group, []):
+                first = utc_ts(ev["first_report_utc"])
+                self._e2_events.append({"id": ev["id"], "types": ev["types"], "first": first,
+                                        "cutoff": first - E2_PRE_HOURS * 3600,
+                                        "match": [tuple(words(m)) for m in ev["match"]]})
+        self._e2_by_last: dict[str, list] = {}
+        for ev in self._e2_events:
+            for m in ev["match"]:
+                self._e2_by_last.setdefault(m[-1], []).append((ev, m))
         self.e3_dates = {day_ts(d): d for d in E3_DATES}
         self.e3: dict = {"dates": {}, "daily": []}
         self.e3_done: set[int] = set()
@@ -209,6 +240,37 @@ class MainRun:
                     if key[0] in ev["types"] and any(m in key[2:] for m in ev["match"]):
                         got[ev["id"]] = {"t": int(t), "key": key, "rank": rank, "lift": round(r["lift"], 3)}
                         break
+        self.e2_revised(variant, eng.new_ranked, int(t))
+
+    def name_parts(self, key: str) -> tuple:
+        """Word lists of the comma-separated parts of a key name (cached)."""
+        parts = self._tails.get(key)
+        if parts is None:
+            parts = self._tails[key] = tuple(tuple(words(c)) for c in key[2:].split(","))
+        return parts
+
+    def e2_revised(self, variant: str, ranked: list, t: int) -> None:
+        """Revised E2 rule over every qualified new-issue row (word-unit match, cut-off first report - 24 h)."""
+        by_last = self._e2_by_last
+        cands = self.e2r[variant]
+        for rank, r in enumerate(ranked, 1):
+            key = r["key"]
+            parts = self.name_parts(key)
+            for part in parts:
+                if not part or part[-1] not in by_last:
+                    continue
+                for ev, m in by_last[part[-1]]:
+                    if t < ev["cutoff"] or part[-len(m):] != m:
+                        continue
+                    c = cands.setdefault(ev["id"], {}).get(key)
+                    if c is None:
+                        c = cands[ev["id"]][key] = {"key": key, "type_ok": key[0] in ev["types"], "first_t": t,
+                                                    "first_rank": rank, "best_rank": rank, "best_t": t,
+                                                    "top20_t": None, "top20_rank": None}
+                    if rank < c["best_rank"]:
+                        c["best_rank"], c["best_t"] = rank, t
+                    if rank <= K and c["top20_t"] is None:
+                        c["top20_t"], c["top20_rank"], c["top20_lift"] = t, rank, round(r["lift"], 3)
 
     def e3_capture(self, eng, t):
         det = eng.detection or {}
@@ -390,6 +452,49 @@ def summarize_e2(main: MainRun, events: dict) -> dict:
     return out
 
 
+def summarize_e2_revised(main: MainRun, events: dict) -> dict:
+    """Revised (post-hoc) E2 rule; see the module docstring. Original results stay in res["E2"]."""
+    out = {"rule": {"match": "match phrase = last word(s) of a comma-separated part of the key name (word units)",
+                    "cutoff_hours_before_first_report": E2_PRE_HOURS, "top": K,
+                    "types": "event types unchanged; name matches of other kinds reported as types 불일치",
+                    "candidates": f"up to {E2_CANDIDATES} matching keys among all qualified rows after the cut-off, "
+                                  f"ordered by best rank then first entry"}}
+    for group in ("events", "warmup_reference_only"):
+        rows = []
+        for ev in events.get(group, []):
+            first = utc_ts(ev["first_report_utc"])
+            row = {"id": ev["id"], "name": ev["name"], "first_report_utc": ev["first_report_utc"],
+                   "types": ev["types"], "verified": ev.get("verified")}
+            for v in ("exact", "theta=0.5"):
+                cands = list(main.e2r[v].get(ev["id"], {}).values())
+
+                def entry(c):
+                    return {"key": c["key"], "rank": c["top20_rank"], "lift": c.get("top20_lift"), "t": c["top20_t"],
+                            "time": iso(c["top20_t"]), "delay_h": round((c["top20_t"] - first) / 3600, 2)}
+                hits = sorted((c for c in cands if c["type_ok"] and c["top20_t"] is not None),
+                              key=lambda c: (c["top20_t"], c["top20_rank"]))
+                other = sorted((c for c in cands if not c["type_ok"] and c["top20_t"] is not None),
+                               key=lambda c: (c["top20_t"], c["top20_rank"]))
+                if hits:
+                    res = {"status": "captured", **entry(hits[0])}
+                elif other:
+                    res = {"status": "types_mismatch", **entry(other[0])}
+                else:
+                    res = {"status": "missed"}
+                top = sorted(cands, key=lambda c: (c["best_rank"], c["first_t"], c["key"]))[:E2_CANDIDATES]
+                res["candidates_total"] = len(cands)
+                res["candidates"] = [{
+                    "key": c["key"], "type_ok": c["type_ok"], "best_rank": c["best_rank"], "best_time": iso(c["best_t"]),
+                    "first_time": iso(c["first_t"]), "first_delay_h": round((c["first_t"] - first) / 3600, 2),
+                    "top20_time": iso(c["top20_t"]) if c["top20_t"] is not None else None,
+                    "top20_delay_h": round((c["top20_t"] - first) / 3600, 2) if c["top20_t"] is not None else None,
+                } for c in top]
+                row[v] = res
+            rows.append(row)
+        out[group] = rows
+    return out
+
+
 def summarize_e4(main: MainRun) -> dict:
     rows = [r for r in main.e4_rows if r["full_window"]]
     per = []
@@ -490,6 +595,34 @@ def figures(res: dict, fig_dir: str) -> list[str]:
         fig.savefig(p, dpi=180)
         plt.close(fig)
         made.append(p)
+    if res.get("E2_revised"):
+        rows = res["E2_revised"]["events"]
+        fig, ax = plt.subplots(figsize=(8, 4.5))
+        xs = range(len(rows))
+        for j, (v, c) in enumerate((("exact", COL["blue"]), ("theta=0.5", COL["orange"]))):
+            label = "정확" if v == "exact" else "θ=0.5"
+            for x, r in zip(xs, rows):
+                h = r[v]
+                xx = x + (j - 0.5) * 0.38
+                if h["status"] == "captured":
+                    ax.bar([xx], [h["delay_h"]], width=0.38, color=c, label=label)
+                    label = None                       # one legend entry per variant
+                else:
+                    ax.text(xx, 0.5, "types 불일치" if h["status"] == "types_mismatch" else "놓침",
+                            ha="center", fontsize=9, color=c, rotation=90)
+        ax.axhline(0, color=COL["ink2"], lw=0.8)
+        ax.set_xticks(list(xs))
+        ax.set_xticklabels([r["id"] for r in rows])
+        ax.set_ylabel("첫 보도 → 신규 Top 20 진입 (시간)")
+        ax.set_title("E2 사후 수정 규칙 (단어 단위 매칭, 첫 보도 -24h 이후)")
+        handles, labels = ax.get_legend_handles_labels()
+        if handles:
+            ax.legend()
+        fig.tight_layout()
+        p = os.path.join(fig_dir, "e2_delay_revised.png")
+        fig.savefig(p, dpi=180)
+        plt.close(fig)
+        made.append(p)
     if res.get("E4") and res["E4"]["configs"]:
         cf = res["E4"]["configs"]
         fig, axs = plt.subplots(1, 2, figsize=(10, 4.2))
@@ -539,6 +672,7 @@ def report(res: dict, warnings: list[str]) -> str:
     L = ["## GKG experiments (E1–E5)", ""]
     if warnings:
         L += [f"> **경고:** {w}" for w in warnings] + [""]
+    prov = res.get("provenance") or {}
     L += [f"- 실행 명령: `{m['command']}`",
           f"- 기간: {m['range']['start']} .. {m['range']['end']} (UTC), 평가 시작 {m['eval_from']}, 6시간 간격",
           f"- 입력 해시: stream SHA-256 `{m['input'].get('stream_sha256')}` ({m['input'].get('articles', 0):,} articles; "
@@ -546,16 +680,29 @@ def report(res: dict, warnings: list[str]) -> str:
           f"- git {m['git']['commit']} (dirty={m['git']['dirty']}), 시드 {SEED}, 결과 `results.json`, 그림 `figures/`",
           f"- 실행 시간: " + ", ".join(f"{k} {v / 60:.1f} min" for k, v in m["seconds"].items())
           + f", peak RSS {m.get('peak_rss_gb')} GB", ""]
+    if len({json.dumps(p, sort_keys=True) for p in prov.values()}) > 1:
+        L += ["실험별 실행 기록 (`--only` 로 일부만 다시 돌린 경우 실험마다 다름):", "",
+              "| 실험 | 명령 | 실행 시각 (UTC) | git (시작 시) | 입력 해시 / 기사 수 |", "|---|---|---|---|---|"]
+        for e in sorted(prov):
+            p = prov[e]
+            L.append(f"| {e} | `{p['command']}` | {p['created_utc']} | {(p['git'].get('commit') or '')[:7]} "
+                     f"(dirty={p['git'].get('dirty')}) | {(p.get('stream_sha256') or '')[:12]}… / {p.get('articles', 0):,} |")
+        L.append("")
     if res.get("E1"):
         L += ["### E1 메모리와 순위 (정확 기준 대비)", "",
-              "| 창 | θ | 키 수(평균) | 메모리 MB(평균) | Top-20 겹침 평균 / 최소 | 순서 동일 | 점수 상대오차 평균 / 최대 |",
+              "| 창 | θ | 키 수(평균) | 메모리 MB(평균, 키 문자열 제외 추정) | Top-20 겹침 평균 / 최소 | 순서 동일 | 점수 상대오차 평균 / 최대 |",
               "|---|---|---:|---:|---:|---:|---:|"]
         for r in res["E1"]["rows"]:
             L.append(f"| {r['window']} | {'정확' if r['theta'] is None else r['theta']} | {r['keys_mean']:,} | "
                      f"{r['mb_mean']} | {r['overlap_mean']:.3f} / {r['overlap_min']:.2f} | {pct(r['same_order_share'])} | "
                      f"{pct(r['rel_err_mean'])} / {pct(r['rel_err_max'])} |")
         L += ["", "[해석] 점수 상대오차는 각 평가 시점의 정확 기준 Top-20 키에서 |정확−근사|/정확 을 모두 모아 평균·최대를 낸 값. "
-              "메모리는 dict + float 추정(키 문자열 제외).", ""]
+              "메모리는 dict + float 추정(키 문자열 제외): 키 문자열은 모든 창이 공유하므로 따로 세며, 실제 프로세스 메모리는 더 크다.",
+              "",
+              "[해석] Top-20 겹침이 θ와 상관없이 1.000인 것은 정상이다. 상위 20개 키의 점수는 수천~수만이라 θ(≤ 1)보다 훨씬 커서 "
+              "삭제 대상이 되지 않고, 삭제는 점수가 θ 밑으로 떨어진 꼬리 키에서만 일어난다. 그러므로 E1은 \"메모리를 줄여도 "
+              "상위 순위는 그대로\"를 보여 줄 뿐이고, θ가 순위 판단에 주는 영향(막 떠오르는 키를 일찍 지워 늦게 잡는지)은 "
+              "E2(정확 vs θ=0.5 신규 포착)에서 본다.", ""]
     if res.get("E2"):
         L += ["### E2 신규 이슈 포착 (72시간 신규 Top 20, 첫 진입)", "",
               "| 사건 | 첫 보도 (UTC) | 정확: 진입 시각 / 지연 h / 키 | θ=0.5: 진입 시각 / 지연 h / 키 |", "|---|---|---|---|"]
@@ -568,6 +715,41 @@ def report(res: dict, warnings: list[str]) -> str:
             L += ["", "참고(준비 기간 사건, 신규 판별은 7일 준비 뒤라 포착 대상 아님):", ""]
             for r in res["E2"]["warmup_reference_only"]:
                 L.append(f"- {r['id']} {r['name']}: 정확 {cell(r['exact'])}; θ=0.5 {cell(r['theta=0.5'])}")
+        L.append("")
+    if res.get("E2_revised"):
+        rv = res["E2_revised"]
+        L += ["### E2 사후 수정 규칙 (2026-11-17, 원래 결과를 본 뒤 추가; 위 원래 표는 그대로 둠)", "",
+              f"- 이름 매칭: 사건 match 문자열이 키 이름의 쉼표로 나뉜 한 부분의 끝 단어(들)과 단어 단위로 같아야 함 "
+              f"(\"milton\" → \"hurricane milton\", \"milton, florida\" 는 맞고 \"milton keynes\" 는 아님). 예외 목록 없음.",
+              f"- 진입 시각이 first_report_utc − {E2_PRE_HOURS}h 이후인 것만 인정. types 는 고치지 않음: 이름은 맞지만 "
+              f"종류가 types 밖이면 \"types 불일치\".",
+              f"- 후보: 수정 규칙에 맞는 키를 컷오프 이후 신규 조건 통과 행 전체(순위 20 밖 포함)에서 모아 최고 순위 순 상위 {E2_CANDIDATES}개.",
+              "", "| 사건 | 첫 보도 (UTC) | types | 정확: 결과 / 진입 시각 / 지연 h / 키 | θ=0.5: 결과 / 진입 시각 / 지연 h / 키 |",
+              "|---|---|---|---|---|"]
+
+        def rcell(h):
+            if h["status"] == "missed":
+                return "놓침"
+            lab = "포착" if h["status"] == "captured" else "types 불일치"
+            return f"{lab} / {h['time']} / {h['delay_h']:+.1f} / {h['key']} (#{h['rank']})"
+        for r in rv["events"]:
+            L.append(f"| {r['id']} {r['name']} | {r['first_report_utc'][:16].replace('T', ' ')} | {','.join(r['types'])} | "
+                     f"{rcell(r['exact'])} | {rcell(r['theta=0.5'])} |")
+        if rv.get("warmup_reference_only"):
+            L += ["", "참고(준비 기간 사건):", ""]
+            for r in rv["warmup_reference_only"]:
+                L.append(f"- {r['id']} {r['name']}: 정확 {rcell(r['exact'])}; θ=0.5 {rcell(r['theta=0.5'])}")
+        L += ["", f"사건별 후보 키 (정확, 최고 순위 순 상위 {E2_CANDIDATES}개; 첫 등장 = 컷오프 이후 처음 신규 조건 통과, "
+              "Top 20 = 처음 20위 안에 든 시각):", "",
+              "| 사건 | 키 | types 맞음 | 최고 순위 (시각) | 첫 등장 (지연 h) | Top 20 진입 (지연 h) |", "|---|---|---|---|---|---|"]
+        for r in rv["events"] + rv.get("warmup_reference_only", []):
+            cs = r["exact"]["candidates"]
+            if not cs:
+                L.append(f"| {r['id']} | (후보 없음) | | | | |")
+            for c in cs:
+                L.append(f"| {r['id']} | {c['key']} | {'예' if c['type_ok'] else '아니오'} | {c['best_rank']} ({c['best_time']}) | "
+                         f"{c['first_time']} ({c['first_delay_h']:+.1f}) | "
+                         + (f"{c['top20_time']} ({c['top20_delay_h']:+.1f})" if c["top20_time"] else "–") + " |")
         L.append("")
     if res.get("E3"):
         L += ["### E3 반짝/꾸준 (00:00 UTC, 168h Top 2,000 후보)", ""]
@@ -671,6 +853,11 @@ def main() -> int:
                                    [os.path.relpath(sys.argv[0], REPO).replace(os.sep, "/"), *sys.argv[1:]])
     warnings: list[str] = []
     events = load_events(warnings)
+    # provenance is taken before the replay: files edited while it runs must not end up in the record
+    git_start = _git_state()
+    code_start = {os.path.basename(m.__file__): _file_sha256(m.__file__)
+                  for m in (gkg, gkg_engine, gkg_cache, dgim_mod, sliding)} \
+        | {"run_gkg_experiments.py": _file_sha256(os.path.abspath(__file__))}
 
     total = count_articles(args.root, args.start, args.end)
     need_main = bool(exps & set(ALL))
@@ -686,6 +873,7 @@ def main() -> int:
     if args.only and os.path.exists(old_path):
         with open(old_path, encoding="utf-8") as f:
             res = json.load(f)
+    old_meta = res.get("meta")
     seconds = {}
     main_run = MainRun(args, exps, events)
     main_run.run(total)
@@ -695,6 +883,7 @@ def main() -> int:
         res["E1"] = {"thetas": list(THETAS), "k": K, "rows": summarize_e1(main_run)}
     if "E2" in exps:
         res["E2"] = summarize_e2(main_run, events)
+        res["E2_revised"] = summarize_e2_revised(main_run, events)
     if "E3" in exps:
         res["E3"] = main_run.e3
     if "E4" in exps:
@@ -714,10 +903,8 @@ def main() -> int:
         "input": {"stream_sha256": main_run.sha.hexdigest(), "articles": main_run.articles,
                   "duplicate_urls_removed": main_run.stats.duplicate_urls,
                   "stream_sha256_def": "sha256 over canonical_line(a) (same as input_manifest.json)"},
-        "git": _git_state(), "python": sys.version.split()[0], "seed": SEED,
-        "code": {os.path.basename(m.__file__): _file_sha256(m.__file__)
-                 for m in (gkg, gkg_engine, gkg_cache, dgim_mod, sliding)}
-                | {"run_gkg_experiments.py": _file_sha256(os.path.abspath(__file__))},
+        "git": git_start, "git_end": _git_state(), "python": sys.version.split()[0], "seed": SEED,
+        "code": code_start,
         "settings": {"thetas": list(THETAS), "k": K, "block_hours": BLOCK // 3600,
                      "engine": {k: v for k, v in GkgEngineConfig().__dict__.items() if k != "evidence_path"},
                      "e3_dates": list(E3_DATES), "e4_configs": [list(c) for c in E4_CONFIGS], "e4_ranks": E4_RANKS,
@@ -725,6 +912,22 @@ def main() -> int:
         "seconds": {k: round(v, 1) for k, v in seconds.items()},
         "peak_rss_gb": round(rss / 1e9, 2) if rss else None, "warnings": warnings,
     }
+    if res["meta"]["git_end"] != git_start:
+        warnings.append(f"git 상태가 실행 중에 바뀌었다(시작 {git_start}, 끝 {res['meta']['git_end']}). "
+                        "기록한 git·코드 해시는 시작 시점 값이다.")
+        res["meta"]["warnings"] = warnings
+    prov = res.get("provenance")
+    if prov is None:        # results written before provenance existed: all from the run in old meta
+        old = old_meta or {}
+        prov = {e: {"command": old.get("command"), "created_utc": old.get("created_utc"), "git": old.get("git", {}),
+                    "stream_sha256": (old.get("input") or {}).get("stream_sha256"),
+                    "articles": (old.get("input") or {}).get("articles"),
+                    "note": "git/code recorded at the end of that run"}
+                for e in old.get("experiments_run", []) if e in res}
+    for e in exps:
+        prov[e] = {"command": command, "created_utc": res["meta"]["created_utc"], "git": git_start,
+                   "stream_sha256": main_run.sha.hexdigest(), "articles": main_run.articles}
+    res["provenance"] = prov
     with open(old_path, "w", encoding="utf-8") as f:
         json.dump(res, f, ensure_ascii=False, indent=1, default=str)
         f.write("\n")
