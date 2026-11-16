@@ -117,6 +117,10 @@ def match_events(exact_e, approx_e, times):
     return pairs, unmatched, spurious
 
 
+def format_event_rate(rate: float | None) -> str:
+    return "N/A" if rate is None else f"{rate:.3f}"
+
+
 def e1_decaying(arts, thetas, every):
     print(f"[E1] variants: baseline + theta in {thetas} (all batch snapshots compared)")
     engines = {"baseline": GalEngine(arts, GalConfig(k=K, threshold=None))}
@@ -204,8 +208,8 @@ def e1_decaying(arts, thetas, every):
             "mem_reduction_pct": round(100 * (1 - statistics.mean(mem[n]) / statistics.mean(mem["baseline"])), 1),
             "events_baseline": len(base_events), "events_variant": len(ev),
             "events_matched": len(pairs),
-            "recall": round(len(pairs) / len(base_events), 4) if base_events else 1.0,
-            "precision": round(len(pairs) / len(ev), 4) if ev else 1.0,
+            "recall": round(len(pairs) / len(base_events), 4) if base_events else None,
+            "precision": round(len(pairs) / len(ev), 4) if ev else None,
             "kinds_baseline": kinds_base, "kinds_matched": kinds_matched,
             "matched_same_snapshot_pct": round(100 * sum(1 for o in offs if o == 0) / len(offs), 1) if offs else 0,
             "matched_offset_median_min": round(statistics.median(offs) / 60, 1) if offs else None,
@@ -218,7 +222,7 @@ def e1_decaying(arts, thetas, every):
         r = results["variants"][n]
         print(f"  {n}: overlap {r['topk_overlap_mean']:.4f} (min {r['topk_overlap_min']}), "
               f"|err| mean {r['abs_err_mean']} max {r['abs_err_max']}, "
-              f"mem -{r['mem_reduction_pct']}%, events R {r['recall']:.3f} P {r['precision']:.3f}")
+              f"mem -{r['mem_reduction_pct']}%, events R {format_event_rate(r['recall'])} P {format_event_rate(r['precision'])}")
     # separate line items: article store + postings index (one engine)
     arts_bytes = deep_sizeof([arts])
     posts = engines["baseline"].postings
@@ -361,8 +365,8 @@ def summary_md(res):
         kb = r["kinds_baseline"]
         km = r["kinds_matched"]
         L.append(f"| {r['theta']} | {r['events_baseline']} ({kb['first']}/{kb['re-entry']}) "
-                 f"| {r['events_variant']} | {r['events_matched']} | {r['recall']:.3f} "
-                 f"| {r['precision']:.3f} | {km['first']}/{km['re-entry']} "
+                 f"| {r['events_variant']} | {r['events_matched']} | {format_event_rate(r['recall'])} "
+                 f"| {format_event_rate(r['precision'])} | {km['first']}/{km['re-entry']} "
                  f"| {r['matched_same_snapshot_pct']}% "
                  f"| {r['matched_offset_median_min']} / {r['matched_offset_max_min']} "
                  f"| {r['unmatched_edge_events']} / {r['unmatched_other']} "

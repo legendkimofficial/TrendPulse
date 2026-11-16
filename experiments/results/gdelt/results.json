@@ -49,8 +49,8 @@
     "events_baseline": 0,
     "events_variant": 0,
     "events_matched": 0,
-    "recall": 1.0,
-    "precision": 1.0,
+    "recall": null,
+    "precision": null,
     "kinds_baseline": {
      "first": 0,
      "re-entry": 0
@@ -88,8 +88,8 @@
     "events_baseline": 0,
     "events_variant": 0,
     "events_matched": 0,
-    "recall": 1.0,
-    "precision": 1.0,
+    "recall": null,
+    "precision": null,
     "kinds_baseline": {
      "first": 0,
      "re-entry": 0
@@ -127,8 +127,8 @@
     "events_baseline": 0,
     "events_variant": 0,
     "events_matched": 0,
-    "recall": 1.0,
-    "precision": 1.0,
+    "recall": null,
+    "precision": null,
     "kinds_baseline": {
      "first": 0,
      "re-entry": 0
