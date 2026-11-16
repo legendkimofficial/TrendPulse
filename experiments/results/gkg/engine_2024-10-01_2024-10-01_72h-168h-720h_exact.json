@@ -1,16 +1,16 @@
 {
  "kind": "gkg_engine_run",
  "version": 1,
- "created_utc": "2026-11-16T14:26:25Z",
+ "created_utc": "2026-11-16T14:35:09Z",
  "command": "python scripts/gkg_run.py --start 2024-10-01 --end 2024-10-01",
  "code": {
   "git": {
-   "commit": "5ed6b463aefae93e26a7c3327dd3df79f2c66d50",
+   "commit": "07b6ffb29d7ceb4ac9227e0461bdc04ccba30f35",
    "dirty": true
   },
-  "gkg_py_sha256": "70b8c92918b2d3d169e250a937faca0f9c898f245978ae1486434e4555bec89e",
-  "gkg_engine_py_sha256": "f3bd18de8e2bd4c9c5e1d34781464b21fe25f02600aa37203f2a8043f6e326ac",
-  "gkg_evidence_py_sha256": "f300da6d751a006fcdca6c3a9954cc4a1b1d6bdf0790db1f56b822c176109399"
+  "gkg_py_sha256": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
+  "gkg_engine_py_sha256": "616ff709f1fb2a87fe285481977c22c8ba27fdda0acb4ccb3e6c3cc5e4e6d9e0",
+  "gkg_evidence_py_sha256": "65b80ac01f7a7f00d565d258a628d5ff64f5bb82823fc15160e70fce32ebff6c"
  },
  "python": "3.14.5",
  "seed": null,
@@ -19,7 +19,7 @@
   "start": "2024-10-01",
   "end": "2024-10-01",
   "articles": 163360,
-  "stream_sha256": "f0c31c8cd77002118e69811f6baa01c89c210adec917ba3b6ebb569dee2c7a34",
+  "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
   "stream_sha256_def": "same as input_manifest.json hashes.stream_sha256 (default GkgConfig)",
   "duplicate_urls_removed": 0
  },
@@ -45,20 +45,21 @@
   "snapshot_every_minutes": 60.0,
   "prune_every_hours": 6.0,
   "evidence_path": "data/gdelt/processed/evidence.sqlite",
-  "evidence_top": 200
+  "evidence_top": 200,
+  "evidence_per_day_cap": 30
  },
  "snapshots": 25,
  "last_snapshot_utc": "2024-10-01T23:45:00Z",
  "timing": {
-  "wall_s": 14.09,
-  "read_s": 6.16,
-  "engine_s": 5.94,
-  "hash_s": 1.98,
-  "articles_per_s_engine": 27482,
-  "articles_per_s_end_to_end": 13497,
+  "wall_s": 13.52,
+  "read_s": 6.34,
+  "engine_s": 5.13,
+  "hash_s": 2.04,
+  "articles_per_s_engine": 31813,
+  "articles_per_s_end_to_end": 14235,
   "note": "engine_s = decay updates + snapshots + evidence writes; end-to-end excludes the hash"
  },
- "peak_rss_mb": 128.6,
+ "peak_rss_mb": 128.9,
  "memory": {
   "decay_windows": [
    {
@@ -66,65 +67,62 @@
     "variant": "exact",
     "half_life_hours": 72.0,
     "threshold": null,
-    "peak_keys": 281425,
+    "peak_keys": 281424,
     "deleted_total": 0,
     "prunes": 0,
     "rebases": 0,
-    "keys": 281425,
+    "keys": 281424,
     "dict_bytes": 7689648,
-    "float_bytes": 6754200,
-    "estimate_bytes": 14443848
+    "float_bytes": 6754176,
+    "estimate_bytes": 14443824
    },
    {
     "window": "168h",
     "variant": "exact",
     "half_life_hours": 168.0,
     "threshold": null,
-    "peak_keys": 281425,
+    "peak_keys": 281424,
     "deleted_total": 0,
     "prunes": 0,
     "rebases": 0,
-    "keys": 281425,
+    "keys": 281424,
     "dict_bytes": 7689648,
-    "float_bytes": 6754200,
-    "estimate_bytes": 14443848
+    "float_bytes": 6754176,
+    "estimate_bytes": 14443824
    },
    {
     "window": "720h",
     "variant": "exact",
     "half_life_hours": 720.0,
     "threshold": null,
-    "peak_keys": 281425,
+    "peak_keys": 281424,
     "deleted_total": 0,
     "prunes": 0,
     "rebases": 0,
-    "keys": 281425,
+    "keys": 281424,
     "dict_bytes": 7689648,
-    "float_bytes": 6754200,
-    "estimate_bytes": 14443848
+    "float_bytes": 6754176,
+    "estimate_bytes": 14443824
    }
   ],
   "key_strings": {
-   "unique": 281425,
-   "bytes": 17826997,
+   "unique": 281424,
+   "bytes": 17826941,
    "note": "key strings are shared by all windows; counted once"
   },
-  "decay_total_bytes": 61158541,
+  "decay_total_bytes": 61158413,
   "evidence": {
    "path": "data/gdelt/processed/evidence.sqlite",
-   "tracked_keys": 382,
-   "articles": 95586,
-   "postings": 308728,
-   "file_bytes": 24428544
+   "tracked_keys": 381,
+   "articles": 6121,
+   "postings": 11211,
+   "per_day_cap": 30,
+   "truncated_postings": 285053,
+   "file_bytes": 1523712
   }
  },
  "top": {
   "72h/exact": [
-   {
-    "key": "O:united states",
-    "score": 11926.44654357449,
-    "rate_per_hour": 561.7601380718515
-   },
    {
     "key": "L:new york, united states",
     "score": 10327.719499655761,
@@ -169,14 +167,14 @@
     "key": "P:donald trump",
     "score": 4768.703054919626,
     "rate_per_hour": 224.615712380699
+   },
+   {
+    "key": "L:london, london, city of, united kingdom",
+    "score": 4569.933115129596,
+    "rate_per_hour": 215.25323979399718
    }
   ],
   "168h/exact": [
-   {
-    "key": "O:united states",
-    "score": 12604.026451270967,
-    "rate_per_hour": 557.1217512908272
-   },
    {
     "key": "L:new york, united states",
     "score": 10863.308271027727,
@@ -221,14 +219,14 @@
     "key": "P:kamala harris",
     "score": 5032.566789826332,
     "rate_per_hour": 222.4489479037373
+   },
+   {
+    "key": "L:london, london, city of, united kingdom",
+    "score": 4836.513703158715,
+    "rate_per_hour": 213.78303154657024
    }
   ],
   "720h/exact": [
-   {
-    "key": "O:united states",
-    "score": 13018.87811460765,
-    "rate_per_hour": 554.4538349779609
-   },
    {
     "key": "L:new york, united states",
     "score": 11191.168232449454,
@@ -273,6 +271,11 @@
     "key": "P:kamala harris",
     "score": 5188.961302922943,
     "rate_per_hour": 220.98981714328522
+   },
+   {
+    "key": "L:london, london, city of, united kingdom",
+    "score": 4999.099410410475,
+    "rate_per_hour": 212.90389349510278
    }
   ]
  }
