@@ -1,0 +1,703 @@
+{
+ "E1": {
+  "thetas": [
+   0.1,
+   0.3,
+   0.5,
+   1.0
+  ],
+  "k": 20,
+  "rows": [
+   {
+    "window": "72h",
+    "variant": "exact",
+    "theta": null,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=0.1",
+    "theta": 0.1,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=0.3",
+    "theta": 0.3,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=0.5",
+    "theta": 0.5,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "72h",
+    "variant": "theta=1",
+    "theta": 1.0,
+    "eval_times": 4,
+    "keys_mean": 31134,
+    "keys_final": 58514,
+    "mb_mean": 1.76,
+    "mb_final": 3.33,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "exact",
+    "theta": null,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=0.1",
+    "theta": 0.1,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=0.3",
+    "theta": 0.3,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=0.5",
+    "theta": 0.5,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "168h",
+    "variant": "theta=1",
+    "theta": 1.0,
+    "eval_times": 4,
+    "keys_mean": 30162,
+    "keys_final": 54626,
+    "mb_mean": 1.74,
+    "mb_final": 3.23,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "exact",
+    "theta": null,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=0.1",
+    "theta": 0.1,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=0.3",
+    "theta": 0.3,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=0.5",
+    "theta": 0.5,
+    "eval_times": 4,
+    "keys_mean": 109656,
+    "keys_final": 220350,
+    "mb_mean": 6.05,
+    "mb_final": 12.98,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   },
+   {
+    "window": "720h",
+    "variant": "theta=1",
+    "theta": 1.0,
+    "eval_times": 4,
+    "keys_mean": 31134,
+    "keys_final": 58514,
+    "mb_mean": 1.76,
+    "mb_final": 3.33,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 1.0,
+    "rel_err_mean": 0.0,
+    "rel_err_max": 0.0
+   }
+  ]
+ },
+ "E2": {
+  "events": [
+   {
+    "id": "milton",
+    "name": "허리케인 밀턴 플로리다 상륙",
+    "first_report_utc": "2024-10-10T00:30:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "han_kang",
+    "name": "한강 노벨문학상 발표",
+    "first_report_utc": "2024-10-10T11:00:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "liam_payne",
+    "name": "리암 페인 사망",
+    "first_report_utc": "2024-10-16T22:30:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "sinwar",
+    "name": "야히야 신와르 사망 발표",
+    "first_report_utc": "2024-10-17T16:55:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "valencia",
+    "name": "스페인 발렌시아 홍수",
+    "first_report_utc": "2024-10-29T19:11:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "quincy_jones",
+    "name": "퀸시 존스 사망 보도",
+    "first_report_utc": "2024-11-04T09:00:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   }
+  ],
+  "warmup_reference_only": [
+   {
+    "id": "helene",
+    "name": "허리케인 헬렌 상륙",
+    "first_report_utc": "2024-09-27T03:10:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   },
+   {
+    "id": "nasrallah",
+    "name": "하산 나스랄라 사망 발표 (이스라엘군)",
+    "first_report_utc": "2024-09-28T08:00:00Z",
+    "verified": true,
+    "exact": {
+     "missed": true
+    },
+    "theta=0.5": {
+     "missed": true
+    }
+   }
+  ]
+ },
+ "E3": {
+  "dates": {},
+  "daily": [
+   {
+    "date": "2024-10-01",
+    "status": "warming_up",
+    "keys": {
+     "P:donald trump": {
+      "ratio": null,
+      "label": null,
+      "rate_168h": 0
+     },
+     "P:kamala harris": {
+      "ratio": null,
+      "label": null,
+      "rate_168h": 0
+     }
+    }
+   }
+  ]
+ },
+ "E4": {
+  "keys": {
+   "L:washington, washington, united states": "top10",
+   "L:florida, united states": "top10",
+   "L:north carolina, united states": "top10",
+   "L:new york, united states": "top10",
+   "P:joe biden": "top10",
+   "L:georgia, united states": "top10",
+   "L:texas, united states": "top10",
+   "P:donald trump": "top10",
+   "P:kamala harris": "top10",
+   "O:white house": "top10",
+   "L:canberra, australian capital territory, australia": "high (rank 100)",
+   "O:migration policy institute": "mid (rank 1000)"
+  },
+  "selected_at": "2024-10-01 00:00",
+  "configs": [
+   {
+    "N": 10000,
+    "r": 2,
+    "samples": 36,
+    "bound": 0.5,
+    "rel_err_mean": 0.10329051245664367,
+    "rel_err_max": 0.23933649289099526,
+    "abs_err_mean": 30.90277777777778,
+    "dgim_bits_mean": 190.0,
+    "exact_bits_mean": 4154.888888888889,
+    "by_group": {
+     "high (rank 100)": {
+      "keys": 1,
+      "exact_mean": 20.0,
+      "rel_err_mean": 0.13517156862745097,
+      "dgim_bits_mean": 108.0,
+      "exact_bits_mean": 280.0
+     },
+     "mid (rank 1000)": {
+      "keys": 1,
+      "exact_mean": 0.3333333333333333,
+      "rel_err_mean": 0.0,
+      "dgim_bits_mean": 6.0,
+      "exact_bits_mean": 4.666666666666667
+     },
+     "top10": {
+      "keys": 10,
+      "exact_mean": 354.1,
+      "rel_err_mean": 0.10354542392145107,
+      "dgim_bits_mean": 216.6,
+      "exact_bits_mean": 4957.4
+     }
+    }
+   },
+   {
+    "N": 50000,
+    "r": 2,
+    "samples": 24,
+    "bound": 0.5,
+    "rel_err_mean": 0.12346404232070118,
+    "rel_err_max": 0.3068181818181818,
+    "abs_err_mean": 159.77083333333334,
+    "dgim_bits_mean": 300.125,
+    "exact_bits_mean": 22114.666666666668,
+    "by_group": {
+     "high (rank 100)": {
+      "keys": 1,
+      "exact_mean": 118.5,
+      "rel_err_mean": 0.22724328780028263,
+      "dgim_bits_mean": 220.5,
+      "exact_bits_mean": 1896.0
+     },
+     "mid (rank 1000)": {
+      "keys": 1,
+      "exact_mean": 4.5,
+      "rel_err_mean": 0.09375,
+      "dgim_bits_mean": 52.5,
+      "exact_bits_mean": 72.0
+     },
+     "top10": {
+      "keys": 10,
+      "exact_mean": 1646.3,
+      "rel_err_mean": 0.11605752200481316,
+      "dgim_bits_mean": 332.85,
+      "exact_bits_mean": 26340.8
+     }
+    }
+   },
+   {
+    "N": 50000,
+    "r": 4,
+    "samples": 24,
+    "bound": 0.16666666666666666,
+    "rel_err_mean": 0.03793965449494451,
+    "rel_err_max": 0.0918769716088328,
+    "abs_err_mean": 48.895833333333336,
+    "dgim_bits_mean": 583.625,
+    "exact_bits_mean": 22114.666666666668,
+    "by_group": {
+     "high (rank 100)": {
+      "keys": 1,
+      "exact_mean": 118.5,
+      "rel_err_mean": 0.04942887423457371,
+      "dgim_bits_mean": 336.0,
+      "exact_bits_mean": 1896.0
+     },
+     "mid (rank 1000)": {
+      "keys": 1,
+      "exact_mean": 4.5,
+      "rel_err_mean": 0.03125,
+      "dgim_bits_mean": 73.5,
+      "exact_bits_mean": 72.0
+     },
+     "top10": {
+      "keys": 10,
+      "exact_mean": 1646.3,
+      "rel_err_mean": 0.03745969797047605,
+      "dgim_bits_mean": 659.4,
+      "exact_bits_mean": 26340.8
+     }
+    }
+   }
+  ],
+  "skipped": [
+   "low (rank 10000): only 6386 keys at selection"
+  ],
+  "note": "samples only after the key has been tracked for N articles (full window)"
+ },
+ "E5": {
+  "seed": 20241001,
+  "runs": [
+   {
+    "drop_fraction": 0.02,
+    "seed": "20241001-0.02",
+    "slots_total": 96,
+    "slots_dropped": 2,
+    "dropped_sha256": "cff619a388cca1810950677acb4ba06afe251401f9bf9c45f58292bca6aceebc",
+    "articles": 161021,
+    "eval_times": 4,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 0.5,
+    "gap_168h_mean": 0.01675675675675676,
+    "held_share": 0.0,
+    "seconds": 11.1,
+    "rows": [
+     {
+      "t": 1727740800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0,
+      "held": false
+     },
+     {
+      "t": 1727762400,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0,
+      "held": false
+     },
+     {
+      "t": 1727784900,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.04,
+      "held": false
+     },
+     {
+      "t": 1727806500,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.02702702702702703,
+      "held": false
+     }
+    ]
+   },
+   {
+    "drop_fraction": 0.05,
+    "seed": "20241001-0.05",
+    "slots_total": 96,
+    "slots_dropped": 5,
+    "dropped_sha256": "f770951db7697046e2a4644126259ceb6e867565eba3233528708ee99ac19dd4",
+    "articles": 155828,
+    "eval_times": 4,
+    "overlap_mean": 1.0,
+    "overlap_min": 1.0,
+    "same_order_share": 0.25,
+    "gap_168h_mean": 0.04627450980392157,
+    "held_share": 0.5,
+    "seconds": 11.1,
+    "rows": [
+     {
+      "t": 1727740800,
+      "overlap": 1.0,
+      "same_order": true,
+      "gap_168h": 0.0,
+      "held": false
+     },
+     {
+      "t": 1727762400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.04,
+      "held": false
+     },
+     {
+      "t": 1727785800,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.0784313725490196,
+      "held": true
+     },
+     {
+      "t": 1727807400,
+      "overlap": 1.0,
+      "same_order": false,
+      "gap_168h": 0.06666666666666667,
+      "held": true
+     }
+    ]
+   }
+  ]
+ },
+ "meta": {
+  "command": "python experiments/run_gkg_experiments.py --quick",
+  "created_utc": "2026-11-16T15:59:42Z",
+  "experiments_run": [
+   "E1",
+   "E2",
+   "E3",
+   "E4",
+   "E5"
+  ],
+  "range": {
+   "start": "2024-10-01",
+   "end": "2024-10-01"
+  },
+  "eval_from": "2024-10-01",
+  "input": {
+   "stream_sha256": "c7d692a4709022ec6208b33145210e4dd3ecbfa2868d7c6f672dd94dd1afc005",
+   "articles": 163360,
+   "duplicate_urls_removed": 0,
+   "stream_sha256_def": "sha256 over canonical_line(a) (same as input_manifest.json)"
+  },
+  "git": {
+   "commit": "70563998281a2e535a9e2f5677dc3212776684a9",
+   "dirty": false
+  },
+  "python": "3.14.5",
+  "seed": 20241001,
+  "code": {
+   "gkg.py": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
+   "gkg_engine.py": "38d954f8f46156743f2c8908d6faab3f84a6469bd3b29de71ddc15769a65f3b2",
+   "gkg_cache.py": "4992fe50aa55378bc660465e15b5e7a22a15cf0b0d722340cb204fbb5f5635d3",
+   "dgim.py": "f67ca7da44bf15a50d4ec1d6e1ccac5c031b07c0dd57e78e1654adaa1ff612d9",
+   "sliding.py": "53452852dd79251fe51b98d085c09f0f2e9d2dfb0a057cf233ddc45d09afd9b0",
+   "run_gkg_experiments.py": "4b9bd1c012da2105c23d4eda607d9d040e20d9b99c242a8d8061357dd11fe553"
+  },
+  "settings": {
+   "thetas": [
+    0.1,
+    0.3,
+    0.5,
+    1.0
+   ],
+   "k": 20,
+   "block_hours": 6,
+   "engine": {
+    "windows": [
+     [
+      "72h",
+      72.0
+     ],
+     [
+      "168h",
+      168.0
+     ],
+     [
+      "720h",
+      720.0
+     ]
+    ],
+    "thresholds": [
+     null
+    ],
+    "top_m": 2000,
+    "snapshot_every_minutes": 60.0,
+    "prune_every_hours": 6.0,
+    "evidence_top": 200,
+    "evidence_per_day_cap": 30,
+    "detect": true,
+    "detect_variant": "exact",
+    "alpha": 1.0,
+    "new_k": 10,
+    "new_warmup_days": 7.0,
+    "new_candidates": 2000,
+    "new_min_articles": 20,
+    "new_min_outlets": 5,
+    "activate_score": 3.0,
+    "max_outlets": 8,
+    "trend_k": 10,
+    "trend_factor": 1.5,
+    "trend_warmup_days": 21.0,
+    "gap_limit": 0.05
+   },
+   "e3_dates": [
+    "2024-10-15",
+    "2024-11-01",
+    "2024-11-08",
+    "2024-11-14"
+   ],
+   "e4_configs": [
+    [
+     10000,
+     2
+    ],
+    [
+     50000,
+     2
+    ],
+    [
+     50000,
+     4
+    ]
+   ],
+   "e4_ranks": {
+    "high": 100,
+    "mid": 1000,
+    "low": 10000
+   },
+   "e5_drops": [
+    0.02,
+    0.05
+   ]
+  },
+  "seconds": {
+   "main": 44.7,
+   "E5 2%": 11.1,
+   "E5 5%": 11.1
+  },
+  "peak_rss_gb": 0.42,
+  "warnings": [
+   "gkg_events.json 의 flash_vs_steady_reference/us_election 는 verified=false (출처 미확인)."
+  ]
+ }
+}
