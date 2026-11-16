@@ -1,0 +1,151 @@
+{
+ "kind": "gkg_app_cache",
+ "command": "python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14",
+ "git": {
+  "commit": "4f53170850250bb33adb2836b894ba22db07d8a5",
+  "dirty": true
+ },
+ "version": 2,
+ "fingerprint": "ce327e7c9c62306d26dd6a1cfeca92866d342d9a78c3404f202afbbe2e62cd03",
+ "config": {
+  "start": "2024-09-15",
+  "end": "2024-10-14",
+  "theta": null,
+  "store_every_hours": 6.0,
+  "top_n": 20,
+  "countries_n": 15,
+  "dgim_n": 160000,
+  "evidence_limit": 20
+ },
+ "engine_config": {
+  "windows": [
+   [
+    "72h",
+    72.0
+   ],
+   [
+    "168h",
+    168.0
+   ],
+   [
+    "720h",
+    720.0
+   ]
+  ],
+  "thresholds": [
+   null
+  ],
+  "top_m": 2000,
+  "snapshot_every_minutes": 60.0,
+  "prune_every_hours": 6.0,
+  "evidence_top": 200,
+  "evidence_per_day_cap": 30,
+  "detect": true,
+  "detect_variant": "exact",
+  "alpha": 1.0,
+  "new_k": 10,
+  "new_warmup_days": 7.0,
+  "new_candidates": 2000,
+  "new_min_articles": 20,
+  "new_min_outlets": 5,
+  "activate_score": 3.0,
+  "max_outlets": 8,
+  "trend_k": 10,
+  "trend_factor": 1.5,
+  "trend_warmup_days": 21.0,
+  "gap_limit": 0.05
+ },
+ "range": {
+  "start": "2024-09-15",
+  "end": "2024-10-14"
+ },
+ "articles": 4024133,
+ "snapshots": 121,
+ "new_events": 422,
+ "seconds": 657.9,
+ "articles_per_s": 6117,
+ "peak_rss_mb": 1364.5,
+ "memory": {
+  "decay_windows": [
+   {
+    "window": "72h",
+    "variant": "exact",
+    "half_life_hours": 72.0,
+    "threshold": null,
+    "peak_keys": 3182782,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 3182782,
+    "dict_bytes": 123033008,
+    "float_bytes": 76386768,
+    "estimate_bytes": 199419776
+   },
+   {
+    "window": "168h",
+    "variant": "exact",
+    "half_life_hours": 168.0,
+    "threshold": null,
+    "peak_keys": 3182782,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 3182782,
+    "dict_bytes": 123033008,
+    "float_bytes": 76386768,
+    "estimate_bytes": 199419776
+   },
+   {
+    "window": "720h",
+    "variant": "exact",
+    "half_life_hours": 720.0,
+    "threshold": null,
+    "peak_keys": 3182782,
+    "deleted_total": 0,
+    "prunes": 0,
+    "rebases": 0,
+    "keys": 3182782,
+    "dict_bytes": 123033008,
+    "float_bytes": 76386768,
+    "estimate_bytes": 199419776
+   }
+  ],
+  "key_strings": {
+   "unique": 3182782,
+   "bytes": 202413178,
+   "note": "key strings are shared by all windows; counted once"
+  },
+  "decay_total_bytes": 800672506,
+  "activity_tracker": {
+   "tracked_keys": 125391,
+   "hour_buckets": 730605,
+   "outlet_entries": 614146,
+   "activations": 670887,
+   "swept": 545496,
+   "estimate_bytes": 140211772,
+   "note": "key and domain strings are shared with the stream; not counted"
+  },
+  "slot_coverage_bytes": 3108,
+  "evidence": {
+   "tracked_keys": 2092,
+   "articles": 327414,
+   "postings": 526063,
+   "per_day_cap": 30,
+   "truncated_postings": 7309010,
+   "file_bytes": 78782464
+  },
+  "dgim": {
+   "keys": 2086,
+   "buckets": 12037
+  }
+ },
+ "code": {
+  "gkg.py": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
+  "gkg_engine.py": "3be027959b377ef06d6d22e0da22ce6cc09c55c8097b897be5a665fa8ba0cbdc",
+  "gkg_evidence.py": "65b80ac01f7a7f00d565d258a628d5ff64f5bb82823fc15160e70fce32ebff6c",
+  "gkg_cache.py": "6762cf4994c73a23f74569dfd3e637261772e93e662e827f3c00cba5a42a029a",
+  "gkg_country_names.txt": "d736e1b9ad4570493706732b754857aea8e9797daecfddead15301d4fad08ef5"
+ },
+ "built_utc": "2026-11-16T15:23:03Z",
+ "rebuilt": true
+}

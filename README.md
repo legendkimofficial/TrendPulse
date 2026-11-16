@@ -9,6 +9,29 @@
 
 ![dashboard](docs/img/dashboard.png)
 
+## GKG 브랜치 (`gdelt-gkg`)
+
+키워드 목록 없이 **GDELT GKG 2.1 영어 기사 흐름**(2024-09-15 ~ 2024-11-14, 하루 약 16만 건)에서
+인물·기관·장소 키로 **7일 주요 이슈 / 72시간 신규 이슈 / 30일 반짝·꾸준**을 시간 감쇠 윈도우(반감기
+72·168·720시간)로 찾고, 낮은 점수 삭제(θ)의 영향을 측정한다. 기존 HuffPost 코드(`app.py` 등)는 그대로다.
+
+| 단계 | 명령 | 결과 |
+|---|---|---|
+| 내려받기 | `python scripts/gdelt_download.py --start 2024-09-15 --end 2024-11-14` | `data/gdelt/slim/` (원본, 읽기 전용) |
+| 입력 점검 | `python scripts/gkg_build.py --start 2024-10-01 --end 2024-10-01` | `experiments/results/gkg/input_manifest.json` |
+| 엔진 재생 | `python scripts/gkg_run.py --start 2024-10-01 --end 2024-10-01` | `experiments/results/gkg/engine_*.json` |
+| 대시보드 | `python app_gkg.py` → http://127.0.0.1:5002 | 시작 시 전체 재생 → `data/gdelt/processed/gkg_cache.sqlite` |
+| 캐시 기록 | `python scripts/gkg_app_cache.py --start … --end …` | `experiments/results/gkg/app_cache_*.json` |
+| 테스트 | `python -m unittest discover -s tests` | |
+
+- 코드: `trendpulse/gkg.py`(스트림·키), `gkg_engine.py`(감쇠 창·판별), `gkg_evidence.py`(근거 sqlite),
+  `gkg_cache.py`(대시보드 캐시), `gkg_agent.py`(질문 답변), `app_gkg.py`, `web/templates/gkg.html`.
+- 대시보드: 탭 3개, 키 종류 필터(인물·기관·장소), 나라 언급은 별도 칸, 행마다 점수·보정 보도율·근거 기사 수·
+  언론사 수·분류·빈 구간 비율·θ 근사 여부, 행 클릭 시 근거 기사와 DGIM 최근 N건 언급 수, 6시간 단위 시점 슬라이더,
+  에이전트 질문(`UPSTAGE_API_KEY`가 있으면 Solar, 없으면 오프라인 요약).
+- 재현 명령·데이터·결과·한계: [docs/GKG_SUBMISSION.md](docs/GKG_SUBMISSION.md),
+  수치와 설계 변경 기록: [experiments/results/gkg/summary.md](experiments/results/gkg/summary.md).
+
 ## v0.4에서 달라진 점 (UI 중심 스프린트)
 
 | 영역 | 내용 |

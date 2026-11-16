@@ -216,3 +216,20 @@ tests: `tests/test_gkg_detect.py`.
 
 Remaining limitation (not changed): names co-mentioned in one story fill several new-issue slots
 (2024-10-01: John Amos, Kunta Kinte, Alex Haley, Norman Lear, Mary Tyler Moore from one obituary).
+
+<!-- app_cache_2024-09-15_2024-10-14:begin -->
+## Dashboard cache 2024-09-15_2024-10-14
+
+- command: `python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14`
+- result: `experiments/results/gkg/app_cache_2024-09-15_2024-10-14.json`
+- git: 4f53170850250bb33adb2836b894ba22db07d8a5 (dirty=True), fingerprint ce327e7c9c62306d…
+
+```
+range      : 2024-09-15 .. 2024-10-14, 4,024,133 articles, 121 cached 6-hour snapshots, 422 new-issue entry events
+build      : 657.9 s (6,117 articles/s), peak RSS 1364.5 MB
+decay      : ≈ 800.7 MB (72h 3,182,782 keys, 168h 3,182,782 keys, 720h 3,182,782 keys)
+tracker    : 125,391 keys, ≈ 140.2 MB
+evidence   : 2,092 keys, 327,414 articles, 526,063 postings (cap 30/day, 7,309,010 truncated), 78.8 MB
+dgim       : 2,086 keys, 12,037 buckets
+```
+<!-- app_cache_2024-09-15_2024-10-14:end -->
