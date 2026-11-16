@@ -146,8 +146,9 @@ evidence: 381 tracked keys, 6,121 articles, 11,211 postings, file 1.5 MB (data/g
 
 ## Known limitations: detection (P3)
 
-Spec: lift = (r72+α)/(r168+α), α=1, candidates = 72h Top 2,000, ≥20 articles and ≥5 outlets in 72 h,
-Top 10 by lift; trend ratio = (r168+α)/(r720+α), F=2, 14-day warm-up; hold only when a used window has
+Spec (as first built; F and warm-ups changed in "설계 변경" below): lift = (r72+α)/(r168+α), α=1,
+candidates = 72h Top 2,000, ≥20 articles and ≥5 outlets in 72 h, Top 10 by lift; trend ratio =
+(r168+α)/(r720+α), F=2, 14-day warm-up; hold only when a used window has
 > 5 % missing 15-min slots. Code: `trendpulse/gkg_engine.py`; tests: `tests/test_gkg_detect.py`.
 
 - **Candidate restriction (approximation):** only keys in the 72 h window's Top 2,000 are scored. A key
@@ -159,14 +160,59 @@ Top 10 by lift; trend ratio = (r168+α)/(r720+α), F=2, 14-day warm-up; hold onl
   capped at 8, enough for the ≥ 5 test. Articles are counted in whole UTC hours (71–72 h of history).
   Keys with no article in the last 72 h are swept at every snapshot and restart from 0.
   On 2024-10-01: 35,461 keys tracked, ≈ 31.5 MB (key/domain strings not counted).
-- **Trend labels cannot reach "rising" early (mathematical limit of the spec):** with bias-corrected rates
+- **Trend labels cannot reach "rising" early (mathematical limit of the original spec F=2; changed,
+  see "설계 변경" below):** with bias-corrected rates
   the largest possible ratio (instantaneous burst, α → 0) at elapsed e is
   720·(1−2^(−e/720)) / (168·(1−2^(−e/168))): 1.58 at day 14, 1.84 at day 20, **2.0 only from day 23.7**,
   2.26 at day 30, 3.25 at day 61. So between day 14 and ≈ day 24 no key can be labelled 최근 급증.
   At day 30 a key that appeared from nothing at a constant rate is "rising" only if it started within
   the last ≈ 3 days (2.18 after 1 day, 2.02 after 3, 1.89 after 5, 1.61 after 10).
-- **New issues have no warm-up in the spec:** on day 1 all lifts are ≈ 1.05 and the list ranks what was
+- **New issues had no warm-up in the original spec (now 7 days, see "설계 변경"):** on day 1 all lifts are ≈ 1.05 and the list ranks what was
   reported late in the day (2024-10-01: the John Amos obituary and its co-mentioned names), with 153
   entry events (151 first, 2 re-entry) in one day. Co-mentioned names of one story fill several slots.
 - **Gaps:** a slot counts as present if it had at least one article; windows are clipped at the stream
   start. A held new-issue snapshot records no events and keeps the previous Top K.
+
+## 설계 변경 (결과 확인 전, 수학적 상한 때문)
+
+Decided 2026-11-16, before any multi-day result was looked at; 2024-10-01 was not re-run (both
+judgements are still warming up on day 1). The reason is a property of the formulas, not of the data.
+
+With bias-corrected rates (rate = score·ln2/h ÷ (1 − 2^(−e/h)), e = elapsed time since the stream
+start), the largest possible ratio of a short-window rate to a long-window rate (all mentions at the last
+instant, α → 0) is
+
+    max(r_short / r_long) = h_long·(1 − 2^(−e/h_long)) / (h_short·(1 − 2^(−e/h_short)))
+
+so neither lift (72 h / 168 h) nor the trend ratio (168 h / 720 h) can be large early in the stream.
+
+| elapsed (days) | max lift r72/r168 | max ratio r168/r720 |
+|---:|---:|---:|
+| 1 | 1.07 | 1.04 |
+| 3 | 1.20 | 1.12 |
+| 5 | 1.33 | 1.20 |
+| 7 | 1.46 | 1.28 |
+| 10 | 1.63 | 1.41 |
+| 14 | 1.82 | 1.58 |
+| 21 | 2.06 | 1.88 |
+| 24 | 2.12 | 2.01 |
+| 30 | 2.22 | 2.26 |
+| 45 | 2.31 | 2.80 |
+| 61 | 2.33 | 3.25 |
+
+Command for this table:
+`python -c "m=lambda e,s,l:l*(1-2**(-e/l))/(s*(1-2**(-e/s)));[print(d,round(m(24*d,72,168),2),round(m(24*d,168,720),2)) for d in (1,3,5,7,10,14,21,24,30,45,61)]"`
+
+Changes:
+1. **Burst / steady: F = 2 → 1.5, warm-up 14 → 21 days.** rising ≥ 1.5, steady 1/1.5 ≤ ratio < 1.5,
+   cooling < 1/1.5. With F = 2 nothing could be "rising" before day 23.7. At day 21 the bound is 1.88 > 1.5,
+   so every label is reachable once judgement starts.
+2. **New issues: 7-day warm-up.** Before day 7 the list is held as "판별 준비 중" and no entry events are
+   recorded; the "previous Top K" for entry events starts empty at day 7. The bound at day 7 is 1.46.
+   On day 1 every lift was ≈ 1.05 and the list only reflected what was reported late in the day.
+
+Code: `trendpulse/gkg_engine.py` (`trend_factor=1.5`, `trend_warmup_days=21`, `new_warmup_days=7`);
+tests: `tests/test_gkg_detect.py`.
+
+Remaining limitation (not changed): names co-mentioned in one story fill several new-issue slots
+(2024-10-01: John Amos, Kunta Kinte, Alex Haley, Norman Lear, Mary Tyler Moore from one obituary).

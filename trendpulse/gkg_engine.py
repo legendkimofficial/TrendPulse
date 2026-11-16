@@ -50,14 +50,18 @@ Detection (at every snapshot; rates are bias_corrected_rate of ``detect_variant`
       The article count uses whole UTC hours (71-72 h of history).
     * Top K by lift (ties by key) = new issues. A key in this Top K that was not in the
       previous judged Top K gives an entry event: "first" or "re-entry".
-  Burst / steady (30 days): ratio = (rate_168h + α) / (rate_720h + α), F = 2, for the 168 h
-    Top ``trend_k`` keys: ratio >= 2 rising (최근 급증), 0.5 <= ratio < 2 steady (꾸준),
-    ratio < 0.5 cooling (식는 중). Before 14 days of stream: warming_up (판별 준비 중).
+    * Before 7 days of stream: warming_up (판별 준비 중), no list and no entry events
+      (the largest possible lift at day 7 is 1.46; see summary.md "설계 변경").
+  Burst / steady (30 days): ratio = (rate_168h + α) / (rate_720h + α), F = 1.5, for the
+    168 h Top ``trend_k`` keys: ratio >= 1.5 rising (최근 급증), 1/1.5 <= ratio < 1.5 steady
+    (꾸준), ratio < 1/1.5 cooling (식는 중). Before 21 days of stream: warming_up
+    (판별 준비 중); the largest possible ratio at day 21 is 1.88 > 1.5.
   Gaps: for each window, the share of missing 15-minute slots in its recent span (72 h,
     168 h, 720 h, clipped at the stream start; a slot counts as present if it had an
     article). Shown always; a judgement is held as insufficient (근거 부족) only when a
-    window it uses exceeds 5 %. A held new-issue snapshot records no events and does not
-    replace the "previous Top K" used for entry events.
+    window it uses exceeds 5 %. Warm-up is checked first. A held (warming_up or
+    insufficient) new-issue snapshot records no events and does not replace the
+    "previous Top K" used for entry events.
 """
 from __future__ import annotations
 
@@ -224,8 +228,8 @@ def smoothed_ratio(num_rate: float, den_rate: float, alpha: float = 1.0) -> floa
     return (num_rate + alpha) / (den_rate + alpha)
 
 
-def trend_label(ratio: float, factor: float = 2.0) -> str:
-    """ratio >= F -> rising; 1/F <= ratio < F -> steady; ratio < 1/F -> cooling."""
+def trend_label(ratio: float, factor: float = 1.5) -> str:
+    """ratio >= F -> rising; 1/F <= ratio < F -> steady; ratio < 1/F -> cooling (default F = 1.5)."""
     if ratio >= factor:
         return "rising"
     if ratio >= 1.0 / factor:
@@ -375,14 +379,15 @@ class GkgEngineConfig:
     detect_variant: str = "exact"
     alpha: float = 1.0
     new_k: int = 10
+    new_warmup_days: float = 7.0                             # new issues held before this
     new_candidates: int = 2000                               # from the 72h Top M (capped at top_m)
     new_min_articles: int = 20
     new_min_outlets: int = 5
     activate_score: float = 3.0
     max_outlets: int = 8
     trend_k: int = 10                                        # labelled keys: 168h Top K
-    trend_factor: float = 2.0
-    trend_warmup_days: float = 14.0
+    trend_factor: float = 1.5
+    trend_warmup_days: float = 21.0
     gap_limit: float = 0.05
 
 
@@ -502,9 +507,15 @@ class GkgEngine:
 
     def _detect_new(self, t: float, gaps: dict) -> dict:
         cfg = self.config
-        if gaps["72h"]["insufficient"] or gaps["168h"]["insufficient"]:
-            return {"status": "insufficient", "label": LABELS_KO["insufficient"], "top": [], "events": []}
         w72, w168, act = self._w72, self._w168, self.activity
+        start = w72.start
+        elapsed_days = (t - start) / 86400.0 if start is not None else 0.0
+        if elapsed_days < cfg.new_warmup_days:
+            return {"status": "warming_up", "label": LABELS_KO["warming_up"], "elapsed_days": elapsed_days,
+                    "top": [], "events": []}
+        if gaps["72h"]["insufficient"] or gaps["168h"]["insufficient"]:
+            return {"status": "insufficient", "label": LABELS_KO["insufficient"], "elapsed_days": elapsed_days,
+                    "top": [], "events": []}
         rows = []
         for key, s72 in w72.top(min(cfg.new_candidates, w72.top_m)):
             if key not in act:
@@ -526,7 +537,8 @@ class GkgEngine:
         for i, r in enumerate(top, 1):
             r["rank"] = i
         events = self.record_entries(t, [r["key"] for r in top], {r["key"]: r for r in top})
-        return {"status": "ok", "top": top, "events": events, "qualified": len(rows)}
+        return {"status": "ok", "elapsed_days": elapsed_days, "top": top, "events": events,
+                "qualified": len(rows)}
 
     def record_entries(self, t: float, keys: list[str], info: dict | None = None) -> list[dict]:
         """Entry events for keys in this new-issue Top K that were not in the previous judged one."""

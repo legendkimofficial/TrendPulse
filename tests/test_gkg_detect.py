@@ -29,7 +29,7 @@ def new_issue_run(n_articles, n_domains, activate_score=1.0):
     s = Stream().add(T0, ["P:bg"])
     for i in range(n_articles):
         s.add(T0 + SLOT, ["P:x"], domain=f"d{i % n_domains}.com")
-    eng = GkgEngine(GkgEngineConfig(activate_score=activate_score))
+    eng = GkgEngine(GkgEngineConfig(activate_score=activate_score, new_warmup_days=0))
     eng.run(s.items)
     return eng
 
@@ -71,6 +71,31 @@ class NewIssueTest(unittest.TestCase):
         eng = new_issue_run(20, 5)
         self.assertEqual([(e["key"], e["kind"]) for e in eng.new_events], [("P:x", "first")])
 
+    def test_new_issue_warmup_7_days(self):
+        """Before day 7: warming_up, no list, no events; from day 7 the same key qualifies."""
+        s = Stream()
+        t = T0
+        while t <= T0 + 8 * DAY:
+            s.add(t, ["P:bg"])
+            if t >= T0 + 6 * DAY:
+                for i in range(2):
+                    s.add(t, ["P:x"], domain=f"d{(t // SLOT + i) % 6}.com")
+            t += SLOT
+        seen = []
+
+        def on_snap(eng, t):
+            n = eng.detection["new"]
+            seen.append(((t - T0) / DAY, n["status"], [r["key"] for r in n["top"]], len(eng.new_events)))
+
+        eng = GkgEngine(GkgEngineConfig(), on_snapshot=on_snap).run(s.items)
+        before = [x for x in seen if x[0] < 7]
+        after = [x for x in seen if x[0] >= 7]
+        # P:x already has > 20 articles and 6 outlets from day 6.25, but is held until day 7
+        self.assertTrue(all(st == "warming_up" and top == [] and n == 0 for _, st, top, n in before))
+        self.assertEqual(after[0][:2], (7.0, "ok"))
+        self.assertIn("P:x", after[0][2])
+        self.assertEqual((eng.new_events[0]["t"], eng.new_events[0]["kind"]), (T0 + 7 * DAY, "first"))
+
 
 class TrendTest(unittest.TestCase):
     @classmethod
@@ -95,21 +120,23 @@ class TrendTest(unittest.TestCase):
         cls.eng = GkgEngine(GkgEngineConfig(trend_k=3), on_snapshot=on_snap).run(s.items)
 
     def test_label_boundaries(self):
-        self.assertEqual(trend_label(2.0), "rising")
-        self.assertEqual(trend_label(1.9999), "steady")
-        self.assertEqual(trend_label(0.5), "steady")
-        self.assertEqual(trend_label(0.4999), "cooling")
-        self.assertEqual(trend_label(2.9, factor=3.0), "steady")
+        # default F = 1.5
+        self.assertEqual(trend_label(1.5), "rising")
+        self.assertEqual(trend_label(1.4999), "steady")
+        self.assertEqual(trend_label(1 / 1.5), "steady")
+        self.assertEqual(trend_label(1 / 1.5 - 1e-9), "cooling")
+        self.assertEqual(trend_label(2.0, factor=2.0), "rising")
+        self.assertEqual(trend_label(0.4999, factor=2.0), "cooling")
         self.assertEqual(smoothed_ratio(3.0, 1.0, 1.0), 2.0)
         self.assertEqual(smoothed_ratio(0.0, 0.0, 1.0), 1.0)
 
-    def test_warming_up_before_14_days(self):
-        before = [x for x in self.status if x[0] < 14]
-        after = [x for x in self.status if x[0] >= 14]
+    def test_warming_up_before_21_days(self):
+        before = [x for x in self.status if x[0] < 21]
+        after = [x for x in self.status if x[0] >= 21]
         self.assertTrue(before and after)
         self.assertTrue(all(st == "warming_up" and set(lab.values()) == {"warming_up"} for _, st, lab in before))
         self.assertTrue(all(st == "ok" for _, st, _ in after))
-        self.assertEqual(after[0][0], 14.0)
+        self.assertEqual(after[0][0], 21.0)
 
     def test_labels_at_day_40(self):
         tr = self.eng.detection["trend"]
@@ -142,7 +169,7 @@ class GapTest(unittest.TestCase):
                 s.add(T0 + i * SLOT, ["P:bg"])
         for i in range(20):
             s.add(T0 + 191 * SLOT, ["P:x"], domain=f"d{i % 5}.com")
-        eng = GkgEngine(GkgEngineConfig(activate_score=1.0))
+        eng = GkgEngine(GkgEngineConfig(activate_score=1.0, new_warmup_days=0))
         eng.run(s.items)
         return eng
 
