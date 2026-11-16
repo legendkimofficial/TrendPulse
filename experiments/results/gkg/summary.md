@@ -222,14 +222,42 @@ Remaining limitation (not changed): names co-mentioned in one story fill several
 
 - command: `python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14`
 - result: `experiments/results/gkg/app_cache_2024-09-15_2024-10-14.json`
-- git: 4f53170850250bb33adb2836b894ba22db07d8a5 (dirty=True), fingerprint ce327e7c9c62306d…
+- git: 1ee22f7174d56cc74c95a88fa9e2ecd4bd4737e6 (dirty=False), fingerprint 4ebcee2e9f7b8be0…
 
 ```
 range      : 2024-09-15 .. 2024-10-14, 4,024,133 articles, 121 cached 6-hour snapshots, 422 new-issue entry events
-build      : 657.9 s (6,117 articles/s), peak RSS 1364.5 MB
+build      : 655.2 s (6,141 articles/s), peak RSS 1367.5 MB
 decay      : ≈ 800.7 MB (72h 3,182,782 keys, 168h 3,182,782 keys, 720h 3,182,782 keys)
 tracker    : 125,391 keys, ≈ 140.2 MB
 evidence   : 2,092 keys, 327,414 articles, 526,063 postings (cap 30/day, 7,309,010 truncated), 78.8 MB
-dgim       : 2,086 keys, 12,037 buckets
+dgim       : 2,086 keys, 11,998 buckets
 ```
 <!-- app_cache_2024-09-15_2024-10-14:end -->
+
+## 설계 변경: 30일 탭을 라벨별 3칸으로 (2026-11-17)
+
+Decided after seeing the dashboard's 30-day tab (ordered by 720 h score): its top rows repeated the 7-day tab
+and almost every row was "steady" (5 rising and 9 cooling of ≈ 2,960 labelled top-20 rows over all cached
+snapshots). This changes only how the dashboard presents labels; the label rule (F = 1.5, 21-day warm-up) is
+unchanged.
+
+- Candidates: 168 h window Top 2,000, labelled by ratio = (r168+1)/(r720+1).
+- Per key kind (filter applied first): **최근 급증** ratio descending Top 10, **식는 중** ratio ascending Top 10,
+  **꾸준** 168 h score order Top 10. Ties by key. Empty while warming up (< 21 days) or held for gaps.
+- Code: `trendpulse/gkg_cache.py` (`trend_groups`), `web/static/gkg.js`; tests: `tests/test_gkg_app.py`
+  (`TrendGroupsTest`, `TrendTabTest` on a 22-day synthetic stream).
+
+Result (`python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14`, last snapshot 2024-10-14 23:45 UTC,
+kind = all):
+- 최근 급증: binyamina (1.79), baba siddique (1.74), alex salmond (1.70), vem miller (1.70), coachella (1.68),
+  abu hamza, alba party, kenny macaskill, simon johnson, joshua simmons (1.61).
+- 식는 중: ryan wesley routh (0.45), trump international golf club (0.50), david lochridge, jean smart,
+  west palm beach (0.57), firass abiad, australian community media, ryan routh, a red ventures company,
+  ranil wickremesinghe (0.63).
+- 꾸준: new york, florida, washington (state), donald trump, california, london, kamala harris, instagram, texas,
+  joe biden.
+- Over the 37 cached snapshots with an active judgement (day ≥ 21): 337 rising, 370 cooling, 370 steady rows
+  (kind = all), so the rising group is sometimes shorter than 10.
+- Visible GKG artifacts (not filtered): place names tagged as persons ("P:los angeles", "P:las vegas") and
+  publisher boilerplate tagged as organizations ("O:a red ventures company", "O:australian community media").
+  The same event can appear under two name forms ("P:ryan wesley routh", "P:ryan routh").

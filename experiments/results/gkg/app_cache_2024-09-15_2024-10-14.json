@@ -2,11 +2,11 @@
  "kind": "gkg_app_cache",
  "command": "python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14",
  "git": {
-  "commit": "4f53170850250bb33adb2836b894ba22db07d8a5",
-  "dirty": true
+  "commit": "1ee22f7174d56cc74c95a88fa9e2ecd4bd4737e6",
+  "dirty": false
  },
- "version": 2,
- "fingerprint": "ce327e7c9c62306d26dd6a1cfeca92866d342d9a78c3404f202afbbe2e62cd03",
+ "version": 3,
+ "fingerprint": "4ebcee2e9f7b8be0af60d06a2fcf18c287ca088363b4f26d4a76c77dfa4deb0b",
  "config": {
   "start": "2024-09-15",
   "end": "2024-10-14",
@@ -15,7 +15,8 @@
   "top_n": 20,
   "countries_n": 15,
   "dgim_n": 160000,
-  "evidence_limit": 20
+  "evidence_limit": 20,
+  "trend_group_n": 10
  },
  "engine_config": {
   "windows": [
@@ -62,9 +63,9 @@
  "articles": 4024133,
  "snapshots": 121,
  "new_events": 422,
- "seconds": 657.9,
- "articles_per_s": 6117,
- "peak_rss_mb": 1364.5,
+ "seconds": 655.2,
+ "articles_per_s": 6141,
+ "peak_rss_mb": 1367.5,
  "memory": {
   "decay_windows": [
    {
@@ -136,16 +137,16 @@
   },
   "dgim": {
    "keys": 2086,
-   "buckets": 12037
+   "buckets": 11998
   }
  },
  "code": {
   "gkg.py": "a4afedc209f113a4ff59c6a4995f40be1e5c1f6a0d516f7dc9d35510daf0b95a",
-  "gkg_engine.py": "3be027959b377ef06d6d22e0da22ce6cc09c55c8097b897be5a665fa8ba0cbdc",
+  "gkg_engine.py": "38d954f8f46156743f2c8908d6faab3f84a6469bd3b29de71ddc15769a65f3b2",
   "gkg_evidence.py": "65b80ac01f7a7f00d565d258a628d5ff64f5bb82823fc15160e70fce32ebff6c",
-  "gkg_cache.py": "6762cf4994c73a23f74569dfd3e637261772e93e662e827f3c00cba5a42a029a",
+  "gkg_cache.py": "4992fe50aa55378bc660465e15b5e7a22a15cf0b0d722340cb204fbb5f5635d3",
   "gkg_country_names.txt": "d736e1b9ad4570493706732b754857aea8e9797daecfddead15301d4fad08ef5"
  },
- "built_utc": "2026-11-16T15:23:03Z",
+ "built_utc": "2026-11-16T15:48:12Z",
  "rebuilt": true
 }
