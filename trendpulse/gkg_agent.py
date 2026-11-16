@@ -2,8 +2,14 @@
 
 Same contract as the HuffPost agent (trendpulse/agent.py, reused only for its HTTP
 helper): the model must call tools, and every cited article id [#idx] must be one the
-tools returned. With UPSTAGE_API_KEY unset (or on any API/verification failure) an
-offline template answer is built from the same tools.
+tools returned. On any API/verification failure an offline template answer is built
+from the same tools.
+
+Model provider, first match wins (keys are read from the environment only, never stored):
+  1. LLM_API_KEY + LLM_BASE_URL + LLM_MODEL   any OpenAI-compatible chat/completions API
+                                              (all three needed; a partial set is skipped with a note)
+  2. UPSTAGE_API_KEY (+ UPSTAGE_BASE_URL, UPSTAGE_MODEL)   Upstage Solar (defaults as in agent.py)
+  3. none                                     offline template answer
 
 Tools read one cached snapshot (the time selected on the slider):
   get_top(tab, kind, k)   rows of a tab ("major" 7-day, "new" 72-hour, "trend" 30-day)
@@ -16,6 +22,7 @@ import os
 import re
 import sqlite3
 import urllib.error
+import urllib.parse
 from datetime import datetime, timezone
 
 from trendpulse.agent import CITE_RE, DEFAULT_BASE_URL, DEFAULT_MODEL, _post
@@ -156,28 +163,65 @@ def ask(reader: CacheReader, question: str, t: int | None = None, key: str | Non
     return out
 
 
+def provider() -> dict:
+    """Which model API to use, from the environment: LLM_* (OpenAI-compatible), then UPSTAGE_*,
+    then offline. The returned dict holds the key for the caller; public_provider() drops it."""
+    env = os.environ
+    llm_key = env.get("LLM_API_KEY", "").strip()
+    llm_base = env.get("LLM_BASE_URL", "").strip().rstrip("/")
+    llm_model = env.get("LLM_MODEL", "").strip()
+    note = None
+    if llm_key and llm_base and llm_model:
+        return {"name": "llm", "label": "LLM", "base": llm_base, "model": llm_model, "key": llm_key, "note": None}
+    if llm_key or llm_base or llm_model:
+        missing = [n for n, v in (("LLM_API_KEY", llm_key), ("LLM_BASE_URL", llm_base), ("LLM_MODEL", llm_model)) if not v]
+        note = f"LLM_* 설정이 일부만 있어({', '.join(missing)} 없음) 사용하지 않았습니다."
+    up_key = env.get("UPSTAGE_API_KEY", "").strip()
+    if up_key:
+        return {"name": "solar", "label": "Solar", "base": env.get("UPSTAGE_BASE_URL", DEFAULT_BASE_URL).strip().rstrip("/"),
+                "model": env.get("UPSTAGE_MODEL", DEFAULT_MODEL).strip(), "key": up_key, "note": note}
+    return {"name": "offline", "label": "오프라인", "base": None, "model": None, "key": None, "note": note}
+
+
+def public_provider() -> dict:
+    """Provider info safe to show (no key; base URL reduced to scheme + host)."""
+    p = provider()
+    host = None
+    if p["base"]:
+        u = urllib.parse.urlsplit(p["base"])
+        host = f"{u.scheme}://{u.hostname}" if u.hostname else None
+    return {"name": p["name"], "label": p["label"], "model": p["model"], "host": host, "note": p["note"],
+            "enabled": p["name"] != "offline"}
+
+
 def _ask(reader: CacheReader, question: str, t: int | None = None, key: str | None = None) -> dict:
     tools = GkgTools(reader, t)
     key = guess_key(tools, question) or (tools.resolve(key) if key else None)
-    api_key = os.environ.get("UPSTAGE_API_KEY", "").strip()
-    if api_key:
+    prov = provider()
+    if prov["name"] != "offline":
+        lab = prov["label"]
         try:
-            res = _solar(tools, question, key, api_key)
+            res = _solar(tools, question, key, prov)
             if res is not None:
+                if prov["note"]:
+                    res["warning"] = prov["note"]
                 return res
             out = _offline(tools, key)
-            out.update(mode="offline-fallback", warning="Solar 답변이 근거 검증을 통과하지 못해 오프라인 요약으로 대체했습니다.")
+            out.update(mode="offline-fallback", warning=f"{lab} 답변이 근거 검증을 통과하지 못해 오프라인 요약으로 대체했습니다.")
             return out
-        except (urllib.error.URLError, TimeoutError, KeyError, ValueError, IndexError) as exc:
+        except (urllib.error.URLError, TimeoutError, KeyError, ValueError, IndexError, TypeError) as exc:
             out = _offline(GkgTools(reader, t), key)
-            out.update(mode="offline-fallback", warning=f"Solar API 호출 실패로 오프라인 요약을 표시합니다: {exc}")
+            out.update(mode="offline-fallback", warning=f"{lab} API 호출 실패로 오프라인 요약을 표시합니다: {exc}")
             return out
-    return _offline(tools, key)
+    out = _offline(tools, key)
+    if prov["note"]:
+        out["warning"] = prov["note"]
+    return out
 
 
-def _solar(tools: GkgTools, question: str, key: str | None, api_key: str) -> dict | None:
-    base = os.environ.get("UPSTAGE_BASE_URL", DEFAULT_BASE_URL).rstrip("/")
-    model = os.environ.get("UPSTAGE_MODEL", DEFAULT_MODEL)
+def _solar(tools: GkgTools, question: str, key: str | None, prov: dict) -> dict | None:
+    """Tool-calling loop against an OpenAI-compatible chat/completions API (Solar or LLM_*)."""
+    base, model, api_key = prov["base"], prov["model"], prov["key"]
     hint = f"\n(선택 시점: {iso(tools.snap['t'])}" + (f", 질문 대상 키: '{key}')" if key else ")")
     messages = [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": question + hint}]
     trace, n_calls, repaired = [], 0, False
@@ -202,7 +246,7 @@ def _solar(tools: GkgTools, question: str, key: str | None, api_key: str) -> dic
         answer = msg.get("content") or ""
         problems = check_citations(answer, tools, need_cite=key is not None)
         if not problems:
-            return {"answer": answer, "mode": f"solar ({model})", "key": key, "as_of": iso(tools.snap["t"]),
+            return {"answer": answer, "mode": f"{prov['name']} ({model})", "key": key, "as_of": iso(tools.snap["t"]),
                     "trace": trace, "verified": True}
         if repaired:
             return None

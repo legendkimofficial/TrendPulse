@@ -32,7 +32,8 @@
   KPI 5개, 탭 3개 × 키 종류 필터, 보기 3종(순위표 / 순위 흐름 / 선택 키 보도율 비교)과 CSV, 급상승(72시간 신규 상위),
   신규 Top 10 진입 기록, 메모리 절약의 대가(실험 E1 결과), 나라 언급, 상세 드로어(키 검색·보도율 추이·근거 기사·
   함께 등장한 키·DGIM), 설정(Top K·근거 얇음 기준·θ 캐시 선택), 도움말, 테마, 링크 공유, v0.4 단축키,
-  에이전트 질문(`UPSTAGE_API_KEY`가 있으면 Solar, 없으면 오프라인 요약). θ 변형은
+  에이전트 질문(모델: `LLM_API_KEY`·`LLM_BASE_URL`·`LLM_MODEL`이 모두 있으면 그 OpenAI 호환 API, 아니면 `UPSTAGE_API_KEY`로 Solar,
+  둘 다 없으면 오프라인 요약; 키는 환경변수로만). θ 변형은
   `python scripts/gkg_app_cache.py --start … --end … --theta 0.5`로 캐시를 만들면 설정에서 고를 수 있다.
   기능 대응표: `experiments/results/gkg/summary.md`의 "대시보드 v0.4 기능 대응".
 - 재현 명령·데이터·결과·한계: [docs/GKG_SUBMISSION.md](docs/GKG_SUBMISSION.md),

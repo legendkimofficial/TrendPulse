@@ -13,6 +13,7 @@ from trendpulse import gkg_agent
 from trendpulse.gkg_cache import CacheConfig, CacheReader, ensure_cache, trend_groups
 
 DAYS = ("2024-10-01", "2024-10-02")
+NO_LLM = {"LLM_API_KEY": "", "LLM_BASE_URL": "", "LLM_MODEL": ""}   # tests never reach a real API
 
 
 def write_fake_slim(root):
@@ -161,7 +162,7 @@ class AppTest(unittest.TestCase):
 
     # ------------------------------------------------------------------ agent
     def test_ask_offline_cites_only_returned_articles(self):
-        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": ""}):
+        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": "", **NO_LLM}):
             r = self.client.post("/api/gkg/ask", json={"question": "Joe Biden 왜 많이 나와?"}).get_json()
             self.assertEqual((r["mode"], r["key"]), ("offline", "P:joe biden"))
             cited = {int(x) for x in re.findall(r"\[#(\d+)\]", r["answer"])}
@@ -186,13 +187,13 @@ class AppTest(unittest.TestCase):
         call = {"tool_calls": [{"id": "c1", "function": {"name": "get_key_detail",
                                                           "arguments": json.dumps({"key": "joe biden"})}}]}
         good = [call, {"content": f"요약 [#{idx}]"}]
-        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": "k"}), \
+        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": "k", **NO_LLM}), \
                 mock.patch.object(gkg_agent, "_post", fake(good)):
             r = gkg_agent.ask(reader, "joe biden 왜?")
         self.assertTrue(r["mode"].startswith("solar"))
         self.assertTrue(r["verified"])
         bad = [call, {"content": "요약 [#999999]"}, {"content": "다시 [#999998]"}]
-        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": "k"}), \
+        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": "k", **NO_LLM}), \
                 mock.patch.object(gkg_agent, "_post", fake(bad)):
             r = gkg_agent.ask(reader, "joe biden 왜?")
         self.assertEqual(r["mode"], "offline-fallback")
@@ -439,13 +440,102 @@ class DashboardV04Test(unittest.TestCase):
         self.assertIn("gkg.js", html)
 
     def test_ask_returns_citations(self):
-        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": ""}):
+        with mock.patch.dict(os.environ, {"UPSTAGE_API_KEY": "", **NO_LLM}):
             r = self.client.post("/api/gkg/ask", json={"question": "joe biden 왜 많이 나와?"}).get_json()
         cited = {int(x) for x in re.findall(r"\[#(\d+)\]", r["answer"])}
         self.assertEqual({c["idx"] for c in r["citations"]}, cited)
         self.assertTrue(cited)
         self.assertTrue(all(c["valid"] and c["url"].startswith("https://") for c in r["citations"]))
         self.assertEqual(self.client.post("/api/gkg/ask", json={"question": "x", "v": "nope"}).status_code, 400)
+
+
+class LlmProviderTest(unittest.TestCase):
+    """OpenAI-compatible provider via LLM_* (mocked HTTP), then UPSTAGE_*, then offline."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.mkdtemp(prefix="gkg_llm_")
+        root = os.path.join(cls.tmp, "gdelt")
+        write_fake_slim(root)
+        cls.cache, cls.evid = os.path.join(cls.tmp, "c.sqlite"), os.path.join(cls.tmp, "e.sqlite")
+        ensure_cache(CacheConfig(), root=root, path=cls.cache, evidence_path=cls.evid, progress=None)
+        cls.reader = CacheReader(cls.cache, cls.evid)
+        from app_gkg import create_app
+        cls.client = create_app(cls.cache, cls.evid).test_client()
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, ignore_errors=True)
+
+    LLM = {"LLM_API_KEY": "sk-test-secret", "LLM_BASE_URL": "https://llm.example.com/v1/", "LLM_MODEL": "gpt-test",
+           "UPSTAGE_API_KEY": "up-secret"}
+
+    def recorder(self, idx):
+        calls = []
+        seq = iter([{"tool_calls": [{"id": "c1", "function": {"name": "get_key_detail",
+                                                               "arguments": json.dumps({"key": "joe biden"})}}]},
+                    {"content": f"요약 [#{idx}]"}])
+
+        def _post(url, key, payload):
+            calls.append((url, key, payload["model"]))
+            return {"choices": [{"message": next(seq)}]}
+        return calls, _post
+
+    def idx(self):
+        return self.reader.evidence("P:joe biden", self.reader.articles[self.reader.times[-1]], 8)["articles"][0]["idx"]
+
+    def test_provider_order(self):
+        with mock.patch.dict(os.environ, self.LLM):
+            p = gkg_agent.provider()
+            self.assertEqual((p["name"], p["base"], p["model"]), ("llm", "https://llm.example.com/v1", "gpt-test"))
+        with mock.patch.dict(os.environ, {**self.LLM, "LLM_MODEL": ""}):
+            p = gkg_agent.provider()
+            self.assertEqual(p["name"], "solar")                     # partial LLM_* is skipped, with a note
+            self.assertIn("LLM_MODEL", p["note"])
+        with mock.patch.dict(os.environ, {**NO_LLM, "UPSTAGE_API_KEY": ""}):
+            self.assertEqual(gkg_agent.provider()["name"], "offline")
+
+    def test_llm_call_uses_llm_env(self):
+        calls, post = self.recorder(self.idx())
+        with mock.patch.dict(os.environ, self.LLM), mock.patch.object(gkg_agent, "_post", post):
+            r = gkg_agent.ask(self.reader, "joe biden 왜?")
+        self.assertEqual(r["mode"], "llm (gpt-test)")
+        self.assertTrue(r["verified"])
+        self.assertEqual({c[0] for c in calls}, {"https://llm.example.com/v1/chat/completions"})
+        self.assertEqual({(c[1], c[2]) for c in calls}, {("sk-test-secret", "gpt-test")})
+        self.assertNotIn("secret", json.dumps(r, ensure_ascii=False))
+
+    def test_partial_llm_falls_back_to_solar_then_offline(self):
+        calls, post = self.recorder(self.idx())
+        with mock.patch.dict(os.environ, {**self.LLM, "LLM_BASE_URL": ""}), mock.patch.object(gkg_agent, "_post", post):
+            r = gkg_agent.ask(self.reader, "joe biden 왜?")
+        self.assertTrue(r["mode"].startswith("solar"))
+        self.assertTrue(calls[0][0].startswith("https://api.upstage.ai"))
+        self.assertEqual(calls[0][1], "up-secret")
+        self.assertIn("LLM_BASE_URL", r["warning"])
+        with mock.patch.dict(os.environ, {**NO_LLM, "LLM_API_KEY": "sk-x", "UPSTAGE_API_KEY": ""}),                 mock.patch.object(gkg_agent, "_post", side_effect=AssertionError("no network")):
+            r = gkg_agent.ask(self.reader, "joe biden 왜?")
+        self.assertEqual(r["mode"], "offline")
+        self.assertIn("LLM_BASE_URL", r["warning"])
+
+    def test_api_failure_falls_back_offline(self):
+        import urllib.error
+
+        def boom(url, key, payload):
+            raise urllib.error.URLError("refused")
+        with mock.patch.dict(os.environ, self.LLM), mock.patch.object(gkg_agent, "_post", boom):
+            r = gkg_agent.ask(self.reader, "joe biden 왜?")
+        self.assertEqual(r["mode"], "offline-fallback")
+        self.assertIn("LLM API 호출 실패", r["warning"])
+
+    def test_info_never_exposes_keys(self):
+        with mock.patch.dict(os.environ, {**self.LLM, "LLM_BASE_URL": "https://user:pw@llm.example.com/v1"}):
+            body = self.client.get("/api/gkg/info").get_data(as_text=True)
+            info = json.loads(body)
+        self.assertEqual(info["llm"], {"name": "llm", "label": "LLM", "model": "gpt-test",
+                                       "host": "https://llm.example.com", "note": None, "enabled": True})
+        for secret in ("sk-test-secret", "up-secret", "user:pw"):
+            self.assertNotIn(secret, body)
 
 
 if __name__ == "__main__":

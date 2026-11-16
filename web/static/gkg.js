@@ -846,8 +846,9 @@ async function askAgent(ev) {
   try {
     const r = await api("/api/gkg/ask", {}, { question: q, t: S.times[S.idx], key: S.selected, v: S.variant });
     const trace = (r.trace || []).map((t) => `<span class="chip" title="${esc(JSON.stringify(t.args))}">${esc(t.tool)}(${esc(Object.values(t.args || {}).join(", "))})</span>`).join("");
-    const modeLabel = r.mode.startsWith("solar") ? `Solar 실시간 답변 · ${r.mode.slice(7, -1)}`
-      : r.mode === "offline" ? "오프라인 요약 (Solar 미사용)" : "오프라인 요약 (Solar 대체)";
+    const live = /^(solar|llm) \((.*)\)$/.exec(r.mode);
+    const modeLabel = live ? `${live[1] === "llm" ? "LLM" : "Solar"} 실시간 답변 · ${live[2]}`
+      : r.mode === "offline" ? "오프라인 요약 (모델 미사용)" : "오프라인 요약 (모델 대체)";
     pending.innerHTML = `
       <div class="asof"><span>기준 시점 ${esc(r.as_of)}</span><span>${esc(modeLabel)}</span>
         ${r.verified ? '<span class="ok" title="인용한 기사 idx가 모두 도구 조회 결과에 있음"><svg><use href="#i-check"/></svg>근거 검증 통과</span>' : ""}</div>
@@ -1026,7 +1027,9 @@ async function init() {
   S.compare = params.getAll("cmp").filter((c) => /^[POL]:/.test(c)).slice(0, 3);
   syncTabs();
   $("brandSub").textContent = `GDELT GKG 2.1 영어 기사 ${compact(S.info.articles)}건 · ${S.info.range.start} ~ ${S.info.range.end} · 6시간 스냅샷 ${S.times.length}개`;
-  $("agentMode").textContent = S.info.solar_enabled ? "Solar · UPSTAGE_API_KEY" : "오프라인 요약 (API 키 없음)";
+  const lp = S.info.llm || {};
+  $("agentMode").textContent = lp.enabled ? `${lp.label} · ${lp.model}${lp.host ? ` · ${lp.host.replace(/^https?:\/\//, "")}` : ""}` : "오프라인 요약 (API 키 없음)";
+  if (lp.note) $("agentMode").title = lp.note;
   $("agentMode").classList.toggle("good", S.info.solar_enabled);
   buildTimeline();
   fillPresets();

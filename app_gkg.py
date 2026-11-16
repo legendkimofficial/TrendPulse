@@ -5,7 +5,9 @@
     python app_gkg.py --rebuild               (force a new full replay)
     python scripts/gkg_app_cache.py --start 2024-09-15 --end 2024-10-14 --theta 0.5
                                               (adds a θ variant the settings dialog can switch to)
-    set UPSTAGE_API_KEY=...                   -> Solar agent (offline summary otherwise)
+    set LLM_API_KEY=... LLM_BASE_URL=... LLM_MODEL=...   -> any OpenAI-compatible API
+    set UPSTAGE_API_KEY=...                   -> Solar agent (when LLM_* is not fully set)
+                                              (neither: offline summary; keys only from the environment)
 
 On start the exact cache for the range is reused or rebuilt (one full replay) in
 data/gdelt/processed/gkg_cache.sqlite. Every cache file found there (gkg_cache.sqlite,
@@ -23,6 +25,7 @@ from flask import Flask, jsonify, render_template, request
 
 from trendpulse.gkg import DEFAULT_ROOT, REPO_ROOT
 from trendpulse.gkg_agent import ask as gkg_ask
+from trendpulse.gkg_agent import public_provider
 from trendpulse.gkg_cache import KIND_KO, CacheConfig, CacheReader, discover_variants, ensure_cache
 from trendpulse.gkg_engine import variant_name
 
@@ -149,7 +152,7 @@ def create_app(cache_path: str | None = None, evidence_path: str | None = None, 
             "built_utc": m["built_utc"], "build_seconds": m["seconds"], "articles_per_s": m.get("articles_per_s"),
             "peak_rss_mb": m["peak_rss_mb"], "fingerprint": m["fingerprint"], "kinds": KIND_KO,
             "days": m.get("days", []), "events": catalog,
-            "solar_enabled": bool(os.environ.get("UPSTAGE_API_KEY")),
+            "solar_enabled": public_provider()["enabled"], "llm": public_provider(),
         })
 
     @app.get("/api/gkg/snapshot")
