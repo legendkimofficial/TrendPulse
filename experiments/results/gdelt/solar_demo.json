@@ -1,0 +1,363 @@
+{
+ "run_at": "2026-11-16 18:15",
+ "input_sha256": "0c5043b3874e3b07f2343687d0d70cc5c03bfdf40446d666859356221bc3c00f",
+ "reference_time": "2026-11-15T12:00:00Z",
+ "articles_replayed": 755193,
+ "keyword": "u.s.",
+ "ranking_top10": [
+  {
+   "rank": 1,
+   "keyword": "u.s.",
+   "score": 9251.25,
+   "entry": null,
+   "prev_rank": 1,
+   "delta": 0,
+   "outlets": 3314,
+   "countries": 67,
+   "mentions_7d": 24790,
+   "burst": null,
+   "evidence": [
+    755134,
+    755129,
+    755122
+   ]
+  },
+  {
+   "rank": 2,
+   "keyword": "trump",
+   "score": 4944.1078,
+   "entry": null,
+   "prev_rank": 2,
+   "delta": 0,
+   "outlets": 2045,
+   "countries": 52,
+   "mentions_7d": 15879,
+   "burst": null,
+   "evidence": [
+    754911,
+    754401,
+    754357
+   ]
+  },
+  {
+   "rank": 3,
+   "keyword": "ai",
+   "score": 4282.7516,
+   "entry": null,
+   "prev_rank": 3,
+   "delta": 0,
+   "outlets": 2505,
+   "countries": 65,
+   "mentions_7d": 13183,
+   "burst": null,
+   "evidence": [
+    755173,
+    755126,
+    754917
+   ]
+  },
+  {
+   "rank": 4,
+   "keyword": "police",
+   "score": 4023.5578,
+   "entry": null,
+   "prev_rank": 4,
+   "delta": 0,
+   "outlets": 2302,
+   "countries": 70,
+   "mentions_7d": 11342,
+   "burst": null,
+   "evidence": [
+    755162,
+    755161,
+    755135
+   ]
+  },
+  {
+   "rank": 5,
+   "keyword": "stop",
+   "score": 3821.1088,
+   "entry": null,
+   "prev_rank": 5,
+   "delta": 0,
+   "outlets": 2226,
+   "countries": 41,
+   "mentions_7d": 6801,
+   "burst": null,
+   "evidence": [
+    755024,
+    754576,
+    754386
+   ]
+  },
+  {
+   "rank": 6,
+   "keyword": "nvidia",
+   "score": 3710.6906,
+   "entry": null,
+   "prev_rank": 6,
+   "delta": 0,
+   "outlets": 1786,
+   "countries": 48,
+   "mentions_7d": 11059,
+   "burst": null,
+   "evidence": [
+    755049,
+    754012,
+    753877
+   ]
+  },
+  {
+   "rank": 7,
+   "keyword": "november",
+   "score": 3699.9868,
+   "entry": null,
+   "prev_rank": 7,
+   "delta": 0,
+   "outlets": 2240,
+   "countries": 57,
+   "mentions_7d": 10347,
+   "burst": null,
+   "evidence": [
+    755188,
+    755133,
+    755079
+   ]
+  },
+  {
+   "rank": 8,
+   "keyword": "state",
+   "score": 3427.5005,
+   "entry": null,
+   "prev_rank": 8,
+   "delta": 0,
+   "outlets": 2632,
+   "countries": 59,
+   "mentions_7d": 9127,
+   "burst": null,
+   "evidence": [
+    755078,
+    755076,
+    755043
+   ]
+  },
+  {
+   "rank": 9,
+   "keyword": "ground",
+   "score": 3396.6659,
+   "entry": null,
+   "prev_rank": 9,
+   "delta": 0,
+   "outlets": 1863,
+   "countries": 37,
+   "mentions_7d": 5667,
+   "burst": null,
+   "evidence": [
+    755024,
+    754740,
+    754576
+   ]
+  },
+  {
+   "rank": 10,
+   "keyword": "county",
+   "score": 3220.0941,
+   "entry": null,
+   "prev_rank": 10,
+   "delta": 0,
+   "outlets": 1857,
+   "countries": 15,
+   "mentions_7d": 9441,
+   "burst": null,
+   "evidence": [
+    755178,
+    755078,
+    754731
+   ]
+  }
+ ],
+ "burst": {
+  "rows": [],
+  "status": "deferred",
+  "reason": "collection_gap"
+ },
+ "related": [
+  {
+   "id": 755134,
+   "obs": "2026-11-15T11:46:00Z",
+   "title": "Indian products to get preferential access to US market over rival nations: Piyush Goyal - The Tribune",
+   "outlet": "The Tribune",
+   "domain": "tribuneindia.com",
+   "country": "unknown",
+   "url": "https://www.tribuneindia.com/news/business/indian-products-to-get-preferential-access-to-us-market-over-rival-nations-piyush-goyal/",
+   "desc": "India and the United States have reached an understanding that Indian products will enjoy preferential access to the American market over those from competing countries, Commerce and Industry Minister"
+  },
+  {
+   "id": 755129,
+   "obs": "2026-11-15T11:46:00Z",
+   "title": "Ringgit seen remaining soft against US dollar next week",
+   "outlet": "The Star",
+   "domain": "thestar.com.my",
+   "country": "MY",
+   "url": "https://www.thestar.com.my/business/business-news/2026/11/15/ringgit-seen-remaining-soft-against-us-dollar-next-week",
+   "desc": "KUALA LUMPUR: The ringgit is expected to remain soft against the US dollar next week as the greenback remains well supported by expectations of further interest rate hikes by the US Federal Reserve (F"
+  },
+  {
+   "id": 755122,
+   "obs": "2026-11-15T11:46:00Z",
+   "title": "At least two injured as passenger, cargo planes collide at U.S. airport",
+   "outlet": "The Hindu",
+   "domain": "thehindu.com",
+   "country": "IN",
+   "url": "https://www.thehindu.com/news/international/2-injured-as-passenger-cargo-planes-collide-at-us-airport/article71704597.ece",
+   "desc": "Two injured after a Copa passenger plane collided with a UPS cargo plane on taxiing at Miami International Airport."
+  },
+  {
+   "id": 755025,
+   "obs": "2026-11-15T11:46:00Z",
+   "title": "Iran strikes US base, Bahrain intercepts aerial attacks",
+   "outlet": "newcastleherald.com.au",
+   "domain": "newcastleherald.com.au",
+   "country": "AU",
+   "url": "https://www.newcastleherald.com.au/story/9391689/iran-strikes-us-base-bahrain-intercepts-aerial-attacks/",
+   "desc": "Iran's Islamic Revolutionary Guard Corps says it has attacked a US military base in Bahrain in retaliation for..."
+  },
+  {
+   "id": 755024,
+   "obs": "2026-11-15T11:46:00Z",
+   "title": "US air travel should normalize Sunday after ground stop triggers mass cancellations, FAA says",
+   "outlet": "NonStop Local Tri-Cities/Yakima",
+   "domain": "nbcrightnow.com",
+   "country": "unknown",
+   "url": "https://www.nbcrightnow.com/regional/us-air-travel-should-normalize-sunday-after-ground-stop-triggers-mass-cancellations-faa-says/article_290600ca-2a47-50dd-8d7f-7e29c1ba8156.html",
+   "desc": "Airlines have canceled thousands of flights across the U.S. as they work to recover from a nationwide ground stop that left passengers scrambling for seats and disrupted travel around the"
+  }
+ ],
+ "solar_mode_requested": "offline",
+ "solar_response": {
+  "mode": "offline",
+  "as_of": {
+   "pos": 755193,
+   "t_iso": "2026-11-15T12:00:00Z"
+  },
+  "verified": true,
+  "keyword": "u.s.",
+  "trace": [
+   {
+    "tool": "get_topic_stats",
+    "args": {
+     "keyword": "u.s."
+    },
+    "summary": "순위 1, 점수 9251.25"
+   },
+   {
+    "tool": "search_related_news",
+    "args": {
+     "keyword": "u.s.",
+     "limit": 6
+    },
+    "summary": "기사 6건"
+   }
+  ],
+  "citations": [
+   {
+    "id": 755134,
+    "valid": true,
+    "obs": "2026-11-15T11:46:00Z",
+    "title": "Indian products to get preferential access to US market over rival nations: Piyush Goyal - The Tribune",
+    "outlet": "The Tribune",
+    "domain": "tribuneindia.com",
+    "country": "unknown",
+    "url": "https://www.tribuneindia.com/news/business/indian-products-to-get-preferential-access-to-us-market-over-rival-nations-piyush-goyal/"
+   },
+   {
+    "id": 755129,
+    "valid": true,
+    "obs": "2026-11-15T11:46:00Z",
+    "title": "Ringgit seen remaining soft against US dollar next week",
+    "outlet": "The Star",
+    "domain": "thestar.com.my",
+    "country": "MY",
+    "url": "https://www.thestar.com.my/business/business-news/2026/11/15/ringgit-seen-remaining-soft-against-us-dollar-next-week"
+   },
+   {
+    "id": 755122,
+    "valid": true,
+    "obs": "2026-11-15T11:46:00Z",
+    "title": "At least two injured as passenger, cargo planes collide at U.S. airport",
+    "outlet": "The Hindu",
+    "domain": "thehindu.com",
+    "country": "IN",
+    "url": "https://www.thehindu.com/news/international/2-injured-as-passenger-cargo-planes-collide-at-us-airport/article71704597.ece"
+   },
+   {
+    "id": 755025,
+    "valid": true,
+    "obs": "2026-11-15T11:46:00Z",
+    "title": "Iran strikes US base, Bahrain intercepts aerial attacks",
+    "outlet": "newcastleherald.com.au",
+    "domain": "newcastleherald.com.au",
+    "country": "AU",
+    "url": "https://www.newcastleherald.com.au/story/9391689/iran-strikes-us-base-bahrain-intercepts-aerial-attacks/"
+   }
+  ],
+  "answer": "**u.s.** — 2026-11-15T12:00:00Z 관측 기준 순위 1, 7일 점수 9251.25, 72시간 급상승 보류(collection_gap).\n- 7일 내 제목 언급 24790건, 보도 매체 3314곳 (발행국: AE, AT, AU, AZ, BB, BD, BN, BZ).\n- 최근 관련 기사:\n  - [#755134] 2026-11-15T11:46 · Indian products to get preferential access to US market over rival nations: Piyush Goyal - The Tribune (The Tribune, unknown)\n  - [#755129] 2026-11-15T11:46 · Ringgit seen remaining soft against US dollar next week (The Star, MY)\n  - [#755122] 2026-11-15T11:46 · At least two injured as passenger, cargo planes collide at U.S. airport (The Hindu, IN)\n  - [#755025] 2026-11-15T11:46 · Iran strikes US base, Bahrain intercepts aerial attacks (newcastleherald.com.au, AU)\n- DGIM: 최근 1,000건 중 약 22.5건 (정확 23건)\n\n※ 오프라인 요약 모드(Solar 미사용): 도구 결과를 템플릿으로 정리했습니다."
+ },
+ "verification": [
+  {
+   "check": "도구 호출됨",
+   "ok": true,
+   "evidence": [
+    "get_topic_stats",
+    "search_related_news"
+   ]
+  },
+  {
+   "check": "동일 키워드 사용",
+   "ok": true,
+   "evidence": "u.s."
+  },
+  {
+   "check": "동일 기준 시각(as_of)",
+   "ok": true,
+   "evidence": {
+    "pos": 755193,
+    "t_iso": "2026-11-15T12:00:00Z"
+   }
+  },
+  {
+   "check": "인용 기사가 도구 결과에 존재",
+   "ok": true,
+   "evidence": [
+    [
+     755134,
+     true
+    ],
+    [
+     755129,
+     true
+    ],
+    [
+     755122,
+     true
+    ],
+    [
+     755025,
+     true
+    ]
+   ]
+  },
+  {
+   "check": "답변 수치 == 엔진 점수",
+   "ok": true,
+   "evidence": "engine=9251.25"
+  },
+  {
+   "check": "오프라인 응답 표시",
+   "ok": true,
+   "evidence": "offline"
+  }
+ ],
+ "verification_passed": true,
+ "real_solar_call": false
+}

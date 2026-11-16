@@ -1,0 +1,260 @@
+{
+ "meta": {
+  "python": "3.12.2",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "run_at": "2026-11-16 17:52"
+ },
+ "input": {
+  "path": "data/processed/gdelt/articles.jsonl",
+  "sha256": "0c5043b3874e3b07f2343687d0d70cc5c03bfdf40446d666859356221bc3c00f",
+  "window": {
+   "start_utc": "2026-11-09T00:00:00Z",
+   "end_utc": "2026-11-16T00:00:00Z",
+   "days": [
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-14",
+    "2026-11-15"
+   ]
+  },
+  "articles": 789845,
+  "gaps": 3
+ },
+ "E1": {
+  "snapshot_cadence": "every observation batch (~15 min)",
+  "snapshots": 1270,
+  "replay_elapsed_sec": 2933.6,
+  "variants": {
+   "theta=0.05": {
+    "theta": 0.05,
+    "topk_overlap_mean": 1.0,
+    "topk_overlap_min": 1.0,
+    "same_order_pct": 100.0,
+    "abs_err_mean": 0.0,
+    "abs_err_max": 0.0,
+    "rel_err_mean": 0.0,
+    "rel_err_p95": 0.0,
+    "rel_err_max": 0.0,
+    "pruned_exceeds_exact_cases": 0,
+    "keywords_baseline_final": 156693,
+    "keywords_variant_final": 156693,
+    "keywords_variant_peak": 156693,
+    "dropped_events": 0,
+    "mem_bytes_mean": 54504959,
+    "mem_bytes_baseline_mean": 54504959,
+    "mem_reduction_pct": 0.0,
+    "events_baseline": 0,
+    "events_variant": 0,
+    "events_matched": 0,
+    "recall": 1.0,
+    "precision": 1.0,
+    "kinds_baseline": {
+     "first": 0,
+     "re-entry": 0
+    },
+    "kinds_matched": {
+     "first": 0,
+     "re-entry": 0
+    },
+    "matched_same_snapshot_pct": 0,
+    "matched_offset_median_min": null,
+    "matched_offset_max_min": null,
+    "match_tolerance": "+-60 min",
+    "unmatched_edge_events": 0,
+    "unmatched_other": 0,
+    "spurious_variant_events": 0
+   },
+   "theta=0.1": {
+    "theta": 0.1,
+    "topk_overlap_mean": 1.0,
+    "topk_overlap_min": 1.0,
+    "same_order_pct": 100.0,
+    "abs_err_mean": 0.0,
+    "abs_err_max": 0.0,
+    "rel_err_mean": 0.0,
+    "rel_err_p95": 0.0,
+    "rel_err_max": 0.0,
+    "pruned_exceeds_exact_cases": 0,
+    "keywords_baseline_final": 156693,
+    "keywords_variant_final": 153239,
+    "keywords_variant_peak": 154373,
+    "dropped_events": 3471,
+    "mem_bytes_mean": 54478656,
+    "mem_bytes_baseline_mean": 54504959,
+    "mem_reduction_pct": 0.0,
+    "events_baseline": 0,
+    "events_variant": 0,
+    "events_matched": 0,
+    "recall": 1.0,
+    "precision": 1.0,
+    "kinds_baseline": {
+     "first": 0,
+     "re-entry": 0
+    },
+    "kinds_matched": {
+     "first": 0,
+     "re-entry": 0
+    },
+    "matched_same_snapshot_pct": 0,
+    "matched_offset_median_min": null,
+    "matched_offset_max_min": null,
+    "match_tolerance": "+-60 min",
+    "unmatched_edge_events": 0,
+    "unmatched_other": 0,
+    "spurious_variant_events": 0
+   },
+   "theta=0.3": {
+    "theta": 0.3,
+    "topk_overlap_mean": 1.0,
+    "topk_overlap_min": 1.0,
+    "same_order_pct": 100.0,
+    "abs_err_mean": 0.0,
+    "abs_err_max": 0.0,
+    "rel_err_mean": 0.0,
+    "rel_err_p95": 0.0,
+    "rel_err_max": 0.0,
+    "pruned_exceeds_exact_cases": 0,
+    "keywords_baseline_final": 156693,
+    "keywords_variant_final": 110681,
+    "keywords_variant_peak": 121359,
+    "dropped_events": 50373,
+    "mem_bytes_mean": 51778625,
+    "mem_bytes_baseline_mean": 54504959,
+    "mem_reduction_pct": 5.0,
+    "events_baseline": 0,
+    "events_variant": 0,
+    "events_matched": 0,
+    "recall": 1.0,
+    "precision": 1.0,
+    "kinds_baseline": {
+     "first": 0,
+     "re-entry": 0
+    },
+    "kinds_matched": {
+     "first": 0,
+     "re-entry": 0
+    },
+    "matched_same_snapshot_pct": 0,
+    "matched_offset_median_min": null,
+    "matched_offset_max_min": null,
+    "match_tolerance": "+-60 min",
+    "unmatched_edge_events": 0,
+    "unmatched_other": 0,
+    "spurious_variant_events": 0
+   }
+  },
+  "line_items": {
+   "article_store_bytes": 1274177602,
+   "postings_index_bytes": 48637091,
+   "note": "deep_sizeof at end of run; article store = GalArticle objects incl. title/desc/URL strings and token tuples; postings = dict[str, array('i')]. Aggregation-state bytes (per variant) are sampled every 20 snapshots and averaged."
+  }
+ },
+ "E2": {
+  "every": 4,
+  "tracked_keywords": [
+   "u.s.",
+   "trump",
+   "november",
+   "ai",
+   "police",
+   "stop",
+   "nvidia",
+   "ground",
+   "state",
+   "county",
+   "greg",
+   "woai"
+  ],
+  "mention_counts": {
+   "top": 25543,
+   "median": 258,
+   "low": 100
+  },
+  "rows": [
+   {
+    "N": 200,
+    "r": 2,
+    "tracked": 12,
+    "eval_points": 2630,
+    "abs_err_mean": 0.455,
+    "abs_err_max": 7.5,
+    "rel_err_mean": 0.0925,
+    "rel_err_p95": 0.25,
+    "rel_err_max": 0.3889,
+    "rel_err_bound": 0.5,
+    "zero_truth_false_positive": 0,
+    "exact_queue_mismatch": 0,
+    "buckets_mean": 2.6,
+    "buckets_max": 8,
+    "theo_bits_dgim_mean": 31,
+    "theo_bits_exact_mean": 32,
+    "pybytes_dgim_mean": 448,
+    "pybytes_exact_mean": 975
+   },
+   {
+    "N": 1000,
+    "r": 2,
+    "tracked": 12,
+    "eval_points": 3153,
+    "abs_err_mean": 1.825,
+    "abs_err_max": 26.5,
+    "rel_err_mean": 0.1111,
+    "rel_err_p95": 0.25,
+    "rel_err_max": 0.4412,
+    "rel_err_bound": 0.5,
+    "zero_truth_false_positive": 0,
+    "exact_queue_mismatch": 0,
+    "buckets_mean": 5.0,
+    "buckets_max": 12,
+    "theo_bits_dgim_mean": 71,
+    "theo_bits_exact_mean": 162,
+    "pybytes_dgim_mean": 698,
+    "pybytes_exact_mean": 1313
+   },
+   {
+    "N": 1000,
+    "r": 3,
+    "tracked": 12,
+    "eval_points": 3153,
+    "abs_err_mean": 1.203,
+    "abs_err_max": 15.5,
+    "rel_err_mean": 0.072,
+    "rel_err_p95": 0.1591,
+    "rel_err_max": 0.2333,
+    "rel_err_bound": 0.25,
+    "zero_truth_false_positive": 0,
+    "exact_queue_mismatch": 0,
+    "buckets_mean": 6.6,
+    "buckets_max": 16,
+    "theo_bits_dgim_mean": 93,
+    "theo_bits_exact_mean": 162,
+    "pybytes_dgim_mean": 852,
+    "pybytes_exact_mean": 1313
+   },
+   {
+    "N": 5000,
+    "r": 2,
+    "tracked": 12,
+    "eval_points": 3419,
+    "abs_err_mean": 8.046,
+    "abs_err_max": 119.5,
+    "rel_err_mean": 0.107,
+    "rel_err_p95": 0.2344,
+    "rel_err_max": 0.3889,
+    "rel_err_bound": 0.5,
+    "zero_truth_false_positive": 0,
+    "exact_queue_mismatch": 0,
+    "buckets_mean": 7.8,
+    "buckets_max": 16,
+    "theo_bits_dgim_mean": 133,
+    "theo_bits_exact_mean": 962,
+    "pybytes_dgim_mean": 1021,
+    "pybytes_exact_mean": 3087
+   }
+  ]
+ },
+ "elapsed_sec": 3551.6
+}

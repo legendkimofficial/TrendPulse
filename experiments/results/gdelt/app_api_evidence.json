@@ -1,0 +1,635 @@
+{
+ "captured_at": "2026-11-16 19:03",
+ "base": "http://127.0.0.1:5001",
+ "info": {
+  "articles": 789845,
+  "collection_gaps": [
+   {
+    "end": "2026-11-09T10:45:00+00:00Z",
+    "slots": 1,
+    "start": "2026-11-09T10:30:00+00:00Z"
+   },
+   {
+    "end": "2026-11-09T11:15:00+00:00Z",
+    "slots": 1,
+    "start": "2026-11-09T11:00:00+00:00Z"
+   },
+   {
+    "end": "2026-11-11T13:15:00+00:00Z",
+    "slots": 1,
+    "start": "2026-11-11T13:00:00+00:00Z"
+   }
+  ],
+  "input_sha256": "0c5043b3874e3b07f2343687d0d70cc5c03bfdf40446d666859356221bc3c00f",
+  "solar_enabled": false,
+  "solar_model": "solar-pro2",
+  "version": "gdelt-submission/1.0",
+  "window": {
+   "days": [
+    "2026-11-09",
+    "2026-11-10",
+    "2026-11-11",
+    "2026-11-12",
+    "2026-11-13",
+    "2026-11-14",
+    "2026-11-15"
+   ],
+   "end_utc": "2026-11-16T00:00:00Z",
+   "start_utc": "2026-11-09T00:00:00Z"
+  }
+ },
+ "state": {
+  "burst": {
+   "reason": "collection_gap",
+   "rows": [],
+   "status": "deferred"
+  },
+  "clock": {
+   "finished": true,
+   "first_obs": "2026-11-09T00:01:00Z",
+   "last_obs": "2026-11-15T23:47:00Z",
+   "pos": 789845,
+   "snapshot_i": 1269,
+   "t": 1794786420,
+   "t_iso": "2026-11-15T23:47:00Z",
+   "total": 789845
+  },
+  "config": {
+   "burst_h": 72.0,
+   "dgim_n": 1000,
+   "dgim_r": 2,
+   "half_life_h": 48.0,
+   "k": 20,
+   "max_trackers": 200,
+   "min_articles_per_interval": 200,
+   "min_keyword_articles": 5,
+   "min_keyword_outlets": 3,
+   "threshold": null,
+   "window_h": 168.0
+  },
+  "metrics": {
+   "dropped_events": 0,
+   "keywords": 156693,
+   "peak_keywords": 156693,
+   "threshold": null,
+   "trackers": 74
+  },
+  "ranking": [
+   {
+    "burst": null,
+    "countries": 68,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789822,
+     789820,
+     789801
+    ],
+    "keyword": "u.s.",
+    "mentions_7d": 25543,
+    "outlets": 3337,
+    "prev_rank": 1,
+    "rank": 1,
+    "score": 8496.3347
+   },
+   {
+    "burst": null,
+    "countries": 52,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789822,
+     789815,
+     789779
+    ],
+    "keyword": "trump",
+    "mentions_7d": 16615,
+    "outlets": 2068,
+    "prev_rank": 2,
+    "rank": 2,
+    "score": 4849.39
+   },
+   {
+    "burst": null,
+    "countries": 58,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789769,
+     789615,
+     789526
+    ],
+    "keyword": "november",
+    "mentions_7d": 11593,
+    "outlets": 2794,
+    "prev_rank": 3,
+    "rank": 3,
+    "score": 4243.0684
+   },
+   {
+    "burst": null,
+    "countries": 65,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789647,
+     789538,
+     789424
+    ],
+    "keyword": "ai",
+    "mentions_7d": 13658,
+    "outlets": 2560,
+    "prev_rank": 4,
+    "rank": 4,
+    "score": 4049.5106
+   },
+   {
+    "burst": null,
+    "countries": 70,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789733,
+     789680,
+     789652
+    ],
+    "keyword": "police",
+    "mentions_7d": 11975,
+    "outlets": 2331,
+    "prev_rank": 5,
+    "rank": 5,
+    "score": 3971.51
+   },
+   {
+    "burst": null,
+    "countries": 43,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789825,
+     789804,
+     789768
+    ],
+    "keyword": "stop",
+    "mentions_7d": 7400,
+    "outlets": 2270,
+    "prev_rank": 6,
+    "rank": 6,
+    "score": 3780.3457
+   },
+   {
+    "burst": null,
+    "countries": 48,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789656,
+     789613,
+     789340
+    ],
+    "keyword": "nvidia",
+    "mentions_7d": 11400,
+    "outlets": 1808,
+    "prev_rank": 7,
+    "rank": 7,
+    "score": 3446.4715
+   },
+   {
+    "burst": null,
+    "countries": 37,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789825,
+     789804,
+     789768
+    ],
+    "keyword": "ground",
+    "mentions_7d": 6195,
+    "outlets": 1893,
+    "prev_rank": 8,
+    "rank": 8,
+    "score": 3358.6388
+   },
+   {
+    "burst": null,
+    "countries": 59,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789816,
+     789722,
+     789675
+    ],
+    "keyword": "state",
+    "mentions_7d": 9589,
+    "outlets": 2658,
+    "prev_rank": 9,
+    "rank": 9,
+    "score": 3313.4553
+   },
+   {
+    "burst": null,
+    "countries": 15,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789593,
+     789484,
+     789468
+    ],
+    "keyword": "county",
+    "mentions_7d": 9840,
+    "outlets": 1865,
+    "prev_rank": 10,
+    "rank": 10,
+    "score": 3084.2775
+   },
+   {
+    "burst": null,
+    "countries": 59,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789709,
+     789670,
+     789665
+    ],
+    "keyword": "home",
+    "mentions_7d": 8902,
+    "outlets": 2780,
+    "prev_rank": 11,
+    "rank": 11,
+    "score": 3052.9462
+   },
+   {
+    "burst": null,
+    "countries": 58,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789496,
+     789485,
+     788923
+    ],
+    "keyword": "city",
+    "mentions_7d": 9783,
+    "outlets": 3072,
+    "prev_rank": 12,
+    "rank": 12,
+    "score": 2992.8744
+   },
+   {
+    "burst": null,
+    "countries": 38,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789619,
+     789609,
+     789581
+    ],
+    "keyword": "star",
+    "mentions_7d": 8542,
+    "outlets": 2140,
+    "prev_rank": 13,
+    "rank": 13,
+    "score": 2899.9257
+   },
+   {
+    "burst": null,
+    "countries": 40,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789684,
+     789402,
+     789401
+    ],
+    "keyword": "india",
+    "mentions_7d": 7868,
+    "outlets": 857,
+    "prev_rank": 14,
+    "rank": 14,
+    "score": 2868.2625
+   },
+   {
+    "burst": null,
+    "countries": 55,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789633,
+     789631,
+     788793
+    ],
+    "keyword": "u.k.",
+    "mentions_7d": 8180,
+    "outlets": 1655,
+    "prev_rank": 15,
+    "rank": 15,
+    "score": 2789.234
+   },
+   {
+    "burst": null,
+    "countries": 47,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789193,
+     789177,
+     789113
+    ],
+    "keyword": "house",
+    "mentions_7d": 9431,
+    "outlets": 2456,
+    "prev_rank": 16,
+    "rank": 16,
+    "score": 2617.7406
+   },
+   {
+    "burst": null,
+    "countries": 10,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789733,
+     789482,
+     789380
+    ],
+    "keyword": "ridge",
+    "mentions_7d": 6559,
+    "outlets": 410,
+    "prev_rank": 17,
+    "rank": 17,
+    "score": 2616.1641
+   },
+   {
+    "burst": null,
+    "countries": 2,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     789503,
+     789502,
+     789501
+    ],
+    "keyword": "aol",
+    "mentions_7d": 7616,
+    "outlets": 3,
+    "prev_rank": 18,
+    "rank": 18,
+    "score": 2593.8265
+   },
+   {
+    "burst": null,
+    "countries": 52,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     788972,
+     788670,
+     788496
+    ],
+    "keyword": "microsoft",
+    "mentions_7d": 5691,
+    "outlets": 1763,
+    "prev_rank": 19,
+    "rank": 19,
+    "score": 2511.149
+   },
+   {
+    "burst": null,
+    "countries": 46,
+    "delta": 0,
+    "entry": null,
+    "evidence": [
+     788972,
+     788765,
+     788496
+    ],
+    "keyword": "outage",
+    "mentions_7d": 5007,
+    "outlets": 1671,
+    "prev_rank": 20,
+    "rank": 20,
+    "score": 2376.7389
+   }
+  ]
+ },
+ "keyword_trump": {
+  "as_of": "2026-11-15T23:47:00Z",
+  "burst": {
+   "den_prev": 398341,
+   "den_recent": 262171,
+   "diff_pp": null,
+   "num_prev": 7982,
+   "num_recent": 4687,
+   "outlets_recent": 1363,
+   "reason": "collection_gap",
+   "share_prev_pp": 2.004,
+   "share_recent_pp": 1.788,
+   "status": "deferred"
+  },
+  "countries_7d": [
+   "AE",
+   "AL",
+   "AR",
+   "AT",
+   "AU",
+   "AZ",
+   "BB",
+   "BD",
+   "CA",
+   "CH",
+   "CN",
+   "DE",
+   "DK",
+   "EG",
+   "FR",
+   "GB",
+   "GE",
+   "GH",
+   "GR",
+   "ID",
+   "IE",
+   "IL",
+   "IN",
+   "IT",
+   "KE",
+   "KR",
+   "LK",
+   "LU",
+   "MO",
+   "MY",
+   "NA",
+   "NG",
+   "NO",
+   "NZ",
+   "OM",
+   "PH",
+   "PK",
+   "QA",
+   "RO",
+   "RU",
+   "SG",
+   "SI",
+   "SY",
+   "TR",
+   "TT",
+   "TZ",
+   "UA",
+   "UG",
+   "US",
+   "UY",
+   "VN",
+   "ZA",
+   "unknown"
+  ],
+  "dgim": {
+   "abs_error": 2.5,
+   "bound": 0.5,
+   "buckets": 7,
+   "dgim_bits": 98,
+   "estimate": 25.5,
+   "exact": 23,
+   "exact_bits": 230,
+   "observed": 1000,
+   "partial": false,
+   "pinned": false,
+   "rel_error": 0.1087,
+   "since_i": 754,
+   "since_obs": "2026-11-09T00:02:00Z",
+   "window": 1000
+  },
+  "first_seen": "2026-11-09T00:01:00Z",
+  "in_window": true,
+  "keyword": "trump",
+  "mentions_7d": 16615,
+  "outlets_7d": 2068,
+  "rank": 2,
+  "related": [
+   {
+    "country": "unknown",
+    "desc": "'This is a dispute between this Association of American Universities, which represents some of the Ivy League and other prestigious colleges, and the federal…",
+    "domain": "wnd.com",
+    "id": 789822,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "WorldNetDaily",
+    "title": "‘Exploited’: Trump moves to expose secret Chinese funding for U.S. colleges * WorldNetDaily * by Elizabeth Troutman Mitchell, The Daily Signal",
+    "url": "https://www.wnd.com/2026/11/trump-moves-expose-secret-chinese-funding-u-s/"
+   },
+   {
+    "country": "unknown",
+    "desc": "'Hundreds of thousands of Blue Collar Workers will be positively affected, BIG TIME, by the passage of this Bill'",
+    "domain": "wnd.com",
+    "id": 789815,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "WorldNetDaily",
+    "title": "‘Believe it or not’: Trump working with his Democrat archenemy to save one industry ‘made in America’ * WorldNetDaily * by Joe Kovacs",
+    "url": "https://www.wnd.com/2026/11/believe-it-not-trump-working-his-democrat-archenemy/"
+   },
+   {
+    "country": "unknown",
+    "desc": "President Donald Trump’s granddaughter Kai Trump is opening up about her bond with mom Vanessa Trump’s boyfriend, Tiger Woods",
+    "domain": "usmagazine.com",
+    "id": 789779,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "Us",
+    "title": "Donald Trump’s Granddaughter Kai Makes Rare Comment About Bonding With Mom’s Boyfriend Tiger Woods",
+    "url": "https://www.usmagazine.com/celebrity-news/news/kai-trump-makes-rare-comment-about-bonding-with-tiger-woods/"
+   },
+   {
+    "country": "unknown",
+    "desc": "Ashley Judd is opening up about a moment when she claims her late mom, Naomi Judd, wrote President Donald Trump’s name on her inner thigh before surgery",
+    "domain": "usmagazine.com",
+    "id": 789776,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "Us",
+    "title": "Ashley Judd Claims Late Mom Naomi Wrote Donald Trump’s Name on Her Inner Thigh Before Surgery",
+    "url": "https://www.usmagazine.com/celebrity-news/news/ashley-judd-claims-late-mom-wrote-donald-trumps-name-on-thigh/"
+   },
+   {
+    "country": "unknown",
+    "desc": "Aaron Reitz said targeting people or companies over their ties to Trump could violate their constitutional right to free association.",
+    "domain": "theepochtimes.com",
+    "id": 789759,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "The Epoch Times",
+    "title": "US Attorney Warns Warren Against Targeting Trump Associates",
+    "url": "https://www.theepochtimes.com/us/us-attorney-warns-warren-against-targeting-trump-associates-6125272"
+   },
+   {
+    "country": "unknown",
+    "desc": "Melania Trump is one of the most private women to hold the role of first lady. But she has commanded the spotlight since the Republican Party’s devastating losses in the",
+    "domain": "local3news.com",
+    "id": 789678,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "Local3News.com",
+    "title": "Usually private, Melania Trump steps into the spotlight after the midterm election",
+    "url": "https://www.local3news.com/local-news/alabama/usually-private-melania-trump-steps-into-the-spotlight-after-the-midterm-election/article_33472bb8-dcb9-5e65-98ce-cf66ce941760.html"
+   },
+   {
+    "country": "unknown",
+    "desc": "Preview of what to expect as President Trump meets with Chinese leader Xi Jinping and Russian President Vladimir Putin at the Asia-Pacific Economic Cooperation summit in Shenzhen, China this week.",
+    "domain": "kwbu.org",
+    "id": 789672,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "KWBU",
+    "title": "What to expect from Trump and Xi's upcoming meeting in China",
+    "url": "https://www.kwbu.org/latest-from-npr/2026-11-15/what-to-expect-from-trump-and-xis-upcoming-meeting-in-china"
+   },
+   {
+    "country": "unknown",
+    "desc": "Preview of what to expect as President Trump meets with Chinese leader Xi Jinping and Russian President Vladimir Putin at the Asia-Pacific Economic Cooperation summit in Shenzhen, China this week.",
+    "domain": "knau.org",
+    "id": 789664,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "KNAU Arizona Public Radio",
+    "title": "What to expect from Trump and Xi's upcoming meeting in China",
+    "url": "https://www.knau.org/2026-11-15/what-to-expect-from-trump-and-xis-upcoming-meeting-in-china"
+   },
+   {
+    "country": "unknown",
+    "desc": "(CNN) — Following a historic airspace meltdown on Friday that grounded all flights nationwide, Transportation Secretary Sean Duffy has implored Congress to authorize tens of billions of dollars in add",
+    "domain": "applevalleynewsnow.com",
+    "id": 789504,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "AppleValleyNewsNow.com",
+    "title": "As Trump administration implores Congress for additional FAA funding, Democrats say the agency already has it",
+    "url": "https://www.applevalleynewsnow.com/news/politics/national-politics/as-trump-administration-implores-congress-for-additional-faa-funding-democrats-say-the-agency-already-has/article_a6918ca2-3327-5e78-a177-1a9df5d45562.html"
+   },
+   {
+    "country": "unknown",
+    "desc": "The man once charged with establishing communications operations at the Pentagon at the start of President Donald Trump's second term is speaking out about the \"disturbing\" things he witnessed, reveal",
+    "domain": "alternet.org",
+    "id": 789492,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "Alternet.org",
+    "title": "Ex-staffer exposes 'sinister secrets' at Trump's Pentagon",
+    "url": "https://www.alternet.org/trump-pentagon-secrets-ex-staffer/"
+   },
+   {
+    "country": "unknown",
+    "desc": "President Donald Trump's obsession with steamrolling over parts of Washington, D.C., to remake them in his own image has never been popular, but now, according to a new poll reported on by The Daily B",
+    "domain": "alternet.org",
+    "id": 789491,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "Alternet.org",
+    "title": "Trump's DC takeover obsession gets brutal new rebuke from his own base",
+    "url": "https://www.alternet.org/trump-dc-takeover-maga-rebuke/"
+   },
+   {
+    "country": "unknown",
+    "desc": "President Donald Trump's endless corruption and acceptance of bribes have their roots in his family's dynamics, according to his niece Mary Trump, who revealed in a new video a \"dark family tradition\"",
+    "domain": "alternet.org",
+    "id": 789490,
+    "obs": "2026-11-15T23:47:00Z",
+    "outlet": "Alternet.org",
+    "title": "Trump relative exposes 'dark family tradition' behind his major corruption",
+    "url": "https://www.alternet.org/mary-trump-greed-obsession/"
+   }
+  ],
+  "score": 4849.389977654794
+ }
+}
